@@ -2,15 +2,15 @@ import Link from 'next/link'
 
 export default function Container({ children }: { children: React.ReactNode }) {
   return (
-    <div className="container">
-      <header className="header">
+    <div className="flex flex-col w-full items-center border">
+      <header className="header flex w-full p-4 border-b">
         <Link className="header__title" href="/">
           Next.js + Sanity
         </Link>
       </header>
-      <main>{children}</main>
-      <footer className="footer">
-        <p className="footer__text">
+      <main className='min-h-screen'>{children}</main>
+      <footer className=" w-full flex ">
+        <p className="w-full flex items-center justify-center p-4">
           Made with{' '}
           <svg
             datasanity-icon="heart-filled"
