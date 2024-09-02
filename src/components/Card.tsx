@@ -1,7 +1,6 @@
 import Image from 'next/image'
-
+import { Post } from '~/interfaces/post'
 import { urlForImage } from '~/lib/sanity.image'
-import { type Post } from '~/lib/sanity.queries'
 import { formatDate } from '~/utils'
 
 export default function Card({ post }: { post: Post }) {
@@ -24,6 +23,16 @@ export default function Card({ post }: { post: Post }) {
             {post.title}
           </a>
         </h3>
+        <div className='flex flex-col gap-1'>
+        {post.tags && post.tags.map(tag => (
+          <span key={tag._id} className="tag text-violet-800">
+            {tag.tagName}
+          </span>))}
+          {post.contentTypes && post.contentTypes.map(contentType => (
+          <span key={contentType._id} className="text-2xl text-blue-500">
+            {contentType.contentType}
+          </span>))}
+          </div>
         <p className="card__excerpt">{post.excerpt}</p>
         <p className="card__date">{formatDate(post._createdAt)}</p>
       </div>

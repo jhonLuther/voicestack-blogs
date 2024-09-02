@@ -1,6 +1,8 @@
 import { ImageAsset, PortableTextBlock, Slug } from "sanity"
 
 export interface Post {
+  contentTypes: any[]
+  tagName: any
     _type: 'post'
     _id: string
     _createdAt: string

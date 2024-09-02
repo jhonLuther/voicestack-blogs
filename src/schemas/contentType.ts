@@ -1,19 +1,19 @@
 import { defineField, defineType } from 'sanity'
 
 export default defineType({
-  name: 'tag',
-  title: 'Tag',
+  name: 'contentType',
+  title: 'ContentType',
   type: 'document',
   fields: [
     defineField({
-      name: 'tagName',
-      title: 'Tag Name',
+      name: 'contentType',
+      title: 'Content Type',
       type: 'string',
     }),
   ],
   preview: {
     select: {
-      title: 'tagName',
+      title: 'contentType',
     },
   },
 })

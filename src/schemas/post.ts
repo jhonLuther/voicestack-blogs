@@ -1,5 +1,6 @@
 import { defineField, defineType } from 'sanity'
 import { CogIcon } from '@sanity/icons'
+import tag from './tag';
 
 export default defineType({
   name: 'post',
@@ -108,6 +109,17 @@ export default defineType({
         },
       ],
     }),
+    defineField({
+      name: 'contentTypes',
+      title: 'Content Type',
+      type: 'array',
+      of: [
+        {
+          type: 'reference',
+          to: [{ type: 'contentType' }],
+        },
+      ],
+    }),
     {
       name: 'dynamicComponents',
       title: 'Dynamic Components',
@@ -131,10 +143,11 @@ export default defineType({
       title: 'title',
       author: 'author.name',
       media: 'mainImage',
+      tag:'tag'
     },
     prepare(selection) {
-      const { author } = selection
-      return { ...selection, subtitle: author && `by ${author}` }
+      const { author ,tag} = selection
+      return { ...selection, subtitle: author && `by ${author + tag}` }
     },
   },
 })

@@ -20,6 +20,16 @@ export const postsQuery = groq`
     bio,
     "picture": picture.asset->url
   },
+
+    tags[]->{
+      _id,
+      tagName
+    },
+
+    contentTypes[]->{
+      _id,
+      contentType
+    }
 }
 `
 

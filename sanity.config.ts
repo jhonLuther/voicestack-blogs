@@ -65,7 +65,7 @@ export default defineConfig({
     // https://www.sanity.io/docs/the-vision-plugin
     visionTool({ defaultApiVersion: apiVersion }),
   ],
-  document: {
+  document : {
     actions: (prev) =>
       prev.map((originalAction) =>
         originalAction.action === 'publish' ? SetAndPublishAction : originalAction

@@ -1,9 +1,15 @@
-import React from 'react'
+import React, { forwardRef } from 'react';
 
-export default function Section({ children, className }: { children: React.ReactNode, className?:any }) {
-  return (
-    <div className={`flex ${className}`}>
-      {children}
-    </div>
-  )
-}
+const Section = forwardRef<HTMLDivElement, { children: React.ReactNode; className?: string }>(
+  ({ children, className }, ref) => {
+    return (
+      <div ref={ref} className={`flex ${className}`}>
+        {children}
+      </div>
+    );
+  }
+);
+
+Section.displayName = 'Section';
+
+export default Section;
