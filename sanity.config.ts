@@ -5,6 +5,7 @@
 import { visionTool } from '@sanity/vision'
 import { defineConfig } from 'sanity'
 import { deskTool } from 'sanity/desk'
+import {SetAndPublishAction} from './actions'
 import {
   defineUrlResolver,
   Iframe,
@@ -64,4 +65,10 @@ export default defineConfig({
     // https://www.sanity.io/docs/the-vision-plugin
     visionTool({ defaultApiVersion: apiVersion }),
   ],
+  document: {
+    actions: (prev) =>
+      prev.map((originalAction) =>
+        originalAction.action === 'publish' ? SetAndPublishAction : originalAction
+      ),
+  },
 })

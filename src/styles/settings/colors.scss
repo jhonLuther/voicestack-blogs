@@ -1,0 +1,276 @@
+// COLORS
+
+$primary: #42ba78;
+$secondary: #05406b;
+$text: #38424d;
+$white: #fff;
+$gray: #f3f5f7;
+$shade: #f9fafb;
+$lightBg: #e2f6f8;
+$text-gray: #728292;
+$link: #3366cc;
+$hilight: #2495a1;
+$border: #ebedf0;
+$border-dark: #d9dee3;
+$border-light: #b6bfc9;
+$footer-bottom-bg: #546273;
+$lightGreen-bg: #e0f5eb;
+$border-primary: #2495a1;
+$table-bg: #effafb;
+$border-hilight: #6bc6d0;
+$teal-100: #b7e6eb;
+$teal-25: #effafb;
+$yellow-shade: #fff4dc;
+$red-shade: #fceeed;
+$border-lightBlue: #93d5dc;
+$primary-text: #2495a1;
+$btn-bg: #f3fbf8;
+$teal-700: #007c89;
+$greenBg: #6cc096;
+$blue-100: #dbeafe;
+$orange-100: #ffedd5;
+$purple-100: #f3e8ff;
+$light-gray: #dddddd;
+$red-300: #eb8279;
+$black: #000000;
+$dark: #1D1D1F;
+$blue-link: #2563EB;
+$blue-link-v2: #1A73E8;
+$blue-v3:#6275C2;
+
+$blue-50: #EFF6FF;
+$blue-100: #EFF6FF;
+$blue-200: #BFDBFE;
+$blue-300: #93C5FD;
+$blue-400: #60A5FA;
+$blue-500: #3B82F6;
+$blue-700: #1D4ED8;
+$blue-800: #1E40AF;
+
+//PURPLES
+$purple-100: #FAF5FF;
+$purple-200: #E9D5FF;
+$purple-300: #D8B4FE;
+$purple-800: #6B21A8;
+
+// GRAYS
+$cs-gray-100: #F7F7F8;
+$cs-gray-200: #F1F2F2;
+$cs-gray-300: #EBECED;
+$cs-gray-400: #D7D9DB;
+$cs-gray-500: #AFB3B8;
+$cs-gray-600: #888E94;
+$cs-gray-700: #606871;
+$cs-gray-800: #38424D;
+// $cs-gray-900: #2D353E;
+$cs-gray-900: #111827;
+
+
+// BLUES
+$cs-blue-100: #EBF0F3;
+$cs-blue-200: #DCE4EA;
+$cs-blue-300: #CDD9E1;
+$cs-blue-400: #9BB3C4;
+$cs-blue-500: #698CA6;
+$cs-blue-600: #376689;
+$cs-blue-700: #05406B;
+$cs-blue-800: #043356;
+$cs-blue-900: #032640;
+$cs-blue-1000: #00003F;
+
+
+// TEALS
+$cs-teal-100: #EDF5F4;
+$cs-teal-200: #E0EDEB;
+$cs-teal-300: #D3E5E3;
+$cs-teal-400: #A7CBC7;
+$cs-teal-500: #7CB1AA;
+$cs-teal-600: #50978E;
+$cs-teal-700: #247D72;
+$cs-teal-800: #1D645B;
+$cs-teal-900: #164B44;
+
+// GREENS
+$cs-green-100: #F0F9F4;
+$cs-green-200: #E4F5EC;
+$cs-green-300: #D9F1E4;
+$cs-green-400: #B3E3C9;
+$cs-green-500: #8ED6AE;
+$cs-green-600: #68C893;
+$cs-green-700: #42BA78;
+$cs-green-800: #359560;
+$cs-green-900: #287048;
+
+
+// REDS
+$cs-red-100: #FEF1EF;
+$cs-red-200: #FEE7E3;
+$cs-red-300: #FDDCD7;
+$cs-red-400: #FCC2B9;
+$cs-red-500: #FBA89B;
+$cs-red-600: #E28174;
+$cs-red-700: #CA6458;
+$cs-red-800: #B44B34;
+$cs-red-900: #B04A3E;
+
+// YELLOWS
+$cs-yellow-100: #FEFBF1;
+$cs-yellow-200: #FEF9E7;
+$cs-yellow-300: #FDF6DD;
+$cs-yellow-400: #FBEDBB;
+$cs-yellow-500: #F9E498;
+$cs-yellow-600: #F7DB76;
+$cs-yellow-700: #F5D254;
+$cs-yellow-800: #F4C006;
+$cs-yellow-900: #D69A00;
+
+$cs-green-light: #E3ECE6;
+$cs-dark-blue: #052A45;
+$cs-light-gray-bg: #F8F7F4;
+$cs-light-gray-bg2: #F3F7F6;
+$cs-light-gray-bg3: #F9FBFA;
+$cs-light-green-bg: #EAF0F0;
+$cs-light-yellow-bg: #ECEBE3;
+$cs-dark-green-bg: #11423F;
+$cs-darker-green-bg: #0F3936;
+$cs-darker-green-bg2: #112B21;
+$cs-primary-btn-color: #26A363;
+$cs-dark-green-bg2: #00473C;
+$cs2-inner-bg1: #F8FAF9;
+$mint-green: #D6E7D7;
+$mint-greenV1:linear-gradient(90deg, #26A363 -24.19%, #00473C 100%);
+$mint-greenV2:linear-gradient(90deg, #00473C -1.68%, #26A363 125.87%);
+$emerald-sapphire:linear-gradient(82deg, #1C8E53 -61.76%, #196BD9 205.34%);
+$green-gradient:linear-gradient(0deg, #05C2B5 0%, #05C2B5 100%), #FFF;;
+$pearl-blue:linear-gradient(180deg, #5FD5B6 0%, #55E99D 122.13%, #4BFE85 244.26%);
+$light-blue-gradient:linear-gradient(180deg, #EEF2FF 0%, #FFF 100%);
+$pearl-blue-v1:linear-gradient(180deg, #00A59A 0%, rgba(25, 202, 105, 0.80) 100%), #FFF;
+$gradient-blue:#05C2B5;
+$gradient-lightBlue:linear-gradient(180deg, #FFF 0%, #EEF2FF 100%);
+
+
+//New ColorsS
+$blacker: #111827;
+$newGray: #F8FAFC;
+$colorType1: #64748B;
+$colorType2: #CBD5E1;
+$colorType3: #F1F5F9;
+$colorType4: #E0EFFB;
+$colorType5: rgba(30, 41, 59, 0.70);
+$colorType6: rgba(236, 247, 255, 0.80);
+$colorType7: #546273;
+$colorType8: #11423F;
+$colorType9: rgba(255, 255, 255, 0.60);
+$colorType10: rgba(255, 255, 255, 0.70);
+$colorType11: rgba(30, 41, 59, 0.60);
+$colorType12: #013830;
+$colorType13: #083936;
+$colorType14: #020617;
+$colorType15: #052A45;
+$colorType16: #F8F7F4;
+// $colorType17: #525252;
+$colorType17: #4b5563;
+// $colorType18: #111827;
+$colorType18: #111827;
+$colorType19: #EAF0F0;
+$colorType20: #11746E;
+$colorType21: #4C82A9;
+$colorType22: #08211F;
+$colorType23: #F5F5F5;
+$colorType24: #F4F3EE;
+$colorType25: #083344;
+$colorType26: #3282C6;
+$colorType27: #A3A3A3;
+$colorType28: #F0F5F4;
+$colorType29: #E5E5E5;
+$peacock-blue-new: #2C7F95;
+$light-green-new: #81CDB2;
+$dark-blue-new: #1D2538;
+$dark-black-new: #18181B;
+
+
+//Revamp - Colors named
+
+// CS Green
+$cs2-green-50: #EEFBF3;
+$cs2-green-100: #D6F5DF;
+$cs2-green-200: #B1E9C5;
+$cs2-green-300: #7ED7A4;
+$cs2-green-400: #42BA78;
+$cs2-green-500: #26A363;
+$cs2-green-600: #18834E;
+$cs2-green-700: #136940;
+$cs2-green-800: #125335;
+$cs2-green-900: #0F452D;
+$cs2-green-950: #072719;
+
+// CS Blue
+$cs2-blue-50: #F1F9FF;
+$cs2-blue-100: #E2F2FE;
+$cs2-blue-200: #C0E5FC;
+$cs2-blue-300: #8AD1FB;
+$cs2-blue-400: #57BBF6;
+$cs2-blue-500: #40A3E7;
+$cs2-blue-600: #3282C6;
+$cs2-blue-700: #2768A0;
+$cs2-blue-800: #215884;
+$cs2-blue-900: #05406B;
+$cs2-blue-950: #122E48;
+
+// CS Teal
+$cs2-teal-50: #F9FBFA;
+$cs2-teal-100: #F3F7F6;
+$cs2-teal-300: #DBECEB;
+$cs2-teal-500: #C5DDDB;
+$cs2-teal-600: #11746E;
+$cs2-teal-800: #095553;
+$cs2-teal-900: #11423F;
+$cs2-teal-950: #0F3936;
+
+//CS Gray
+$cs2-gray-50: #F1F9FF;
+$cs2-gray-100: #F3F4F6;
+$cs2-gray-200: #E5E7EB;
+$cs2-gray-300: #D1D5DB;
+$cs2-gray-400: #9CA3AF;
+$cs2-gray-500: #6b7280;
+$cs2-gray-550: #5F6368;
+$cs2-gray-600: #4B5563;
+$cs2-gray-700: #374151;
+$cs2-gray-800: #1F2937;
+$cs2-gray-900: #111827;
+$cs2-gray-950: #030712;
+$cs2-gray-1000: #202124;
+$cs2-gray-v1: #52525B;
+
+//CS Tan
+$cS2-Tan-50: #F8F7F4;
+$cS2-Tan-100: #ECEBE3;
+$cS2-Tan-400: #CFCBB9;
+$cS2-Tan-600: #83765D;
+$cS2-Tan-900: #615547;
+$cS2-Tan-950: #383229;
+
+//cs Peach
+$cs2-Peach-50: #F9FCF8;
+
+//inner circle colors
+$midnight-navy:#01192B;
+$midnight-half:linear-gradient(to bottom, #01192B 50%, #F3F4F6 50%);
+$cs-blue-half:linear-gradient(to bottom, #00003F 50%, #EEF2FF 50%);
+$cs-light-pink: #EEF2FF;
+
+
+:export {
+  primary: $primary;
+  secondary: $secondary;
+  text: $text;
+  white: $white;
+  gray: $gray;
+  lightBg: $lightBg;
+  text-gray: $text-gray;
+  link: $link;
+  border: $border;
+  border-light: $border-light;
+  footer-bottom-bg: $footer-bottom-bg;
+}

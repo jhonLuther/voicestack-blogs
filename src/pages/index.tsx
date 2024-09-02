@@ -7,8 +7,10 @@ import Section from '~/components/Section'
 import Welcome from '~/components/Welcome'
 import { readToken } from '~/lib/sanity.api'
 import { getClient } from '~/lib/sanity.client'
-import { getPosts, type Post, postsQuery } from '~/lib/sanity.queries'
+import { getPosts, postsQuery } from '~/lib/sanity.queries'
 import type { SharedPageProps } from '~/pages/_app'
+import { Post } from '~/interfaces/post'
+import { useEffect } from 'react'
 
 export const getStaticProps: GetStaticProps<
   SharedPageProps & {
@@ -17,7 +19,7 @@ export const getStaticProps: GetStaticProps<
 > = async ({ draftMode = false }) => {
   const client = getClient(draftMode ? { token: readToken } : undefined)
   const posts = await getPosts(client)
-
+  
   return {
     props: {
       draftMode,
