@@ -1,4 +1,6 @@
 import '~/styles/global.scss'
+import '~/styles/common.scss'
+import '~/styles/container.scss'
 
 import type { AppProps } from 'next/app'
 import {  Inter, Archivo, Manrope} from 'next/font/google'

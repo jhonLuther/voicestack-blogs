@@ -1,21 +1,20 @@
 import { useRef, useState, useEffect } from 'react';
 import type { GetStaticProps, InferGetStaticPropsType } from 'next';
-import { useLiveQuery } from 'next-sanity/preview';
 import Card from '~/components/Card';
 import Container from '~/components/Container';
 import Section from '~/components/Section';
 import Welcome from '~/components/Welcome';
 import { readToken } from '~/lib/sanity.api';
-import { getClient } from '~/lib/sanity.client';
-import { getPosts, postsQuery } from '~/lib/sanity.queries';
+import { getPosts } from '~/lib/sanity.queries';
 import type { SharedPageProps } from '~/pages/_app';
 import { Post } from '~/interfaces/post';
-import { useRouter } from "next/router";
 import TagSelect from '~/common/TagSelector';
+import { getClient } from '~/lib/sanity.client';
+import Wrapper from '~/components/commonSections/Wrapper';
 
 export const getStaticProps: GetStaticProps<
   SharedPageProps & {
-    posts: Post[]
+    posts: Post[];
   }
 > = async ({ draftMode = false }) => {
   const client = getClient(draftMode ? { token: readToken } : undefined);
@@ -30,44 +29,44 @@ export const getStaticProps: GetStaticProps<
   };
 };
 
-export default function IndexPage(
-  props: InferGetStaticPropsType<typeof getStaticProps>,
-) {
-  const router = useRouter();
+export default function IndexPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
   const mainSection = useRef<HTMLDivElement>(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedTag, setSelectedTag] = useState<string>('');
-  const [posts, setPosts] = useState<Post[]>(props.posts);
-  console.log(posts,'post');
-  
-  const tags = posts
-  .flatMap((item) => item.tags || [])  
-  .map((tag) => tag?.tagName)  
-  .filter((name) => name !== undefined)  
-  .filter((value, index, self) => self.indexOf(value) === index); 
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [selectedContentType, setSelectedContentType] = useState<string>('');
+  const [filteredPosts, setFilteredPosts] = useState<Post[]>(props.posts);
 
-  const contentTypes = posts
-  .flatMap((item) => item.contentTypes || [])  
-  .map((tag) => tag?.contentType)  
-  .filter((name) => name !== undefined)  
-  .filter((value, index, self) => self.indexOf(value) === index); 
+  useEffect(() => {
+    let filtered = props.posts;
 
-  
+    if (selectedContentType) {
+      filtered = filtered.filter(post =>
+        post.contentTypes?.some(type => type.contentType === selectedContentType)
+      );
+    }
 
-  const filteredPosts = selectedTag
-    ? posts.filter(post => 
-        (post.contentTypes || []).some(tag => tag.contentType === selectedTag)
-      )
-    : posts;
+    if (selectedTags.length > 0) {
+      filtered = filtered.filter(post =>
+        selectedTags.every(tag => post.tags?.some(t => t.tagName === tag))
+      );
+    }
 
-  const filteredTags = selectedTag
-    ? posts.filter(post => 
-        (post.tags || []).some(tag => tag.tagName === selectedTag)
-      )
-    : posts;
+    if (filtered.length === 0) {
+      console.log('Selected item not found');
+    }
 
-    
-  console.log(filteredPosts,'filteredPosts');
+    setFilteredPosts(filtered);
+  }, [selectedTags, selectedContentType, props.posts]);
+
+  const tags = props.posts
+    .flatMap(post => post.tags || [])
+    .map(tag => tag?.tagName)
+    .filter((name, index, self) => name && self.indexOf(name) === index);
+
+  const contentTypes = props.posts
+    .flatMap(post => post.contentTypes || [])
+    .map(type => type?.contentType)
+    .filter((name, index, self) => name && self.indexOf(name) === index);
 
   const segmentSize = 3;
   const segments = [];
@@ -83,19 +82,41 @@ export default function IndexPage(
   };
 
   const handleTagChange = (tag: string) => {
-    setSelectedTag(tag);
+    setSelectedTags(prevTags =>
+      prevTags.includes(tag)
+        ? prevTags.filter(t => t !== tag) 
+        : [...prevTags, tag] 
+    );
+    setCurrentPage(1);
+  };
+
+  const handleContentTypeChange = (contentType: string) => {
+    setSelectedContentType(contentType);
     setCurrentPage(1);
   };
 
   return (
     <Container>
-      <Section ref={mainSection} className="flex-col max-w-7xl py-20">
-        <TagSelect contentTypes={contentTypes} onChange={handleTagChange} />
+      <Wrapper             
+      color={"white"}
+      spacing={"pt-0"} 
+      >
+      <Section ref={mainSection} className="flex-col py-20">
+        <TagSelect
+          contentTypes={contentTypes}
+          tags={tags}
+          onContentTypeChange={handleContentTypeChange}
+          onTagChange={handleTagChange}
+          selectedTags={selectedTags}
+          tagLimit={3}
+        />
 
-        {currentSegment.length ? (
-          currentSegment.map((post: Post) => <Card key={post._id} post={post} />)
+        {currentSegment.length > 0 ? (
+          currentSegment.map(post => <Card key={post._id} post={post} />)
         ) : (
-          <Welcome />
+          <div className="text-center py-10">
+            <p>No matching posts found.</p>
+          </div>
         )}
 
         <div className="flex justify-center mt-8">
@@ -112,6 +133,7 @@ export default function IndexPage(
           ))}
         </div>
       </Section>
+      </Wrapper>
     </Container>
   );
 }

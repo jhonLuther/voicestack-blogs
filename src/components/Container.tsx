@@ -8,7 +8,7 @@ export default function Container({ children }: { children: React.ReactNode }) {
           Next.js + Sanity
         </Link>
       </header>
-      <main className='min-h-screen'>{children}</main>
+      <main className='w-full'>{children}</main>
       <footer className=" w-full flex ">
         <p className="w-full flex items-center justify-center p-4">
           Made with{' '}

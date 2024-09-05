@@ -5,7 +5,7 @@ import { formatDate } from '~/utils'
 
 export default function Card({ post }: { post: Post }) {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col max-w-[516px] h-auto">
       {post.mainImage ? (
         <Image
           className="w-full h-[300px] object-cover rounded-lg"
