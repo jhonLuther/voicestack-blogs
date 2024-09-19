@@ -1,6 +1,8 @@
 import { ImageAsset, PortableTextBlock, Slug } from "sanity"
 
 export interface Post {
+  ebookFields: any
+  contentType: any
   contentTypes: any[]
   tagName: any
     _type: 'post'

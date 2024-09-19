@@ -73,7 +73,7 @@ export default function ProjectSlugRoute(
   const seoKeywords = post.seoKeywords || '';
   const seoRobots = post.seoRobots || 'index,follow';
   const seoCanonical = post.seoCanonical || `https://carestack.com/post/${post.slug.current}`;
-  const jsonLD = generateJSONLD(post);
+  const jsonLD:any = generateJSONLD(post);
 
   return (
     <>
@@ -83,7 +83,8 @@ export default function ProjectSlugRoute(
         keywords={seoKeywords}
         robots={seoRobots}
         canonical={seoCanonical}
-        jsonLD={jsonLD} />
+        jsonLD={jsonLD}
+        contentType={post?.contentType}/>
       <Container>
         <section className={`post ${blogStyles.blog}`}>
           {post.mainImage ? (

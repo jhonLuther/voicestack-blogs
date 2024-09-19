@@ -8,6 +8,10 @@ interface SEOHeadProps {
   robots: string;
   canonical: string;
   jsonLD: string;
+  props?:{
+    contentType: any
+  };
+  
 }
 
 export default function SEOHead({
@@ -17,6 +21,7 @@ export default function SEOHead({
   robots,
   canonical,
   jsonLD,
+  ...props
 }: SEOHeadProps) {
   return (
     <>
@@ -26,12 +31,13 @@ export default function SEOHead({
         <meta name="keywords" content={keywords} key="keywords" />
         <meta name="robots" content={robots} key="robots" />
         <link rel="canonical" href={canonical} key="canonical" />
+        {jsonLD && <script
+          key={`blogJSON-${0.5*Math.random()}`}
+          type="application/ld+json"
+          id={`${props.contentType}-jsonLd`}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLD) }}
+        />}
       </Head>
-      <Script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: jsonLD }}
-        key="jsonld"
-      />
     </>
   );
 }

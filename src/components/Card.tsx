@@ -28,10 +28,10 @@ export default function Card({ post }: { post: Post }) {
           <span key={tag._id} className="tag text-violet-800">
             {tag.tagName}
           </span>))}
-          {post.contentTypes && post.contentTypes.map(contentType => (
-          <span key={contentType._id} className="text-2xl text-blue-500">
-            {contentType.contentType}
-          </span>))}
+          {post.contentType && 
+          <span  className="text-2xl text-blue-500">
+            {post.contentType}
+          </span>}
           </div>
         <p className="card__excerpt">{post.excerpt}</p>
         <p className="card__date">{formatDate(post._createdAt)}</p>

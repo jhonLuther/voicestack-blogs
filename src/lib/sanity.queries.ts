@@ -17,6 +17,7 @@ export const postsQuery = groq`
   "author": author-> {
     _id,
     name,
+    role,
     bio,
     "picture": picture.asset->url
   },
@@ -25,11 +26,6 @@ export const postsQuery = groq`
       _id,
       tagName
     },
-
-    contentTypes[]->{
-      _id,
-      contentType
-    }
 }
 `
 
