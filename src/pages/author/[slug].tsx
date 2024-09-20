@@ -14,7 +14,7 @@ interface Query {
 
 export const getStaticProps: GetStaticProps<
   SharedPageProps & {
-    post: Author
+    author: Author
   },
   Query
 > = async ({ draftMode = false, params = {} }) => {

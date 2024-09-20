@@ -35,6 +35,7 @@ export interface Post {
   }
 
   export interface Author{
+    picture: any
     _id: string,
     name: string,
     slug: Slug,
