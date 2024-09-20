@@ -1,57 +1,38 @@
-import {useState, useEffect} from 'react'
-import {useDocumentOperation} from 'sanity'
-
+import { useState, useEffect } from 'react';
+import { useDocumentOperation } from 'sanity';
 
 export function SetAndPublishAction(props) {
-  const {patch, publish} = useDocumentOperation(props.id, props.type)
-  const [isPublishing, setIsPublishing] = useState(false)
+  const { patch, publish } = useDocumentOperation(props.id, props.type);
+  const [isPublishing, setIsPublishing] = useState(false);
 
   useEffect(() => {
-    // if the isPublishing state was set to true and the draft has changed
-    // to become `null` the document has been published
+    // Reset the publishing state once the draft becomes `null` (published)
     if (isPublishing && !props.draft) {
-      setIsPublishing(false)
+      setIsPublishing(false);
     }
-  }, [props.draft])
+  }, [props.draft, isPublishing]);
 
-  if(props.type=="tag"){
+  // Ensure the disabled property is strictly boolean
+  const isDisabled = publish.disabled === false ? false : true;
+
+  // Determine the label based on the document type
+  const label = isPublishing ? 'Publishing…' : props.type === 'tag' ? 'Save' : 'Publish & Update';
+
   return {
-    disabled: publish.disabled,
-    label: isPublishing ? 'Publishing…' : 'Save',
+    disabled: isDisabled, // Ensure this is always boolean
+    label,
     onHandle: () => {
-      // This will update the button text
-      setIsPublishing(true)
+      // Update the button text and set isPublishing to true
+      setIsPublishing(true);
 
-      // Set publishedAt to current date and time
-    //   patch.execute([{set: {publishedAt: new Date().toISOString()}}])
+      // Optional: Patch the document to set any specific fields (e.g., publishedAt)
+      // patch.execute([{ set: { publishedAt: new Date().toISOString() }}]);
 
-      // Perform the publish
-      publish.execute()
+      // Perform the publish operation
+      publish.execute();
 
-      // Signal that the action is completed
-      props.onComplete()
+      // Signal that the action is complete
+      props.onComplete();
     },
-  }
-}
-else{
-
-    return {
-        disabled: publish.disabled,
-        label: isPublishing ? 'Publishing…' : 'Publish & Update',
-        onHandle: () => {
-          // This will update the button text
-          setIsPublishing(true)
-    
-          // Set publishedAt to current date and time
-        //   patch.execute([{set: {publishedAt: new Date().toISOString()}}])
-    
-          // Perform the publish
-          publish.execute()
-    
-          // Signal that the action is completed
-          props.onComplete()
-        },
-      }
-
-}
+  };
 }
