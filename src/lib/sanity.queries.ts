@@ -17,6 +17,7 @@ export const postsQuery = groq`
   "author": author-> {
     _id,
     name,
+    slug,
     role,
     bio,
     "picture": picture.asset->url
@@ -31,17 +32,55 @@ export const postsQuery = groq`
 
 export const iframesQuery = groq`*[_type == "iframes" && defined(slug.current)] | order(_createdAt desc)`
 
+export const authorsQuery = groq`*[_type == "author" && defined(slug.current)] | order(_createdAt desc)`
+
 export async function getPosts(client: SanityClient): Promise<Post[]> {
   return await client.fetch(postsQuery)
 }
 export async function getIframes(client: SanityClient): Promise<Post[]> {
   return await client.fetch(iframesQuery)
 }
+export async function getAuthors(client: SanityClient): Promise<Post[]> {
+  return await client.fetch(authorsQuery)
+}
+
 
 export const postBySlugQuery = groq`
   *[_type == "post" && slug.current == $slug][0] {
-    ...,
-    dynamicComponents
+    title,
+    slug,
+    excerpt,
+    body,
+    mainImage,
+    _createdAt,
+    seoTitle,
+    seoDescription,
+    seoKeywords,
+    seoCanonical,
+    seoRobots,
+    dynamicComponents[]{
+      _key,
+      componentType,
+    },
+    "author": author->{
+      _id,
+      name,
+      slug,
+      role,
+      bio,
+      "picture": picture.asset->url
+    }
+  }
+`
+
+export const authorBySlugQuery = groq`
+  *[_type == "author" && slug.current == $slug][0] {
+    _id,
+    name,
+    role,
+    slug,
+    bio,
+    "picture": picture.asset->url,
   }
 `
 export const iframeBySlugQuery = groq`*[_type == "iframes" && slug.current == $slug][0]`
@@ -54,6 +93,7 @@ export async function getPost(
     slug,
   })
 }
+
 export async function getIframe(
   client: SanityClient,
   slug: string,
@@ -62,12 +102,24 @@ export async function getIframe(
     slug,
   })
 }
+export async function getAuthor(
+  client: SanityClient,
+  slug: string,
+): Promise<any> {
+  return await client.fetch(authorBySlugQuery, {
+    slug,
+  })
+}
 
 export const postSlugsQuery = groq`
 *[_type == "post" && defined(slug.current)][].slug.current
+
 `
 export const iframeSlugsQuery = groq`
 *[_type == "iframes" && defined(slug.current)][].slug.current
+`
+export const authorSlugsQuery = groq`
+  *[_type == "author" && defined(slug.current)][].slug.current
 `
 
 

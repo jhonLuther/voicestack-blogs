@@ -80,7 +80,6 @@ export default function IndexPage(props: InferGetStaticPropsType<typeof getStati
     .map(tag => tag?.tagName)
     .filter((name, index, self) => name && self.indexOf(name) === index);
 
-    console.log(props.posts,'props post ');
     
 
   const contentTypes = props.posts

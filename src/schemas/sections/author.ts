@@ -11,6 +11,16 @@ export default defineType({
       type: 'string',
     }),
     defineField({
+      name: 'slug',
+      type: 'slug',
+      title: 'Slug',
+      options: {
+        source: 'name',
+        maxLength: 96,
+      },
+    }),
+
+    defineField({
       name: 'role',
       title: 'Role',
       type: 'string',
@@ -33,9 +43,8 @@ export default defineType({
       media: 'picture',
     },
     prepare(selection) {
-      const { bio,title } = selection
+      const { bio, title } = selection
       return { ...selection, subtitle: bio && `${bio}` }
     },
   },
-}
-)
+})

@@ -19,6 +19,8 @@ import DynamicComponent from '../../layout/DynamicComponent'
 import SEOHead from '~/layout/SeoHead'
 import { Post } from '~/interfaces/post'
 import { generateJSONLD } from '~/utils/generateJSONLD'
+import { fetchAuthor } from '~/utils/common'
+import AuthorInfo from '~/components/commonSections/AuthorInfo'
 
 
 interface Query {
@@ -73,7 +75,9 @@ export default function ProjectSlugRoute(
   const seoKeywords = post.seoKeywords || '';
   const seoRobots = post.seoRobots || 'index,follow';
   const seoCanonical = post.seoCanonical || `https://carestack.com/post/${post.slug.current}`;
-  const jsonLD:any = generateJSONLD(post);
+  const jsonLD: any = generateJSONLD(post);
+  const authorInfo = post?.author;
+
 
   return (
     <>
@@ -84,7 +88,7 @@ export default function ProjectSlugRoute(
         robots={seoRobots}
         canonical={seoCanonical}
         jsonLD={jsonLD}
-        contentType={post?.contentType}/>
+        contentType={post?.contentType} />
       <Container>
         <section className={`post ${blogStyles.blog}`}>
           {post.mainImage ? (
@@ -98,6 +102,9 @@ export default function ProjectSlugRoute(
           ) : (
             <div className="post__cover--none" />
           )}
+
+          {authorInfo && <AuthorInfo author={authorInfo} />}
+
           <div className="post__container">
             <h1 className="post__title">{post.title}</h1>
             <p className="post__excerpt">{post.excerpt}</p>

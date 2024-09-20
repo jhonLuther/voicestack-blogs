@@ -237,7 +237,7 @@ export default defineType({
         title,
         subtitle:
           author &&
-          `${contentType && contentType} by ${author ? author : 'Unknown'}`,
+          `${contentType && contentType}`,
         media: selection.media,
       }
     },

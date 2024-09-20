@@ -33,3 +33,11 @@ export interface Post {
       [key: string]: any
     }>
   }
+
+  export interface Author{
+    _id: string,
+    name: string,
+    slug: Slug,
+    role:any,
+    bio:any,
+  }
