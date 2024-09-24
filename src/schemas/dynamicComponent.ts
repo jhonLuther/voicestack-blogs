@@ -12,8 +12,7 @@ export default {
       options: {
         list: [
           { title: 'Text Block', value: 'textBlock' },
-          { title: 'Image Block', value: 'imageBlock' },
-          { title: 'Demo Banner Block', value: 'bannerBlock' }, 
+          { title: 'Book Free Demo Banner', value: 'bannerBlock' }, 
           //add the component name 
         ],
       },

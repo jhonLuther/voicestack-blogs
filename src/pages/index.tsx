@@ -86,7 +86,7 @@ export default function IndexPage(props: InferGetStaticPropsType<typeof getStati
     .map(type => type?.contentType)
     .filter((name, index, self) => name && self.indexOf(name) === index);
 
-  const segmentSize = 3;
+  const segmentSize = 9;// defines Content per page 
   const segments = [];
   for (let i = 0; i < filteredPosts.length; i += segmentSize) {
     segments.push(filteredPosts.slice(i, i + segmentSize));
@@ -120,7 +120,7 @@ export default function IndexPage(props: InferGetStaticPropsType<typeof getStati
 
   return (
     <Container>
-      <Wrapper color={"white"} spacing={"pt-0"}>
+      <Wrapper color={"white"} spacing={'p-mp'} >
         <Section ref={mainSection} className="flex-col py-20">
           <TagSelect
             contentTypes={contentTypes}
@@ -131,8 +131,7 @@ export default function IndexPage(props: InferGetStaticPropsType<typeof getStati
             selectedTags={selectedTags}
             tagLimit={4}
           />
-
-          <div className='grid grid-cols-3 gap-1'>
+          <div className='grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4'>
             {currentSegment.length > 0 ? (
               currentSegment.map(post => <Card key={post._id} post={post} />)
             ) : (

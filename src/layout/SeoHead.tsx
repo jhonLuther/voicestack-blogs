@@ -31,11 +31,11 @@ export default function SEOHead({
         <meta name="keywords" content={keywords} key="keywords" />
         <meta name="robots" content={robots} key="robots" />
         <link rel="canonical" href={canonical} key="canonical" />
-        {jsonLD && props?.contentType && ( 
+        {jsonLD && ( 
           <script
             key={`blogJSON-${0.5 * Math.random()}`}
             type="application/ld+json"
-            id={`${props.contentType}-jsonLd`}
+            id={`${props?.contentType ? props.contentType : "blog"}-jsonLd`}
             dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLD) }}
           />
         )}

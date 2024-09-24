@@ -4,12 +4,12 @@ import { fetchAuthor } from './common';
 export function generateJSONLD(post: Post) {
 
   const contentType = post?.contentType;
-
+  console.log(contentType,'contentType');
   
 
   if (contentType) {
     switch (contentType) {
-      case 'post':
+      case 'blog':
         return JSON.stringify({
           "@context": "https://schema.org",
           "@type": "BlogPosting",

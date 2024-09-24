@@ -277,10 +277,19 @@
         }
       }
     }
+    &--p-mp & {
+      &__inner {
+        padding: 6.4rem 1.6rem ;
+
+        @media (min-width:1200px) {
+          padding: 0rem 9.6rem;
+        }
+      }
+    }
 
     &--pt-0 & {
       &__inner {
-        padding: 0 1.6rem 6.4rem;
+        padding: 4.8rem 1.6rem 6.4rem;
 
         @media (min-width:1200px) {
           padding: 0 1.6rem 9.6rem;
@@ -418,7 +427,7 @@
 
     &__inner {
       width: 100%;
-      max-width: 127.2rem;
+      max-width: 128rem;
       padding: 6.4rem 1.6rem;
 
       @media (min-width:1200px) {

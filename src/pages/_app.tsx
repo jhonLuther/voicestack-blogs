@@ -3,7 +3,6 @@ import '~/styles/common.scss'
 import '~/styles/container.scss'
 
 import type { AppProps } from 'next/app'
-import {  Inter, Archivo, Manrope} from 'next/font/google'
 import { lazy } from 'react'
 
 export interface SharedPageProps {
@@ -13,9 +12,7 @@ export interface SharedPageProps {
 
 const PreviewProvider = lazy(() => import('~/components/PreviewProvider'))
 
-const inter = Inter({ subsets: ["latin"], display: "swap", variable: '--font-inter' });
-const archivo = Archivo({ subsets: ["latin"], display: "swap" });
-const monrope = Manrope({ subsets: ["latin"], display: "swap",  variable: '--font-manrope' });
+
 
 export default function App({
   Component,
@@ -25,20 +22,6 @@ export default function App({
   
   return (
     <>
-        <style jsx global>{`
-          body {
-            font-family: ${inter.style.fontFamily};
-          }
-          button {
-            font-family: ${inter.style.fontFamily};
-          }
-          .archivo {
-            font-family: ${archivo.style.fontFamily};
-          }
-          .monrope {
-            font-family: ${monrope.style.fontFamily};
-          }
-        `}</style>
       {draftMode ? (
         <PreviewProvider token={token}>
           <Component {...pageProps} />

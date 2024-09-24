@@ -9,7 +9,20 @@ module.exports = {
       "./src/**/*.{js,ts,jsx,tsx,mdx}",
     ],
     theme: {
-      extend: {},
+      extend: {
+
+        colors:{
+          'cs-100':"red"
+        },
+        maxWidth:{
+          '8xl':"80rem"
+        },
+        fontFamily:{
+          'sans':['Inter', 'sans-serif'],
+          'manrope':['Manrope', 'Inter', 'sans-serif']
+        }
+
+      },
     },
     plugins: [],
   }

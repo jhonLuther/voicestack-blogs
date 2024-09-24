@@ -7,6 +7,7 @@ import { Post } from '~/interfaces/post'
 export const postsQuery = groq`
 *[_type == "post" && defined(slug.current)] | order(_createdAt desc) {
  ...,
+ contentType,
   seoTitle,
   seoDescription,
   seoRobots,
@@ -50,7 +51,17 @@ export const postBySlugQuery = groq`
     title,
     slug,
     excerpt,
-    body,
+    contentType,
+    body[] {
+      ...,
+      _type == "image" => {
+        ...,
+        asset->
+      }
+    },
+       "numberOfCharacters": length(pt::text(body)),
+      "estimatedWordCount": round(length(pt::text(body)) / 5),
+      "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180),
     mainImage,
     _createdAt,
     seoTitle,
@@ -58,20 +69,25 @@ export const postBySlugQuery = groq`
     seoKeywords,
     seoCanonical,
     seoRobots,
-    dynamicComponents[]{
+    dynamicComponents[] {
       _key,
       componentType,
     },
-    "author": author->{
+    "author": author-> {
       _id,
       name,
       slug,
       role,
       bio,
       "picture": picture.asset->url
+    },
+    tags[]-> {
+      _id,
+      tagName
     }
   }
 `
+
 
 export const authorBySlugQuery = groq`
   *[_type == "author" && slug.current == $slug][0] {

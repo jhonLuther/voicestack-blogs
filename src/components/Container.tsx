@@ -1,10 +1,18 @@
 import Link from 'next/link'
 
-export default function Container({ children }: { children: React.ReactNode }) {
+interface ContainerProps {
+  children: React.ReactNode;
+  fullWidth?: boolean; 
+  className?: string;
+}
+
+
+export default function Container({ children,className, fullWidth = false }: ContainerProps) {
   return (
-    <div className="flex flex-col w-full items-center border">
-      <header className="header flex w-full p-4 border-b">
-        <Link className="header__title" href="/">
+
+    <div className={`flex flex-col w-full items-center border`}>
+      <header className=" flex w-full p-4 border-b ">
+        <Link className="" href="/">
           Next.js + Sanity
         </Link>
       </header>

@@ -91,7 +91,7 @@ export default defineType({
       },
     }),
 
-    // Fields for Post
+    // Fields for blog
     defineField({
       name: 'postFields',
       title: 'Post Specific Fields',
@@ -208,12 +208,12 @@ export default defineType({
       ],
     }),
 
-    defineField({
-      name: 'dynamicComponents',
-      title: 'Custom Components',
-      type: 'array',
-      of: [{ type: 'dynamicComponent' }],
-    }),
+    // defineField({
+    //   name: 'dynamicComponents',
+    //   title: 'Custom Components',
+    //   type: 'array',
+    //   of: [{ type: 'dynamicComponent' }],
+    // }),
 
     // Author Reference
     defineField({
@@ -237,7 +237,7 @@ export default defineType({
         title,
         subtitle:
           author &&
-          `${contentType && contentType}`,
+          `${contentType && contentType.toUpperCase()}`,
         media: selection.media,
       }
     },

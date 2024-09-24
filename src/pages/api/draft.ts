@@ -17,6 +17,7 @@ export default async function preview(
 
   const secret = typeof query.secret === 'string' ? query.secret : undefined
   const slug = typeof query.slug === 'string' ? query.slug : undefined
+  const contentType = typeof query.type === 'string' ? query.type : undefined
 
   if (!secret) {
     res.status(401)
@@ -36,7 +37,13 @@ export default async function preview(
     return res.status(401).send('Invalid secret')
   }
 
-  if (slug) {
+  if (contentType=="author" && slug) {
+    res.setDraftMode({ enable: true })
+    res.writeHead(307, { Location: `/author/${slug}` })
+    res.end()
+    return
+  }
+  if (contentType=="post" && slug) {
     res.setDraftMode({ enable: true })
     res.writeHead(307, { Location: `/post/${slug}` })
     res.end()

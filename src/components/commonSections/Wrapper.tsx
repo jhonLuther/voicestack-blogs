@@ -74,6 +74,7 @@ interface ContainerProps {
   | "default"
   | "pb-lg-0"
   | "pt-pb-0"
+  | "p-mp"
 }
 
 const Wrapper: React.FunctionComponent<ContainerProps> = ({
@@ -83,16 +84,14 @@ const Wrapper: React.FunctionComponent<ContainerProps> = ({
   display,
   spacing,
   background,
-  position
+  position,
+  className
 }) => {
   return (
     <div
-      className={`c-container--${color} ${extended ? "c-container__extended" : ""
-        } c-container--${display} ${spacing ? `c-container--${spacing}` : ""
-        } ${position ? `c-container--${position}` : ""}`}
-        style={background ? { background: `${background}` } : {}}
+      className={` max-w-8xl mx-auto w-full px-8 ${className}`}
     >
-      <div className="c-container__inner">{children}</div>
+      {children}
     </div>
   );
 };

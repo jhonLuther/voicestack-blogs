@@ -9,25 +9,25 @@ const AuthorInfo = ({ author }) => {
     }
     
   return (
-    <div className="author-info">
+    <Link href={`/author/${author.slug.current}`}>
+
+    <div className="author-info flex gap-4 items-center">
       {author.picture && (
         <Image
         alt={author.name} 
-        className="rounded-lg"
+        className=""
         src={author.picture}
-        height={100}
-        width={100}
+        height={56}
+        width={56}
       />
       )}
-      {author.slug?.current ? (
-        <Link href={`/author/${author.slug.current}`}>
-          {author.name}
-        </Link>
-      ) : (
-        <span>{author.name}</span>
-      )}
-      <p>{author.bio}</p>
+      <div className='flex flex-col'>
+      <span className='!font-semibold text-lg leading-tight'>{author.name}</span>
+      <span className='text-base text-gray-600'>{author.role}</span>
+      </div>
     </div>
+    </Link>
+
   )
 }
 

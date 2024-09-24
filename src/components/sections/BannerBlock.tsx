@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React from 'react';
 
 interface BannerBlockProps {
@@ -14,21 +15,32 @@ const BannerBlock: React.FC<BannerBlockProps> = ({ bannerBlock }) => {
 
   return (
     <div
-      className="flex justify-center items-center lg:max-w-[127rem] border-red-100"
+      className="flex flex-1 md:flex-row flex-col md:items-center rounded-[10px] p-8 my-8 md:gap-20 gap-4 justify-between "
       style={{ backgroundColor: bannerBlock?.backgroundColor }}
     >
-      <div>
-        <h2>
-          {bannerBlock?.title} {bannerBlock?.backgroundColor}
+      <div className='flex flex-col justify-center'>
+        <h2 className='!text-white !text-3xl !font-semibold leading-[110%] block'>
+          {bannerBlock?.title}
         </h2>
-        <p>{bannerBlock?.description}</p>
+        <p className='!text-gray-100 !text-opacity-70 !text-lg !m-0'>{bannerBlock?.description}</p>
       </div>
-      <a
-        href={bannerBlock?.buttonLink}
-        className="bg-green-500 text-white py-4 px-8 text-center no-underline inline-block text-lg my-1 mx-0.5 cursor-pointer rounded"
+
+
+      <div>
+      <div
+        className="bg-green-700 hover:bg-green-600 px-4 py-3 flex min-w-[200px] cursor-pointer rounded"
       >
-        {bannerBlock?.buttonText}
-      </a>
+        <Link
+          href={bannerBlock?.buttonLink}
+          target="_blank"
+          rel="noreferrer"
+          title="linkedin"
+          className="text-center w-full wh text-white font-inter text-lg font-medium leading-6"
+        >
+          {bannerBlock?.buttonText}
+        </Link>
+      </div>
+      </div>
     </div>
   );
 };

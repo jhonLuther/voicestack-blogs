@@ -8,8 +8,10 @@ import { getClient } from '~/lib/sanity.client'
 import { urlForImage } from '~/lib/sanity.image'
 import {
   getPost,
+  getPosts,
   postBySlugQuery,
   postSlugsQuery,
+  postsQuery,
 } from '~/lib/sanity.queries'
 import type { SharedPageProps } from '~/pages/_app'
 import { formatDate } from '~/utils'
@@ -19,8 +21,15 @@ import DynamicComponent from '../../layout/DynamicComponent'
 import SEOHead from '~/layout/SeoHead'
 import { Post } from '~/interfaces/post'
 import { generateJSONLD } from '~/utils/generateJSONLD'
-import { fetchAuthor } from '~/utils/common'
+import { fetchAuthor, getRelatedFeatures } from '~/utils/common'
 import AuthorInfo from '~/components/commonSections/AuthorInfo'
+import Header from '~/components/commonSections/Header'
+import Wrapper from '~/components/commonSections/Wrapper'
+import { SanityImage } from '~/components/SanityImage'
+import RelatedFeaturesSection from '~/components/RelatedFeaturesSection'
+import ShareableLinks from '~/components/commonSections/ShareableLinks'
+import Breadcrumb from '~/components/commonSections/BreadCrumb'
+import MainImageSection from '~/components/MainImageSection'
 
 
 interface Query {
@@ -35,6 +44,7 @@ export const getStaticProps: GetStaticProps<
 > = async ({ draftMode = false, params = {} }) => {
   const client = getClient(draftMode ? { token: readToken } : undefined)
   const post = await getPost(client, params.slug)
+  const allPosts = await getPosts(client);
 
   if (!post) {
     return {
@@ -47,24 +57,19 @@ export const getStaticProps: GetStaticProps<
       draftMode,
       token: draftMode ? readToken : '',
       post,
+      allPosts
     },
   }
 }
-const myPortableTextComponents = {
-  marks: {
-    highlight: ({ children, value }: any) => {
-      return (
-        <HighlightDecorator>{children}</HighlightDecorator>
-      )
-    },
-  },
-}
+
 export default function ProjectSlugRoute(
   props: InferGetStaticPropsType<typeof getStaticProps>,
 ) {
   const [post] = useLiveQuery(props.post, postBySlugQuery, {
     slug: props.post?.slug?.current,
   })
+
+  const [allPosts] = useLiveQuery(props.allPosts, postsQuery);
 
   if (!post) {
     return <div>Loading...</div>
@@ -79,6 +84,32 @@ export default function ProjectSlugRoute(
   const authorInfo = post?.author;
 
 
+  const myPortableTextComponents : any = {
+    marks: {
+      highlight: ({ children, value }: any) => {
+        return (
+          <HighlightDecorator>{children}</HighlightDecorator>
+        )
+      },
+      link: ({ children, value }) => {
+        return <a href={value.href} >{children}</a>
+
+      },
+    },
+
+    types: {
+      image: ({ value }) => {
+        return (
+          <SanityImage {...value} client={getClient(props.draftMode ? { token: props.token } : undefined)} />
+        );
+      },
+
+      dynamicComponent: ({ value }) => {
+        return <DynamicComponent {...value} client={getClient(props.draftMode ? { token: props.token } : undefined)} />
+      }
+    },
+  }
+
   return (
     <>
       <SEOHead
@@ -89,36 +120,37 @@ export default function ProjectSlugRoute(
         canonical={seoCanonical}
         jsonLD={jsonLD}
         contentType={post?.contentType} />
-      <Container>
+      <Container >
+        <MainImageSection post={post} />
         <section className={`post ${blogStyles.blog}`}>
-          {post.mainImage ? (
-            <Image
-              className="post__cover"
-              src={urlForImage(post.mainImage).url()}
-              height={231}
-              width={367}
-              alt=""
-            />
-          ) : (
-            <div className="post__cover--none" />
-          )}
-
-          {authorInfo && <AuthorInfo author={authorInfo} />}
-
           <div className="post__container">
-            <h1 className="post__title">{post.title}</h1>
-            <p className="post__excerpt">{post.excerpt}</p>
-            <p className="post__date">{formatDate(post._createdAt)}</p>
-            <div className="post__content">
-              <PortableText value={post.body} components={myPortableTextComponents} />
-              {post.dynamicComponents && post.dynamicComponents?.map((component: any, index: number) => (
-                <DynamicComponent
-                  key={component._key || index}
-                  componentType={component.componentType}
-                  {...component}
-                />
-              ))}
+
+            <Wrapper>
+            <div className="flex gap-[74px] md:flex-row flex-col">
+
+              <div className="mt-12 flex md:flex-col flex-col-reverse">
+              <div className='post__content max-w-[53rem] '>
+                <PortableText value={post.body} components={myPortableTextComponents} />
+                
+              </div>
+
+              <div className='md:hidden block'>
+              {authorInfo && <AuthorInfo author={authorInfo} />}
+              </div>
+              </div>
+              <div className='flex-1 flex flex-col gap-12 mt-12  bg-red relative'>
+
+              <div className='sticky top-12 flex flex-col gap-12'>
+                <div className='md:block hidden'>
+              {authorInfo && <AuthorInfo author={authorInfo} />}
+              </div>
+                <RelatedFeaturesSection currentPostSlug={post.slug.current} allPosts={allPosts} />
+                <ShareableLinks props={post.title ?? post.title} />
+              </div>
+
+              </div>
             </div>
+            </Wrapper>
           </div>
         </section>
       </Container>
