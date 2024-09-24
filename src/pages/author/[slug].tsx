@@ -50,7 +50,7 @@ export default function AuthorPage({
   author,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
 
-  console.log(author,'in author tsx');
+  // console.log(author,'in author tsx');
   
   const router = useRouter()
 

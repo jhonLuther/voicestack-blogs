@@ -18,7 +18,7 @@ const RelatedFeaturesSection: React.FC<RelatedFeaturesSectionProps> = ({ current
         return null;
     }
 
-    console.log(relatedFeatures);
+    // console.log(relatedFeatures);
 
 
     return (

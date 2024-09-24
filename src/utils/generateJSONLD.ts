@@ -4,7 +4,7 @@ import { fetchAuthor } from './common';
 export function generateJSONLD(post: Post) {
 
   const contentType = post?.contentType;
-  console.log(contentType,'contentType');
+  // console.log(contentType,'contentType');
   
 
   if (contentType) {

@@ -120,7 +120,7 @@ export default function IndexPage(props: InferGetStaticPropsType<typeof getStati
 
   return (
     <Container>
-      <Wrapper color={"white"} spacing={'p-mp'} >
+      <Wrapper >
         <Section ref={mainSection} className="flex-col py-20">
           <TagSelect
             contentTypes={contentTypes}

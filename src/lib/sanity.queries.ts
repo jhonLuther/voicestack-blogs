@@ -59,7 +59,7 @@ export const postBySlugQuery = groq`
         asset->
       }
     },
-       "numberOfCharacters": length(pt::text(body)),
+      "numberOfCharacters": length(pt::text(body)),
       "estimatedWordCount": round(length(pt::text(body)) / 5),
       "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180),
     mainImage,

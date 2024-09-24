@@ -80,9 +80,9 @@ const ImageLoader = ({
     }
   };
 
-  useEffect(() => {
-    calculateRenderValues();
-  }, [imageParent, deviceObtained, router.asPath, image, maxWidth]);
+  // useEffect(() => {
+  //   calculateRenderValues();
+  // }, [imageParent, deviceObtained, router.asPath, image, maxWidth]);
 
   const calculateAspectRatio = () => {
     const ratio = imageProps ? (imageProps.height / imageProps.width) * 100 : 0;

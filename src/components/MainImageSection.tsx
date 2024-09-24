@@ -16,7 +16,7 @@ const MainImageSection = ({ post }) => {
         return null
     }
 
-    console.log(post);
+    // console.log(post);
 
 
 
@@ -47,8 +47,6 @@ const MainImageSection = ({ post }) => {
            
                     <ImageLoader
                         image={post.mainImage}
-                        // useClientWidth={true} 
-                        // maxWidth={411}
                         priority={true}
                         alt={post.title || "Post image"}
                         client={client}
