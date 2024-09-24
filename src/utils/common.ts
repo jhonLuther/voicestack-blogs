@@ -12,7 +12,6 @@ export const fetchAuthor = (post) => {
 
 
   export function getRelatedFeatures(currentPost: Post, allPosts: Post[]): Post[] {
-s    
     const currentTags = new Set(currentPost.tags?.map(tag => tag.tagName) || []);
   
     const relatedPosts = allPosts
