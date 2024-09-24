@@ -1,6 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .font-manrope {
+    font-family: 'Manrope', 'Inter', 'sans-serif';
+  }
+}
 
 :root {
   --space-0: 0;
@@ -72,7 +81,6 @@ body, #__next {
   color: #151515;
 }
 
-
 .post {
   @apply text-base;
 }
@@ -80,52 +88,55 @@ body, #__next {
 .post__container {
   @apply mb-9; 
 }
+
 .post__content h1 {
   @apply mb-4 text-5xl font-normal font-[700] leading-[52.8px] tracking-[-0.96px] font-manrope; 
 }
-.post__content h2{
+
+.post__content h2 {
   @apply mb-4 font-manrope;
 }
 
-.post__content p{
- @apply mb-7;
+.post__content p {
+  @apply mb-7;
 }
-.post__content h3{
-@apply mb-1.5 font-sans;
+
+.post__content h3 {
+  @apply mb-1.5 font-sans;
 }
+
 .post__content ul {
-   @apply list-disc list-inside text-lg mb-7;
+  @apply list-disc list-inside text-lg mb-7;
 }
 
 .post__content ul li {
   margin-bottom: 0.5rem; 
 }
 
-.post__content img{
+.post__content img {
   @apply mt-4 mb-8;
 }
 
-
-
-.post__content h2{
+.post__content h2 {
   @apply text-3xl font-extrabold;
 }
-.post__content h3{
+
+.post__content h3 {
   @apply text-2xl font-semibold leading-[26.4px] tracking-[-0.48px];
 }
 
-.post__content p{
+.post__content p {
   @apply text-lg font-normal;
-  a{
-    @apply text-blue-600 hover:underline underline-offset-2 ;
+  a {
+    @apply text-blue-600 hover:underline underline-offset-2;
   }
 
-  strong{
+  strong {
     @apply font-semibold;
   }
 }
 
-.post__container{
+.post__container {
   // @apply max-w-4xl mx-auto;
 }
 // /* Post page */

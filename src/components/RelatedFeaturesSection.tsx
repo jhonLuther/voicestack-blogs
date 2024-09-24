@@ -25,7 +25,7 @@ const RelatedFeaturesSection: React.FC<RelatedFeaturesSectionProps> = ({ current
         <div className="flex flex-col gap-4">
             <h2 className="text-base font-extrabold font-manrope uppercase ">{`Related Articles`}</h2>
             <ul className="space-y-2 flex flex-col gap-2">
-                {relatedFeatures.map((feature) => (
+                {relatedFeatures && relatedFeatures.map((feature) => (
                     <li key={feature._id} className="flex flex-col items-start p-6 self-stretch rounded-md bg-[#151515] group">
                         <Link
                             href={`/post/${feature.slug.current}`}

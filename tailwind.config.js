@@ -23,6 +23,8 @@ module.exports = {
         }
 
       },
+      extend: {},
     },
     plugins: [],
+    
   }

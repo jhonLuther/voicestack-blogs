@@ -1,6 +1,4 @@
 import '~/styles/global.scss'
-import '~/styles/common.scss'
-import '~/styles/container.scss'
 
 import type { AppProps } from 'next/app'
 import { lazy } from 'react'

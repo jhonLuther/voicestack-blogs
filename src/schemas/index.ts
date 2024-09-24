@@ -7,6 +7,7 @@ import iframe from './iframe'
 import dynamicComponent from './dynamicComponent'
 import demoBannerBlock from './sections/demoBannerBlock'
 import author from './sections/author'
+import siteSettings from './settings'
 
 export const schemaTypes = [post, iframe, blockContent, newContent, tag,dynamicComponent,demoBannerBlock,author]
 export const schema: { types: SchemaTypeDefinition[] } = {
