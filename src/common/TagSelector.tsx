@@ -1,13 +1,18 @@
+import Link from 'next/link';
 import { Fragment, useState } from 'react';
+import { usePostContext } from '~/components/Context/postContext';
+import { Tag } from '~/interfaces/post';
 
 interface TagSelectProps {
   contentTypes: string[];
-  tags: string[];
+  tags: any[];
   onContentTypeChange: (contentType: string) => void;
   onTagChange: (tag: string) => void;
   onTimeFilterChange: (filter: string) => void;
   selectedTags: string[];
   tagLimit: number;
+  showFilter?: boolean;
+  showTags?: boolean;
 }
 
 export default function TagSelect({ 
@@ -16,10 +21,19 @@ export default function TagSelect({
   onContentTypeChange, 
   onTagChange, 
   onTimeFilterChange,
-  selectedTags, 
-  tagLimit 
+  tagLimit,
+  showFilter = false,
+  showTags = false,
 }: TagSelectProps) {
   const [visibleTagCount, setVisibleTagCount] = useState(tagLimit);
+
+  const [selectedTag, setSelectedTag] = useState(null);
+
+  const onTagChanges = (tag) => {
+      setSelectedTag(tag);
+      
+    };
+
 
   const handleShowMore = () => {
     setVisibleTagCount(tags.length); 
@@ -31,7 +45,7 @@ export default function TagSelect({
 
   return (
     <Fragment>
-      <div className='flex gap-3 justify-between'>
+      {showFilter && <div className='flex gap-3 justify-between'>
         <select onChange={(e) => onContentTypeChange(e.target.value)} className="w-3/12 mb-4 p-2 border rounded">
           <option value="">All Content Types</option>
           {contentTypes && contentTypes.map((type, i) => (
@@ -50,29 +64,31 @@ export default function TagSelect({
           <option value="month">Last Month</option>
           <option value="year">Last Year</option>
         </select>
-      </div>
+      </div>}
 
-      <ul className="flex gap-2 m-5 flex-wrap">
+      {showTags && <ul  className="flex gap-2 pb-8 flex-wrap border-b-2  border-gray-900">
         {tags && tags.slice(0, visibleTagCount).map((tag, i) => (
+          <Link href={`/tag/${tag.slug.current ? tag.slug.current : ''}`}>
           <li
             key={i}
-            onClick={() => onTagChange(tag)}
-            className={`flex content-center items-center gap-4 text-xs p-1 border rounded-full text-center cursor-pointer ${
-              selectedTags.includes(tag) ? 'bg-black text-white' : 'bg-gray-400 text-black'
-            }`}
+            onClick={() => onTagChanges(tag)}
+            className={`flex group hover: transition duration-500 content-center items-center gap-4 text px-2 py-3 text-lg font-medium 
+              border rounded text-center cursor-pointer  hover:underline underline-offset-4
+              ${selectedTag === tag ? 'bg-gray-900 text-white' : 'bg-gray-300 text-black'}`}
           >
-            <span>{tag}</span>
+            <span>{tag.tagName}</span>
           </li>
+          </Link>
         ))}
         {tags.length > tagLimit && (
           <li
             onClick={visibleTagCount < tags.length ? handleShowMore : handleShowLess}
-            className={`${visibleTagCount < tags.length ? 'bg-black' : 'text-white'} flex content-center items-center gap-4 text-xs p-1 border rounded-full text-center cursor-pointer bg-gray-400`}
+            className={`${ 'bg-black' } hover:underline underline-offset-4 flex content-center items-center gap-4  px-2 py-3 text-xs p-1 border rounded text-center cursor-pointer bg-gray-300`}
           >
-            <span>{visibleTagCount < tags.length ? 'More...' : 'Less...'}</span>
+            <span className='text-lg font-medium '>{visibleTagCount < tags.length ? 'More...' : 'Less...'}</span>
           </li>
         )}
-      </ul>
+      </ul>}
     </Fragment>
   );
 }

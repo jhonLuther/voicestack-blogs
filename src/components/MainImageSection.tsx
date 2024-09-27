@@ -16,7 +16,7 @@ const MainImageSection = ({ post }) => {
         return null
     }
 
-    // console.log(post);
+    console.log(post);
 
 
 

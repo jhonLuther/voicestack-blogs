@@ -1,6 +1,8 @@
 import { ImageAsset, PortableTextBlock, Slug } from "sanity"
 
 export interface Post {
+  desc: string
+  image: any
   ebookFields: any
   contentType: any
   contentTypes: any[]
@@ -41,4 +43,9 @@ export interface Post {
     slug: Slug,
     role:any,
     bio:any,
+  }
+  export interface Tag{
+    _id: string,
+    tagName: string,
+    slug: Slug,
   }

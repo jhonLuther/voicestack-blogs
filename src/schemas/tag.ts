@@ -10,6 +10,16 @@ export default defineType({
       title: 'Tag Name',
       type: 'string',
     }),
+    defineField({
+      name: 'slug',
+      title: 'Slug',
+      type: 'slug',
+      validation: (Rule) => Rule.required(),
+      options: {
+        source: 'tagName',
+        maxLength: 96,
+      },
+    }),
   ],
   preview: {
     select: {

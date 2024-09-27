@@ -95,3 +95,35 @@ export function generateJSONLD(post: Post) {
 
   return JSON.stringify({ ...defaultJSONLD, ...customJSONLD });
 }
+
+
+export function breadCrumbJsonLd(breadCrumbList: any[]) {
+  const baseUrl = `https://carestack.com`;
+  const itemListElement = breadCrumbList.map((item, index) => {
+    return index !== breadCrumbList.length - 1
+      ? {
+          "@type": "ListItem",
+          position: index + 2,
+          name: item.breadcrumb,
+          item: `${baseUrl}${item.href}/`,
+        }
+      : {
+          "@type": "ListItem",
+          position: index + 2,
+          name: item.breadcrumb,
+        };
+  });
+  return {
+    "@context": "https://schema.org/",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: `${baseUrl}/`,
+      },
+      ...itemListElement,
+    ],
+  };
+}

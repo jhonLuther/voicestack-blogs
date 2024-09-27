@@ -7,6 +7,8 @@ interface ContainerProps {
   position?: string;
   background?: string;
   className?:any
+  fullWidth?: boolean
+  removePadding?: boolean
 
 }
 
@@ -16,11 +18,13 @@ const Wrapper: React.FunctionComponent<ContainerProps> = ({
   display,
   background,
   position,
-  className
+  className,
+  fullWidth = false,
+  removePadding = false,
 }) => {
   return (
     <div
-      className={` max-w-8xl mx-auto w-full px-8 ${className}`}
+      className={` ${fullWidth ? "w-full" : "max-w-7xl"}  ${removePadding ? "p-0" : "py-8 px-8"}   mx-auto w-full  ${className}`}
     >
       {children}
     </div>
