@@ -1,4 +1,4 @@
-import { useState, useEffect, Fragment } from 'react';
+import { useState, useEffect, Fragment, useMemo } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { breadCrumbJsonLd } from '~/utils/generateJSONLD';
@@ -9,13 +9,13 @@ const Breadcrumb = () => {
   const [breadcrumbs, setBreadcrumbs] = useState([]);
   const pathSegments = router.asPath.split('/').filter(segment => segment !== '');
 
-  const breadcrumbLabels = {
+  const breadcrumbLabels = useMemo(() => ({
     blogs: 'Blogs',
     articles: 'Articles',
     ebooks: 'eBooks',
     podcasts: 'Podcasts',
     // Add more mappings as needed
-  };
+  }), []);
 
   useEffect(() => {
     const breadcrumbList = pathSegments.map((segment, index) => {
@@ -24,7 +24,7 @@ const Breadcrumb = () => {
       return { href, label };
     });
     setBreadcrumbs(breadcrumbList);
-  }, [router.asPath]);
+  }, [router.asPath, breadcrumbLabels, pathSegments]);
 
   const breadcrumbLd = breadCrumbJsonLd(breadcrumbs);
 

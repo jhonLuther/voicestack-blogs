@@ -68,7 +68,7 @@ export default function TagSelect({
 
       {showTags && <ul  className="flex gap-2 pb-8 flex-wrap border-b-2  border-gray-900">
         {tags && tags.slice(0, visibleTagCount).map((tag, i) => (
-          <Link href={`/tag/${tag.slug.current ? tag.slug.current : ''}`}>
+          <Link key={i} href={`/tag/${tag.slug.current ? tag.slug.current : ''}`}>
           <li
             key={i}
             onClick={() => onTagChanges(tag)}

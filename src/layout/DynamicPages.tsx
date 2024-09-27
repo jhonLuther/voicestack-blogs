@@ -15,7 +15,6 @@ import ShortBannerSection from "~/components/sections/ShortBannerSection";
 import BannerSubscribeSection from "~/components/sections/BannerSubscribeSection";
 import Wrapper from "~/components/commonSections/Wrapper";
 
-
 interface DynamicProps {
     children?: React.ReactNode;
     body?: any;
@@ -40,13 +39,6 @@ const DynamicPages = ({
     featuredContents,
     ...rest
 }: DynamicProps) => {
-
-
-
-    // console.log(testimonials,'testimonials');
-
-    // console.log(homeSettings?.testimonials,'testimonials in home settings');
-
 
 
     const router = useRouter();
@@ -214,7 +206,7 @@ const DynamicPages = ({
                 </section>
 
             </Wrapper>
-            <TestimonialSection testimonials={testimonialList} />'
+            <TestimonialSection testimonials={testimonialList} />
             <Wrapper>
 
                 <AllcontentSection allContent={posts} />
