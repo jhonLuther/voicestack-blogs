@@ -12,20 +12,19 @@ function BannerSubscribeSection() {
         <>
         <div className="bg-cs-gray-900 text-white p-9 rounded flex gap-3">
             <div className='flex flex-col gap-6 flex-1'>
-                <div className='flex justify-end items-start md:flex-row flex-col'>
-                    <h2 className="text-5xl font-manrope font-extrabold">Subscribe to CS Growth Digest</h2>
-                    <p className="text-lg font-medium">Get the best, coolest, and latest in the dental industry delivered to your inbox each week.</p>
+                <div className='flex justify-end gap-1 items-start md:flex-row flex-col'>
+                    <h2 className="md:text-5xl  text-2xl font-manrope font-extrabold">Subscribe to CS Growth Digest</h2>
+                    <p className="md:text-lg text-base font-medium">Get the best, coolest, and latest in the dental industry delivered to your inbox each week.</p>
                 </div>
 
-                <div className='flex md:flex-row flex-col py-6 px-8 items-center m rounded border-2 justify-between border-cs-gray-800 bg-cs-black'>
-
+                <div className='flex md:flex-row flex-col gap-3 md:py-6  py-3 md:px-8 px-4 items-center m rounded border-2 justify-between border-cs-gray-800 bg-cs-black'>
                     <input id="default-search"
                         type="email"
                         placeholder="Enter your email address"
                         value={email}
                         onChange={(event) => setEmail(event.target.value)}
-                        className="block  flex-1   max-w-2xl p-4 ps-10
-                 text-cs-gray-600  font-medium text-2x   bg-transparent focus:ring-blue-500 focus:border-blue-500 dark:bg-transparent  dark:placeholder-gray-400 dark:text-cs-gray-600 dark:focus:border-blue-500"
+                        className="block  flex-1  md:max-w-2xl  w-full p-4 
+                 text-cs-gray-600  font-medium text-2x   bg-transparent focus:ring-blue-500 focus:border-blue-500 dark:bg-transparent  focus:outline-none dark:placeholder-gray-400 dark:text-cs-gray-600 dark:focus:border-blue-500"
                         required />
                     <button type="submit" className="bg-cs-gray-500 hover:bg-cs-gray-600 text-white px-4 py-2 rounded-sm flex items-center"><span className='text-base font-medium'>Submit</span></button>
                 </div>

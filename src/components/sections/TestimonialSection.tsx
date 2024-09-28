@@ -5,6 +5,8 @@ import { urlForImage } from '~/lib/sanity.image';
 import Image from 'next/image';
 import Wrapper from '../commonSections/Wrapper';
 import Link from 'next/link';
+import useMediaQuery from '~/utils/useMediaQuery';
+
 
 
 interface TestimonialSectionProps {
@@ -19,15 +21,17 @@ interface TestimonialSectionProps {
 }
 
 const TestimonialSection = ({ testimonials }: TestimonialSectionProps) => {
+    const isMobile:any = useMediaQuery(767);
+
 
     console.log(testimonials);
 
     return (
         <div className="  gap-0 bg-[#F5C6C6] p-11 relative flex content-center items-center" >
-            <Wrapper>
+            <Wrapper removePadding={isMobile}>
                 {testimonials && testimonials.length && testimonials.map((testimonialItem, i) => (
                     <div className='flex md:flex-row flex-col  content-center items-center' key={i}>
-                        <div className='flex px-14 py-9 flex-1 gap-8'>
+                        <div className='flex  md:px-14   px-0 py-9 flex-1 gap-8'>
                             <div>
                                 <div className='flex justify-between'>
                                 <p className="text-sm max-w-max flex-1 text-white font-bold px-1 py-2 flex items-center rounded-sm bg-cs-darkBlack  uppercase">{testimonialItem.testimonialName}
@@ -44,7 +48,7 @@ const TestimonialSection = ({ testimonials }: TestimonialSectionProps) => {
                                 </Link>
                                 </div>
                 
-                                <blockquote className="mt-6 text-5xl font-extrabold font-manrope leading-tight">
+                                <blockquote className="mt-6  md:text-5xl text-2xl font-extrabold font-manrope leading-tight">
                                     {`"Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore fugiat nulla pariatur."`}
                                 </blockquote>
 

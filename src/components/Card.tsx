@@ -37,7 +37,7 @@ export default function Card({ post, cardType, className }: CardProps) {
                     {post.tags[0].tagName}
                   </span>
                 )}
-                <h2 className="card-content font-manrope text-5xl text-white font-extrabold group-hover: group-hover:underline underline-offset-4">{post.title}</h2>
+                <h2 className="card-content font-manrope md:text-5xl text-2xl text-white font-extrabold group-hover: group-hover:underline underline-offset-4">{post.title}</h2>
                 <p className="text-white font-inter text-lg font-normal line-clamp-2 overflow-hidden">
                   {post.desc? post.desc :  post.excerpt}
                 </p>
@@ -66,7 +66,7 @@ export default function Card({ post, cardType, className }: CardProps) {
               {post.tags && post.tags[0] && (
                 <span className="uppercase text-sm font-medium text-gray-600">{post.tags[0].tagName}</span>
               )}
-              <h2 className="text-2xl font-semibold text-gray-900 group-hover: group-hover:underline">
+              <h2 className="md:text-2xl  text-base font-semibold text-gray-900 group-hover: group-hover:underline line-clamp-2 overflow-hidden">
                 {post.title}
               </h2>
               <p className="text-gray-700">{post.desc || ''}</p>
@@ -98,7 +98,7 @@ export default function Card({ post, cardType, className }: CardProps) {
                   <div className='group-hover:scale-105 transition duration-500 overflow-hidden'>
                     {post.mainImage && (
                       <Image
-                        className="w-auto rounded-t-md min-h-[250px] object-center object-cover  "
+                        className="w-full h-auto rounded-t-md min-h-[250px] object-center object-cover md:w-auto"
                         src={urlForImage(post.mainImage).width(519).height(537).url()}
                         height={537}
                         width={519}
@@ -113,7 +113,7 @@ export default function Card({ post, cardType, className }: CardProps) {
                           {post.tags[0].tagName}
                         </span>
                       )}
-                      <h2 className="card-content text-5xl font-manrope text-white font-extrabold group-hover: group-hover:underline underline-offset-4">{post.title}</h2>
+                      <h2 className="card-content md:text-5xl text-2xl font-manrope text-white font-extrabold group-hover: group-hover:underline underline-offset-4">{post.title}</h2>
                       <p className="text-white font-inter text-lg font-normal line-clamp-2 overflow-hidden">
                       {post.desc? post.desc :  post.excerpt}
                       </p>

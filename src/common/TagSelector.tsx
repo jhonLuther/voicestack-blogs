@@ -76,14 +76,14 @@ export default function TagSelect({
               border rounded text-center cursor-pointer  hover:underline underline-offset-4
               ${selectedTag === tag ? 'bg-gray-900 text-white' : 'bg-gray-300 text-black'}`}
           >
-            <span>{tag.tagName}</span>
+            <span className='text-lg font-medium '>{tag.tagName}</span>
           </li>
           </Link>
         ))}
         {tags.length > tagLimit && (
           <li
             onClick={visibleTagCount < tags.length ? handleShowMore : handleShowLess}
-            className={`${ 'bg-black' } hover:underline underline-offset-4 flex content-center items-center gap-4  px-2 py-3 text-xs p-1 border rounded text-center cursor-pointer bg-gray-300`}
+            className={`${ 'bg-black' }  flex content-center items-center gap-4  px-2 py-3 text-xs p-1 border rounded text-center cursor-pointer bg-gray-300`}
           >
             <span className='text-lg font-medium '>{visibleTagCount < tags.length ? 'More...' : 'Less...'}</span>
           </li>

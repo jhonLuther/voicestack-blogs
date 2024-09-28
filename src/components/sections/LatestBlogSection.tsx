@@ -14,7 +14,7 @@ const LatestBlogs: React.FC<LatestBlogsProps> = ({ blogs }) => {
 
     return (
         <section className='flex w-full gap-20 justify-between md:flex-row flex-col'>
-            <div  className='flex flex-col gap-9 max-w-[519px]  justify-between flex-1'>
+            <div  className='flex flex-col gap-9 md:max-w-[519px] w-full  justify-between flex-1'>
                 <h2 className='text-5xl text-black font-extrabold'>Latest</h2>
                 <div className='flex flex-col gap-8 last-child'>
                     {blogs.slice(1).map(blog => (

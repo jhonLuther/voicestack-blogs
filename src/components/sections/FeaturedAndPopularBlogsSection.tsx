@@ -16,9 +16,9 @@ const FeaturedAndPopularBlogs = ({ featuredBlog, popularBlogs }: FeaturedAndPopu
 
     return (
         <section className="flex flex-wrap md:flex-row flex-col w-full gap-20 justify-between my-8">
-            <div className="flex flex-col gap-9 max-w-[519px] flex-1">
+            <div className="flex flex-col gap-9 md:max-w-[519px]  w-full flex-1">
                 <div className="flex flex-col">
-                    <div className="max-w-[519px] w-full overflow-hidden flex-1">
+                    <div className="md:max-w-[519px]  w-full  overflow-hidden flex-1">
                         <Card cardType="top-image-smallCard" post={featuredBlog} />
                     </div>
                 </div>
