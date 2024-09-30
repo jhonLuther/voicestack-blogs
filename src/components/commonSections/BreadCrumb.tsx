@@ -1,4 +1,4 @@
-import { useState, useEffect, Fragment, useMemo } from 'react';
+import { useState, useEffect, Fragment, useMemo, useRef } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { breadCrumbJsonLd } from '~/utils/generateJSONLD';
@@ -7,7 +7,8 @@ import Head from 'next/head';
 const Breadcrumb = () => {
   const router = useRouter();
   const [breadcrumbs, setBreadcrumbs] = useState([]);
-  const pathSegments = router.asPath.split('/').filter(segment => segment !== '');
+  const pathSegments = useRef(router.asPath.split('/').filter(segment => segment !== ''));
+  const prevRouterAsPath = useRef(router.asPath);
 
   const breadcrumbLabels = useMemo(() => ({
     blogs: 'Blogs',
@@ -17,17 +18,16 @@ const Breadcrumb = () => {
   }), []);
 
   useEffect(() => {
-    const breadcrumbList = pathSegments.map((segment, index) => {
-      const href = `/${pathSegments.slice(0, index + 1).join('/')}`;
+    const breadcrumbList = pathSegments?.current.map((segment, index) => {
+      const href = `/${pathSegments?.current.slice(0, index + 1).join('/')}`;
       const label = (breadcrumbLabels[segment] || segment).replace(/-/g, ' ');
       return { href, label };
     });
     setBreadcrumbs(breadcrumbList);
-  }, [router.asPath, breadcrumbLabels]);
+  }, [router.asPath, breadcrumbLabels ,pathSegments]);
 
   const breadcrumbLd = breadCrumbJsonLd(breadcrumbs);
 
-  // console.log(breadcrumbLd,'breadcrumbLd');
   
 
   return (
