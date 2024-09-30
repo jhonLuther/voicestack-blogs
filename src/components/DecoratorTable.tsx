@@ -6,7 +6,7 @@ export default function DecoratorTable({ children }) {
 	return (
 		<div className='w-full md:overflow-visible overflow-x-scroll py-1'>
 			<table className="blog-table md:table-auto min-w-full  w-full mb-10  ">
-				<thead className=''>
+				{children && children.rows[0].cells[0] && children.rows[0].cells[1]  !== "" && <thead className=''>
 					<tr className=''>
 						{
 							children && children.rows[0].cells.map((cellItem, index) => {
@@ -14,7 +14,7 @@ export default function DecoratorTable({ children }) {
 							})
 						}
 					</tr>
-				</thead>
+				</thead>}
 
 				<tbody className='overflow-x-scroll'>
 					{

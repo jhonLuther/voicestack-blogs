@@ -70,6 +70,10 @@ export default function ProjectSlugRoute(
     slug: props.post?.slug?.current,
   })
 
+
+  console.log(props,'all props');
+  
+
   const [allPosts] = useLiveQuery(props.allPosts, postsQuery);
 
   if (!post) {
@@ -82,7 +86,10 @@ export default function ProjectSlugRoute(
   const seoRobots = post.seoRobots || 'index,follow';
   const seoCanonical = post.seoCanonical || `https://carestack.com/post/${post.slug.current}`;
   const jsonLD: any = generateJSONLD(post);
-  const authorInfo = post?.author;
+  const authorInfo = post?.author
+
+  console.log(post,post,authorInfo,'author infor oin props');
+  
 
 
   const myPortableTextComponents : any = {

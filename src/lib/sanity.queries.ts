@@ -16,14 +16,14 @@ export const postsQuery = groq`
   seoCanonical,
   seoJSONLD,
 
-  "author": author-> {
-    _id,
-    name,
-    slug,
-    role,
-    bio,
-    "picture": picture.asset->url
-  },
+    author[]-> {
+      _id,
+      name,
+      slug,
+      role,
+      bio,
+      "picture": picture.asset->url
+    },
 }
 `
 
@@ -66,14 +66,14 @@ export const homeSettingsQuery = groq`
       title,
       mainImage,
       slug,
-      "author": author->{
-        _id,
-        name,
-        slug,
-        role,
-        bio,
-        "picture": picture.asset->url
-      },
+    author[]-> {
+      _id,
+      name,
+      slug,
+      role,
+      bio,
+      "picture": picture.asset->url
+    },
       tags[]->{
         _id,
         tagName,
@@ -119,19 +119,17 @@ export const homeSettingsQuery = groq`
         tagName,
         slug
       },
-      "author": author->{
-        _id,
-        name,
-        slug,
-        role,
-        bio,
-        "picture": picture.asset->url
-      },
+    author[]-> {
+      _id,
+      name,
+      slug,
+      role,
+      bio,
+      "picture": picture.asset->url
+    },
     }
   }
 `
-
-
 
 export async function getPosts(
   client: SanityClient,
@@ -168,19 +166,19 @@ export async function getPostsBySlug(
     newPostsQuery = groq`
       *[_type == "post" && defined(slug.current) && "${slug}" in tags[]->slug.current]  | order(_createdAt desc) {
 
-    "desc":postFields.excerpt,
-  title,
- "mainImage":mainImage.asset->url,
- "slug":slug.current,
-      
-        "author": author-> {
-          _id,
-          name,
-          slug,
-          role,
-          bio,
-          "picture": picture.asset->url
-        },
+      "desc":postFields.excerpt,
+    title,
+  "mainImage":mainImage.asset->url,
+  "slug":slug.current,
+        
+    author[]-> {
+      _id,
+      name,
+      slug,
+      role,
+      bio,
+      "picture": picture.asset->url
+    },
       
         tags[]->{
         _id,
@@ -227,7 +225,7 @@ export const postBySlugQuery = groq`
       _key,
       componentType,
     },
-    "author": author-> {
+    author[]-> {
       _id,
       name,
       slug,
