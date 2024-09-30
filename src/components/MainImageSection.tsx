@@ -10,13 +10,14 @@ import Wrapper from './commonSections/Wrapper'
 
 
 const MainImageSection = ({ post }) => {
+    console.log(post);
+
     const client = getClient()
 
     if (!post) {
         return null
     }
 
-    console.log(post);
 
 
 
@@ -44,7 +45,6 @@ const MainImageSection = ({ post }) => {
 
         <div className='w-full flex absolute h-full justify-end'>
          <div className='md:w-1/2 w-1/3'>
-           
                     <ImageLoader
                         image={post.mainImage}
                         priority={true}

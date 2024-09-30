@@ -1,6 +1,8 @@
+import { HomeIcon, DocumentIcon, TagIcon } from '@sanity/icons';
 export default {
   name: 'homeSettings',
   title: 'Home Settings',
+  icon: DocumentIcon,
   type: 'document',
   groups: [
     {
@@ -51,6 +53,7 @@ export default {
       type: 'array',
       of: [{ type: 'reference', to: [{ type: 'post' }] }],
       group: 'EbooksAndWebinars',
+      
     },
   ],
   preview: {

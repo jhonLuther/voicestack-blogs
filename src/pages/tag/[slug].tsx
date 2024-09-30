@@ -8,6 +8,7 @@ import { readToken } from '~/lib/sanity.api'
 import { Author, Post, Tag } from '~/interfaces/post'
 import { SharedPageProps } from '../_app'
 
+
 interface Query {
   [key: string]: string
 }

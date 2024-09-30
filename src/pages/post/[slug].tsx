@@ -30,6 +30,7 @@ import RelatedFeaturesSection from '~/components/RelatedFeaturesSection'
 import ShareableLinks from '~/components/commonSections/ShareableLinks'
 import Breadcrumb from '~/components/commonSections/BreadCrumb'
 import MainImageSection from '~/components/MainImageSection'
+import DecoratorTable from '~/components/DecoratorTable'
 
 
 interface Query {
@@ -86,11 +87,7 @@ export default function ProjectSlugRoute(
 
   const myPortableTextComponents : any = {
     marks: {
-      highlight: ({ children, value }: any) => {
-        return (
-          <HighlightDecorator>{children}</HighlightDecorator>
-        )
-      },
+
       link: ({ children, value }) => {
         return <a href={value.href} >{children}</a>
 
@@ -101,6 +98,12 @@ export default function ProjectSlugRoute(
       image: ({ value }) => {
         return (
           <SanityImage {...value} client={getClient(props.draftMode ? { token: props.token } : undefined)} />
+        );
+      },
+      table: ({ value }) => {
+        return (
+          <DecoratorTable>{value}</DecoratorTable>
+          
         );
       },
 
@@ -139,11 +142,14 @@ export default function ProjectSlugRoute(
               </div>
               </div>
               <div className='flex-1 flex flex-col gap-12 mt-12  bg-red relative'>
-
               <div className='sticky top-12 flex flex-col gap-12'>
-                <div className='md:block hidden'>
-              {authorInfo && <AuthorInfo author={authorInfo} />}
+              {authorInfo &&
+                <div className=''>
+              
+              <AuthorInfo author={authorInfo} />
+
               </div>
+              }
                 <RelatedFeaturesSection currentPostSlug={post.slug.current} allPosts={allPosts} />
                 <ShareableLinks props={post.title ?? post.title} />
               </div>

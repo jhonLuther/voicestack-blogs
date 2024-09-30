@@ -14,7 +14,7 @@ export default defineType({
     }),
     defineField({
       name: 'slug',
-      title: 'Slug',
+      title: 'Page Path',
       type: 'slug',
       validation: (Rule) => Rule.required(),
       options: {

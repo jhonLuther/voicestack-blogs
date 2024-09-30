@@ -1,6 +1,9 @@
 import { defineArrayMember, defineType } from 'sanity'
 import HighlightDecorator from '../components/HighlightDecorator'
 import DynamicComponent from '../../src/schemas/dynamicComponent'
+import {ImageIcon} from '@sanity/icons'
+import {ThLargeIcon} from '@sanity/icons'
+import {InsertBelowIcon} from '@sanity/icons'
 
 export default defineType({
   title: 'Block Content',
@@ -8,10 +11,23 @@ export default defineType({
   type: 'array',
   of: [
     {
-      type: 'image'
+      type: 'image',
+      icon: ImageIcon,
     },
     {
+      type: 'table', 
+      icon: ThLargeIcon,
+      options: {
+        editModal: 'fullscreen',
+        columns: 3,
+        pageSize: 10
+      }
+
+    },
+
+    {
       type: 'dynamicComponent',
+      icon: InsertBelowIcon,
       options: {
         list: [
           { title: 'Text Block', value: 'textBlock' },
@@ -37,8 +53,6 @@ export default defineType({
           { title: 'Strong', value: 'strong' },
           { title: 'Emphasis', value: 'em' },
           { title: 'Code', value: 'code' },
-          { title: 'Highlight', value: 'highlight',
-            component: HighlightDecorator },
         ],
         annotations: [
           {

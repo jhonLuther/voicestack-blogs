@@ -32,7 +32,7 @@ function ShareableLinks({ props }) {
                             title="facebook"
                         >
                             <svg xmlns="http://www.w3.org/2000/svg"  width="36" height="36" viewBox="0 0 25 24" fill="none">
-                                <g clip-path="url(#clip0_7518_2445)">
+                                <g clipPath="url(#clip0_7518_2445)">
                                     <rect x="0.333984" width="24" height="24" rx="3.33333" fill="#C1C1C1" />
                                     <path d="M11.2192 17.3335H12.9931V12.3329H14.1763L14.333 10.6099H12.9931L12.995 9.74729C12.995 9.298 13.0317 9.05707 13.5852 9.05707H14.3248V7.3335H13.1411C11.7192 7.3335 11.2192 8.16973 11.2192 9.57544V10.6099H10.333V12.3335H11.2192V17.3335Z" fill="white" />
                                 </g>
@@ -52,9 +52,9 @@ function ShareableLinks({ props }) {
                             title="twitter"
                         >
                             <svg  width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <g clip-path="url(#clip0_7518_2448)">
+                                <g clipPath="url(#clip0_7518_2448)">
                                     <rect width="24" height="24" rx="3.33333" fill="#C1C1C1" />
-                                    <g clip-path="url(#clip1_7518_2448)">
+                                    <g clipPath="url(#clip1_7518_2448)">
                                         <path d="M14.4587 8.07373H15.7706L12.9045 11.3495L16.2763 15.8072H13.6362L11.5684 13.1036L9.20235 15.8072H7.88965L10.9553 12.3033L7.7207 8.07373H10.4278L12.2969 10.5449L14.4587 8.07373ZM13.9983 15.0219H14.7252L10.0328 8.81773H9.25272L13.9983 15.0219Z" fill="white" />
                                     </g>
                                 </g>

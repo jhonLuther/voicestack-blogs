@@ -14,7 +14,6 @@ const Breadcrumb = () => {
     articles: 'Articles',
     ebooks: 'eBooks',
     podcasts: 'Podcasts',
-    // Add more mappings as needed
   }), []);
 
   useEffect(() => {
@@ -24,7 +23,7 @@ const Breadcrumb = () => {
       return { href, label };
     });
     setBreadcrumbs(breadcrumbList);
-  }, [router.asPath, breadcrumbLabels, pathSegments]);
+  }, [router.asPath, breadcrumbLabels]);
 
   const breadcrumbLd = breadCrumbJsonLd(breadcrumbs);
 

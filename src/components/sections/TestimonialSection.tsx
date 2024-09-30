@@ -5,7 +5,7 @@ import { urlForImage } from '~/lib/sanity.image';
 import Image from 'next/image';
 import Wrapper from '../commonSections/Wrapper';
 import Link from 'next/link';
-import useMediaQuery from '~/utils/useMediaQuery';
+import useMediaQuery from '~/utils/useMediaQueryHook';
 
 
 

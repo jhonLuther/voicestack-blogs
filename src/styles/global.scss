@@ -155,6 +155,9 @@ body, #__next {
   @apply last:border-none;
 }
 
+.blog-table a{
+  @apply text-blue-600 hover:underline underline-offset-2;
+}
 
 // /* Post page */
 // .post {
