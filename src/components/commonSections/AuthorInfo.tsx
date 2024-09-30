@@ -11,9 +11,9 @@ const AuthorInfo = ({ author }) => {
     
   return (
     <>
-      {author && author.length  > 0 && author.map((authors) => (
+      {author && author.length  > 0 && author.map((authors,index) => (
         (
-          <Link href={`/author/${authors.slug && authors.slug.current && authors.slug.current}`}>
+          <Link key={authors._id || index} href={`/author/${authors.slug && authors.slug.current && authors.slug.current}`}>
           <div className="author-info flex gap-4 cursor-pointer items-center">
             {authors.picture && (
               <Image
