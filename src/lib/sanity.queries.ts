@@ -60,13 +60,13 @@ export const homeSettingsQuery = groq`
   *[_type == "homeSettings"] | order(_createdAt desc) {
     _id,
     _createdAt,
-    
     "latestBlogs": *[_type == "post" && defined(slug.current)] | order(_createdAt desc) {
+       id,
       "desc": postFields.excerpt,
       title,
       mainImage,
       slug,
-    author[]-> {
+      author[]-> {
       _id,
       name,
       slug,
@@ -80,7 +80,6 @@ export const homeSettingsQuery = groq`
         slug
       }
     }[0...4],
-
     "testimonials": testimonials[]-> {
       _id,
       testimonialName,
@@ -113,6 +112,8 @@ export const homeSettingsQuery = groq`
       title,
       mainImage,
       blogColor,
+      excerpt,
+      slug,
       "desc": postFields.excerpt,
       tags[]->{
         _id,
@@ -167,32 +168,85 @@ export async function getPostsBySlug(
       *[_type == "post" && defined(slug.current) && "${slug}" in tags[]->slug.current]  | order(_createdAt desc) {
 
       "desc":postFields.excerpt,
-    title,
-  "mainImage":mainImage.asset->url,
-  "slug":slug.current,
-        
-    author[]-> {
-      _id,
-      name,
-      slug,
-      role,
-      bio,
-      "picture": picture.asset->url
-    },
-      
+      title,
+      "mainImage":mainImage.asset->url,
+      "slug":slug.current,
+      author[]-> {
+        _id,
+        name,
+        slug,
+        role,
+        bio,
+        "picture": picture.asset->url
+      },
         tags[]->{
         _id,
         tagName,
-        slug
-          
+        slug 
         }
-      
-      
       }
       `
   }
   return await client.fetch(newPostsQuery)
 }
+
+export const podcastQuery = groq`
+*[_type == "post" && contentType == "podcast" && defined(slug.current)] {
+  _id,
+  title,
+  slug,
+  contentType,
+  "audioFile": Video.link,
+  "platform": Video.platform,
+  duration,
+  publishedAt,
+  excerpt,
+  mainImage,
+  body,
+  "authors": author[]-> {
+    _id,
+    name,
+    slug,
+    bio,
+    "picture": picture.asset->url,
+    "associatedPodcasts": *[_type == "post" && contentType == "podcast" && references(^._id) && _id != ^._id] {
+      _id,
+      title,
+      slug,
+      "audioFile": Video.link,
+      "platform": Video.platform,
+      duration,
+      publishedAt,
+      excerpt,
+      mainImage {
+        asset->{
+          _id,
+          url
+        }
+      }
+    }
+  },
+  tags[]-> {
+    _id,
+    tagName,
+    slug
+  }
+}
+`
+
+export const authorRelatedContentQuery = groq`
+  *[_type == "post" && $authorId in author[]->_id] {
+    _id,
+    title,
+    slug,
+    contentType,
+    duration,
+    publishedAt,
+    excerpt,
+    mainImage,
+    body,
+  }
+`
 
 export async function getHomeSettings(client: SanityClient): Promise<Post[]> {
   return await client.fetch(homeSettingsQuery)
@@ -298,6 +352,36 @@ export async function getAuthor(
   return await client.fetch(authorBySlugQuery, {
     slug,
   })
+}
+
+export async function getauthorRelatedContents(
+  client: SanityClient,
+  authorId: string,
+): Promise<any> {
+
+  let relatedAuthors = authorRelatedContentQuery
+
+  if (authorId.length > 0) {
+      relatedAuthors = groq`
+  *[_type == "post" && "${authorId}" in author[]->_id] {
+    _id,
+    title,
+    slug,
+    contentType,
+    duration,
+    publishedAt,
+    excerpt,
+    mainImage,
+    body,
+  }
+      `
+  }
+  // return await client.fetch(authorRelatedContentQuery)
+
+
+  return await client.fetch(authorRelatedContentQuery, {
+    authorId,
+  });
 }
 
 export async function getTag(client: SanityClient, slug: string): Promise<any> {

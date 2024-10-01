@@ -19,7 +19,7 @@ const BannerBlock: React.FC<BannerBlockProps> = ({ bannerBlock }) => {
       style={{ backgroundColor: bannerBlock?.backgroundColor ? bannerBlock?.backgroundColor : '#0f3936' }}
     >
       <div className='flex flex-col justify-center'>
-        <h2 className='!text-white !text-3xl !font-semibold leading-[110%] block'>
+        <h2 className='!text-white !m-0 !text-3xl !font-semibold leading-[110%] block'>
           {bannerBlock?.title ? bannerBlock?.title : 'Book a demo with us!'}
         </h2>
         <p className='!text-gray-100 !text-opacity-70 !text-lg !m-0'>{bannerBlock?.description ? bannerBlock?.description  : 'Learn how we can help you reduce claim rejections and denials.'}</p>
@@ -34,7 +34,7 @@ const BannerBlock: React.FC<BannerBlockProps> = ({ bannerBlock }) => {
           href={bannerBlock?.buttonLink ? bannerBlock?.buttonLink : 'https://carestack.com/demo'}
           target="_blank"
           rel="noreferrer"
-          className="text-center w-full wh text-white font-inter text-lg font-medium leading-6"
+          className="text-center w-full wh !text-white font-inter text-lg font-medium leading-6 !no-underline"
         >
           {bannerBlock?.buttonText ? bannerBlock?.buttonText : 'Book Free Demo'}
         </Link>

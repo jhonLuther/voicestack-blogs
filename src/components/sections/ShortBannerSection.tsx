@@ -12,7 +12,7 @@ function ShortBannerSection() {
                 </div>
                 <div className='group-hover:translate-y-[-10px]   transition'>
                     <svg xmlns="http://www.w3.org/2000/svg" width="38" height="38" viewBox="0 0 38 38" fill="none">
-                        <path d="M0 2H36M36 2V38M36 2L4.5 33.5" stroke="white" stroke-width="4" />
+                        <path d="M0 2H36M36 2V38M36 2L4.5 33.5" stroke="white" strokeWidth="4" />
                     </svg>
                 </div>
             </div>

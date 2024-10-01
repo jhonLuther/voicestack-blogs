@@ -16,10 +16,11 @@ import DynamicPages from '~/layout/DynamicPages';
 
 
 interface IndexPageProps {
+  podcastData: any;
   draftMode: boolean;
   token: string;
   posts: Array<Post>;
-  tags: Array<any>; // Replace 'any' with a proper Tag interface
+  tags: Array<any>; 
   testimonials: Array<any>; 
   homeSettings: Array<any>; 
 }
@@ -34,8 +35,7 @@ export const getStaticProps: GetStaticProps<
   const tags = await getTags(client)
   const testimonials = await getTestiMonials(client)
   const homeSettings = await getHomeSettings(client)
-
-  
+  // const podcastData = await getPodcastsWithAuthorData(client)
 
 
   return {
@@ -45,7 +45,7 @@ export const getStaticProps: GetStaticProps<
       posts,
       tags,
       testimonials,
-      homeSettings
+      homeSettings,
     },
   };
 };
@@ -53,21 +53,18 @@ export const getStaticProps: GetStaticProps<
 export default function IndexPage(props: IndexPageProps) {
   const mainSection = useRef<HTMLDivElement>(null);
 
-  console.log(props,'add props');
+  console.log(props,'all  props');
 
-
-
-  const homeSettings = props.homeSettings[0]; 
-
-  console.log(props, 'add props');
-  
+  const homeSettings = props?.homeSettings[0]; 
 
   return (
     <Container>
         <Section ref={mainSection} className="flex-col py-20 bg-cs-gray">
           <Layout>
             <DynamicPages posts={props.posts} tags={props.tags} testimonials={props.testimonials}
-             homeSettings={homeSettings} popularBlogs={homeSettings?.popularBlogs} featuredContents={homeSettings?.FeaturedContents}/>
+             homeSettings={homeSettings} popularBlogs={homeSettings?.popularBlogs}
+             podcastData={props?.podcastData}
+             featuredContents={homeSettings?.FeaturedContents}/>
           </Layout>
         </Section>
     </Container>

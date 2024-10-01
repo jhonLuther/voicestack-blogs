@@ -28,7 +28,6 @@ const Breadcrumb = () => {
 
   const breadcrumbLd = breadCrumbJsonLd(breadcrumbs);
 
-  
 
   return (
     <Fragment>
@@ -45,7 +44,7 @@ const Breadcrumb = () => {
       <nav className='cursor-pointer mb-4' aria-label="Breadcrumb">
         <p className="line-clamp-1 uppercase overflow-hidden text-ellipsis">
           <span>
-            <Link href="/">Home</Link>
+            <Link href="/">{`Home`}</Link>
           </span>
           {breadcrumbs.map((breadcrumb, index) => {
             const isLast = index === breadcrumbs.length - 1;

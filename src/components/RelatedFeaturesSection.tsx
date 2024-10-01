@@ -12,7 +12,7 @@ interface RelatedFeaturesSectionProps {
 const RelatedFeaturesSection: React.FC<RelatedFeaturesSectionProps> = ({ currentPostSlug, allPosts }) => {
     const relatedFeatures = allPosts
         .filter(post => post.slug.current !== currentPostSlug)
-        .slice(0, 2); // Limit to 2 related features
+        .slice(0, 2); 
 
     if (relatedFeatures.length === 0) {
         return null;
