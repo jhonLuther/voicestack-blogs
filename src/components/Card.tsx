@@ -108,11 +108,11 @@ export default function Card({ post, cardType, className }: CardProps) {
                   </div>
                   <div className="flex py-10 px-9  rounded-b-md bg-cs-purple flex-col items-start gap-10 flex-1">
                     <div className="flex flex-col gap-3">
-                      {post.tags && post.tags[0] && (
-                        <span className="uppercase text-white font-inter text-sm font-medium">
-                          {post.tags[0].tagName}
+                      {post.tags && post.tags.map((tag,i) => (
+                        i === 0 && <span key={i} className="uppercase text-white font-inter text-sm font-medium">
+                          {tag.tagName}
                         </span>
-                      )}
+                      ))}
                       <h2 className="card-content md:text-5xl text-2xl font-manrope text-white font-extrabold group-hover: group-hover:underline underline-offset-4">{post.title}</h2>
                       <p className="text-white font-inter text-lg font-normal line-clamp-2 overflow-hidden">
                       {post.desc? post.desc :  post.excerpt}
@@ -170,8 +170,8 @@ export default function Card({ post, cardType, className }: CardProps) {
                       </Link>
                     </h3>
                     <div className="flex flex-col gap-1">
-                      {post.tags && post.tags.map((tag) => (
-                        <span key={tag._id} className="text-violet-800">
+                      {post.tags && post.tags.map((tag,i) => (
+                        <span key={tag._id || i} className="text-violet-800">
                           {tag.tagName}
                         </span>
                       ))}

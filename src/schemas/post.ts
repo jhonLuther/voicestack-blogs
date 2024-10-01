@@ -111,16 +111,12 @@ export default defineType({
       ],
       hidden: ({ parent }) => parent.contentType !== 'webinar' && parent.contentType !== 'podcast',
     }),
-
-
     defineField({
       name: 'duration',
       title: 'Duration ',
       type: 'string',
       hidden: ({ parent }) => parent.contentType !== 'webinar' && parent.contentType !== 'podcast',
     }),
-
-
 // Common Components
     defineField({
       name: 'mainImage',
@@ -141,8 +137,6 @@ export default defineType({
       title: 'Short Description',
       type: 'text',
     }),
-
-
 
     // Tags Field
     defineField({

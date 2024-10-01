@@ -24,7 +24,7 @@ const Wrapper: React.FunctionComponent<ContainerProps> = ({
 }) => {
   return (
     <div
-      className={` ${fullWidth ? "w-full" : "max-w-7xl"}  ${removePadding ? "p-0" : "" } md:p-8 p-4   mx-auto w-full  ${className}`}
+      className={` ${fullWidth ? "w-full" : "max-w-7xl"}  ${removePadding ? "p-0" : "" } md:p-8 p-4 h-full   mx-auto w-full  ${className}`}
     >
       {children}
     </div>

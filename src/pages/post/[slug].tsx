@@ -31,6 +31,8 @@ import ShareableLinks from '~/components/commonSections/ShareableLinks'
 import Breadcrumb from '~/components/commonSections/BreadCrumb'
 import MainImageSection from '~/components/MainImageSection'
 import DecoratorTable from '~/components/DecoratorTable'
+import { list } from 'postcss'
+import ListItem from '~/components/typography/ListItem'
 
 
 interface Query {
@@ -64,15 +66,15 @@ export const getStaticProps: GetStaticProps<
 }
 
 export default function ProjectSlugRoute(
-  props: InferGetStaticPropsType<typeof getStaticProps>  & { allPosts: Post[] },
+  props: InferGetStaticPropsType<typeof getStaticProps> & { allPosts: Post[] },
 ) {
   const [post] = useLiveQuery(props.post, postBySlugQuery, {
     slug: props.post?.slug?.current,
   })
 
 
-  console.log(props,'all props');
-  
+  console.log(props, 'all props');
+
 
   const [allPosts] = useLiveQuery(props.allPosts, postsQuery);
 
@@ -88,19 +90,32 @@ export default function ProjectSlugRoute(
   const jsonLD: any = generateJSONLD(post);
   const authorInfo = post?.author
 
-  console.log(post,post,authorInfo,'author infor oin props');
-  
+  console.log(post, post, authorInfo, 'author infor oin props');
 
 
-  const myPortableTextComponents : any = {
+
+  const myPortableTextComponents: any = {
     marks: {
 
       link: ({ children, value }) => {
-        return <a href={value.href} >{children}</a>
+        return <a href={value.href} className='!text-blue-500' >{children}</a>
 
       },
     },
 
+    // },
+    list: {
+      bullet: ({ children }) => <ul>{children}</ul>,
+      number: ({ children }) => <ol>{children}</ol>,
+    },
+    listItem: {
+      bullet: ({ children, index }) => (
+        <ListItem node={{ children }} index={index} isOrdered={false} />
+      ),
+      number: ({ children, index }) => (
+        <ListItem node={{ children }} index={index} isOrdered={true} />
+      ),
+    },
     types: {
       image: ({ value }) => {
         return (
@@ -110,7 +125,7 @@ export default function ProjectSlugRoute(
       table: ({ value }) => {
         return (
           <DecoratorTable>{value}</DecoratorTable>
-          
+
         );
       },
 
@@ -134,35 +149,30 @@ export default function ProjectSlugRoute(
         <MainImageSection post={post} />
         <section className={`post ${blogStyles.blog}`}>
           <div className="post__container">
-
             <Wrapper>
-            <div className="flex gap-[74px] md:flex-row flex-col">
+              <div className="flex  md:flex-row flex-col">
+                <div className="mt-12 flex md:flex-col flex-col-reverse md:w-2/3 w-full ">
+                  <div className='post__content w-full '>
+                    <PortableText value={post.body}
+                      components={myPortableTextComponents} />
+                  </div>
+                  <div className='md:hidden block'>
+                    {authorInfo && <AuthorInfo contentType={post.contentType} author={authorInfo} />}
+                  </div>
+                </div>
+                <div className='flex-1 flex flex-col gap-12 mt-12  bg-red relative md:w-1/3 w-full'>
+                  <div className='sticky top-12 flex flex-col gap-12'>
+                    {authorInfo &&
+                      <div className=''>
+                        <AuthorInfo contentType={post.contentType} author={authorInfo} />
+                      </div>
+                    }
+                    <RelatedFeaturesSection currentPostSlug={post.slug.current} allPosts={allPosts} />
+                    <ShareableLinks props={post.title ?? post.title} />
+                  </div>
 
-              <div className="mt-12 flex md:flex-col flex-col-reverse">
-              <div className='post__content max-w-[53rem] '>
-                <PortableText value={post.body} components={myPortableTextComponents} />
-                
+                </div>
               </div>
-
-              <div className='md:hidden block'>
-              {authorInfo && <AuthorInfo author={authorInfo} />}
-              </div>
-              </div>
-              <div className='flex-1 flex flex-col gap-12 mt-12  bg-red relative'>
-              <div className='sticky top-12 flex flex-col gap-12'>
-              {authorInfo &&
-                <div className=''>
-              
-              <AuthorInfo author={authorInfo} />
-
-              </div>
-              }
-                <RelatedFeaturesSection currentPostSlug={post.slug.current} allPosts={allPosts} />
-                <ShareableLinks props={post.title ?? post.title} />
-              </div>
-
-              </div>
-            </div>
             </Wrapper>
           </div>
         </section>

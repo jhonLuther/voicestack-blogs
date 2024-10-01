@@ -17,8 +17,8 @@ const LatestBlogs: React.FC<LatestBlogsProps> = ({ blogs }) => {
             <div  className='flex flex-col gap-9 md:max-w-[519px] w-full  justify-between flex-1'>
                 <h2 className='text-5xl text-black font-extrabold'>Latest</h2>
                 <div className='flex flex-col gap-8 last-child'>
-                    {blogs.slice(1).map(blog => (
-                        <Card cardType='text-only-card' key={blog._id} post={blog} />
+                    {blogs.slice(1).map((blog,i) => (
+                        <Card key={i+1 || blog._id} cardType='text-only-card'  post={blog} />
                     ))}
                 </div>
             </div>

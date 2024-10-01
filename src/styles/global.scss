@@ -5,11 +5,13 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer utilities {
-  .font-manrope {
-    font-family: 'Manrope', 'Inter', 'sans-serif';
-  }
-}
+// @layer utilities {
+//   .font-manrope {
+//     font-family: 'Manrope', 'Inter', 'sans-serif';
+//   }
+// }
+
+
 
 :root {
   --space-0: 0;
@@ -64,6 +66,7 @@
   --max-width-1: 768px;
 }
 
+@layer utilities {
 html {
   background-color: var(--white);
   font-family: 'Inter';
@@ -82,59 +85,66 @@ body, #__next {
 }
 
 .post {
-  @apply text-base;
+  // @apply ;
 }
 
 .post__container {
-  @apply mb-9; 
+  @apply mb-9 ; 
 }
 
-.post__content h1 {
-  @apply mb-4 text-5xl font-normal font-[700] leading-[52.8px] tracking-[-0.96px] font-manrope; 
+.post__content{
+  @apply  prose md:prose lg:prose-lg; 
 }
 
-.post__content h2 {
-  @apply mb-4 font-manrope;
-}
 
-.post__content p {
-  @apply mb-7;
-}
 
-.post__content h3 {
-  @apply mb-1.5 font-sans;
-}
+// .post__content h1 {
+//   @apply mb-4 text-5xl font-normal font-[700] leading-[52.8px] tracking-[-0.96px] font-manrope; 
+// }
 
-.post__content ul {
-  @apply list-disc list-inside text-lg mb-7;
-}
+// .post__content h2 {
+//   @apply mb-4 font-manrope;
+// }
 
-.post__content ul li {
-  margin-bottom: 0.5rem; 
-}
+// .post__content p {
+//   @apply mb-7;
+// }
 
-.post__content img {
-  @apply mt-4 mb-8;
-}
+// .post__content h3 {
+//   @apply mb-1.5 font-sans;
+// }
 
-.post__content h2 {
-  @apply text-3xl font-extrabold;
-}
+// .post__content ul {
+//   @apply list-disc list-inside text-lg mb-7;
+// }
 
-.post__content h3 {
-  @apply text-2xl font-semibold leading-[26.4px] tracking-[-0.48px];
-}
+// .post__content ul li {
+//   margin-bottom: 0.5rem; 
+// }
 
-.post__content p {
-  @apply text-lg font-normal;
-  a {
-    @apply text-blue-600 hover:underline underline-offset-2;
-  }
+// .post__content img {
+//   @apply mt-4 mb-8;
+// }
 
-  strong {
-    @apply font-semibold;
-  }
-}
+// .post__content h2 {
+//   @apply text-3xl font-extrabold;
+// }
+
+// .post__content h3 {
+//   @apply text-2xl font-semibold leading-[26.4px] tracking-[-0.48px];
+// }
+
+// .post__content p {
+
+//   @apply text-lg font-normal prose;
+//   a {
+//     @apply text-blue-600 hover:underline underline-offset-2;
+//   }
+
+//   strong {
+//     @apply font-semibold;
+//   }
+// }
 
 
 .card-content  {
@@ -540,6 +550,5 @@ body, #__next {
 //     max-height: 231px;
 //   }
 // }
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+
+}
