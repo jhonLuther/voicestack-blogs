@@ -1,4 +1,5 @@
 import { defineField, defineType } from 'sanity'
+import {DocumentVideoIcon} from '@sanity/icons'
 
 export default defineType({
   name: 'post',
@@ -7,7 +8,7 @@ export default defineType({
   fieldsets: [
     {
       name: 'seo',
-      title: 'SEO Handlers',
+      title: 'SEO Settings',
       options: {
         collapsible: true,
         collapsed: true,
@@ -22,7 +23,6 @@ export default defineType({
       type: 'string',
       options: {
         list: [
-          { title: 'Blog', value: 'blog' },
           { title: 'Ebook', value: 'ebook' },
           { title: 'Article', value: 'article' },
           { title: 'Webinar', value: 'webinar' },
@@ -33,15 +33,10 @@ export default defineType({
     }),
 
     // SEO Fields
-    defineField({
-      name: 'seoTitle',
-      title: 'SEO Title',
-      type: 'string',
-      fieldset: 'seo',
-    }),
+
     defineField({
       name: 'seoDescription',
-      title: 'SEO Description',
+      title: 'Meta Description',
       type: 'string',
       fieldset: 'seo',
       validation: (Rule) => [
@@ -53,13 +48,13 @@ export default defineType({
     }),
     defineField({
       name: 'seoKeywords',
-      title: 'SEO Keywords',
+      title: 'Meta Keywords',
       type: 'string',
       fieldset: 'seo',
     }),
     defineField({
       name: 'seoJSONLD',
-      title: 'SEO JSON-LD',
+      title: 'Meta JSON-LD',
       type: 'text',
       fieldset: 'seo',
       validation: (Rule: any) =>
@@ -82,7 +77,7 @@ export default defineType({
     }),
     defineField({
       name: 'slug',
-      title: 'Slug',
+      title: 'Page Path',
       type: 'slug',
       validation: (Rule) => Rule.required(),
       options: {
@@ -90,81 +85,42 @@ export default defineType({
         maxLength: 96,
       },
     }),
-
-    // Fields for blog
     defineField({
-      name: 'postFields',
-      title: 'Post Specific Fields',
+      name: 'Video',
+      title: 'Video Link',
       type: 'object',
-      hidden: ({ parent }) => parent.contentType !== 'blog',
+      icon: DocumentVideoIcon,
       fields: [
         {
-          name: 'excerpt',
-          title: 'Excerpt',
-          type: 'text',
-        },
-      ],
-    }),
-
-    // Fields for Ebook
-    defineField({
-      name: 'ebookFields',
-      title: 'Ebook Specific Fields',
-      type: 'object',
-      hidden: ({ parent }) => parent.contentType !== 'ebook',
-      fields: [
-        {
-          name: 'ebookFile',
-          title: 'Ebook File',
-          type: 'file',
+          name: 'platform',
+          title: 'Platform',
+          type: 'string',
+          options: {
+            list: [
+              { title: 'YouTube', value: 'youtube' },
+              { title: 'Vimeo', value: 'vimeo' },
+              { title: 'Vidyard', value: 'vidyard' },
+            ],
+          },
         },
         {
-          name: 'ebookPages',
-          title: 'Number of Pages',
-          type: 'number',
-        },
-      ],
-    }),
-
-    // Fields for Podcast
-    defineField({
-      name: 'podcastFields',
-      title: 'Podcast Specific Fields',
-      type: 'object',
-      hidden: ({ parent }) => parent.contentType !== 'podcast',
-      fields: [
-        {
-          name: 'podcastFile',
-          title: 'Podcast File',
-          type: 'file',
-        },
-        {
-          name: 'duration',
-          title: 'Duration (in minutes)',
-          type: 'number',
-        },
-      ],
-    }),
-
-    // Fields for Webinar
-    defineField({
-      name: 'webinarFields',
-      title: 'Webinar Specific Fields',
-      type: 'object',
-      hidden: ({ parent }) => parent.contentType !== 'webinar',
-      fields: [
-        {
-          name: 'webinarLink',
-          title: 'Webinar Link',
+          name: 'link',
+          title: 'Link',
           type: 'url',
         },
-        {
-          name: 'scheduledDate',
-          title: 'Scheduled Date',
-          type: 'datetime',
-        },
       ],
+      hidden: ({ parent }) => parent.contentType !== 'webinar' && parent.contentType !== 'podcast',
     }),
+
+
+    defineField({
+      name: 'duration',
+      title: 'Duration ',
+      type: 'string',
+      hidden: ({ parent }) => parent.contentType !== 'webinar' && parent.contentType !== 'podcast',
+    }),
+
+
 // Common Components
     defineField({
       name: 'mainImage',
@@ -180,20 +136,13 @@ export default defineType({
       type: 'newContent',
     }),
 
-    // Fields for Article
     defineField({
-      name: 'articleFields',
-      title: 'Article Specific Fields',
-      type: 'object',
-      hidden: ({ parent }) => parent.contentType !== 'article',
-      fields: [
-        {
-          name: 'articleBody',
-          title: 'Article Body',
-          type: 'blockContent',
-        },
-      ],
+      name: 'excerpt',
+      title: 'Short Description',
+      type: 'text',
     }),
+
+
 
     // Tags Field
     defineField({
@@ -207,20 +156,18 @@ export default defineType({
         },
       ],
     }),
-
-    // defineField({
-    //   name: 'dynamicComponents',
-    //   title: 'Custom Components',
-    //   type: 'array',
-    //   of: [{ type: 'dynamicComponent' }],
-    // }),
-
     // Author Reference
-    defineField({
+    defineField(
+    {
       name: 'author',
       title: 'Author',
-      type: 'reference',
-      to: [{ type: 'author' }],
+      type: 'array',
+      of: [
+        {
+          type: 'reference',
+          to: [{ type: 'author' }],
+        },
+      ],
     }),
   ],
   preview: {

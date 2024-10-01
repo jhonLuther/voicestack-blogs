@@ -1,49 +1,190 @@
-import Image from 'next/image'
-import { Post } from '~/interfaces/post'
-import { urlForImage } from '~/lib/sanity.image'
-import { formatDate } from '~/utils'
-import Wrapper from './commonSections/Wrapper'
+import Image from 'next/image';
+import { Post } from '~/interfaces/post';
+import { urlForImage } from '~/lib/sanity.image';
+import { formatDate } from '~/utils';
+import React from 'react';
+import Link from 'next/link';
 
-export default function Card({ post }: { post: Post }) {
+interface CardProps {
+  post: Post;
+  cardType?: 'top-image-card' | 'text-only-card' | 'left-image-card' | 'ebook-card' | 'featured' | 'top-image-smallCard';
+  className?: string;
+}
+
+export default function Card({ post, cardType, className }: CardProps) {
+
+
   return (
-    <div className="flex flex-col w-full min-h-[250px] group hover:scale-105 transform duration-300">
-      {post.mainImage ? (
-        <Image
-          className="w-auto min-h-[250px] object-center object-cover rounded-lg "
-          src={urlForImage(post.mainImage).width(411).height(170).url()}
-          height={170}
-          width={411}
-          alt=""
-        />
-      ) : (
-        <div className="" />
-      )}
-      <div className="mt-4">
-        <h3 className="text-ellipsis h-auto line-clamp-1 overflow-hidden  w-full">
-          <a className=" text-gray-950 text-xl font-semibold group-hover:underline underline-offset-2 " href={`/post/${post.slug && post.slug.current}`}>
-            <div className='text-blue-500'>
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-10">
-                <path d="M11.7 2.805a.75.75 0 0 1 .6 0A60.65 60.65 0 0 1 22.83 8.72a.75.75 0 0 1-.231 1.337 49.948 49.948 0 0 0-9.902 3.912l-.003.002c-.114.06-.227.119-.34.18a.75.75 0 0 1-.707 0A50.88 50.88 0 0 0 7.5 12.173v-.224c0-.131.067-.248.172-.311a54.615 54.615 0 0 1 4.653-2.52.75.75 0 0 0-.65-1.352 56.123 56.123 0 0 0-4.78 2.589 1.858 1.858 0 0 0-.859 1.228 49.803 49.803 0 0 0-4.634-1.527.75.75 0 0 1-.231-1.337A60.653 60.653 0 0 1 11.7 2.805Z" />
-                <path d="M13.06 15.473a48.45 48.45 0 0 1 7.666-3.282c.134 1.414.22 2.843.255 4.284a.75.75 0 0 1-.46.711 47.87 47.87 0 0 0-8.105 4.342.75.75 0 0 1-.832 0 47.87 47.87 0 0 0-8.104-4.342.75.75 0 0 1-.461-.71c.035-1.442.121-2.87.255-4.286.921.304 1.83.634 2.726.99v1.27a1.5 1.5 0 0 0-.14 2.508c-.09.38-.222.753-.397 1.11.452.213.901.434 1.346.66a6.727 6.727 0 0 0 .551-1.607 1.5 1.5 0 0 0 .14-2.67v-.645a48.549 48.549 0 0 1 3.44 1.667 2.25 2.25 0 0 0 2.12 0Z" />
-                <path d="M4.462 19.462c.42-.419.753-.89 1-1.395.453.214.902.435 1.347.662a6.742 6.742 0 0 1-1.286 1.794.75.75 0 0 1-1.06-1.06Z" />
-              </svg>
+    <React.Fragment>
+      {cardType === 'top-image-card' ? (
+        <Link href={`/post/${post.slug && post.slug.current}`}>
+          <div className="flex flex-col gap-1 group overflow-hidden">
+            <div className='overflow-hidden'>
+              {post.mainImage && (
+                <Image
+                  className="w-auto rounded-b-md block min-h-[250px] object-center object-cover group-hover: scale-100 transition duration-500 "
+                  src={urlForImage(post.mainImage).width(700).height(350).url()}
+                  height={350}
+                  width={700}
+                  alt={post.title || 'Blog Image'}
+                />
+              )}
             </div>
-            {post.title}
-          </a>
-        </h3>
-        <div className='flex flex-col gap-1'>
-          {post.tags && post.tags.map(tag => (
-            <span key={tag._id} className=" text-violet-800">
-              {tag.tagName}
-            </span>))}
-          {post.contentType &&
-            <span className="text-sm uppercase text-cs-100">
-              {post.contentType}
-            </span>}
-        </div>
-        <p className=" text-akash ">{post.excerpt}</p>
-        <p className="">{formatDate(post._createdAt)}</p>
-      </div>
-    </div>
-  )
+            <div className="flex pt-[42px] px-9 pb-[42px] rounded-t-md bg-bg-green flex-col items-start gap-10 flex-1">
+              <div className="flex flex-col gap-3">
+                {post.tags && post.tags[0] && (
+                  <span className="uppercase text-white font-inter text-sm font-medium">
+                    {post.tags[0].tagName}
+                  </span>
+                )}
+                <h2 className="card-content font-manrope md:text-5xl text-2xl text-white font-extrabold group-hover: group-hover:underline underline-offset-4">{post.title}</h2>
+                <p className="text-white font-inter text-lg font-normal line-clamp-2 overflow-hidden">
+                  {post.desc? post.desc :  post.excerpt}
+                </p>
+              </div>
+              <span className="text-white font-inter text-lg font-semibold">
+                {post.author?.name || ''}
+              </span>
+            </div>
+          </div>
+        </Link>
+      ) :
+
+        cardType === 'left-image-card' ? (
+        <Link href={`/post/${post.slug && post.slug.current}`}>
+          <div className={`flex flex-row gap-4 items-center group hover: transition duration-500 ${className}`}>
+            {post.mainImage && (
+              <Image
+                className="w-1/3 rounded-md object-cover group-hover:scale-105 transition duration-500"
+                src={urlForImage(post.mainImage).width(400).height(300).url()}
+                height={300}
+                width={400}
+                alt={post.title || 'Blog Image'}
+              />
+            )}
+            <div className="flex flex-col flex-1">
+              {post.tags && post.tags[0] && (
+                <span className="uppercase text-sm font-medium text-gray-600">{post.tags[0].tagName}</span>
+              )}
+              <h2 className="md:text-2xl  text-base font-semibold text-gray-900 group-hover: group-hover:underline line-clamp-2 overflow-hidden">
+                {post.title}
+              </h2>
+              <p className="text-gray-700">{post.desc || ''}</p>
+              <span className="text-gray-500 text-sm">{post.author?.name || ''} · {formatDate(post._createdAt)}</span>
+            </div>
+          </div>
+        </Link>
+        )
+
+
+
+          : cardType === 'text-only-card' ? (
+            <div className={`flex flex-col flex-1 w-full group hover:scale-100 transform duration-300 ${className} `}>
+              <Link href={`/post/${post.slug && post.slug.current}`}>
+                <div className={`border-b-2 pb-6 flex flex-col gap-3 border-gray-900 group-hover:border-gray-600`}>
+                  {post.tags && post.tags[0] && (
+                    <span className="uppercase font-inter text-sm font-medium">{post.tags[0].tagName}</span>
+                  )}
+                  <h3 className="text-4xl font-bold font-manrope text-gray-900 w-full group-hover: group-hover:underline underline-offset-4">
+                    {post.title}
+                  </h3>
+                </div>
+              </Link>
+            </div>
+          ) :
+            cardType === 'top-image-smallCard' ? (
+              <Link href={`/post/${post.slug && post.slug.current}`}>
+                <div className="flex flex-col gap-1 group hover: transition duration-500 overflow-hidden">
+                  <div className='group-hover:scale-105 transition duration-500 overflow-hidden'>
+                    {post.mainImage && (
+                      <Image
+                        className="w-full h-auto rounded-t-md min-h-[250px] object-center object-cover md:w-auto"
+                        src={urlForImage(post.mainImage).width(519).height(537).url()}
+                        height={537}
+                        width={519}
+                        alt={post.title || 'Blog Image'}
+                      />
+                    )}
+                  </div>
+                  <div className="flex py-10 px-9  rounded-b-md bg-cs-purple flex-col items-start gap-10 flex-1">
+                    <div className="flex flex-col gap-3">
+                      {post.tags && post.tags[0] && (
+                        <span className="uppercase text-white font-inter text-sm font-medium">
+                          {post.tags[0].tagName}
+                        </span>
+                      )}
+                      <h2 className="card-content md:text-5xl text-2xl font-manrope text-white font-extrabold group-hover: group-hover:underline underline-offset-4">{post.title}</h2>
+                      <p className="text-white font-inter text-lg font-normal line-clamp-2 overflow-hidden">
+                      {post.desc? post.desc :  post.excerpt}
+                      </p>
+                    </div>
+                    <span className="text-white font-inter text-lg font-semibold">
+                      {post.author?.name || ''}
+                    </span>
+                  </div>
+                </div>
+              </Link>
+            ) :
+
+
+
+              cardType === 'featured' ? (
+                <div className="card featured-card">
+                  {post.mainImage && (
+                    <Image
+                      src={urlForImage(post.mainImage).width(800).height(400).url()}
+                      alt={post.title || 'Featured Blog Image'}
+                      width={800}
+                      height={400}
+                      className="rounded-lg object-cover w-full"
+                    />
+                  )}
+                  <div className="mt-6">
+                    <h3 className="font-semibold text-2xl">{post.title}</h3>
+                    <p className="text-gray-700 mt-2">{post.excerpt || ''}</p>
+                  </div>
+                </div>
+              ) : (
+
+                // default card
+                <div className="flex flex-col w-full min-h-[250px] group hover:scale-105 transform duration-300">
+                  {(post.mainImage || post.image) && (
+                    <Image
+                      className="w-auto min-h-[250px] object-center object-cover rounded-lg"
+                      src={
+                        post.mainImage
+                          ? urlForImage(post.mainImage).width(411).height(170).url()
+                          : urlForImage(post.image).width(411).height(170).url()
+                      }
+                      height={170}
+                      width={411}
+                      alt={post.title || 'Blog Image'}
+                    />
+                  )}
+                  <div className="mt-4">
+                    <h3 className="text-ellipsis h-auto line-clamp-1 overflow-hidden w-full">
+                      <Link href={`/post/${post.slug && post.slug.current}`}>
+                        <span className="text-gray-950 text-xl font-semibold group-hover:underline underline-offset-2">
+                          {post.title}
+                        </span>
+                      </Link>
+                    </h3>
+                    <div className="flex flex-col gap-1">
+                      {post.tags && post.tags.map((tag) => (
+                        <span key={tag._id} className="text-violet-800">
+                          {tag.tagName}
+                        </span>
+                      ))}
+                      {post.contentType && (
+                        <span className="text-sm uppercase text-cs-100">{post.contentType}</span>
+                      )}
+                      {post.author && (
+                        <span>{`${post.author.name  ?` by ${post.author.name}`: ""}`}</span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
+    </React.Fragment>
+  );
 }

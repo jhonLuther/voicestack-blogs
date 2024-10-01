@@ -136,9 +136,29 @@ body, #__next {
   }
 }
 
-.post__container {
-  // @apply max-w-4xl mx-auto;
+
+.card-content  {
+
+ h2{
+  @apply  text-5xl font-normal font-extrabold   font-manrope; 
+
+} 
+
+ h3{
+  @apply  text-5xl font-normal font-extrabold   font-manrope; 
+ } 
+
 }
+
+
+.last-child{
+  @apply last:border-none;
+}
+
+.blog-table a{
+  @apply text-blue-600 hover:underline underline-offset-2;
+}
+
 // /* Post page */
 // .post {
 //   width: 100%;

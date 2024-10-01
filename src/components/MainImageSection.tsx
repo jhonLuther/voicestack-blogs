@@ -7,16 +7,22 @@ import ImageLoader from './commonSections/ImageLoader'
 import { getClient } from '~/lib/sanity.client'
 import Container from './Container'
 import Wrapper from './commonSections/Wrapper'
+import useMediaQuery from '~/utils/useMediaQueryHook'
+
 
 
 const MainImageSection = ({ post }) => {
+
+    const isMobile:any = useMediaQuery(767);
+
+    // console.log(post);
+
     const client = getClient()
 
     if (!post) {
         return null
     }
 
-    // console.log(post);
 
 
 
@@ -27,7 +33,7 @@ const MainImageSection = ({ post }) => {
                 <div className='flex flex-col items-start gap-32 bg-black text-white md:max-w-xl max-w-lg h-full justify-center pr-8'>
                     <div className='flex flex-col items-start '>
                         <Breadcrumb />
-                        <h1 className="text-white font-manrope leading-tight text-5xl font-bold  mb-[10px]">
+                        <h1 className="text-white font-manrope leading-tight md:text-5xl text-2xl font-bold  mb-[10px]">
                             {post.title ? post.title : 'Post Title'}
                         </h1>
                         <p className="text-gray-400 font-inter text-base font-normal leading-120">
@@ -42,19 +48,16 @@ const MainImageSection = ({ post }) => {
             </Wrapper>
 
 
-        <div className='w-full flex absolute h-full justify-end'>
-         <div className='md:w-1/2 w-1/3'>
-           
+        { !isMobile && <div className='w-full flex absolute h-full justify-end'>
+          <div className='md:w-1/2 w-1/3'>
                     <ImageLoader
                         image={post.mainImage}
                         priority={true}
                         alt={post.title || "Post image"}
                         client={client}
                     />
-
         </div>
-
-        </div>
+        </div>}
 
               
 

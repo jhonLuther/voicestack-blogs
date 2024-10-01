@@ -30,6 +30,7 @@ import RelatedFeaturesSection from '~/components/RelatedFeaturesSection'
 import ShareableLinks from '~/components/commonSections/ShareableLinks'
 import Breadcrumb from '~/components/commonSections/BreadCrumb'
 import MainImageSection from '~/components/MainImageSection'
+import DecoratorTable from '~/components/DecoratorTable'
 
 
 interface Query {
@@ -69,6 +70,10 @@ export default function ProjectSlugRoute(
     slug: props.post?.slug?.current,
   })
 
+
+  console.log(props,'all props');
+  
+
   const [allPosts] = useLiveQuery(props.allPosts, postsQuery);
 
   if (!post) {
@@ -81,16 +86,15 @@ export default function ProjectSlugRoute(
   const seoRobots = post.seoRobots || 'index,follow';
   const seoCanonical = post.seoCanonical || `https://carestack.com/post/${post.slug.current}`;
   const jsonLD: any = generateJSONLD(post);
-  const authorInfo = post?.author;
+  const authorInfo = post?.author
+
+  console.log(post,post,authorInfo,'author infor oin props');
+  
 
 
   const myPortableTextComponents : any = {
     marks: {
-      highlight: ({ children, value }: any) => {
-        return (
-          <HighlightDecorator>{children}</HighlightDecorator>
-        )
-      },
+
       link: ({ children, value }) => {
         return <a href={value.href} >{children}</a>
 
@@ -101,6 +105,12 @@ export default function ProjectSlugRoute(
       image: ({ value }) => {
         return (
           <SanityImage {...value} client={getClient(props.draftMode ? { token: props.token } : undefined)} />
+        );
+      },
+      table: ({ value }) => {
+        return (
+          <DecoratorTable>{value}</DecoratorTable>
+          
         );
       },
 
@@ -139,11 +149,14 @@ export default function ProjectSlugRoute(
               </div>
               </div>
               <div className='flex-1 flex flex-col gap-12 mt-12  bg-red relative'>
-
               <div className='sticky top-12 flex flex-col gap-12'>
-                <div className='md:block hidden'>
-              {authorInfo && <AuthorInfo author={authorInfo} />}
+              {authorInfo &&
+                <div className=''>
+              
+              <AuthorInfo author={authorInfo} />
+
               </div>
+              }
                 <RelatedFeaturesSection currentPostSlug={post.slug.current} allPosts={allPosts} />
                 <ShareableLinks props={post.title ?? post.title} />
               </div>

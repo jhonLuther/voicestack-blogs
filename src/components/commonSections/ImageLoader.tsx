@@ -13,7 +13,7 @@ interface ImageLoaderProps {
   priority?: boolean;
   maxWidth?: number;
   wrapperPadding?: boolean;
-  client: any;
+  client?: any;
   [x: string]: any;
 }
 
