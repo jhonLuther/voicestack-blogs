@@ -49,8 +49,15 @@ export const getStaticPaths = async () => {
   const client = getClient()
   const slugs = await client.fetch(authorSlugsQuery)
 
+  const paths = slugs?.map(({ slug }: { slug: string }) => {
+    if (slug) {
+      return `/author/${slug}`
+    }
+    return null
+  }).filter(Boolean)
+
   return {
-    paths: slugs?.map(({ slug }: { slug: string }) => `/author/${slug}`) || [],
+    paths,
     fallback: 'blocking',
   }
 }
@@ -90,7 +97,7 @@ export default function AuthorPage({
         <div className='flex flex-col max-w-3xl items-center gap-4 mt-8'>
           <h2 className='text-2xl font-semibold'>{`More Like This`}</h2>
           <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1  gap-y-9 gap-4">
-            {
+            {relatedContents &&
               relatedContents?.length > 0 && (
                 relatedContents.map((contents) => (
                   <Card key={contents._id} post={contents} />
