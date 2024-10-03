@@ -15,7 +15,6 @@ export const postsQuery = groq`
   seoKeywords,
   seoCanonical,
   seoJSONLD,
-
     author[]-> {
       _id,
       name,
@@ -163,10 +162,8 @@ export async function getPostsBySlug(
   let newPostsQuery = postsQuery
 
   if (slug.length > 0) {
-    // *[_type == "post" && defined(slug.current) && references("${slug}")]  | order(_createdAt desc) {
     newPostsQuery = groq`
       *[_type == "post" && defined(slug.current) && "${slug}" in tags[]->slug.current]  | order(_createdAt desc) {
-
       "desc":postFields.excerpt,
       title,
       "mainImage":mainImage.asset->url,
@@ -305,7 +302,7 @@ export const authorBySlugQuery = groq`
   }
 `
 export const testiMonialBySlugQuery = groq`
-  *[_type == "testiMonial" && slug.current == $slug][0] {
+  *[_type == "testimonial" && slug.current == $slug][0] {
     _id,
     testimonialName,
     slug,
@@ -319,6 +316,7 @@ export const testiMonialBySlugQuery = groq`
     date
   }
 `
+
 export const tagBySlugQuery = groq`
   *[_type == "tag" && slug.current == $slug][0] {
     _id,
@@ -410,6 +408,9 @@ export const authorSlugsQuery = groq`
 `
 export const tagsSlugsQuery = groq`
   *[_type == "tag" && defined(slug.current)][].slug.current
+`
+export const testimonialSlugsQuery = groq`
+  *[_type == "testimonial" && defined(slug.current)][].slug.current
 `
 
 export interface Iframe {

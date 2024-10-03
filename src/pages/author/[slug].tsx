@@ -49,6 +49,9 @@ export const getStaticPaths = async () => {
   const client = getClient()
   const slugs = await client.fetch(authorSlugsQuery)
 
+  console.log(slugs, 'slugs authors');
+
+
   const paths = slugs?.map(({ slug }: { slug: string }) => {
     if (slug) {
       return `/author/${slug}`

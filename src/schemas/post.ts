@@ -1,5 +1,5 @@
 import { defineField, defineType } from 'sanity'
-import {DocumentVideoIcon} from '@sanity/icons'
+import { DocumentVideoIcon } from '@sanity/icons'
 
 export default defineType({
   name: 'post',
@@ -31,8 +31,6 @@ export default defineType({
       },
       validation: (Rule) => Rule.required(),
     }),
-
-    // SEO Fields
 
     defineField({
       name: 'seoDescription',
@@ -86,6 +84,11 @@ export default defineType({
       },
     }),
     defineField({
+      name: 'excerpt',
+      title: 'Short Description',
+      type: 'text',
+    }),
+    defineField({
       name: 'Video',
       title: 'Video Link',
       type: 'object',
@@ -109,15 +112,17 @@ export default defineType({
           type: 'url',
         },
       ],
-      hidden: ({ parent }) => parent.contentType !== 'webinar' && parent.contentType !== 'podcast',
+      hidden: ({ parent }) =>
+        parent.contentType !== 'webinar' && parent.contentType !== 'podcast',
     }),
     defineField({
       name: 'duration',
       title: 'Duration ',
       type: 'string',
-      hidden: ({ parent }) => parent.contentType !== 'webinar' && parent.contentType !== 'podcast',
+      hidden: ({ parent }) =>
+        parent.contentType !== 'webinar' && parent.contentType !== 'podcast',
     }),
-// Common Components
+    // Common Components
     defineField({
       name: 'mainImage',
       title: 'Main Image',
@@ -132,10 +137,22 @@ export default defineType({
       type: 'newContent',
     }),
 
+    // Author Reference
     defineField({
-      name: 'excerpt',
-      title: 'Short Description',
-      type: 'text',
+      name: 'author',
+      title: 'Author',
+      type: 'array',
+      of: [
+        {
+          type: 'reference',
+          to: [{ type: 'author' }],
+        },
+      ],
+      validation: (Rule) => [
+        Rule.required()
+          .min(1)
+          .error('At least one author is required'),
+      ],
     }),
 
     // Tags Field
@@ -147,19 +164,6 @@ export default defineType({
         {
           type: 'reference',
           to: [{ type: 'tag' }],
-        },
-      ],
-    }),
-    // Author Reference
-    defineField(
-    {
-      name: 'author',
-      title: 'Author',
-      type: 'array',
-      of: [
-        {
-          type: 'reference',
-          to: [{ type: 'author' }],
         },
       ],
     }),
@@ -176,9 +180,7 @@ export default defineType({
       const { title, contentType, author, tag } = selection
       return {
         title,
-        subtitle:
-          author &&
-          `${contentType && contentType.toUpperCase()}`,
+        subtitle: author && `${contentType && contentType.toUpperCase()}`,
         media: selection.media,
       }
     },

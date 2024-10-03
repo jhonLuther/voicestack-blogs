@@ -96,10 +96,8 @@ export default function ProjectSlugRoute(
 
   const myPortableTextComponents: any = {
     marks: {
-
       link: ({ children, value }) => {
         return <a href={value.href} className='!text-blue-500' >{children}</a>
-
       },
     },
 
@@ -128,7 +126,6 @@ export default function ProjectSlugRoute(
 
         );
       },
-
       dynamicComponent: ({ value }) => {
         return <DynamicComponent {...value} client={getClient(props.draftMode ? { token: props.token } : undefined)} />
       }
@@ -170,7 +167,6 @@ export default function ProjectSlugRoute(
                     <RelatedFeaturesSection currentPostSlug={post.slug.current} allPosts={allPosts} />
                     <ShareableLinks props={post.title ?? post.title} />
                   </div>
-
                 </div>
               </div>
             </Wrapper>

@@ -50,3 +50,15 @@ export interface Post {
     tagName: string,
     slug: Slug,
   }
+// interfaces/post.ts
+// Example of Testimonial interface
+export interface Testimonial {
+  title: string
+  _id: string;
+  testimonialName: string; 
+  slug: Slug;
+  excerpt?: string; 
+  summary?: string; 
+  image?: string;
+}
+

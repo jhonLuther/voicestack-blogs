@@ -36,7 +36,6 @@ const TestimonialSection = ({ testimonials }: TestimonialSectionProps) => {
                                 <div className='flex justify-between'>
                                 <p className="text-sm max-w-max flex-1 text-white font-bold px-1 py-2 flex items-center rounded-sm bg-cs-darkBlack  uppercase">{testimonialItem.testimonialName}
                                 </p>
-
                                 <Link
                                     href="#"
                                     className=" text-sm font-semibold flex items-center space-x-1"

@@ -1,4 +1,6 @@
 import Link from 'next/link'
+import Footer from '~/layout/Footer';
+import Header from '~/layout/Header';
 
 interface ContainerProps {
   children: React.ReactNode;
@@ -11,13 +13,9 @@ export default function Container({ children,className, fullWidth = false }: Con
   return (
 
     <div className={`flex flex-col w-full items-center border`}>
-      <header className=" flex w-full p-4 border-b ">
-        <Link className="" href="/">
-          Next.js + Sanity
-        </Link>
-      </header>
+      <Header/>
       <main className='w-full'>{children}</main>
-      <footer className=" w-full flex ">
+      {/* <footer className=" w-full flex ">
         <p className="w-full flex items-center justify-center p-4">
           Made with{' '}
           <svg
@@ -37,7 +35,8 @@ export default function Container({ children,className, fullWidth = false }: Con
           </svg>{' '}
           at Sanity
         </p>
-      </footer>
+      </footer> */}
+      <Footer className={`w-full flex `}/>
     </div>
   )
 }

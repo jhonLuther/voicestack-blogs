@@ -59,7 +59,7 @@ export default function IndexPage(props: IndexPageProps) {
 
   return (
     <Container>
-        <Section ref={mainSection} className="flex-col py-20 bg-cs-gray">
+        <Section ref={mainSection} className="flex-col py-12 bg-cs-gray">
           <Layout>
             <DynamicPages posts={props.posts} tags={props.tags} testimonials={props.testimonials}
              homeSettings={homeSettings} popularBlogs={homeSettings?.popularBlogs}
