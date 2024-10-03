@@ -4,6 +4,7 @@ import DynamicComponent from '../../src/schemas/dynamicComponent'
 import { ImageIcon } from '@sanity/icons'
 import { ThLargeIcon } from '@sanity/icons'
 import { InsertBelowIcon } from '@sanity/icons'
+import htmlCode from './htmlCode'
 
 export default defineType({
   title: 'Block Content',
@@ -23,6 +24,7 @@ export default defineType({
         pageSize: 10,
       },
     },
+    defineArrayMember(htmlCode),
     {
       type: 'dynamicComponent',
       icon: InsertBelowIcon,
@@ -39,7 +41,7 @@ export default defineType({
       type: 'block',
       styles: [
         { title: 'Normal', value: 'normal' },
-        { title: 'H1', value: 'h1' },
+        // { title: 'H1', value: 'h1' },
         { title: 'H2', value: 'h2' },
         { title: 'H3', value: 'h3' },
         { title: 'H4', value: 'h4' },

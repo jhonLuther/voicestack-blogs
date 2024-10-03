@@ -155,6 +155,15 @@ export async function getTestiMonials(client: SanityClient): Promise<Post[]> {
   return await client.fetch(testiMonialsQuery)
 }
 
+export async function getPodcasts(client: SanityClient,limit?: number): Promise<Post[]> {
+
+  let newPodCastQuery = podcastsQuery
+  if (limit > 0) {
+    newPodCastQuery = postsQuery + `[0...${limit}]`
+  }
+  return await client.fetch(newPodCastQuery)
+}
+
 export async function getPostsBySlug(
   client: SanityClient,
   slug: any,
@@ -187,8 +196,8 @@ export async function getPostsBySlug(
   return await client.fetch(newPostsQuery)
 }
 
-export const podcastQuery = groq`
-*[_type == "post" && contentType == "podcast" && defined(slug.current)] {
+export const podcastsQuery = groq`
+*[_type == "post" && contentType == "podcast" && defined(slug.current)] |  order(_updatedAt desc){
   _id,
   title,
   slug,
@@ -316,6 +325,30 @@ export const testiMonialBySlugQuery = groq`
     date
   }
 `
+export const podcastBySlugQuery = groq`
+  *[_type == "post" && contentType == "podcast" && slug.current == $slug][0] {
+    _id,
+    title,
+    slug,
+    contentType,
+    "audioFile": Video.link,
+    "platform": Video.platform,
+    "htmlCode": Video.htmlCode, 
+    duration,
+    publishedAt,
+    excerpt,
+    mainImage,
+    body,
+    "author": author[]-> {
+      _id,
+      name,
+      slug,
+      role,
+      bio,
+      "picture": picture.asset->url
+    }
+  }
+`
 
 export const tagBySlugQuery = groq`
   *[_type == "tag" && slug.current == $slug][0] {
@@ -395,6 +428,15 @@ export async function getTestimonial(
     slug,
   })
 }
+
+export async function getPodcast(
+  client: SanityClient,
+  slug: string,
+): Promise<any> {
+  return await client.fetch(podcastBySlugQuery, {
+    slug,
+  })
+}
 // queries for static path generation **
 export const postSlugsQuery = groq`
 *[_type == "post" && defined(slug.current)][].slug.current
@@ -411,6 +453,9 @@ export const tagsSlugsQuery = groq`
 `
 export const testimonialSlugsQuery = groq`
   *[_type == "testimonial" && defined(slug.current)][].slug.current
+`
+export const podcastSlugsQuery = groq`
+  *[_type == "post" && contentType == "podcast" && defined(slug.current)][].slug.current
 `
 
 export interface Iframe {

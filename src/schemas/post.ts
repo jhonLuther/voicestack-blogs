@@ -1,5 +1,6 @@
 import { defineField, defineType } from 'sanity'
 import { DocumentVideoIcon } from '@sanity/icons'
+import htmlCode from './htmlCode'
 
 export default defineType({
   name: 'post',
@@ -107,10 +108,18 @@ export default defineType({
           },
         },
         {
+          name: 'htmlCode',
+          title: 'Embed Code',
+          type: 'text',
+          description: 'Paste the HTML code you want to embed',
+          validation: Rule => Rule.required()
+        },
+        {
           name: 'link',
           title: 'Link',
           type: 'url',
         },
+
       ],
       hidden: ({ parent }) =>
         parent.contentType !== 'webinar' && parent.contentType !== 'podcast',

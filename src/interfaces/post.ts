@@ -61,4 +61,16 @@ export interface Testimonial {
   summary?: string; 
   image?: string;
 }
+export interface Podcasts {
+  htmlCode: any
+  body: any
+  mainImage: any
+  title: string
+  _id: string;
+  testimonialName: string; 
+  slug: Slug;
+  excerpt?: string; 
+  summary?: string; 
+  image?: string;
+}
 

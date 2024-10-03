@@ -9,9 +9,10 @@ interface CardProps {
   post: Post;
   cardType?: 'top-image-card' | 'text-only-card' | 'left-image-card' | 'ebook-card' | 'featured' | 'top-image-smallCard';
   className?: string;
+  cardColor?: string
 }
 
-export default function Card({ post, cardType, className }: CardProps) {
+export default function Card({ post, cardType, className,cardColor }: CardProps) {
 
 
   return (
@@ -80,12 +81,12 @@ export default function Card({ post, cardType, className }: CardProps) {
 
           : cardType === 'text-only-card' ? (
             <div className={`flex flex-col flex-1 w-full group hover:scale-100 transform duration-300 ${className} `}>
-              <Link href={`/post/${post.slug && post.slug.current}`}>
-                <div className={`border-b-2 pb-6 flex flex-col gap-3 border-gray-900 group-hover:border-gray-600`}>
+              <Link href={`/${cardColor === 'white' ? 'podcasts' : 'post'}/${post.slug && post.slug.current}`}>
+                <div className={`border-b-2 pb-6 flex flex-col gap-3 ${cardColor === 'white' ? 'border-white' : 'border-gray-900'  } group-hover:border-gray-600`}>
                   {post.tags && post.tags[0] && (
                     <span className="uppercase font-inter text-sm font-medium">{post.tags[0].tagName}</span>
                   )}
-                  <h3 className="text-4xl font-bold font-manrope text-gray-900 w-full group-hover: group-hover:underline underline-offset-4">
+                  <h3 className={`text-4xl font-bold font-manrope ${cardColor === 'white' ? 'text-white' : 'text-gray-900'  } w-full group-hover: group-hover:underline underline-offset-4`}>
                     {post.title}
                   </h3>
                 </div>

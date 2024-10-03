@@ -53,7 +53,7 @@ export const getStaticProps: GetStaticProps<
 export default function IndexPage(props: IndexPageProps) {
   const mainSection = useRef<HTMLDivElement>(null);
 
-  console.log(props,'all  props');
+  // console.log(props,'all  props');
 
   const homeSettings = props?.homeSettings[0]; 
 

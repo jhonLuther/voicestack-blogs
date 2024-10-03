@@ -24,7 +24,7 @@ const TestimonialSection = ({ testimonials }: TestimonialSectionProps) => {
     const isMobile:any = useMediaQuery(767);
 
 
-    console.log(testimonials);
+    // console.log(testimonials);
 
     return (
         <div className="  gap-0 bg-[#F5C6C6] p-11 relative flex content-center items-center" >

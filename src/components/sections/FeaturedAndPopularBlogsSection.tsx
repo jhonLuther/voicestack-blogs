@@ -12,7 +12,7 @@ interface FeaturedAndPopularBlogsProps {
 }
 
 const FeaturedAndPopularBlogs = ({ featuredBlog, popularBlogs }: FeaturedAndPopularBlogsProps) => {
-    console.log(featuredBlog, 'featuredBlog in featured and popular blog section');
+    // console.log(featuredBlog, 'featuredBlog in featured and popular blog section');
 
     return (
         <section className="flex flex-wrap md:flex-row flex-col w-full gap-20 justify-between my-8">

@@ -32,6 +32,7 @@ import MainImageSection from '~/components/MainImageSection'
 import DecoratorTable from '~/components/DecoratorTable'
 import { list } from 'postcss'
 import ListItem from '~/components/typography/ListItem'
+import SanityPortableText from '~/components/blockEditor/sanityBlockEditor'
 
 
 interface Query {
@@ -72,7 +73,7 @@ export default function ProjectSlugRoute(
   })
 
 
-  console.log(props, 'all props');
+  // console.log(props, 'all props');
 
 
   const [allPosts] = useLiveQuery(props.allPosts, postsQuery);
@@ -89,47 +90,46 @@ export default function ProjectSlugRoute(
   const jsonLD: any = generateJSONLD(post);
   const authorInfo = post?.author
 
-  console.log(post, post, authorInfo, 'author infor oin props');
+  // const myPortableTextComponents: any = {
+  //   marks: {
+  //     link: ({ children, value }) => {
+  //       return <a href={value.href} className='!text-blue-500' >{children}</a>
+  //     },
+  //   },
 
-
-
-  const myPortableTextComponents: any = {
-    marks: {
-      link: ({ children, value }) => {
-        return <a href={value.href} className='!text-blue-500' >{children}</a>
-      },
-    },
-
-    // },
-    list: {
-      bullet: ({ children }) => <ul>{children}</ul>,
-      number: ({ children }) => <ol>{children}</ol>,
-    },
-    listItem: {
-      bullet: ({ children, index }) => (
-        <ListItem node={{ children }} index={index} isOrdered={false} />
-      ),
-      number: ({ children, index }) => (
-        <ListItem node={{ children }} index={index} isOrdered={true} />
-      ),
-    },
-    types: {
-      image: ({ value }) => {
-        return (
-          <SanityImage {...value} client={getClient(props.draftMode ? { token: props.token } : undefined)} />
-        );
-      },
-      table: ({ value }) => {
-        return (
-          <DecoratorTable>{value}</DecoratorTable>
-
-        );
-      },
-      dynamicComponent: ({ value }) => {
-        return <DynamicComponent {...value} client={getClient(props.draftMode ? { token: props.token } : undefined)} />
-      }
-    },
-  }
+  //   // },
+  //   list: {
+  //     bullet: ({ children }) => <ul>{children}</ul>,
+  //     number: ({ children }) => <ol>{children}</ol>,
+  //   },
+  //   listItem: {
+  //     bullet: ({ children, index }) => (
+  //       <ListItem node={{ children }} index={index} isOrdered={false} />
+  //     ),
+  //     number: ({ children, index }) => (
+  //       <ListItem node={{ children }} index={index} isOrdered={true} />
+  //     ),
+  //   },
+  //   types: {
+  //     image: ({ value }) => {
+  //       return (
+  //         <SanityImage {...value} client={getClient(props.draftMode ? { token: props.token } : undefined)} />
+  //       );
+  //     },
+      
+  //     table: ({ value }) => {
+  //       return (
+  //         <DecoratorTable>{value}</DecoratorTable>
+  //       );
+  //     },
+  //     htmlCode: ({ value }) => {
+  //       return <div className='content-wrapper  w-full' dangerouslySetInnerHTML={{ __html: value.htmlCode }} />
+  //     },
+  //     dynamicComponent: ({ value }) => {
+  //       return <DynamicComponent {...value} client={getClient(props.draftMode ? { token: props.token } : undefined)} />
+  //     }
+  //   },
+  // }
 
   return (
     <>
@@ -149,8 +149,11 @@ export default function ProjectSlugRoute(
               <div className="flex  md:flex-row flex-col">
                 <div className="mt-12 flex md:flex-col flex-col-reverse md:w-2/3 w-full ">
                   <div className='post__content w-full '>
-                    <PortableText value={post.body}
-                      components={myPortableTextComponents} />
+                  <SanityPortableText
+                      content={post.body}
+                      draftMode={props.draftMode}
+                      token={props.token}
+                    />
                   </div>
                   <div className='md:hidden block'>
                     {authorInfo && <AuthorInfo contentType={post.contentType} author={authorInfo} />}
