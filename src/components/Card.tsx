@@ -17,13 +17,13 @@ export default function Card({ post, cardType, className, cardColor }: CardProps
 	console.log(cardColor,'cardColor');
 
 	const linkUrl = useMemo(() => {
-    const contentTypePath = post.contentType === 'podcast' ? 'podcasts' : post.contentType;
-    
-    if (cardColor === 'white') {
-        return `/${contentTypePath}/${post.slug.current}`;
-    }
-    return `/post/${post.slug.current}`;
-}, [cardColor, post.contentType]);
+		const contentTypePath = post.contentType === 'podcast' ? 'podcasts' : post.contentType;
+		
+		if (cardColor === 'white') {
+			return `/${contentTypePath}/${post.slug.current}`;
+		}
+		return `/post/${post.slug.current}`;
+	}, [cardColor, post.contentType, post.slug]);
 
 	
 
