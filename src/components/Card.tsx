@@ -23,7 +23,7 @@ export default function Card({ post, cardType, className, cardColor }: CardProps
         return `/${contentTypePath}/${post.slug.current}`;
     }
     return `/post/${post.slug.current}`;
-}, [cardColor, post.contentType, post.slug.current]);
+}, [cardColor, post.contentType]);
 
 	
 
