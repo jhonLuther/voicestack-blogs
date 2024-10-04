@@ -8,10 +8,14 @@ import { getClient } from '~/lib/sanity.client'
 import Container from './Container'
 import Wrapper from './commonSections/Wrapper'
 import useMediaQuery from '~/utils/useMediaQueryHook'
+import AuthorInfo from './commonSections/AuthorInfo'
 
+interface Props {
+    post?: any
+    isAuthor?: any
+}
 
-
-const MainImageSection = ({ post }) => {
+const MainImageSection = ({ post ,isAuthor }:Props) => {
 
     const isMobile:any = useMediaQuery(767);
 
@@ -27,7 +31,7 @@ const MainImageSection = ({ post }) => {
 
 
     return (
-        <div className='w-full flex gap-1 min-h-[423px] bg-black relative '>
+        <div className='w-full flex gap-1 min-h-[423px] items-center bg-black relative '>
 
             <Wrapper className="z-10 flex min-h-full h-auto">
                 <div className='flex flex-col items-start gap-32 bg-black text-white md:max-w-xl max-w-lg h-full justify-center pr-8'>
@@ -40,9 +44,13 @@ const MainImageSection = ({ post }) => {
                             {post.excerpt ? post.excerpt : 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur except.'}
                         </p>
 
+
+
+                        {isAuthor ? <AuthorInfo  className={"mt-8"} contentType={post.contentType} author={post?.author} /> :
+                        
                         <p className="text-gray-400 font-inter text-base font-normal leading-120 mt-4">
                             {post.estimatedReadingTime} mins read • {formatDate(post._createdAt)}
-                        </p>
+                        </p>}
                     </div>
                 </div>
             </Wrapper>

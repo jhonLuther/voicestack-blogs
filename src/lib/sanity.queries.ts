@@ -59,7 +59,7 @@ export const homeSettingsQuery = groq`
   *[_type == "homeSettings"] | order(_createdAt desc) {
     _id,
     _createdAt,
-    "latestBlogs": *[_type == "post" && defined(slug.current)] | order(_createdAt desc) {
+    "latestBlogs": *[_type == "post" && contentType == "article" && defined(slug.current)] | order(_createdAt desc) {
        id,
       "desc": postFields.excerpt,
       title,
@@ -159,7 +159,15 @@ export async function getPodcasts(client: SanityClient,limit?: number): Promise<
 
   let newPodCastQuery = podcastsQuery
   if (limit > 0) {
-    newPodCastQuery = postsQuery + `[0...${limit}]`
+    newPodCastQuery = podcastsQuery + `[0...${limit}]`
+  }
+  return await client.fetch(newPodCastQuery)
+}
+export async function getCaseStudies(client: SanityClient,limit?: number): Promise<Post[]> {
+
+  let newPodCastQuery = caseStudiesQuery
+  if (limit > 0) {
+    newPodCastQuery = caseStudiesQuery + `[0...${limit}]`
   }
   return await client.fetch(newPodCastQuery)
 }
@@ -209,7 +217,7 @@ export const podcastsQuery = groq`
   excerpt,
   mainImage,
   body,
-  "authors": author[]-> {
+  "author": author[]-> {
     _id,
     name,
     slug,
@@ -231,6 +239,33 @@ export const podcastsQuery = groq`
         }
       }
     }
+  },
+  tags[]-> {
+    _id,
+    tagName,
+    slug
+  }
+}
+`
+export const caseStudiesQuery = groq`
+*[_type == "post" && contentType == "caseStudy" && defined(slug.current)] |  order(_updatedAt desc){
+  _id,
+  title,
+  slug,
+  contentType,
+  "audioFile": Video.link,
+  "platform": Video.platform,
+  duration,
+  publishedAt,
+  excerpt,
+  mainImage,
+  body,
+  "author": author[]-> {
+    _id,
+    name,
+    slug,
+    bio,
+    "picture": picture.asset->url,
   },
   tags[]-> {
     _id,

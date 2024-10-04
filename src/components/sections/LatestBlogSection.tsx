@@ -12,7 +12,7 @@ interface LatestBlogsProps {
 }
 
 const LatestBlogs: React.FC<LatestBlogsProps> = ({ blogs, revamp ,className }) => {
-  console.log(blogs, 'blogs in latest blog section');
+  console.log(blogs, 'data in latest blog section');
 
   return (
     <React.Fragment>
@@ -23,7 +23,7 @@ const LatestBlogs: React.FC<LatestBlogsProps> = ({ blogs, revamp ,className }) =
             <section className='flex w-full gap-20 justify-between md:flex-row flex-col'>
               <div className='flex flex-col gap-9 md:max-w-[519px] w-full  justify-between flex-1'>
                 <div className="flex flex-col w-full overflow-hidden ">
-                  <Card cardType='top-image-card' key={blogs[0]._id} post={blogs[0]} />
+                  <Card cardType='top-image-card' key={blogs[0]._id} cardColor='white' post={blogs[0]} />
                 </div>
               </div>
               <div className='flex-grow flex-1 flex flex-col gap-8'>

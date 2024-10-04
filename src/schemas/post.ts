@@ -1,5 +1,5 @@
 import { defineField, defineType } from 'sanity'
-import { DocumentVideoIcon } from '@sanity/icons'
+import { DocumentVideoIcon,MasterDetailIcon } from '@sanity/icons'
 import htmlCode from './htmlCode'
 
 export default defineType({
@@ -10,6 +10,15 @@ export default defineType({
     {
       name: 'seo',
       title: 'SEO Settings',
+      options: {
+        collapsible: true,
+        collapsed: true,
+        modal: { type: 'popover' },
+      },
+    },
+    {
+      name: 'caseStudyInfo',
+      title: 'Case Study Info',
       options: {
         collapsible: true,
         collapsed: true,
@@ -28,6 +37,7 @@ export default defineType({
           { title: 'Article', value: 'article' },
           { title: 'Webinar', value: 'webinar' },
           { title: 'Podcast', value: 'podcast' },
+          { title: 'Case Study', value: 'caseStudy' },
         ],
       },
       validation: (Rule) => Rule.required(),
@@ -125,6 +135,49 @@ export default defineType({
         parent.contentType !== 'webinar' && parent.contentType !== 'podcast',
     }),
     defineField({
+      name: 'practiceProfile',
+      title: 'Practice Profile',
+      type: 'object',
+      icon: MasterDetailIcon,
+      fieldset: 'caseStudyInfo',
+      fields: [
+        defineField({
+          name: 'practiceName',
+          title: 'Practice Name',
+          type: 'string',
+        }),
+        defineField({
+          name: 'headCount',
+          title: 'Number of Staffs',
+          type: 'string',
+        }),
+        defineField({
+          name: 'location',
+          title: 'Location',
+          type: 'string',
+        }),
+        defineField({
+          name: 'providers',
+          title: 'Providers',
+          type: 'string',
+        }),
+        defineField({
+          name: 'growingLocations',
+          title: 'Growing Locations',
+          type: 'string',
+        }),
+        defineField({
+          name:'dynamicComponent',
+          title:'Dynamic Component',
+          type:'array',
+          of:[{type:'dynamicComponent'}]
+        }),
+      ],
+      hidden: ({ parent }) =>
+        parent.contentType !== 'caseStudy',
+    }),
+    
+    defineField({
       name: 'duration',
       title: 'Duration ',
       type: 'string',
@@ -163,6 +216,8 @@ export default defineType({
           .error('At least one author is required'),
       ],
     }),
+
+
 
     // Tags Field
     defineField({

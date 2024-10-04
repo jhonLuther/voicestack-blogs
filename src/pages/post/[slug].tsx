@@ -166,8 +166,7 @@ export default function ProjectSlugRoute(
                         <AuthorInfo contentType={post.contentType} author={authorInfo} />
                       </div>
                     }
-                    <RelatedFeaturesSection currentPostSlug={post.slug.current} allPosts={allPosts} />
-                    <ShareableLinks props={post.title ?? post.title} />
+                    <RelatedFeaturesSection currentPostSlug={post.slug.current} title={post?.title} allPosts={allPosts} />
                   </div>
                 </div>
               </div>

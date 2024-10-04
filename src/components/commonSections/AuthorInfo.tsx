@@ -2,7 +2,14 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { urlForImage } from '~/lib/sanity.image'
 
-const AuthorInfo = ({ author, contentType }) => {
+
+interface AuthorProps {
+  author?: any
+  contentType?: string
+  className?: string
+}
+
+const AuthorInfo = ({ author, contentType,className }:AuthorProps) => {
 
   if (!author) {
     return null
@@ -11,7 +18,7 @@ const AuthorInfo = ({ author, contentType }) => {
   if (contentType === 'article') {
     const singleAuthor = author[0] || author; 
     return (
-      <Link href={`/author/${singleAuthor.slug && singleAuthor.slug.current && singleAuthor.slug.current}`}>
+      <Link className={className} href={`/author/${singleAuthor.slug && singleAuthor.slug.current && singleAuthor.slug.current}`}>
         <div className="author-info flex gap-4 cursor-pointer items-center">
           {singleAuthor.picture && (
             <Image
@@ -33,7 +40,7 @@ const AuthorInfo = ({ author, contentType }) => {
     return (
       <>
         {author.map((authors, index) => (
-          <Link key={authors._id || index} href={`/author/${authors.slug && authors.slug.current && authors.slug.current}`}>
+          <Link className={className}  key={authors._id || index} href={`/author/${authors.slug && authors.slug.current && authors.slug.current}`}>
             <div className="author-info flex gap-4 cursor-pointer items-center">
               {authors.picture && (
                 <Image

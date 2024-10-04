@@ -13,6 +13,7 @@ export default {
         list: [
           { title: 'Text Block', value: 'textBlock' },
           { title: 'Book Free Demo Banner', value: 'bannerBlock' }, 
+          { title: 'Aside Book Free Demo Banner', value: 'asideBannerBlock' }, 
           //add the component name 
         ],
       },
@@ -42,8 +43,14 @@ export default {
     {
       name: 'bannerBlock',
       title: 'Demo Banner Block',
-      type: 'demoBannerBlock', // Always use the name of schemaName
+      type: 'demoBannerBlock', 
       hidden: ({ parent }) => parent?.componentType !== 'bannerBlock',
+    },
+    {
+      name: 'asideBannerBlock',
+      title: 'Aside Banner Block',
+      type: 'asideBannerBlock', 
+      hidden: ({ parent }) => parent?.componentType !== 'asideBannerBlock',
     },
   ],
   preview: {

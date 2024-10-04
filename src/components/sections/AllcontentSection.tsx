@@ -4,9 +4,12 @@ import SearchBar from '../widgets/SearchBar';
 
 interface LatestBlogsProps {
     allContent: any[];
+    hideSearch?:boolean
+    className?: string;
+    cardType?: 'podcast-card' |  'ebook-card' | 'featured' | 'top-image-smallCard';
 }
 
-const AllcontentSection: React.FC<LatestBlogsProps> = ({ allContent }) => {
+const AllcontentSection: React.FC<LatestBlogsProps> = ({ allContent,hideSearch = false,className,cardType }) => {
 
     console.log(allContent, 'allcontent in allcontentsection');
 
@@ -17,18 +20,18 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({ allContent }) => {
     };
 
     return (
-        <section className="mt-9">
-            <div className="md:flex-row flex-col gap-8 flex items-center justify-between py-9">
+        <section className={`mt-9 ${className}`}>
+           {!hideSearch && <div className="md:flex-row flex-col gap-8 flex items-center justify-between py-9">
                 <h2 className="text-cs-black text-5xl font-manrope font-extrabold">{`Browse All`}</h2>
                 <div className="relative max-w-xl flex-1">
                     <SearchBar />
                 </div>
 
-            </div>
-            <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1  gap-y-9 gap-4">
+            </div>}
+            <div className={`${cardType === 'podcast-card' ? 'grid lg:grid-cols-2 md:grid-cols-1 pb-16   gap-y-9 gap-x-12' : 'grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1  gap-y-9 gap-4'} grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1  gap-y-9 gap-4`}>
                 {allContent && allContent.length > 0 ? (
                     allContent.slice(0, postsToShow).map((post) => (
-                        <Card key={post._id} post={post} />
+                        <Card cardType={cardType} cardColor='white' key={post._id} post={post} />
                     ))
                 ) : (
                     <div className="text-center py-10">
