@@ -51,13 +51,9 @@ export const getStaticPaths = async () => {
 
   console.log(slugs, 'slugs authors');
 
-
-  const paths = slugs?.map(({ slug }: { slug: string }) => {
-    if (slug) {
-      return `/author/${slug}`
-    }
-    return null
-  }).filter(Boolean)
+  const paths = slugs?.map((slug: string) => ({
+    params: { slug }
+  })).filter(Boolean)
 
   return {
     paths,

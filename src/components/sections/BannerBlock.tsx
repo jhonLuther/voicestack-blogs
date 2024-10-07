@@ -24,8 +24,6 @@ const BannerBlock: React.FC<BannerBlockProps> = ({ bannerBlock }) => {
         </h2>
         <p className='!text-gray-100 !text-opacity-70 !text-lg !m-0'>{bannerBlock?.description ? bannerBlock?.description  : 'Learn how we can help you reduce claim rejections and denials.'}</p>
       </div>
-
-
       <div>
       <div
         className="bg-green-700 hover:bg-green-600 px-4 py-3 flex min-w-[200px] cursor-pointer rounded"

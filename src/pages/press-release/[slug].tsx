@@ -1,31 +1,33 @@
+// pages/testimonial/[slug].tsx
 import { GetStaticProps, GetStaticPaths } from 'next';
 import { useRouter } from 'next/router';
 import { getClient } from '~/lib/sanity.client';
-import { getPodcast, getPodcasts, podcastSlugsQuery } from '~/lib/sanity.queries';
-import { Podcasts } from '~/interfaces/post';
+import { caseStudySlugsQuery, getCaseStudy, getRelatedContents } from '~/lib/sanity.queries';
+import { CaseStudies } from '~/interfaces/post';
 import Wrapper from '~/components/commonSections/Wrapper';
 import Image from 'next/image';
 import { readToken } from '~/lib/sanity.api';
-import { urlForImage } from '~/lib/sanity.image';
-import SanityPortableText from '~/components/blockEditor/sanityBlockEditor';
-import Container from '~/components/Container';
+import { draftMode } from 'next/headers';
+import SanityPortableText from '~/components/Editor/sanityBlockEditor';
 import MainImageSection from '~/components/MainImageSection';
 import RelatedFeaturesSection from '~/components/RelatedFeaturesSection';
-import AllcontentSection from '~/components/sections/AllcontentSection';
+import Container from '~/components/Container';
+import DynamicComponent from '~/layout/DynamicComponent';
+import AsideBannerBlock from '~/components/sections/asideBannerBlock';
+import PracticeProfile from '~/contentUtils/PracticeProfile';
 
 interface Props {
-  podcast: Podcasts;
-  allPodcasts: any;
+  caseStudy: CaseStudies;
   draftMode: boolean;
   token: string;
+  relatedContents?: any;
 }
-
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const client = getClient();
-  const slugs = await client.fetch(podcastSlugsQuery);
+  const slugs = await client.fetch(caseStudySlugsQuery);
 
-  console.log(slugs, 'slugs podcast');
+  console.log(slugs, 'slugs testimonials');
 
   const paths = slugs?.map((slug: string) => {
     return { params: { slug } };
@@ -39,70 +41,67 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false, params = {} }) => {
   const client = getClient(draftMode ? { token: readToken } : undefined);
-  const podcast = await getPodcast(client, params.slug as string);
-  const allPodcasts: any = await getPodcasts(client);
+  const caseStudy = await getCaseStudy(client, params.slug as string);
+  const relatedContents = await getRelatedContents(client, params.slug as string, 3 as number);
 
 
-  console.log(podcast, 'podcastslug', params);
 
-  if (!podcast) {
+  if (!caseStudy) {
     return {
       notFound: true,
+      revalidate: 60,
     };
   }
+
 
   return {
     props: {
       draftMode,
       token: draftMode ? readToken : '',
-      podcast,
-      allPodcasts
+      caseStudy,
+      relatedContents
     },
-    revalidate: 60,  // only include revalidate when the page is found
   };
 }
 
-// Testimonial page component
-const PodcastPage = ({ podcast, allPodcasts, draftMode, token }: Props) => {
+const CaseStudyPage = ({ caseStudy, draftMode, token, relatedContents }: Props) => {
   const router = useRouter();
 
-  console.log(podcast, 'slugxx ');
+  console.log(caseStudy, 'caseStudy data ');
 
   if (router.isFallback) {
     return <div>Loading...</div>;
   }
 
   return (
-
     <Container >
-      <MainImageSection isAuthor={true} post={podcast} />
+      <MainImageSection post={caseStudy} />
       <Wrapper>
-        {podcast.htmlCode && (
-          <div
-            className="video-embed w-full pt-16"
-            dangerouslySetInnerHTML={{ __html: podcast.htmlCode }}
-          />
-        )}
         <div className="flex  md:flex-row flex-col">
           <div className="mt-12 flex md:flex-col flex-col-reverse md:w-2/3 w-full ">
+
             <div className='post__content w-full '>
+            <PracticeProfile contents={caseStudy}/>
+
               <SanityPortableText
-                content={podcast.body}
+                content={caseStudy.body}
                 draftMode={draftMode}
                 token={token}
               />
             </div>
           </div>
+
           <div className='flex-1 flex flex-col gap-12 mt-12  bg-red relative md:w-1/3 w-full'>
+
             <div className='sticky top-12 flex flex-col gap-12'>
-              <RelatedFeaturesSection currentPostSlug={podcast.slug.current} title={podcast?.title} allPosts={allPodcasts} />
+              <AsideBannerBlock contents={caseStudy}/>
+              <RelatedFeaturesSection title={caseStudy?.title} allPosts={relatedContents} />
             </div>
           </div>
         </div>
-        <AllcontentSection className={'pt-16'}  allContent={allPodcasts} hideSearch={true} cardType={'podcast-card'}/>
       </Wrapper>
     </Container>
   );
 };
 
-export default PodcastPage;
+export default CaseStudyPage;

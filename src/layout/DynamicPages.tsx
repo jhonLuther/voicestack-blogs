@@ -1,7 +1,7 @@
 import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
-import TagSelect from "~/common/TagSelector";
+import TagSelect from "~/contentUtils/TagSelector";
 import { Post, Tag } from "~/interfaces/post";
 import Card from "~/components/Card";
 import LatestBlogs from "~/components/sections/LatestBlogSection";
@@ -39,9 +39,12 @@ const DynamicPages = ({
     popularBlogs,
     featuredContents,
     podcastData,
+    latestPosts,
     ...rest
 }: DynamicProps) => {
 
+    console.log(latestPosts,'latestPosts');
+    
 
     const router = useRouter();
 
@@ -175,7 +178,7 @@ const DynamicPages = ({
     return (
         <>
             <Wrapper >
-                <LatestBlogs blogs={latestBlogs ? latestBlogs : posts} />
+                <LatestBlogs contents={latestPosts} />
                 <ShortBannerSection />
                 <TagSelect
                     contentTypes={contentTypes}

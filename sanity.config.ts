@@ -96,19 +96,6 @@ export default defineConfig({
       structure: (S) =>
         S.list()
           .title('Base')
-          // .items([
-          //   S.listItem()
-          //     .title('Site Settings')
-          //     .child(
-          //       S.document()
-          //         .schemaType('siteSettings')
-          //         .documentId('siteSettings'),
-          //     ),
-          //   ...S.documentTypeListItems().filter(
-          //     (listItem) => !['siteSettings'].includes(listItem.getId()),
-          //   ),
-          // ])'structureTool({
- 
           .items([
             S.listItem()
               .title('Home Page')
@@ -118,7 +105,6 @@ export default defineConfig({
                   .schemaType('homeSettings')
                   .documentId('homeSettings'),
               ),
-
               S.documentTypeListItem('post').title('All Content'),
               S.documentTypeListItem('author').title('Authors'),
               S.documentTypeListItem('tag').title('Tags'),
@@ -131,20 +117,7 @@ export default defineConfig({
           
 
 
-          ])
-          // .items([
-          //   S.listItem()
-          //     .title('Global Settings')
-          //     .icon(CogIcon)
-          //     .child(
-          //       S.document()
-          //         .schemaType('globalSettings')
-          //         .documentId('globalSettings')
-          //     ),
-          //   ...S.documentTypeListItems().filter(
-          //     (listItem) => !['globalSettings'].includes(listItem.getId())
-          //   ),
-          // ])          
+          ])         
     }),
 
     media({

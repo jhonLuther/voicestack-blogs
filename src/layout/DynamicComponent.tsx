@@ -5,10 +5,9 @@ const componentMap = {
   textBlock: dynamic(() => import('../components/sections/TextBlock')),
   imageBlock: dynamic(() => import('../components/sections/ImageBlock')),
   bannerBlock: dynamic(() => import('../components/sections/BannerBlock')),
-  asideBannerBlock: dynamic(() => import('../components/sections/asideBannerBlock')),
 };
 
-const DynamicComponent = ({ componentType, ...props }) => {
+const DynamicComponent = ({ componentType, ...props }) => {  
   const Component = componentMap[componentType];
   if (!Component) return null;
   return <Component {...props} />;

@@ -43,14 +43,11 @@ const MainImageSection = ({ post ,isAuthor }:Props) => {
                         <p className="text-gray-400 font-inter text-base font-normal leading-120">
                             {post.excerpt ? post.excerpt : 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur except.'}
                         </p>
-
-
-
-                        {isAuthor ? <AuthorInfo  className={"mt-8"} contentType={post.contentType} author={post?.author} /> :
+                        {isAuthor  && <AuthorInfo  className={"mt-8"} contentType={post.contentType} author={post?.author} /> }
                         
-                        <p className="text-gray-400 font-inter text-base font-normal leading-120 mt-4">
-                            {post.estimatedReadingTime} mins read • {formatDate(post._createdAt)}
-                        </p>}
+                        {/* // <p className="text-gray-400 font-inter text-base font-normal leading-120 mt-4">
+                        //     {post.estimatedReadingTime} mins read • {formatDate(post._createdAt)}
+                        // </p> */}
                     </div>
                 </div>
             </Wrapper>

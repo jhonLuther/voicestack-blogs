@@ -9,6 +9,7 @@ import { urlForImage } from '~/lib/sanity.image'
 import {
   getPost,
   getPosts,
+  getRelatedContents,
   postBySlugQuery,
   postSlugsQuery,
   postsQuery,
@@ -48,6 +49,7 @@ export const getStaticProps: GetStaticProps<
   const client = getClient(draftMode ? { token: readToken } : undefined)
   const post = await getPost(client, params.slug)
   const allPosts = await getPosts(client);
+  const relatedContents = await getRelatedContents(client, params?.slug,3);
 
   if (!post) {
     return {
@@ -60,13 +62,14 @@ export const getStaticProps: GetStaticProps<
       draftMode,
       token: draftMode ? readToken : '',
       post,
-      allPosts
+      allPosts,
+      relatedContents
     },
   }
 }
 
 export default function ProjectSlugRoute(
-  props: InferGetStaticPropsType<typeof getStaticProps> & { allPosts: Post[] },
+  props: InferGetStaticPropsType<typeof getStaticProps> & { allPosts: Post[] ,relatedContents: Post[]},
 ) {
   const [post] = useLiveQuery(props.post, postBySlugQuery, {
     slug: props.post?.slug?.current,
@@ -166,7 +169,7 @@ export default function ProjectSlugRoute(
                         <AuthorInfo contentType={post.contentType} author={authorInfo} />
                       </div>
                     }
-                    <RelatedFeaturesSection currentPostSlug={post.slug.current} title={post?.title} allPosts={allPosts} />
+                    <RelatedFeaturesSection  title={post?.title} allPosts={props?.relatedContents} />
                   </div>
                 </div>
               </div>

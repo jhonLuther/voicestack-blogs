@@ -2,49 +2,37 @@ import Link from 'next/link';
 import React from 'react';
 
 interface AsidebannerBlockProps {
-  bannerBlock?: {
-    backgroundColor?: string;
-    title?: string;
-    buttonLink?: string;
-    buttonText?: string;
-    description?: string;
-  };
+  contents?:any
+
 }
 
-const BannerBlock: React.FC<AsidebannerBlockProps> = ({ bannerBlock }) => {
+const AsideBannerBlock: React.FC<AsidebannerBlockProps> = ({ contents }) => {
 
-  console.log(bannerBlock,'banner block');
-  
-
+  console.log(contents, 'AsideBannerBlock Contents');
   return (
-    <div
-      className="flex flex-1 md:flex-row flex-col md:items-center rounded-[10px] p-8 my-8 md:gap-20 gap-4 justify-between "
-      style={{ backgroundColor: bannerBlock?.backgroundColor ? bannerBlock?.backgroundColor : '#0f3936' }}
-    >
-      <div className='flex flex-col justify-center'>
-        <h2 className='!text-white !m-0 !text-3xl !font-semibold leading-[110%] block'>
-          {bannerBlock?.title ? bannerBlock?.title : 'Book a demo with us!'}
-        </h2>
-        <p className='!text-gray-100 !text-opacity-70 !text-lg !m-0'>{bannerBlock?.description ? bannerBlock?.description  : 'Learn how we can help you reduce claim rejections and denials.'}</p>
-      </div>
-
-
-      <div>
+    <div className='flex flex-col px-9 pt-16 pb-9 gap-9 bg-cs-green rounded-s '>
+      {contents && contents?.asideBookFreeDemoBanner?.map((item, i) => {
+        return (
+          <div className='flex flex-col gap-4' key={item._id || i}>
+            <h4 className='text-white leading-tight  font-bold text-[48px] tracking-tight'>{item.number}</h4>
+            <p className={`text-gray-300 pb-4 text-sm font-normal leading-relaxed tracking-wide border-b-2 border-gray-50 ${i === contents.asideBookFreeDemoBanner.length - 1 ? 'border-b-0' : ''}`}>{item.text}</p>
+          </div>
+        )
+      })}
       <div
-        className="bg-green-700 hover:bg-green-600 px-4 py-3 flex min-w-[200px] cursor-pointer rounded"
+        className="bg-cs-green-200 hover:bg-green-600 px-4 py-3 flex min-w-[200px] cursor-pointer rounded"
       >
         <Link
-          href={bannerBlock?.buttonLink ? bannerBlock?.buttonLink : 'https://carestack.com/demo'}
+          href={contents?.buttonLink ? contents?.buttonLink : 'https://carestack.com/demo'}
           target="_blank"
           rel="noreferrer"
           className="text-center w-full wh !text-white font-inter text-lg font-medium leading-6 !no-underline"
         >
-          {bannerBlock?.buttonText ? bannerBlock?.buttonText : 'Book Free Demo'}
+          {contents?.buttonText ? contents?.buttonText : 'Book Free Demo'}
         </Link>
-      </div>
       </div>
     </div>
   );
 };
 
-export default BannerBlock;
+export default AsideBannerBlock;

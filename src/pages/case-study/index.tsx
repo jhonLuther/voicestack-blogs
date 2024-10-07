@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { GetStaticProps } from 'next';
-import { Post, Testimonial, Podcasts,CaseStudies } from '~/interfaces/post';
+import { Post, Testimonial, Podcasts, CaseStudies } from '~/interfaces/post';
 import { readToken } from '~/lib/sanity.api';
 import { getClient } from '~/lib/sanity.client';
 import { getCaseStudies, getPodcasts, getTags } from '~/lib/sanity.queries';
@@ -9,7 +9,7 @@ import Wrapper from '~/components/commonSections/Wrapper';
 import LatestBlogs from '~/components/sections/LatestBlogSection';
 import Section from '~/components/Section';
 import Container from '~/components/Container';
-import TagSelect from '~/common/TagSelector';
+import TagSelect from '~/contentUtils/TagSelector';
 import AllcontentSection from '~/components/sections/AllcontentSection';
 
 export const getStaticProps: GetStaticProps<
@@ -34,18 +34,15 @@ export const getStaticProps: GetStaticProps<
 };
 
 const CaseStudyPage = ({ caseStudies, allPodcasts, tags }: { caseStudies: CaseStudies[], allPodcasts: Podcasts[], tags: any }) => {
-  console.log(caseStudies,'caseStudies  IN  MAIN SECTON');
-  
+  console.log(caseStudies, 'caseStudies  IN  MAIN SECTON');
+
 
   return (
     <Container>
-        <Wrapper>
-        </Wrapper>
-        {/* <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'}  revamp={true} blogs={caseStudies} />
-        <Wrapper>
-          <AllcontentSection className={'pb-9'}  allContent={allPodcasts} hideSearch={true} cardType={'podcast-card'}/>
-        </Wrapper> */}
-
+      <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'} revamp={true} contents={caseStudies ? caseStudies : []} />
+      <Wrapper>
+        <AllcontentSection className={'pb-9'} allContent={caseStudies} hideSearch={true} cardType={'podcast-card'} />
+      </Wrapper>
     </Container>
 
   );

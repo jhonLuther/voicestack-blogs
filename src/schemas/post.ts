@@ -1,5 +1,5 @@
 import { defineField, defineType } from 'sanity'
-import { DocumentVideoIcon,MasterDetailIcon } from '@sanity/icons'
+import { DocumentVideoIcon, MasterDetailIcon } from '@sanity/icons'
 import htmlCode from './htmlCode'
 
 export default defineType({
@@ -17,12 +17,12 @@ export default defineType({
       },
     },
     {
-      name: 'caseStudyInfo',
-      title: 'Case Study Info',
+      name: 'practiceProfile',
+      title: 'Practice Profile',
       options: {
         collapsible: true,
         collapsed: true,
-        modal: { type: 'popover' },
+        modal: { type: 'popover' },  
       },
     },
   ],
@@ -37,7 +37,7 @@ export default defineType({
           { title: 'Article', value: 'article' },
           { title: 'Webinar', value: 'webinar' },
           { title: 'Podcast', value: 'podcast' },
-          { title: 'Case Study', value: 'caseStudy' },
+          { title: 'Case Study', value: 'case-study' },
         ],
       },
       validation: (Rule) => Rule.required(),
@@ -129,61 +129,92 @@ export default defineType({
           title: 'Link',
           type: 'url',
         },
-
       ],
       hidden: ({ parent }) =>
         parent.contentType !== 'webinar' && parent.contentType !== 'podcast',
     }),
+
+    // Practice Profile Fields
     defineField({
-      name: 'practiceProfile',
-      title: 'Practice Profile',
-      type: 'object',
-      icon: MasterDetailIcon,
-      fieldset: 'caseStudyInfo',
-      fields: [
-        defineField({
-          name: 'practiceName',
-          title: 'Practice Name',
-          type: 'string',
-        }),
-        defineField({
-          name: 'headCount',
-          title: 'Number of Staffs',
-          type: 'string',
-        }),
-        defineField({
-          name: 'location',
-          title: 'Location',
-          type: 'string',
-        }),
-        defineField({
-          name: 'providers',
-          title: 'Providers',
-          type: 'string',
-        }),
-        defineField({
-          name: 'growingLocations',
-          title: 'Growing Locations',
-          type: 'string',
-        }),
-        defineField({
-          name:'dynamicComponent',
-          title:'Dynamic Component',
-          type:'array',
-          of:[{type:'dynamicComponent'}]
-        }),
-      ],
-      hidden: ({ parent }) =>
-        parent.contentType !== 'caseStudy',
-    }),
-    
-    defineField({
-      name: 'duration',
-      title: 'Duration ',
+      name: 'practiceName',
+      title: 'Practice Name',
       type: 'string',
       hidden: ({ parent }) =>
-        parent.contentType !== 'webinar' && parent.contentType !== 'podcast',
+        parent.contentType !== 'case-study',
+      fieldset: 'practiceProfile',
     }),
+
+    defineField({
+      name: 'headCount',
+      title: 'Number of Staffs',
+      type: 'string',
+      fieldset: 'practiceProfile',
+      hidden: ({ parent }) =>
+        parent.contentType !== 'case-study',
+    }),
+
+    defineField({
+      name: 'location',
+      title: 'Location',
+      type: 'string',
+      fieldset: 'practiceProfile',
+      hidden: ({ parent }) =>
+        parent.contentType !== 'case-study',
+    }),
+
+    defineField({
+      name: 'providers',
+      title: 'Providers',
+      type: 'string',
+      fieldset: 'practiceProfile',
+      hidden: ({ parent }) =>
+        parent.contentType !== 'case-study',
+    }),
+
+    defineField({
+      name: 'growingLocations',
+      title: 'Growing Locations',
+      type: 'string',
+      fieldset: 'practiceProfile',
+      hidden: ({ parent }) =>
+        parent.contentType !== 'case-study',
+    }),
+
+    defineField({
+      name: 'asideBookFreeDemoBanner',
+      title: 'Aside Book Free Demo Banner',
+      type: 'array',
+      fieldset: 'practiceProfile',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            {
+              name: 'number',
+              title: 'Number Field',
+              type: 'string',
+            },
+            
+            { 
+              name: 'text', 
+              title: 'Description', 
+              type: 'string' 
+            },
+          ],
+        },
+      ],
+      hidden: ({ parent }) =>
+        parent.contentType !== 'case-study',
+    }),
+
+    defineField({
+      name: 'duration',
+      title: 'Duration',
+      type: 'string',
+      hidden: ({ parent }) =>
+        parent.contentType !== 'webinar' && parent.contentType !== 'podcast' && parent.contentType !== 'case-study',
+    }),
+
     // Common Components
     defineField({
       name: 'mainImage',
@@ -216,8 +247,6 @@ export default defineType({
           .error('At least one author is required'),
       ],
     }),
-
-
 
     // Tags Field
     defineField({

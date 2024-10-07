@@ -1,17 +1,20 @@
 import React from 'react';
 import Link from 'next/link';
 import SearchBar from '~/components/widgets/SearchBar';
+import ProgressBar from '~/utils/progressBar/progressBar';
 
 const navigationLinks = [
-  { href: "/case-studies", label: "Case Studies" },
-  { href: "/articles", label: "Articles" },
-  { href: "/podcasts", label: "Podcasts" },
-  { href: "/webinars", label: "Webinars" },
-  { href: "/press-releases", label: "Press Releases" }
+  { href: "/case-study", label: "Case Study" },
+  { href: "/article", label: "Articles" },
+  { href: "/podcast", label: "Podcasts" },
+  { href: "/webinar", label: "Webinars" },
+  { href: "/press-release", label: "Press Releases" }
 ];
 
 const Header = () => {
   return (
+    <>
+    <ProgressBar/>
     <header className="w-full">
       <div className="bg-[#39B54A] text-white text-center py-2 text-sm">
        {` Book a Demo with us - It's free!`}
@@ -47,6 +50,8 @@ const Header = () => {
         </div>
       </div>
     </header>
+    </>
+
   );
 };
 

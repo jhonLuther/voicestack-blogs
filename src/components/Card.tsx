@@ -7,17 +7,17 @@ import Link from 'next/link';
 
 interface CardProps {
 	post: Post;
-	cardType?: 'top-image-card' | 'text-only-card' | 'left-image-card' | 'ebook-card' | 'featured' | 'top-image-smallCard' | 'podcast-card';
+	cardType?: 'top-image-card' | 'text-only-card' | 'left-image-card' | 'ebook-card' | 'featured' | 'top-image-smallCard' | 'podcast-card' | 'top-image-contentType-card';
 	className?: string;
 	cardColor?: string
 }
 
 export default function Card({ post, cardType, className, cardColor }: CardProps) {
 
-	console.log(cardColor,'cardColor');
 
 	const linkUrl = useMemo(() => {
-		const contentTypePath = post.contentType === 'podcast' ? 'podcasts' : post.contentType;
+
+		const contentTypePath =  post.contentType === "case Studie" ? "case-studies" : post.contentType;
 		
 		if (cardColor === 'white') {
 			return `/${contentTypePath}/${post.slug.current}`;
@@ -48,7 +48,7 @@ export default function Card({ post, cardType, className, cardColor }: CardProps
 							<div className="flex flex-col gap-3">
 								{post.tags && post.tags[0] && (
 									<span className="uppercase text-white font-inter text-sm font-medium">
-										{post.tags[0].tagName}
+										{post?.tags[0]?.tagName}
 									</span>
 								)}
 								<h2 className="card-content font-manrope md:text-5xl text-2xl text-white font-extrabold group-hover: group-hover:underline underline-offset-4">{post.title}</h2>
@@ -62,8 +62,46 @@ export default function Card({ post, cardType, className, cardColor }: CardProps
 						</div>
 					</div>
 				</Link>
-			) :
+			):
 
+			cardType === 'top-image-contentType-card' ? (
+				<Link href={linkUrl}>
+				<div className={`flex flex-col rounded-lg overflow-hidden ${className}`}>
+				  <div className="bg-purple-600 gap-2  text-white px-9 py-11 flex flex-col min-h-60">
+					<span className="uppercase text-sm font-medium">{post.tags &&post?.tags[0]?.tagName}</span>
+					<h2 className="text-3xl font-bold my-2">{post.title}</h2>
+					<p className="text-lg font-normal line-clamp-3 overflow-hidden">{post.desc || post.excerpt}</p>
+				  </div>
+				  
+				  <div className="relative">
+					{post.mainImage && (
+					  <Image
+						className="w-full h-auto object-cover"
+						src={urlForImage(post.mainImage).width(800).height(400).url()}
+						alt={post.title || 'Podcast Image'}
+						width={800}
+						height={400}
+					  />
+					)}
+					<div className="absolute gap-4 bottom-14 max-w-44 right-10 bg-white text-black p-3 rounded-full  shadow-md flex items-center">
+
+                     <div className='flex flex-col pl-5'>
+					 <span className='text-xs font-semibold'>{`Listen Now`}</span>
+					  <span className="text-xs font-normal text-cs-gray-700">{`${post.duration || '0:00'} min`}</span>
+					 </div>
+			
+
+					  <button className="flex items-center justify-center bg-black text-white p-2 rounded-full">
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+						  <path fill="currentColor" d="M8 5v14l11-7L8 5z" />
+						</svg>
+					  </button>
+					</div>
+				  </div>
+				</div>
+			  </Link>
+			)
+			:
 				cardType === 'left-image-card' ? (
 					<Link href={`/post/${post.slug && post.slug.current}`}>
 						<div className={`flex flex-row gap-4 items-center group hover: transition duration-500 ${className}`}>
@@ -78,7 +116,7 @@ export default function Card({ post, cardType, className, cardColor }: CardProps
 							)}
 							<div className="flex flex-col flex-1">
 								{post.tags && post.tags[0] && (
-									<span className="uppercase text-sm font-medium text-gray-600">{post.tags[0].tagName}</span>
+									<span className="uppercase text-sm font-medium text-gray-600">{post?.tags[0]?.tagName}</span>
 								)}
 								<h2 className="md:text-2xl  text-base font-semibold text-gray-900 group-hover: group-hover:underline line-clamp-2 overflow-hidden">
 									{post.title}
@@ -90,14 +128,12 @@ export default function Card({ post, cardType, className, cardColor }: CardProps
 					</Link>
 				)
 
-
-
 					: cardType === 'text-only-card' ? (
 						<div className={`flex flex-col flex-1 w-full group hover:scale-100 transform duration-300 ${className} `}>
 							<Link href={linkUrl}>
 								<div className={`border-b-2 pb-6 flex flex-col gap-3 ${cardColor === 'white' ? 'border-white' : 'border-gray-900'} group-hover:border-gray-600`}>
 									{post.tags && post.tags[0] && (
-										<span className="uppercase font-inter text-sm font-medium">{post.tags[0].tagName}</span>
+										<span className="uppercase font-inter text-sm font-medium">{post?.tags[0]?.tagName}</span>
 									)}
 									<h3 className={`text-4xl font-bold font-manrope ${cardColor === 'white' ? 'text-white' : 'text-gray-900'} w-full group-hover: group-hover:underline underline-offset-4`}>
 										{post.title}
@@ -124,7 +160,7 @@ export default function Card({ post, cardType, className, cardColor }: CardProps
 										<div className="flex flex-col gap-3">
 											{post.tags && post.tags.map((tag, i) => (
 												i === 0 && <span key={i} className="uppercase text-white font-inter text-sm font-medium">
-													{tag.tagName}
+													{tag?.tagName}
 												</span>
 											))}
 											<h2 className="card-content md:text-5xl text-2xl font-manrope text-white font-extrabold group-hover: group-hover:underline underline-offset-4">{post.title}</h2>
@@ -183,7 +219,7 @@ export default function Card({ post, cardType, className, cardColor }: CardProps
 											<div className="flex flex-col h-full justify-center flex-1 gap-3">
 												{post.tags && post.tags[0] && (
 													<span className="uppercase text-sm font-medium text-cs-black">
-														{post.tags[0].tagName}
+														{post?.tags[0]?.tagName}
 													</span>
 												)}
 												<h2 className="md:text-2xl font-manrope text-lg font-extrabold text-gray-900 group-hover:underline transition-all line-clamp-2">
@@ -224,8 +260,8 @@ export default function Card({ post, cardType, className, cardColor }: CardProps
 												</h3>
 												<div className="flex flex-col gap-1">
 													{post.tags && post.tags.map((tag, i) => (
-														<span key={tag._id || i} className="text-violet-800">
-															{tag.tagName}
+														<span key={tag?._id || i} className="text-violet-800">
+															{tag?.tagName}
 														</span>
 													))}
 													{post.contentType && (

@@ -5,22 +5,13 @@ import { getRelatedFeatures } from '~/utils/common';
 import ShareableLinks from './commonSections/ShareableLinks';
 
 interface RelatedFeaturesSectionProps {
-    currentPostSlug: string;
     allPosts: any[]; 
     title?: string;
 }
 
 
-const RelatedFeaturesSection: React.FC<RelatedFeaturesSectionProps> = ({ currentPostSlug, allPosts,title }) => {
-    console.log(allPosts, 'allposts PODCAST');
-    
-    const relatedFeatures =  allPosts && allPosts
-        .filter(post => post.slug.current !== currentPostSlug)
-        .slice(0, 2);
+const RelatedFeaturesSection: React.FC<RelatedFeaturesSectionProps> = ({allPosts,title }) => {
 
-    if (relatedFeatures.length === 0) {
-        return null;
-    }
 
 
 
@@ -29,7 +20,7 @@ const RelatedFeaturesSection: React.FC<RelatedFeaturesSectionProps> = ({ current
             <div className="flex flex-col gap-4">
                 <h2 className="text-base font-extrabold font-manrope uppercase ">{`Related Articles`}</h2>
                 <ul className="space-y-2 flex flex-col gap-2">
-                    {relatedFeatures && relatedFeatures.map((feature) => (
+                    {allPosts && allPosts.map((feature) => (
                         <li key={feature._id} className="flex flex-col items-start p-6 self-stretch rounded-md bg-[#151515] group">
                             <Link
                                 href={`/post/${feature.slug.current}`}

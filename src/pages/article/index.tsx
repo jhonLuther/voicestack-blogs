@@ -9,7 +9,7 @@ import Wrapper from '~/components/commonSections/Wrapper';
 import LatestBlogs from '~/components/sections/LatestBlogSection';
 import Section from '~/components/Section';
 import Container from '~/components/Container';
-import TagSelect from '~/common/TagSelector';
+import TagSelect from '~/contentUtils/TagSelector';
 import AllcontentSection from '~/components/sections/AllcontentSection';
 
 export const getStaticProps: GetStaticProps<
@@ -18,7 +18,7 @@ export const getStaticProps: GetStaticProps<
   const draftMode = context.preview || false;
   const client = getClient(draftMode ? { token: readToken } : undefined);
 
-  const podcasts: any = await getPodcasts(client, 4);
+  const podcasts: any = await getPodcasts(client, 5);
   const allPodcasts: any = await getPodcasts(client);
   const tags = await getTags(client)
 
@@ -33,21 +33,20 @@ export const getStaticProps: GetStaticProps<
   };
 };
 
-const PodcastPage = ({ podcasts, allPodcasts, tags }: { podcasts: Podcasts[], allPodcasts: Podcasts[], tags: any }) => {
+const ArticlePage = ({ podcasts, allPodcasts, tags }: { podcasts: Podcasts[], allPodcasts: Podcasts[], tags: any }) => {
 
   return (
     <Container>
         <Wrapper>
         </Wrapper>
-        <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'}  revamp={true} blogs={podcasts} />
+        <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'}  revamp={true} contents={podcasts} />
         <Wrapper>
           <AllcontentSection className={'pb-9'}  allContent={allPodcasts} hideSearch={true} cardType={'podcast-card'}/>
         </Wrapper>
-
     </Container>
 
   );
 };
 
-export default PodcastPage;
+export default ArticlePage;
 

@@ -155,21 +155,25 @@ export async function getTestiMonials(client: SanityClient): Promise<Post[]> {
   return await client.fetch(testiMonialsQuery)
 }
 
-export async function getPodcasts(client: SanityClient,limit?: number): Promise<Post[]> {
-
+export async function getPodcasts(
+  client: SanityClient,
+  limit?: number,
+): Promise<Post[]> {
   let newPodCastQuery = podcastsQuery
   if (limit > 0) {
     newPodCastQuery = podcastsQuery + `[0...${limit}]`
   }
   return await client.fetch(newPodCastQuery)
 }
-export async function getCaseStudies(client: SanityClient,limit?: number): Promise<Post[]> {
-
-  let newPodCastQuery = caseStudiesQuery
+export async function getCaseStudies(
+  client: SanityClient,
+  limit?: number,
+): Promise<Post[]> {
+  let newCaseStudyQuery = caseStudiesQuery
   if (limit > 0) {
-    newPodCastQuery = caseStudiesQuery + `[0...${limit}]`
+    newCaseStudyQuery = caseStudiesQuery + `[0...${limit}]`
   }
-  return await client.fetch(newPodCastQuery)
+  return await client.fetch(newCaseStudyQuery)
 }
 
 export async function getPostsBySlug(
@@ -248,7 +252,7 @@ export const podcastsQuery = groq`
 }
 `
 export const caseStudiesQuery = groq`
-*[_type == "post" && contentType == "caseStudy" && defined(slug.current)] |  order(_updatedAt desc){
+*[_type == "post" && contentType == "case-study" && defined(slug.current)] |  order(_updatedAt desc){
   _id,
   title,
   slug,
@@ -385,6 +389,69 @@ export const podcastBySlugQuery = groq`
   }
 `
 
+export const relatedContentsQuery = groq`
+  *[_type == "post" && slug.current != $currentSlug] 
+  | order(_createdAt desc)
+  [0...$limit] {  
+    _id,
+    title,
+    slug,
+    excerpt,
+    mainImage,
+    body,
+    "author": author[]-> {
+      _id,
+      name,
+      slug,
+      role,
+      bio,
+      "picture": picture.asset->url
+    },
+    tags[]-> {
+      _id,
+      tagName,
+      slug
+    }
+  }
+`
+
+export const caseStudyBySlugQuery = groq`
+  *[_type == "post" && contentType == "case-study" && slug.current == $slug][0] {
+    _id,
+    title,
+    slug,
+    contentType,
+    "audioFile": Video.link,
+    "platform": Video.platform,
+    duration,
+    publishedAt,
+    excerpt,
+    mainImage,
+    body,
+    "author": author[]-> {
+      _id,
+      name,
+      slug,
+      bio,
+      "picture": picture.asset->url,
+    },
+    tags[]-> {
+      _id,
+      tagName,
+      slug
+    },
+    practiceName, 
+    headCount,
+    location,
+    providers,
+    growingLocations,
+    "asideBookFreeDemoBanner": asideBookFreeDemoBanner[] {
+      number,
+      text
+    }
+  }
+`
+
 export const tagBySlugQuery = groq`
   *[_type == "tag" && slug.current == $slug][0] {
     _id,
@@ -419,16 +486,25 @@ export async function getAuthor(
     slug,
   })
 }
+export async function getRelatedContents(
+  client: SanityClient,
+  slug: string,
+  limit: number,
+): Promise<any> {
+  return await client.fetch(relatedContentsQuery, {
+    currentSlug: slug,
+    limit: limit,
+  })
+}
 
 export async function getauthorRelatedContents(
   client: SanityClient,
   authorId: string,
 ): Promise<any> {
-
   let relatedAuthors = authorRelatedContentQuery
 
   if (authorId.length > 0) {
-      relatedAuthors = groq`
+    relatedAuthors = groq`
   *[_type == "post" && "${authorId}" in author[]->_id] {
     _id,
     title,
@@ -444,14 +520,21 @@ export async function getauthorRelatedContents(
   }
   // return await client.fetch(authorRelatedContentQuery)
 
-
   return await client.fetch(authorRelatedContentQuery, {
     authorId,
-  });
+  })
 }
 
 export async function getTag(client: SanityClient, slug: string): Promise<any> {
   return await client.fetch(tagBySlugQuery, {
+    slug,
+  })
+}
+export async function getCaseStudy(
+  client: SanityClient,
+  slug: string,
+): Promise<any> {
+  return await client.fetch(caseStudyBySlugQuery, {
     slug,
   })
 }
@@ -491,6 +574,9 @@ export const testimonialSlugsQuery = groq`
 `
 export const podcastSlugsQuery = groq`
   *[_type == "post" && contentType == "podcast" && defined(slug.current)][].slug.current
+`
+export const caseStudySlugsQuery = groq`
+  *[_type == "post" && contentType == "case-study" && defined(slug.current)][].slug.current
 `
 
 export interface Iframe {

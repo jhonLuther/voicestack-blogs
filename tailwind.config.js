@@ -19,13 +19,16 @@ module.exports = {
           'cs-black':'#151515',
           'cs-gray-900':'#18181B',
           'cs-gray-800':'#38424D',
+          'cs-gray-700':'#606871',
           'cs-gray-600':'#888E94',
           'cs-gray-500':'#52525B',
+          'cs-gray-400':'#A1A1AA',
           'cs-gray':'#F6F6F3',
           'cs-lightGray-900':'#2D353E',
-
-          'cs-darkBlack':'#000'
-
+          'cs-darkBlack':'#000',
+          'cs-green' : '#277E78',
+          'cs-green-200' : '#42BA78',
+          'cs-dark-500' : '#202124'
         },
         maxWidth:{
           '8xl':"80rem"

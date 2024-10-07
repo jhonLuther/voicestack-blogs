@@ -10,7 +10,6 @@ import { readToken } from '~/lib/sanity.api';
 
 interface Props {
   testimonial: Testimonial; 
-  relatedTestimonials: Testimonial[]; 
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -34,8 +33,6 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
   const client = getClient(draftMode ? { token: readToken } : undefined);
   const testimonial = await getTestimonial(client, params.slug as string);
 
-  console.log(testimonial, 'testimonialSlug', params);
-
   if (!testimonial) {
     return {
       notFound: true,
@@ -43,23 +40,20 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
     };
   }
 
-  const relatedTestimonials = []; 
 
   return {
     props: {
       draftMode,
       token: draftMode ? readToken : '',
       testimonial,
-      relatedTestimonials, 
     },
   };
 }
 
 // Testimonial page component
-const TestimonialPage = ({ testimonial, relatedTestimonials }: Props) => {
+const TestimonialPage = ({ testimonial }: Props) => {
   const router = useRouter();
 
-  console.log(testimonial, 'slugxx ');
 
   if (router.isFallback) {
     return <div>Loading...</div>;
