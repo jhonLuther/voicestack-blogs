@@ -1,9 +1,9 @@
 import Link from 'next/link';
 import { GetStaticProps } from 'next';
-import { Post, Testimonial, Podcasts } from '~/interfaces/post';
+import { Post, Testimonial, Podcasts,Webinars } from '~/interfaces/post';
 import { readToken } from '~/lib/sanity.api';
 import { getClient } from '~/lib/sanity.client';
-import { getPodcasts, getTags } from '~/lib/sanity.queries';
+import { getPodcasts, getTags, getWebinars } from '~/lib/sanity.queries';
 import { SharedPageProps } from '../_app';
 import Wrapper from '~/components/commonSections/Wrapper';
 import LatestBlogs from '~/components/sections/LatestBlogSection';
@@ -13,35 +13,35 @@ import TagSelect from '~/contentUtils/TagSelector';
 import AllcontentSection from '~/components/sections/AllcontentSection';
 
 export const getStaticProps: GetStaticProps<
-  SharedPageProps & { podcasts: Podcasts[] }
+  SharedPageProps & { webinars: Webinars[] }
 > = async (context) => {
   const draftMode = context.preview || false;
   const client = getClient(draftMode ? { token: readToken } : undefined);
 
-  const podcasts: any = await getPodcasts(client, 5);
-  const allPodcasts: any = await getPodcasts(client);
+  const webinars: any = await getWebinars(client, 5);
+  const allWebinars: any = await getWebinars(client);
   const tags = await getTags(client)
 
   return {
     props: {
       draftMode,
       token: draftMode ? readToken : '',
-      podcasts,
-      allPodcasts,
+      webinars,
+      allWebinars,
       tags,
-    } as SharedPageProps & { podcasts: Podcasts[] },
+    } as SharedPageProps & { webinars: Webinars[] },
   };
 };
 
-const PodcastPage = ({ podcasts, allPodcasts, tags }: { podcasts: Podcasts[], allPodcasts: Podcasts[], tags: any }) => {
+const PodcastPage = ({ webinars, allWebinars, tags }: { webinars: Webinars[], allWebinars: Webinars[], tags: any }) => {
 
   return (
     <Container>
         <Wrapper>
         </Wrapper>
-        <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'}  revamp={true} contents={podcasts} />
+        <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'}  revamp={true} contents={webinars} />
         <Wrapper>
-          <AllcontentSection className={'pb-9'}  allContent={allPodcasts} hideSearch={true} cardType={'podcast-card'}/>
+          <AllcontentSection className={'pb-9'}  allContent={allWebinars} hideSearch={true} cardType={'podcast-card'}/>
         </Wrapper>
 
     </Container>

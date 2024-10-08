@@ -1,9 +1,9 @@
 import Link from 'next/link';
 import { GetStaticProps } from 'next';
-import { Post, Testimonial, Podcasts, CaseStudies } from '~/interfaces/post';
+import { Post, Testimonial, Podcasts, PressRelease } from '~/interfaces/post';
 import { readToken } from '~/lib/sanity.api';
 import { getClient } from '~/lib/sanity.client';
-import { getCaseStudies, getPodcasts, getTags } from '~/lib/sanity.queries';
+import { getCaseStudies, getPodcasts, getPressReleases, getTags } from '~/lib/sanity.queries';
 import { SharedPageProps } from '../_app';
 import Wrapper from '~/components/commonSections/Wrapper';
 import LatestBlogs from '~/components/sections/LatestBlogSection';
@@ -13,35 +13,33 @@ import TagSelect from '~/contentUtils/TagSelector';
 import AllcontentSection from '~/components/sections/AllcontentSection';
 
 export const getStaticProps: GetStaticProps<
-  SharedPageProps & { caseStudies: CaseStudies[] }
+  SharedPageProps & { pressReleases: PressRelease[] }
 > = async (context) => {
   const draftMode = context.preview || false;
   const client = getClient(draftMode ? { token: readToken } : undefined);
 
-  const caseStudies: any = await getCaseStudies(client, 4);
-  // const allPodcasts: any = await getPodcasts(client);
+  const pressReleases: any = await getPressReleases(client, 4);
+  const allPressReleases: any = await getPressReleases(client);
   const tags = await getTags(client)
 
   return {
     props: {
       draftMode,
       token: draftMode ? readToken : '',
-      caseStudies,
-      // allPodcasts,
-      // tags,
-    } as SharedPageProps & { caseStudies: CaseStudies[] },
+      pressReleases,
+      allPressReleases,
+    } as SharedPageProps & { pressReleases: PressRelease[] },
   };
 };
 
-const CaseStudyPage = ({ caseStudies, allPodcasts, tags }: { caseStudies: CaseStudies[], allPodcasts: Podcasts[], tags: any }) => {
-  console.log(caseStudies, 'caseStudies  IN  MAIN SECTON');
+const CaseStudyPage = ({ pressReleases, allPressReleases, tags }: { pressReleases: PressRelease[], allPressReleases: PressRelease[], tags: any }) => {
 
 
   return (
     <Container>
-      <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'} revamp={true} contents={caseStudies ? caseStudies : []} />
+      <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'} revamp={true} contents={pressReleases ? pressReleases : []} />
       <Wrapper>
-        <AllcontentSection className={'pb-9'} allContent={caseStudies} hideSearch={true} cardType={'podcast-card'} />
+        <AllcontentSection className={'pb-9'} allContent={allPressReleases} hideSearch={true} cardType={'podcast-card'} />
       </Wrapper>
     </Container>
 

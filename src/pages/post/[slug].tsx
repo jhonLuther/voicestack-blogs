@@ -75,10 +75,6 @@ export default function ProjectSlugRoute(
     slug: props.post?.slug?.current,
   })
 
-
-  // console.log(props, 'all props');
-
-
   const [allPosts] = useLiveQuery(props.allPosts, postsQuery);
 
   if (!post) {
@@ -93,46 +89,6 @@ export default function ProjectSlugRoute(
   const jsonLD: any = generateJSONLD(post);
   const authorInfo = post?.author
 
-  // const myPortableTextComponents: any = {
-  //   marks: {
-  //     link: ({ children, value }) => {
-  //       return <a href={value.href} className='!text-blue-500' >{children}</a>
-  //     },
-  //   },
-
-  //   // },
-  //   list: {
-  //     bullet: ({ children }) => <ul>{children}</ul>,
-  //     number: ({ children }) => <ol>{children}</ol>,
-  //   },
-  //   listItem: {
-  //     bullet: ({ children, index }) => (
-  //       <ListItem node={{ children }} index={index} isOrdered={false} />
-  //     ),
-  //     number: ({ children, index }) => (
-  //       <ListItem node={{ children }} index={index} isOrdered={true} />
-  //     ),
-  //   },
-  //   types: {
-  //     image: ({ value }) => {
-  //       return (
-  //         <SanityImage {...value} client={getClient(props.draftMode ? { token: props.token } : undefined)} />
-  //       );
-  //     },
-      
-  //     table: ({ value }) => {
-  //       return (
-  //         <DecoratorTable>{value}</DecoratorTable>
-  //       );
-  //     },
-  //     htmlCode: ({ value }) => {
-  //       return <div className='content-wrapper  w-full' dangerouslySetInnerHTML={{ __html: value.htmlCode }} />
-  //     },
-  //     dynamicComponent: ({ value }) => {
-  //       return <DynamicComponent {...value} client={getClient(props.draftMode ? { token: props.token } : undefined)} />
-  //     }
-  //   },
-  // }
 
   return (
     <>

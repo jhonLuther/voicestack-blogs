@@ -38,6 +38,7 @@ export default defineType({
           { title: 'Webinar', value: 'webinar' },
           { title: 'Podcast', value: 'podcast' },
           { title: 'Case Study', value: 'case-study' },
+          { title: 'Press Release', value: 'press-release' },
         ],
       },
       validation: (Rule) => Rule.required(),

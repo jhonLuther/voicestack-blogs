@@ -43,7 +43,6 @@ const PodcastPage = ({ podcasts, allPodcasts, tags }: { podcasts: Podcasts[], al
         <Wrapper>
           <AllcontentSection className={'pb-9'}  allContent={allPodcasts} hideSearch={true} cardType={'podcast-card'}/>
         </Wrapper>
-
     </Container>
 
   );

@@ -16,10 +16,13 @@ const Header = () => {
     <>
     <ProgressBar/>
     <header className="w-full">
-      <div className="bg-[#39B54A] text-white text-center py-2 text-sm">
+      <Link href="https://carestack.com/demo" >
+      <div className="bg-[#39B54A] text-white hover:translate-y-[-1px] transition-transform duration-300 ease-in-outduration-300 text-center py-2 text-sm">
        {` Book a Demo with us - It's free!`}
       </div>
-      <div className="bg-[#1E252B] text-white">
+      </Link>
+
+      <div className="bg-cs-gray-900 text-white">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex flex-col gap-3 justify-between py-4">
             <div className='flex md:flex-row gap-2  flex-col justify-between'>

@@ -19,6 +19,7 @@ export const getStaticProps: GetStaticProps<
   const client = getClient(draftMode ? { token: readToken } : undefined);
 
   const caseStudies: any = await getCaseStudies(client, 4);
+  const allCaseStudies: any = await getCaseStudies(client);
   // const allPodcasts: any = await getPodcasts(client);
   const tags = await getTags(client)
 
@@ -27,13 +28,13 @@ export const getStaticProps: GetStaticProps<
       draftMode,
       token: draftMode ? readToken : '',
       caseStudies,
-      // allPodcasts,
+      allCaseStudies,
       // tags,
     } as SharedPageProps & { caseStudies: CaseStudies[] },
   };
 };
 
-const CaseStudyPage = ({ caseStudies, allPodcasts, tags }: { caseStudies: CaseStudies[], allPodcasts: Podcasts[], tags: any }) => {
+const CaseStudyPage = ({ caseStudies, allCaseStudies, tags }: { caseStudies: CaseStudies[], allCaseStudies: CaseStudies[], tags: any }) => {
   console.log(caseStudies, 'caseStudies  IN  MAIN SECTON');
 
 
@@ -41,7 +42,7 @@ const CaseStudyPage = ({ caseStudies, allPodcasts, tags }: { caseStudies: CaseSt
     <Container>
       <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'} revamp={true} contents={caseStudies ? caseStudies : []} />
       <Wrapper>
-        <AllcontentSection className={'pb-9'} allContent={caseStudies} hideSearch={true} cardType={'podcast-card'} />
+        <AllcontentSection className={'pb-9'} allContent={allCaseStudies} hideSearch={true} cardType={'podcast-card'} />
       </Wrapper>
     </Container>
 

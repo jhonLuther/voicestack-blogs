@@ -38,6 +38,7 @@ export const testiMonialsQuery = groq`
     _id,
     testimonialName,
     slug,
+    image,
   "customer": customer-> {
     _id,
     name,
@@ -151,8 +152,15 @@ export async function getTags(client: SanityClient): Promise<Tag[]> {
   return await client.fetch(tagsQuery)
 }
 
-export async function getTestiMonials(client: SanityClient): Promise<Post[]> {
-  return await client.fetch(testiMonialsQuery)
+export async function getTestiMonials(
+  client: SanityClient,
+  limit?: number,
+): Promise<Post[]> {
+  let newTestiMonialsQuery = testiMonialsQuery
+  if (limit > 0) {
+    newTestiMonialsQuery = testiMonialsQuery + `[0...${limit}]`
+  }
+  return await client.fetch(newTestiMonialsQuery)
 }
 
 export async function getPodcasts(
@@ -165,6 +173,26 @@ export async function getPodcasts(
   }
   return await client.fetch(newPodCastQuery)
 }
+export async function getWebinars(
+  client: SanityClient,
+  limit?: number,
+): Promise<Post[]> {
+  let newWebinarQuery = webinarsQuery
+  if (limit > 0) {
+    newWebinarQuery = webinarsQuery + `[0...${limit}]`
+  }
+  return await client.fetch(newWebinarQuery)
+}
+export async function getArticles(
+  client: SanityClient,
+  limit?: number,
+): Promise<Post[]> {
+  let newArticles = artilclesQuery
+  if (limit > 0) {
+    newArticles = artilclesQuery + `[0...${limit}]`
+  }
+  return await client.fetch(newArticles)
+}
 export async function getCaseStudies(
   client: SanityClient,
   limit?: number,
@@ -174,6 +202,16 @@ export async function getCaseStudies(
     newCaseStudyQuery = caseStudiesQuery + `[0...${limit}]`
   }
   return await client.fetch(newCaseStudyQuery)
+}
+export async function getPressReleases(
+  client: SanityClient,
+  limit?: number,
+): Promise<Post[]> {
+  let newPressReleaseQuery = pressReleasesQuery
+  if (limit > 0) {
+    newPressReleaseQuery = pressReleasesQuery + `[0...${limit}]`
+  }
+  return await client.fetch(newPressReleaseQuery)
 }
 
 export async function getPostsBySlug(
@@ -227,22 +265,87 @@ export const podcastsQuery = groq`
     slug,
     bio,
     "picture": picture.asset->url,
-    "associatedPodcasts": *[_type == "post" && contentType == "podcast" && references(^._id) && _id != ^._id] {
-      _id,
-      title,
-      slug,
-      "audioFile": Video.link,
-      "platform": Video.platform,
-      duration,
-      publishedAt,
-      excerpt,
-      mainImage {
-        asset->{
-          _id,
-          url
-        }
-      }
-    }
+  },
+  tags[]-> {
+    _id,
+    tagName,
+    slug
+  }
+}
+`
+export const webinarsQuery = groq`
+*[_type == "post" && contentType == "webinar" && defined(slug.current)] |  order(_updatedAt desc){
+  _id,
+  title,
+  slug,
+  contentType,
+  "audioFile": Video.link,
+  "platform": Video.platform,
+  duration,
+  publishedAt,
+  excerpt,
+  mainImage,
+  body,
+  "author": author[]-> {
+    _id,
+    name,
+    slug,
+    bio,
+    "picture": picture.asset->url,
+  },
+  tags[]-> {
+    _id,
+    tagName,
+    slug
+  }
+}
+`
+export const pressReleasesQuery = groq`
+*[_type == "post" && contentType == "press-release" && defined(slug.current)] |  order(_updatedAt desc){
+  _id,
+  title,
+  slug,
+  contentType,
+  "audioFile": Video.link,
+  "platform": Video.platform,
+  duration,
+  publishedAt,
+  excerpt,
+  mainImage,
+  body,
+  "author": author[]-> {
+    _id,
+    name,
+    slug,
+    bio,
+    "picture": picture.asset->url,
+  },
+  tags[]-> {
+    _id,
+    tagName,
+    slug
+  }
+}
+`
+export const artilclesQuery = groq`
+*[_type == "post" && contentType == "article" && defined(slug.current)] |  order(_updatedAt desc){
+  _id,
+  title,
+  slug,
+  contentType,
+  "audioFile": Video.link,
+  "platform": Video.platform,
+  duration,
+  publishedAt,
+  excerpt,
+  mainImage,
+  body,
+  "author": author[]-> {
+    _id,
+    name,
+    slug,
+    bio,
+    "picture": picture.asset->url,
   },
   tags[]-> {
     _id,
@@ -373,6 +476,75 @@ export const podcastBySlugQuery = groq`
     "audioFile": Video.link,
     "platform": Video.platform,
     "htmlCode": Video.htmlCode, 
+    duration,
+    publishedAt,
+    excerpt,
+    mainImage,
+    body,
+    "author": author[]-> {
+      _id,
+      name,
+      slug,
+      role,
+      bio,
+      "picture": picture.asset->url
+    }
+  }
+`
+export const webinarBySlugQuery = groq`
+  *[_type == "post" && contentType == "webinar" && slug.current == $slug][0] {
+    _id,
+    title,
+    slug,
+    contentType,
+    "audioFile": Video.link,
+    "platform": Video.platform,
+    "htmlCode": Video.htmlCode, 
+    duration,
+    publishedAt,
+    excerpt,
+    mainImage,
+    body,
+    "author": author[]-> {
+      _id,
+      name,
+      slug,
+      role,
+      bio,
+      "picture": picture.asset->url
+    }
+  }
+`
+export const pressReleaseBySlugQuery = groq`
+  *[_type == "post" && contentType == "press-release" && slug.current == $slug][0] {
+    _id,
+    title,
+    slug,
+    contentType,
+    "audioFile": Video.link,
+    "platform": Video.platform,
+    "htmlCode": Video.htmlCode, 
+    duration,
+    publishedAt,
+    excerpt,
+    mainImage,
+    body,
+    "author": author[]-> {
+      _id,
+      name,
+      slug,
+      role,
+      bio,
+      "picture": picture.asset->url
+    }
+  }
+`
+export const articleBySlugQuery = groq`
+  *[_type == "post" && contentType == "article" && slug.current == $slug][0] {
+    _id,
+    title,
+    slug,
+    contentType,
     duration,
     publishedAt,
     excerpt,
@@ -555,6 +727,31 @@ export async function getPodcast(
     slug,
   })
 }
+
+export async function getArticle(
+  client: SanityClient,
+  slug: string,
+): Promise<any> {
+  return await client.fetch(articleBySlugQuery, {
+    slug,
+  })
+}
+export async function getWebinar(
+  client: SanityClient,
+  slug: string,
+): Promise<any> {
+  return await client.fetch(webinarBySlugQuery, {
+    slug,
+  })
+}
+export async function getPressRelease(
+  client: SanityClient,
+  slug: string,
+): Promise<any> {
+  return await client.fetch(articleBySlugQuery, {
+    slug,
+  })
+}
 // queries for static path generation **
 export const postSlugsQuery = groq`
 *[_type == "post" && defined(slug.current)][].slug.current
@@ -574,6 +771,15 @@ export const testimonialSlugsQuery = groq`
 `
 export const podcastSlugsQuery = groq`
   *[_type == "post" && contentType == "podcast" && defined(slug.current)][].slug.current
+`
+export const articleSlugsQuery = groq`
+  *[_type == "post" && contentType == "article" && defined(slug.current)][].slug.current
+`
+export const webinarSlugsQuery = groq`
+  *[_type == "post" && contentType == "webinar" && defined(slug.current)][].slug.current
+`
+export const pressReleaseSlugsQuery = groq`
+  *[_type == "post" && contentType == "press-release" && defined(slug.current)][].slug.current
 `
 export const caseStudySlugsQuery = groq`
   *[_type == "post" && contentType == "case-study" && defined(slug.current)][].slug.current

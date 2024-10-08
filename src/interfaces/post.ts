@@ -55,6 +55,8 @@ export interface Post {
 // interfaces/post.ts
 // Example of Testimonial interface
 export interface Testimonial {
+  body: any
+  practiceName: any
   mainImage: any
   title: string
   _id: string;
@@ -65,6 +67,21 @@ export interface Testimonial {
   image?: string;
 }
 export interface Podcasts {
+  practiceName: Podcasts
+  contents: any
+  htmlCode: any
+  body: any
+  mainImage: any
+  title: string
+  _id: string;
+  testimonialName: string; 
+  slug: Slug;
+  excerpt?: string; 
+  summary?: string; 
+  image?: string;
+}
+export interface Articles {
+  article: any
   contents: any
   htmlCode: any
   body: any
@@ -78,6 +95,35 @@ export interface Podcasts {
   image?: string;
 }
 export interface CaseStudies {
+  practiceName: any
+  practiceProfile: any
+  htmlCode: any
+  body: any
+  mainImage: any
+  title: string
+  _id: string;
+  testimonialName: string; 
+  slug: Slug;
+  excerpt?: string; 
+  summary?: string; 
+  image?: string;
+}
+export interface Webinars {
+  practiceName: any
+  practiceProfile: any
+  htmlCode: any
+  body: any
+  mainImage: any
+  title: string
+  _id: string;
+  testimonialName: string; 
+  slug: Slug;
+  excerpt?: string; 
+  summary?: string; 
+  image?: string;
+}
+export interface  PressRelease {
+  practiceName: any
   practiceProfile: any
   htmlCode: any
   body: any

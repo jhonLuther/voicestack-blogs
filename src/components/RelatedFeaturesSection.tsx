@@ -12,6 +12,10 @@ interface RelatedFeaturesSectionProps {
 
 const RelatedFeaturesSection: React.FC<RelatedFeaturesSectionProps> = ({allPosts,title }) => {
 
+    if(!allPosts){
+        return null
+    }
+
 
 
 

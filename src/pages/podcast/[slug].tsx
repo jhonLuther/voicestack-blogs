@@ -73,9 +73,9 @@ const PodcastPage = ({ podcast,relatedContents, draftMode, token }: Props) => {
         <div className="flex  md:flex-row flex-col">
           <div className="mt-12 flex md:flex-col flex-col-reverse md:w-2/3 w-full ">
             <div className='post__content w-full '>
-              {podcast && <PracticeProfile contents={podcast}/>}
+              {podcast && podcast?.practiceName ? <PracticeProfile contents={podcast}/> : ""}
               <SanityPortableText
-                content={podcast.body}
+                content={podcast?.body}
                 draftMode={draftMode}
                 token={token}
               />

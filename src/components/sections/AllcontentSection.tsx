@@ -10,10 +10,14 @@ interface LatestBlogsProps {
 }
 
 const AllcontentSection: React.FC<LatestBlogsProps> = ({ allContent, hideSearch = false, className, cardType }) => {
+    const [postsToShow, setPostsToShow] = useState(6);
+
+    if (!allContent) {
+        return null;
+    }
 
     console.log(allContent, 'allcontent in allcontentsection');
 
-    const [postsToShow, setPostsToShow] = useState(6);
 
     const handleShowMore = () => {
         setPostsToShow(postsToShow + 6);
