@@ -26,10 +26,7 @@ export default defineType({
       },
     },
     defineArrayMember(htmlCode),
-    defineArrayMember({
-      ...dynamicComponent,
-      icon: InsertBelowIcon,
-    }),
+    defineArrayMember(dynamicComponent),
     defineArrayMember({
       title: 'Block',
       type: 'block',

@@ -1,71 +1,61 @@
-import { defineArrayMember, defineType } from 'sanity'
-import HighlightDecorator from '../components/HighlightDecorator'
-import DynamicComponent from '../../src/schemas/dynamicComponent'
-import { ImageIcon } from '@sanity/icons'
-import { ThLargeIcon } from '@sanity/icons'
-import { InsertBelowIcon } from '@sanity/icons'
-import htmlCode from './htmlCode'
-import dynamicComponent from '../../src/schemas/dynamicComponent'
+import demoBannerBlock from './sections/demoBannerBlock';
 
-export default defineType({
-  title: 'Block Content',
-  name: 'newContent',
-  type: 'array',
-  of: [
+export default {
+  name: 'dynamicComponent',
+  title: 'Dynamic Component',
+  type: 'object',
+  fields: [
     {
-      type: 'image',
-      icon: ImageIcon,
-    },
-    {
-      type: 'table',
-      icon: ThLargeIcon,
+      name: 'componentType',
+      title: 'Component Type',
+      type: 'string',
       options: {
-        editModal: 'fullscreen',
-        columns: 3,
-        pageSize: 10,
+        list: [
+          { title: 'Text Block', value: 'textBlock' },
+          { title: 'Book Free Demo Banner', value: 'bannerBlock' }, 
+          { title: 'Aside Book Free Demo Banner', value: 'asideBannerBlock' }, 
+          //add the component name 
+        ],
       },
     },
-    defineArrayMember(htmlCode),
-    defineArrayMember({
-      ...dynamicComponent,
-      icon: InsertBelowIcon,
-    }),
-    defineArrayMember({
-      title: 'Block',
-      type: 'block',
-      styles: [
-        { title: 'Normal', value: 'normal' },
-        // { title: 'H1', value: 'h1' },
-        { title: 'H2', value: 'h2' },
-        { title: 'H3', value: 'h3' },
-        { title: 'H4', value: 'h4' },
-        { title: 'Quote', value: 'blockquote' },
-      ],
-      lists: [
-        { title: 'Bullet', value: 'bullet' },
-        { title: 'Numbered', value: 'number' },
-      ],
-      marks: {
-        decorators: [
-          { title: 'Strong', value: 'strong' },
-          { title: 'Emphasis', value: 'em' },
-          { title: 'Code', value: 'code' },
-        ],
-        annotations: [
-          {
-            title: 'URL',
-            name: 'link',
-            type: 'object',
-            fields: [
-              {
-                title: 'URL',
-                name: 'href',
-                type: 'url',
-              },
-            ],
-          },
-        ],
+    {
+      name: 'content',
+      title: 'Text Content',
+      type: 'array',
+      of: [{ type: 'block' }],
+      hidden: ({ parent }) => parent?.componentType !== 'textBlock',
+    },
+    {
+      name: 'image',
+      title: 'Image',
+      type: 'image',
+      options: {
+        hotspot: true,
       },
-    }),
+      hidden: ({ parent }) => parent?.componentType !== 'imageBlock',
+    },
+    {
+      name: 'caption',
+      title: 'Image Caption',
+      type: 'string',
+      hidden: ({ parent }) => parent?.componentType !== 'imageBlock',
+    },
+    {
+      name: 'bannerBlock',
+      title: 'Demo Banner Block',
+      type: 'demoBannerBlock', 
+      hidden: ({ parent }) => parent?.componentType !== 'bannerBlock',
+    },
+    {
+      name: 'asideBannerBlock',
+      title: 'Aside Banner Block',
+      type: 'asideBannerBlock', 
+      hidden: ({ parent }) => parent?.componentType !== 'asideBannerBlock',
+    },
   ],
-})
+  preview: {
+    select: {
+      title: 'componentType',
+    },
+  },
+};
