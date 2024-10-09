@@ -35,8 +35,8 @@ const LatestBlogs: React.FC<LatestBlogsProps> = ({ contents, revamp, className }
       {revamp ? (
         <div className={`bg-cs-gray-900 text-white ${className}`}>
           <Wrapper>
-            <section className='flex w-full gap-20 justify-between md:flex-row flex-col'>
-              <div className='flex flex-col gap-9 md:max-w-[519px] w-full justify-between flex-1'>
+            <section className='flex w-full gap-20 md:flex-row flex-col'>
+              <div className='flex flex-col gap-9 md:max-w-[519px] w-full flex-1'>
                 <div className="flex flex-col w-full overflow-hidden">
                   <Card cardType='top-image-contentType-card' key={firstBlog?._id || 1} cardColor='white' post={firstBlog} />
                 </div>

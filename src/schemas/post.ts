@@ -216,6 +216,17 @@ export default defineType({
         parent.contentType !== 'webinar' && parent.contentType !== 'podcast' && parent.contentType !== 'case-study',
     }),
 
+    // Ebook Specific Fields
+    defineField(    {
+      name: 'attachment',
+      title: 'Ebook Attachment',
+      type: 'file',
+      hidden: ({ parent }) =>
+        parent.contentType !== 'ebook',
+    },),
+
+
+
     // Common Components
     defineField({
       name: 'mainImage',

@@ -1,6 +1,7 @@
 import { ImageAsset, PortableTextBlock, Slug } from "sanity"
 
 export interface Post {
+  relatedPosts: any[]
 	duration: string
     map(arg0: (blog: any, index: any) => import("react").JSX.Element): import("react").ReactNode | Iterable<import("react").ReactNode>
   desc: string
@@ -55,6 +56,7 @@ export interface Post {
 // interfaces/post.ts
 // Example of Testimonial interface
 export interface Testimonial {
+  relatedTestimonials: any[]
   body: any
   practiceName: any
   mainImage: any
@@ -67,6 +69,8 @@ export interface Testimonial {
   image?: string;
 }
 export interface Podcasts {
+  relatedWebinars: any[]
+  relatedPodcasts: any[]
   practiceName: Podcasts
   contents: any
   htmlCode: any
@@ -81,6 +85,7 @@ export interface Podcasts {
   image?: string;
 }
 export interface Articles {
+  relatedArticles: any[]
   article: any
   contents: any
   htmlCode: any
@@ -95,6 +100,7 @@ export interface Articles {
   image?: string;
 }
 export interface CaseStudies {
+  relatedCaseStudies: any[]
   practiceName: any
   practiceProfile: any
   htmlCode: any
@@ -122,7 +128,24 @@ export interface Webinars {
   summary?: string; 
   image?: string;
 }
+export interface Ebooks {
+  relatedEbooks: any[]
+  relatedWebinars: any[]
+  practiceName: any
+  practiceProfile: any
+  htmlCode: any
+  body: any
+  mainImage: any
+  title: string
+  _id: string;
+  testimonialName: string; 
+  slug: Slug;
+  excerpt?: string; 
+  summary?: string; 
+  image?: string;
+}
 export interface  PressRelease {
+  relatedPressReleases: any[]
   practiceName: any
   practiceProfile: any
   htmlCode: any

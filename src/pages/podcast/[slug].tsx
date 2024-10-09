@@ -16,10 +16,8 @@ import PracticeProfile from '~/contentUtils/PracticeProfile';
 
 interface Props {
   podcast: Podcasts;
-  allPodcasts: any;
   draftMode: boolean;
   token: string;
-  relatedContents: any
 }
 
 
@@ -42,21 +40,17 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false, params = {} }) => {
   const client = getClient(draftMode ? { token: readToken } : undefined);
   const podcast = await getPodcast(client, params.slug as string);
-  const relatedContents = await getRelatedContents(client, params.slug as string, 3 as number);
-  const allPodcasts = await getPodcasts(client);
 
   return {
     props: {
       draftMode,
       token: draftMode ? readToken : '',
       podcast,
-      relatedContents,
-      allPodcasts,
     },
   };
 };
 
-const PodcastPage = ({ podcast,relatedContents, draftMode, token }: Props) => {
+const PodcastPage = ({ podcast, draftMode, token }: Props) => {
   const router = useRouter();
 
   console.log(podcast, 'slugxx ');
@@ -83,7 +77,7 @@ const PodcastPage = ({ podcast,relatedContents, draftMode, token }: Props) => {
           </div>
           <div className='flex-1 flex flex-col gap-12 mt-12  bg-red relative md:w-1/3 w-full'>
             <div className='sticky top-12 flex flex-col gap-12'>
-              <RelatedFeaturesSection title={podcast?.title} allPosts={relatedContents} />
+             {podcast?.relatedPodcasts.length > 0 && <RelatedFeaturesSection title={podcast?.title} allPosts={podcast?.relatedPodcasts} />}
             </div>
           </div>
         </div>

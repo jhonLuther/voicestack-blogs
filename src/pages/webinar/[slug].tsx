@@ -19,7 +19,6 @@ interface Props {
   allWebinars: any;
   draftMode: boolean;
   token: string;
-  relatedContents: any
 }
 
 
@@ -42,7 +41,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false, params = {} }) => {
   const client = getClient(draftMode ? { token: readToken } : undefined);
   const webinar = await getWebinar(client, params.slug as string);
-  const relatedContents = await getRelatedContents(client, params.slug as string, 3 as number);
   const allWebinars = await getWebinars(client);
 
   return {
@@ -50,13 +48,12 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
       draftMode,
       token: draftMode ? readToken : '',
       webinar,
-      relatedContents,
       allWebinars,
     },
   };
 };
 
-const WebinarPage = ({ webinar,relatedContents, draftMode, token }: Props) => {
+const WebinarPage = ({ webinar, draftMode, token }: Props) => {
   const router = useRouter();
 
   console.log(webinar, 'slugxx ');
@@ -82,7 +79,7 @@ const WebinarPage = ({ webinar,relatedContents, draftMode, token }: Props) => {
           </div>
           <div className='flex-1 flex flex-col gap-12 mt-12  bg-red relative md:w-1/3 w-full'>
             <div className='sticky top-12 flex flex-col gap-12'>
-              <RelatedFeaturesSection title={webinar?.title} allPosts={relatedContents} />
+              {webinar?.relatedWebinars.length > 0 && <RelatedFeaturesSection title={webinar?.title} allPosts={webinar?.relatedWebinars} />}
             </div>
           </div>
         </div>

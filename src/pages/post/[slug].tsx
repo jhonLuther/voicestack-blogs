@@ -49,7 +49,7 @@ export const getStaticProps: GetStaticProps<
   const client = getClient(draftMode ? { token: readToken } : undefined)
   const post = await getPost(client, params.slug)
   const allPosts = await getPosts(client);
-  const relatedContents = await getRelatedContents(client, params?.slug,3);
+  const relatedContents = await getRelatedContents(client, params?.slug);
 
   if (!post) {
     return {
@@ -125,7 +125,7 @@ export default function ProjectSlugRoute(
                         <AuthorInfo contentType={post.contentType} author={authorInfo} />
                       </div>
                     }
-                    <RelatedFeaturesSection  title={post?.title} allPosts={props?.relatedContents} />
+                    <RelatedFeaturesSection  title={post?.title} allPosts={post?.relatedPosts} />
                   </div>
                 </div>
               </div>

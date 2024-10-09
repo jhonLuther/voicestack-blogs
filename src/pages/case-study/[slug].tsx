@@ -20,7 +20,6 @@ interface Props {
   caseStudy: CaseStudies;
   draftMode: boolean;
   token: string;
-  relatedContents?: any;
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -42,10 +41,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false, params = {} }) => {
   const client = getClient(draftMode ? { token: readToken } : undefined);
   const caseStudy = await getCaseStudy(client, params.slug as string);
-  const relatedContents = await getRelatedContents(client, params.slug as string, 3 as number);
-
-
-
   if (!caseStudy) {
     return {
       notFound: true,
@@ -59,12 +54,11 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
       draftMode,
       token: draftMode ? readToken : '',
       caseStudy,
-      relatedContents
     },
   };
 }
 
-const CaseStudyPage = ({ caseStudy, draftMode, token, relatedContents }: Props) => {
+const CaseStudyPage = ({ caseStudy, draftMode, token }: Props) => {
   const router = useRouter();
 
   console.log(caseStudy, 'caseStudy data ');
@@ -91,7 +85,7 @@ const CaseStudyPage = ({ caseStudy, draftMode, token, relatedContents }: Props) 
           <div className='flex-1 flex flex-col gap-12 mt-12  bg-red relative md:w-1/3 w-full'>
             <div className='sticky top-12 flex flex-col gap-12'>
               <AsideBannerBlock contents={caseStudy}/>
-              <RelatedFeaturesSection title={caseStudy?.title} allPosts={relatedContents} />
+              {caseStudy?.relatedCaseStudies?.length > 0 && <RelatedFeaturesSection title={caseStudy?.title} allPosts={caseStudy?.relatedCaseStudies} />}
             </div>
           </div>
         </div>

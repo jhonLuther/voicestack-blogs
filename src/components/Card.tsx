@@ -2,8 +2,10 @@ import Image from 'next/image';
 import { Post } from '~/interfaces/post';
 import { urlForImage } from '~/lib/sanity.image';
 import { formatDate } from '~/utils';
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
+import router from 'next/router';
+import { getBasePath } from '~/utils/getBasePath';
 
 interface CardProps {
   post: Post;
@@ -14,20 +16,18 @@ interface CardProps {
 
 export default function Card({ post, cardType, className, cardColor }: CardProps) {
 
-  const linkUrl = useMemo(() => {
+  const [linkUrl, setLinkUrl] = useState<string | null>(null); 
 
-    const contentTypePath = post.contentType === "case Studie" ? "case-studies" : post.contentType;
-
-    if (cardColor === 'white') {
-      return `/${contentTypePath}/${post.slug.current}`;
+  useEffect(() => {
+    if (router.isReady && post?.slug) {
+      const contentTypePath = getBasePath(router, post.contentType); 
+      setLinkUrl(`/${contentTypePath}/${post.slug.current}`);
     }
-    return `/post/${post.slug.current}`;
-  }, [cardColor, post?.contentType, post?.slug]);
+  }, [ post?.contentType, post?.slug]);
 
-  if (!post) {
-    return null
+  if (!post || !linkUrl) {
+    return null;
   }
-
 
 
   return (
@@ -52,6 +52,7 @@ export default function Card({ post, cardType, className, cardColor }: CardProps
                   <span className="uppercase text-white font-inter text-sm font-medium">
                     {post?.tags[0]?.tagName}
                   </span>
+
                 )}
                 <h2 className="card-content font-manrope md:text-5xl text-2xl text-white font-extrabold group-hover: group-hover:underline underline-offset-4">{post.title}</h2>
                 <p className="text-white font-inter text-lg font-normal line-clamp-2 overflow-hidden">

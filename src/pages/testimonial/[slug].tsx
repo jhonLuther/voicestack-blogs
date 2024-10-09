@@ -19,14 +19,11 @@ interface Props {
   testimonial: Testimonial; 
   draftMode: boolean;
   token: string;
-  relatedContents?: any;
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const client = getClient();
   const slugs = await client.fetch(testimonialSlugsQuery);
-
-  console.log(slugs, 'slugs testimonials');
 
   const paths = slugs?.map((slug: string) => {
     return { params: { slug } }; 
@@ -42,8 +39,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false, params = {} }) => {
   const client = getClient(draftMode ? { token: readToken } : undefined);
   const testimonial = await getTestimonial(client, params.slug as string);
-  const relatedContents = await getRelatedContents(client, params.slug as string, 3 as number);
-
 
   if (!testimonial) {
     return {
@@ -63,7 +58,9 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
 }
 
 // Testimonial page component
-const TestimonialPage = ({ testimonial,draftMode,token ,relatedContents}: Props) => {
+const TestimonialPage = ({ testimonial,draftMode,token }: Props) => {
+  console.log(testimonial);
+  
   const router = useRouter();
 
 
@@ -79,7 +76,6 @@ const TestimonialPage = ({ testimonial,draftMode,token ,relatedContents}: Props)
         <div className="flex  md:flex-row flex-col">
           <div className="mt-12 flex md:flex-col flex-col-reverse md:w-2/3 w-full ">
             <div className='post__content w-full '>
-              {podcast && testimonial?.practiceName ? <PracticeProfile contents={testimonial}/> : ""}
               <SanityPortableText
                 content={testimonial?.body}
                 draftMode={draftMode}
@@ -89,7 +85,7 @@ const TestimonialPage = ({ testimonial,draftMode,token ,relatedContents}: Props)
           </div>
           <div className='flex-1 flex flex-col gap-12 mt-12  bg-red relative md:w-1/3 w-full'>
             <div className='sticky top-12 flex flex-col gap-12'>
-              <RelatedFeaturesSection title={testimonial?.title} allPosts={relatedContents} />
+              {testimonial?.relatedTestimonials?.length > 0 && <RelatedFeaturesSection title={testimonial?.title} allPosts={testimonial?.relatedTestimonials} />}
             </div>
           </div>
         </div>

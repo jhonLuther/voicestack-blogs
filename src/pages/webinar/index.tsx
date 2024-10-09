@@ -33,7 +33,7 @@ export const getStaticProps: GetStaticProps<
   };
 };
 
-const PodcastPage = ({ webinars, allWebinars, tags }: { webinars: Webinars[], allWebinars: Webinars[], tags: any }) => {
+const WebinarsPage = ({ webinars, allWebinars, tags }: { webinars: Webinars[], allWebinars: Webinars[], tags: any }) => {
 
   return (
     <Container>
@@ -49,5 +49,5 @@ const PodcastPage = ({ webinars, allWebinars, tags }: { webinars: Webinars[], al
   );
 };
 
-export default PodcastPage;
+export default WebinarsPage;
 

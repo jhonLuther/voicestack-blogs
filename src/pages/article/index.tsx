@@ -33,7 +33,7 @@ export const getStaticProps: GetStaticProps<
   };
 };
 
-const ArticlePage = ({ articles, allArticles, tags }: { articles: Articles[], allArticles: Articles[], tags: any }) => {
+const ArticlesPage = ({ articles, allArticles, tags }: { articles: Articles[], allArticles: Articles[], tags: any }) => {
 
   return (
     <Container>
@@ -48,5 +48,5 @@ const ArticlePage = ({ articles, allArticles, tags }: { articles: Articles[], al
   );
 };
 
-export default ArticlePage;
+export default ArticlesPage;
 

@@ -7,6 +7,7 @@ const navigationLinks = [
   { href: "/case-study", label: "Case Study" },
   { href: "/article", label: "Articles" },
   { href: "/podcast", label: "Podcasts" },
+  { href: "/ebook", label: "Ebooks" },
   { href: "/webinar", label: "Webinars" },
   { href: "/press-release", label: "Press Releases" }
 ];

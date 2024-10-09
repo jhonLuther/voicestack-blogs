@@ -5,6 +5,7 @@ import { ImageIcon } from '@sanity/icons'
 import { ThLargeIcon } from '@sanity/icons'
 import { InsertBelowIcon } from '@sanity/icons'
 import htmlCode from './htmlCode'
+import dynamicComponent from '../../src/schemas/dynamicComponent'
 
 export default defineType({
   title: 'Block Content',
@@ -25,17 +26,10 @@ export default defineType({
       },
     },
     defineArrayMember(htmlCode),
-    {
-      type: 'dynamicComponent',
+    defineArrayMember({
+      ...dynamicComponent,
       icon: InsertBelowIcon,
-      options: {
-        list: [
-          { title: 'Text Block', value: 'textBlock' },
-          { title: 'Image Block', value: 'imageBlock' },
-          { title: 'Demo Banner Block', value: 'bannerBlock' },
-        ],
-      },
-    },
+    }),
     defineArrayMember({
       title: 'Block',
       type: 'block',

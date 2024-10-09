@@ -20,7 +20,6 @@ export const getStaticProps: GetStaticProps<
 
   const caseStudies: any = await getCaseStudies(client, 4);
   const allCaseStudies: any = await getCaseStudies(client);
-  // const allPodcasts: any = await getPodcasts(client);
   const tags = await getTags(client)
 
   return {
@@ -29,12 +28,11 @@ export const getStaticProps: GetStaticProps<
       token: draftMode ? readToken : '',
       caseStudies,
       allCaseStudies,
-      // tags,
     } as SharedPageProps & { caseStudies: CaseStudies[] },
   };
 };
 
-const CaseStudyPage = ({ caseStudies, allCaseStudies, tags }: { caseStudies: CaseStudies[], allCaseStudies: CaseStudies[], tags: any }) => {
+const CaseStudysPage = ({ caseStudies, allCaseStudies, tags }: { caseStudies: CaseStudies[], allCaseStudies: CaseStudies[], tags: any }) => {
   console.log(caseStudies, 'caseStudies  IN  MAIN SECTON');
 
 
@@ -49,5 +47,5 @@ const CaseStudyPage = ({ caseStudies, allCaseStudies, tags }: { caseStudies: Cas
   );
 };
 
-export default CaseStudyPage;
+export default CaseStudysPage;
 

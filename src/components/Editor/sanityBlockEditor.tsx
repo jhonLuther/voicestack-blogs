@@ -28,8 +28,8 @@ const SanityPortableText: React.FC<SanityPortableTextProps> = ({
       },
     },
     list: {
-      bullet: ({children}) => <ul className="list-disc ml-4">{children}</ul>,
-      number: ({children}) => <ol className="list-decimal ml-4">{children}</ol>,
+      bullet: ({children}) => <ul >{children}</ul>,
+      number: ({children}) => <ol >{children}</ol>,
     },
     listItem: {
       bullet: ({children, index}) => (

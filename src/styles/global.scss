@@ -95,7 +95,9 @@ body, #__next {
 .post__content{
   @apply  prose md:prose lg:prose-lg; 
 }
-
+.post__content li{
+  @apply list-none;
+}
 
 
 // .post__content h1 {
