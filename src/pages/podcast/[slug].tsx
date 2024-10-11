@@ -64,10 +64,19 @@ const PodcastPage = ({ podcast, draftMode, token }: Props) => {
     <Container >
       <MainImageSection isAuthor={true} post={podcast} />
       <Wrapper>
+      {
+        podcast.htmlCode &&
+        (
+          <div className='pt-9' dangerouslySetInnerHTML={{ __html: podcast.htmlCode }}>
+          </div>
+        )
+      }
+      </Wrapper>
+
+      <Wrapper>
         <div className="flex  md:flex-row flex-col">
           <div className="mt-12 flex md:flex-col flex-col-reverse md:w-2/3 w-full ">
             <div className='post__content w-full '>
-              {podcast && podcast?.practiceName ? <PracticeProfile contents={podcast}/> : ""}
               <SanityPortableText
                 content={podcast?.body}
                 draftMode={draftMode}
@@ -77,7 +86,7 @@ const PodcastPage = ({ podcast, draftMode, token }: Props) => {
           </div>
           <div className='flex-1 flex flex-col gap-12 mt-12  bg-red relative md:w-1/3 w-full'>
             <div className='sticky top-12 flex flex-col gap-12'>
-             {podcast?.relatedPodcasts.length > 0 && <RelatedFeaturesSection title={podcast?.title} allPosts={podcast?.relatedPodcasts} />}
+              {podcast?.relatedPodcasts.length > 0 && <RelatedFeaturesSection title={podcast?.title} allPosts={podcast?.relatedPodcasts} />}
             </div>
           </div>
         </div>

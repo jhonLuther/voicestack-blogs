@@ -13,6 +13,7 @@ import MainImageSection from '~/components/MainImageSection';
 import RelatedFeaturesSection from '~/components/RelatedFeaturesSection';
 import AllcontentSection from '~/components/sections/AllcontentSection';
 import PracticeProfile from '~/contentUtils/PracticeProfile';
+import VideoModal from '~/components/commonSections/VideoModal';
 
 interface Props {
   webinar: Podcasts;
@@ -67,6 +68,7 @@ const WebinarPage = ({ webinar, draftMode, token }: Props) => {
     <Container >
       <MainImageSection isAuthor={true} post={webinar} />
       <Wrapper>
+      <VideoModal className={`pt-9 max-w-xl flex items-start`} platform={`${webinar.platform ? webinar.platform : 'Youtube'}`} link={`${webinar.videoId ? webinar.videoId : '650959265'}`}/>
         <div className="flex  md:flex-row flex-col">
           <div className="mt-12 flex md:flex-col flex-col-reverse md:w-2/3 w-full ">
             <div className='post__content w-full '>

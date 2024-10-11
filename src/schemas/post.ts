@@ -119,21 +119,29 @@ export default defineType({
           },
         },
         {
-          name: 'htmlCode',
-          title: 'Embed Code',
-          type: 'text',
-          description: 'Paste the HTML code you want to embed',
-          validation: Rule => Rule.required()
-        },
-        {
-          name: 'link',
-          title: 'Link',
-          type: 'url',
+          name: 'videoId',
+          title: 'Video ID',
+          description:"Paste the ID of the video you want to embed",
+          type: 'string',
         },
       ],
       hidden: ({ parent }) =>
-        parent.contentType !== 'webinar' && parent.contentType !== 'podcast',
+        parent.contentType !== 'webinar' ,
     }),
+
+
+
+    defineField(
+      {
+        name: 'htmlCode',
+        title: 'Embed Code',
+        type: 'text',
+        description: 'Paste the HTML code you want to embed',
+        validation: Rule => Rule.required(),
+        hidden: ({ parent }) =>
+           parent.contentType !== 'podcast',
+      },
+    ),
 
     // Practice Profile Fields
     defineField({
@@ -224,7 +232,6 @@ export default defineType({
       hidden: ({ parent }) =>
         parent.contentType !== 'ebook',
     },),
-
 
 
     // Common Components

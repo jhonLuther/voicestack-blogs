@@ -8,10 +8,13 @@ const componentMap = {
   testimonialCard: dynamic(() => import('../components/sections/TestimonialCard')),
 };
 
-// specify the props type in each dynamic blocks withn the names in componentMap
+// Specify the props type in each dynamic block within the names in componentMap
 const DynamicComponent = ({ componentType, ...props }) => {  
+  console.log(props);
+  
   const Component = componentMap[componentType];
   if (!Component) return null;
+
   return <Component {...props} />;
 };
 

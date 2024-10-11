@@ -23,6 +23,8 @@ module.exports = {
           'cs-gray-600':'#888E94',
           'cs-gray-500':'#52525B',
           'cs-gray-400':'#A1A1AA',
+          'cs-gray-300':'#E7E8E9',
+          'cs-gray-200':'#374151',
           'cs-gray':'#F6F6F3',
           'cs-lightGray-900':'#2D353E',
           'cs-darkBlack':'#000',

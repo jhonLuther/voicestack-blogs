@@ -69,6 +69,10 @@ export interface Testimonial {
   image?: string;
 }
 export interface Podcasts {
+  videoId: any
+  videoId: any
+  platform: any
+  platform: any
   relatedWebinars: any[]
   relatedPodcasts: any[]
   practiceName: Podcasts

@@ -256,19 +256,50 @@ export async function getPostsBySlug(
   return await client.fetch(newPostsQuery)
 }
 
+// Common Body query  for $portableText  update the dynamic component query here 
+const bodyFragment = `
+  body[] {
+    ...,
+    _type == "image" => {
+      ...,
+      asset->,
+    },
+    _type == "dynamicComponent" => {
+      ...,
+      testimonialCard {
+        testimonial-> {
+          testimonialName,
+          excerpt,
+          "customerDetails": customer->{
+            name,
+            slug,
+            bio,
+            "picture": picture.asset->url
+          },
+          image {
+            asset->{
+              url,
+              metadata
+            }
+          },
+          rating,
+          date
+        }
+      },
+      bannerBlock,
+      asideBannerBlock,
+    }
+  }
+`
+
 export const podcastsQuery = groq`
 *[_type == "post" && contentType == "podcast" && defined(slug.current)] |  order(_updatedAt desc){
   _id,
   title,
   slug,
-  contentType,
-  "audioFile": Video.link,
-  "platform": Video.platform,
   duration,
   publishedAt,
   excerpt,
-  mainImage,
-  body,
   "author": author[]-> {
     _id,
     name,
@@ -276,11 +307,6 @@ export const podcastsQuery = groq`
     bio,
     "picture": picture.asset->url,
   },
-  tags[]-> {
-    _id,
-    tagName,
-    slug
-  }
 }
 `
 export const webinarsQuery = groq`
@@ -441,16 +467,10 @@ export const postBySlugQuery = groq`
     slug,
     excerpt,
     contentType,
-    body[] {
-      ...,
-      _type == "image" => {
-        ...,
-        asset->
-      }
-    },
-      "numberOfCharacters": length(pt::text(body)),
-      "estimatedWordCount": round(length(pt::text(body)) / 5),
-      "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180),
+   ${bodyFragment},
+    "numberOfCharacters": length(pt::text(body)),
+    "estimatedWordCount": round(length(pt::text(body)) / 5),
+    "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180),
     mainImage,
     _createdAt,
     seoTitle,
@@ -458,10 +478,6 @@ export const postBySlugQuery = groq`
     seoKeywords,
     seoCanonical,
     seoRobots,
-    dynamicComponents[] {
-      _key,
-      componentType,
-    },
     author[]-> {
       _id,
       name,
@@ -499,6 +515,7 @@ export const testiMonialBySlugQuery = groq`
     videoId,
     image,
     rating,
+    ${bodyFragment},
     date,
     "tags": tags[]-> {
     _id,
@@ -512,14 +529,12 @@ export const podcastBySlugQuery = groq`
   title,
   slug,
   contentType,
-  "audioFile": Video.link,
-  "platform": Video.platform,
-  "htmlCode": Video.htmlCode, 
+  htmlCode, 
   duration,
   publishedAt,
   excerpt,
   mainImage,
-  body,
+  ${bodyFragment},
   "author": author[]-> {
     _id,
     name,
@@ -549,7 +564,7 @@ export const ebookBySlugQuery = groq`
         url
       }
     },
-    body,
+    ${bodyFragment},
     "author": author[]-> {
       _id,
       name,
@@ -571,14 +586,14 @@ export const webinarBySlugQuery = groq`
     title,
     slug,
     contentType,
-    "audioFile": Video.link,
+    "videoId": Video.videoId,
     "platform": Video.platform,
     "htmlCode": Video.htmlCode, 
     duration,
     publishedAt,
     excerpt,
     mainImage,
-    body,
+    ${bodyFragment},
     "author": author[]-> {
       _id,
       name,
@@ -607,7 +622,7 @@ export const pressReleaseBySlugQuery = groq`
     publishedAt,
     excerpt,
     mainImage,
-    body,
+    ${bodyFragment},
     "author": author[]-> {
       _id,
       name,
@@ -633,7 +648,7 @@ export const articleBySlugQuery = groq`
     publishedAt,
     excerpt,
     mainImage,
-    body,
+    ${bodyFragment},
     "author": author[]-> {
       _id,
       name,
@@ -662,7 +677,7 @@ export const caseStudyBySlugQuery = groq`
     publishedAt,
     excerpt,
     mainImage,
-    body,
+    ${bodyFragment},
     "author": author[]-> {
       _id,
       name,
@@ -959,7 +974,7 @@ export async function getWebinar(
       )
       return { ...webinar, relatedWebinars }
     }
-    return { ...webinar, relatedWebinars: [] }``
+    return { ...webinar, relatedWebinars: [] }
   }
   return null
 }
@@ -979,7 +994,7 @@ export async function getEbook(
       )
       return { ...ebook, relatedEbooks }
     }
-    return { ...ebook, relatedEbooks: [] }``
+    return { ...ebook, relatedEbooks: [] }
   }
   return null
 }

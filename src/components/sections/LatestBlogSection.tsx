@@ -64,7 +64,7 @@ const LatestBlogs: React.FC<LatestBlogsProps> = ({ contents, revamp, className }
           </div>
           <div className='flex-grow flex-1'>
             <div className="flex flex-col w-full overflow-hidden">
-              <Card cardType='top-image-card' key={firstBlog._id} post={firstBlog} />
+              <Card cardType='top-image-card' key={firstBlog?._id} post={firstBlog} />
             </div>
           </div>
         </section>

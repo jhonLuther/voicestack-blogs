@@ -1,8 +1,10 @@
 import demoBannerBlock from './sections/demoBannerBlock';
+import { InsertBelowIcon } from '@sanity/icons'
 
 export default {
   name: 'dynamicComponent',
   title: 'Dynamic Component',
+  icon: InsertBelowIcon,
   type: 'object',
   fields: [
     {
@@ -14,7 +16,8 @@ export default {
           { title: 'Text Block', value: 'textBlock' },
           { title: 'Book Free Demo Banner', value: 'bannerBlock' }, 
           { title: 'Aside Book Free Demo Banner', value: 'asideBannerBlock' }, 
-          //add the component name 
+          { title: 'Testimonial Card', value: 'testimonialCard' },
+                    //add the component name 
         ],
       },
     },
@@ -51,6 +54,12 @@ export default {
       title: 'Aside Banner Block',
       type: 'asideBannerBlock', 
       hidden: ({ parent }) => parent?.componentType !== 'asideBannerBlock',
+    },
+    {
+      name: 'testimonialCard',
+      title: 'Testimonial Card',
+      type: 'testimonialCard',
+      hidden: ({ parent }) => parent?.componentType !== 'testimonialCard'
     },
   ],
   preview: {
