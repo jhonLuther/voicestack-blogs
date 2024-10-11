@@ -70,8 +70,6 @@ export interface Testimonial {
 }
 export interface Podcasts {
   videoId: any
-  videoId: any
-  platform: any
   platform: any
   relatedWebinars: any[]
   relatedPodcasts: any[]
