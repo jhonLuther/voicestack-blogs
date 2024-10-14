@@ -11,7 +11,7 @@ interface AuthorProps {
 
 const  AuthorInfo = ({ author, contentType,className }:AuthorProps) => {
 
-  console.log(author,'auhor info');
+  // console.log(author,'auhor info');
   
 
   if (!author) {

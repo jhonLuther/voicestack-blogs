@@ -36,7 +36,7 @@ const Header = () => {
             </div>
             <div className='flex md:flex-row  flex-col gap-2 justify-between items-center'>
               <nav className="flex gap-8 flex-wrap">
-                {navigationLinks.map((link) => (
+                {navigationLinks?.map((link) => (
                   <Link 
                     key={link.href} 
                     href={link.href} 

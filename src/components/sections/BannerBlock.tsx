@@ -13,7 +13,7 @@ interface BannerBlockProps {
 
 const BannerBlock: React.FC<BannerBlockProps> = ({ bannerBlock }) => {
 
-  console.log(bannerBlock, 'BannerBlock Contents');
+  // console.log(bannerBlock, 'BannerBlock Contents');
   
 
   return (

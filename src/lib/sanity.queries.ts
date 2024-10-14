@@ -479,7 +479,7 @@ export const postBySlugQuery = groq`
     seoKeywords,
     seoCanonical,
     seoRobots,
-    author[]-> {
+    "author": author[]-> {
       _id,
       name,
       slug,

@@ -6,6 +6,7 @@ import { ThLargeIcon } from '@sanity/icons'
 import { InsertBelowIcon } from '@sanity/icons'
 import htmlCode from './htmlCode'
 import dynamicComponent from '../../src/schemas/dynamicComponent'
+import videoManager from './videoManager'
 
 export default defineType({
   title: 'Block Content',
@@ -27,6 +28,7 @@ export default defineType({
     },
     defineArrayMember(htmlCode),
     defineArrayMember(dynamicComponent),
+    defineArrayMember(videoManager),
     defineArrayMember({
       title: 'Block',
       type: 'block',

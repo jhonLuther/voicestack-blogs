@@ -15,26 +15,15 @@ import {
   postsQuery,
 } from '~/lib/sanity.queries'
 import type { SharedPageProps } from '~/pages/_app'
-import { formatDate } from '~/utils'
 import blogStyles from '../../styles/components/blogStyles.module.scss'
-import HighlightDecorator from '~/components/HighlightDecorator'
-import DynamicComponent from '../../layout/DynamicComponent'
 import SEOHead from '~/layout/SeoHead'
 import { Post } from '~/interfaces/post'
 import { generateJSONLD } from '~/utils/generateJSONLD'
-import { fetchAuthor, getRelatedFeatures } from '~/utils/common'
 import AuthorInfo from '~/components/commonSections/AuthorInfo'
 import Wrapper from '~/components/commonSections/Wrapper'
-import { SanityImage } from '~/components/SanityImage'
 import RelatedFeaturesSection from '~/components/RelatedFeaturesSection'
-import ShareableLinks from '~/components/commonSections/ShareableLinks'
-import Breadcrumb from '~/components/commonSections/BreadCrumb'
 import MainImageSection from '~/components/MainImageSection'
-import DecoratorTable from '~/components/DecoratorTable'
-import { list } from 'postcss'
-import ListItem from '~/components/typography/ListItem'
 import SanityPortableText from '~/components/blockEditor/sanityBlockEditor'
-
 
 interface Query {
   [key: string]: string
@@ -86,8 +75,8 @@ export default function ProjectSlugRoute(
   const seoKeywords = post.seoKeywords || '';
   const seoRobots = post.seoRobots || 'index,follow';
   const seoCanonical = post.seoCanonical || `https://carestack.com/post/${post.slug.current}`;
-  const jsonLD: any = generateJSONLD(post);
   const authorInfo = post?.author
+  const jsonLD: any = generateJSONLD(post);
 
 
   return (

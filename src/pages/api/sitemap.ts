@@ -7,8 +7,6 @@ import { getPosts, getSitemapData } from '~/lib/sanity.queries';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
-
-
 function generateSiteMap(posts: any[]) {
   const staticPages = [
     `${BASE_URL}`,
@@ -47,11 +45,7 @@ function generateSiteMap(posts: any[]) {
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
     const client = getClient(req?.preview ? { token: readToken } : undefined);
-
-
     const data = await getSitemapData(client)
-
-    console.log(data,'IDATA');
     const sitemap = generateSiteMap(data);
     res.setHeader('Content-Type', 'application/xml');
     res.write(sitemap);

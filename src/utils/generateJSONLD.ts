@@ -2,9 +2,22 @@ import { Post } from '~/interfaces/post';
 import { fetchAuthor } from './common';
 
 export function generateJSONLD(post: Post) {
+  console.log({generatedPost:post});
+
+  const {
+    author = null,
+    estimatedReadingTime = null,
+    estimatedWordCount = null,
+    excerpt = null,
+    numberOfCharacters = null,
+  } = post || {};
+  
 
   const contentType = post?.contentType;
   // console.log(contentType,'contentType');
+
+  console.log(author,'author in json');
+  
   
 
   if (contentType) {
@@ -13,12 +26,40 @@ export function generateJSONLD(post: Post) {
         return JSON.stringify({
           "@context": "https://schema.org",
           "@type": "BlogPosting",
-          "headline": post.title,
-          "description": post.excerpt,
-          "datePublished": post._createdAt,
-          "author": {
+          mainEntityOfPage: {
+            "@type": "WebPage",
+            "@id": `https://carestack.com${post.slug}`,
+            isPartOf: {
+              "@id": "https://carestack.com/#website",
+            },
+          },
+          headline: post.title,
+          description: excerpt,
+          image:
+            "https://a.storyblok.com/f/144863/1201x1201/a1d1cbd61c/carestack-favicon-1200x1200.png",
+          author: {
             "@type": "Person",
-            "name": post.author?.name || "Unknown Author",
+            name: author[0]?.name || "Unknown Author",
+            url: "https://carestack.com/company/leadership-team",
+          },
+          wordCount: estimatedWordCount ?? 0,
+          dateCreated: post._createdAt,
+          inLanguage: "en-US",
+          copyrightYear: post._createdAt.split(' ')[2],
+          copyrightHolder: {
+            "@id": "https://carestack.com/#organization",
+          },
+          publisher: {
+            "@type": "Organization",
+            name: "CareStack",
+            url: "https://carestack.com",
+            logo: {
+              "@type": "ImageObject",
+              inLanguage: "en-US",
+              url: "https://a.storyblok.com/f/144863/1201x1201/a1d1cbd61c/carestack-favicon-1200x1200.png",
+              width: 1200,
+              height: 1200,
+            },
           },
         });
       case 'ebook':
@@ -28,7 +69,7 @@ export function generateJSONLD(post: Post) {
           "name": post.title,
           "author": {
             "@type": "Person",
-            "name": post.author?.name || "Unknown Author",
+            "name": author[0]?.name || "Unknown Author",
           },
           "datePublished": post._createdAt,
           "numberOfPages": post.ebookFields?.ebookPages || 0,
@@ -41,7 +82,7 @@ export function generateJSONLD(post: Post) {
           "headline": post.title,
           "author": {
             "@type": "Person",
-            "name": post.author?.name || "Unknown Author",
+            "name": author[0]?.name || "Unknown Author",
           },
           "datePublished": post._createdAt,
           "articleBody": post.body,
@@ -65,7 +106,7 @@ export function generateJSONLD(post: Post) {
           "datePublished": post._createdAt,
           "author": {
             "@type": "Person",
-            "name": post.author?.name || "Unknown Author",
+            "name": author[0]?.name || "Unknown Author",
           },
         });
       default:
@@ -77,14 +118,43 @@ export function generateJSONLD(post: Post) {
   const defaultJSONLD = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "headline": post.title,
-    "description": post.excerpt,
-    "datePublished": post._createdAt,
-    "author": {
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `https://carestack.com${post.slug}`,
+      isPartOf: {
+        "@id": "https://carestack.com/#website",
+      },
+    },
+    headline: post.title,
+    description: excerpt,
+    image:
+      "https://a.storyblok.com/f/144863/1201x1201/a1d1cbd61c/carestack-favicon-1200x1200.png",
+    author: {
       "@type": "Person",
-      "name": post.author?.name || "Unknown Author",
+      name: author[0]?.name || "Unknown Author",
+      url: "https://carestack.com/company/leadership-team",
+    },
+    wordCount: estimatedWordCount ?? 0,
+    dateCreated: post._createdAt,
+    inLanguage: "en-US",
+    copyrightYear: post._createdAt.split(' ')[2],
+    copyrightHolder: {
+      "@id": "https://carestack.com/#organization",
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "CareStack",
+      url: "https://carestack.com",
+      logo: {
+        "@type": "ImageObject",
+        inLanguage: "en-US",
+        url: "https://a.storyblok.com/f/144863/1201x1201/a1d1cbd61c/carestack-favicon-1200x1200.png",
+        width: 1200,
+        height: 1200,
+      },
     },
   };
+
 
   let customJSONLD = {};
   try {

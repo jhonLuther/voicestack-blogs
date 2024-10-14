@@ -6,9 +6,7 @@ interface TestimonialCardProps {
 }
 
 const TestimonialCard: React.FC<TestimonialCardProps> = ({ ...props }:any) => {
-    const data = props.testimonialCard?.testimonial?.customerDetails
-
-    console.log(props,'testimonial card');
+    const customerDetails = props.testimonialCard?.testimonial?.customerDetails
     
   return (
     <div className="w-full p-8 flex flex-col gap-2 border-2 rounded-2xl border-cs-gray-300">
@@ -22,7 +20,7 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({ ...props }:any) => {
           </p>
         </div>
         <div>
-          <AuthorInfo contentType={'article'} author={data} />
+          <AuthorInfo contentType={'article'} author={customerDetails} />
         </div>
       </div>
     </div>
