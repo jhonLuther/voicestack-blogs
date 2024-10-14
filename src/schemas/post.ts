@@ -1,5 +1,6 @@
 import { defineField, defineType } from 'sanity'
-import {DocumentVideoIcon} from '@sanity/icons'
+import { DocumentVideoIcon, MasterDetailIcon } from '@sanity/icons'
+import htmlCode from './htmlCode'
 
 export default defineType({
   name: 'post',
@@ -15,6 +16,15 @@ export default defineType({
         modal: { type: 'popover' },
       },
     },
+    {
+      name: 'practiceProfile',
+      title: 'Practice Profile',
+      options: {
+        collapsible: true,
+        collapsed: true,
+        modal: { type: 'popover' },  
+      },
+    },
   ],
   fields: [
     defineField({
@@ -27,12 +37,12 @@ export default defineType({
           { title: 'Article', value: 'article' },
           { title: 'Webinar', value: 'webinar' },
           { title: 'Podcast', value: 'podcast' },
+          { title: 'Case Study', value: 'case-study' },
+          { title: 'Press Release', value: 'press-release' },
         ],
       },
       validation: (Rule) => Rule.required(),
     }),
-
-    // SEO Fields
 
     defineField({
       name: 'seoDescription',
@@ -86,6 +96,11 @@ export default defineType({
       },
     }),
     defineField({
+      name: 'excerpt',
+      title: 'Short Description',
+      type: 'text',
+    }),
+    defineField({
       name: 'Video',
       title: 'Video Link',
       type: 'object',
@@ -104,20 +119,122 @@ export default defineType({
           },
         },
         {
-          name: 'link',
-          title: 'Link',
-          type: 'url',
+          name: 'videoId',
+          title: 'Video ID',
+          description:"Paste the ID of the video you want to embed",
+          type: 'string',
         },
       ],
-      hidden: ({ parent }) => parent.contentType !== 'webinar' && parent.contentType !== 'podcast',
+      hidden: ({ parent }) =>
+        parent.contentType !== 'webinar' ,
     }),
+
+
+
+    defineField(
+      {
+        name: 'htmlCode',
+        title: 'Embed Code',
+        type: 'text',
+        description: 'Paste the HTML code you want to embed',
+        validation: Rule => Rule.required(),
+        hidden: ({ parent }) =>
+           parent.contentType !== 'podcast',
+      },
+    ),
+
+    // Practice Profile Fields
+    defineField({
+      name: 'practiceName',
+      title: 'Practice Name',
+      type: 'string',
+      hidden: ({ parent }) =>
+        parent.contentType !== 'case-study',
+      fieldset: 'practiceProfile',
+    }),
+
+    defineField({
+      name: 'headCount',
+      title: 'Number of Staffs',
+      type: 'string',
+      fieldset: 'practiceProfile',
+      hidden: ({ parent }) =>
+        parent.contentType !== 'case-study',
+    }),
+
+    defineField({
+      name: 'location',
+      title: 'Location',
+      type: 'string',
+      fieldset: 'practiceProfile',
+      hidden: ({ parent }) =>
+        parent.contentType !== 'case-study',
+    }),
+
+    defineField({
+      name: 'providers',
+      title: 'Providers',
+      type: 'string',
+      fieldset: 'practiceProfile',
+      hidden: ({ parent }) =>
+        parent.contentType !== 'case-study',
+    }),
+
+    defineField({
+      name: 'growingLocations',
+      title: 'Growing Locations',
+      type: 'string',
+      fieldset: 'practiceProfile',
+      hidden: ({ parent }) =>
+        parent.contentType !== 'case-study',
+    }),
+
+    defineField({
+      name: 'asideBookFreeDemoBanner',
+      title: 'Aside Book Free Demo Banner',
+      type: 'array',
+      fieldset: 'practiceProfile',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            {
+              name: 'number',
+              title: 'Number Field',
+              type: 'string',
+            },
+            
+            { 
+              name: 'text', 
+              title: 'Description', 
+              type: 'string' 
+            },
+          ],
+        },
+      ],
+      hidden: ({ parent }) =>
+        parent.contentType !== 'case-study',
+    }),
+
     defineField({
       name: 'duration',
-      title: 'Duration ',
+      title: 'Duration',
       type: 'string',
-      hidden: ({ parent }) => parent.contentType !== 'webinar' && parent.contentType !== 'podcast',
+      hidden: ({ parent }) =>
+        parent.contentType !== 'webinar' && parent.contentType !== 'podcast' && parent.contentType !== 'case-study',
     }),
-// Common Components
+
+    // Ebook Specific Fields
+    defineField(    {
+      name: 'attachment',
+      title: 'Ebook Attachment',
+      type: 'file',
+      hidden: ({ parent }) =>
+        parent.contentType !== 'ebook',
+    },),
+
+
+    // Common Components
     defineField({
       name: 'mainImage',
       title: 'Main Image',
@@ -132,10 +249,22 @@ export default defineType({
       type: 'newContent',
     }),
 
+    // Author Reference
     defineField({
-      name: 'excerpt',
-      title: 'Short Description',
-      type: 'text',
+      name: 'author',
+      title: 'Author',
+      type: 'array',
+      of: [
+        {
+          type: 'reference',
+          to: [{ type: 'author' }],
+        },
+      ],
+      validation: (Rule) => [
+        Rule.required()
+          .min(1)
+          .error('At least one author is required'),
+      ],
     }),
 
     // Tags Field
@@ -147,19 +276,6 @@ export default defineType({
         {
           type: 'reference',
           to: [{ type: 'tag' }],
-        },
-      ],
-    }),
-    // Author Reference
-    defineField(
-    {
-      name: 'author',
-      title: 'Author',
-      type: 'array',
-      of: [
-        {
-          type: 'reference',
-          to: [{ type: 'author' }],
         },
       ],
     }),
@@ -176,9 +292,7 @@ export default defineType({
       const { title, contentType, author, tag } = selection
       return {
         title,
-        subtitle:
-          author &&
-          `${contentType && contentType.toUpperCase()}`,
+        subtitle: author && `${contentType && contentType.toUpperCase()}`,
         media: selection.media,
       }
     },

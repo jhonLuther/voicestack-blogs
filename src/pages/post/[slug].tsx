@@ -2,13 +2,14 @@ import { PortableText } from '@portabletext/react'
 import type { GetStaticProps, InferGetStaticPropsType } from 'next'
 import Image from 'next/image'
 import { useLiveQuery } from 'next-sanity/preview'
-import Container from '~/components/Container'
+import Layout from '~/components/Layout'
 import { readToken } from '~/lib/sanity.api'
 import { getClient } from '~/lib/sanity.client'
 import { urlForImage } from '~/lib/sanity.image'
 import {
   getPost,
   getPosts,
+  getRelatedContents,
   postBySlugQuery,
   postSlugsQuery,
   postsQuery,
@@ -23,8 +24,7 @@ import { Post } from '~/interfaces/post'
 import { generateJSONLD } from '~/utils/generateJSONLD'
 import { fetchAuthor, getRelatedFeatures } from '~/utils/common'
 import AuthorInfo from '~/components/commonSections/AuthorInfo'
-import Header from '~/components/commonSections/Header'
-import Wrapper from '~/components/commonSections/Wrapper'
+import Wrapper from '~/layout/Wrapper'
 import { SanityImage } from '~/components/SanityImage'
 import RelatedFeaturesSection from '~/components/RelatedFeaturesSection'
 import ShareableLinks from '~/components/commonSections/ShareableLinks'
@@ -33,6 +33,7 @@ import MainImageSection from '~/components/MainImageSection'
 import DecoratorTable from '~/components/DecoratorTable'
 import { list } from 'postcss'
 import ListItem from '~/components/typography/ListItem'
+import SanityPortableText from '~/components/blockEditor/sanityBlockEditor'
 
 
 interface Query {
@@ -48,6 +49,7 @@ export const getStaticProps: GetStaticProps<
   const client = getClient(draftMode ? { token: readToken } : undefined)
   const post = await getPost(client, params.slug)
   const allPosts = await getPosts(client);
+  const relatedContents = await getRelatedContents(client, params?.slug);
 
   if (!post) {
     return {
@@ -60,21 +62,18 @@ export const getStaticProps: GetStaticProps<
       draftMode,
       token: draftMode ? readToken : '',
       post,
-      allPosts
+      allPosts,
+      relatedContents
     },
   }
 }
 
 export default function ProjectSlugRoute(
-  props: InferGetStaticPropsType<typeof getStaticProps> & { allPosts: Post[] },
+  props: InferGetStaticPropsType<typeof getStaticProps> & { allPosts: Post[] ,relatedContents: Post[]},
 ) {
   const [post] = useLiveQuery(props.post, postBySlugQuery, {
     slug: props.post?.slug?.current,
   })
-
-
-  console.log(props, 'all props');
-
 
   const [allPosts] = useLiveQuery(props.allPosts, postsQuery);
 
@@ -90,50 +89,6 @@ export default function ProjectSlugRoute(
   const jsonLD: any = generateJSONLD(post);
   const authorInfo = post?.author
 
-  console.log(post, post, authorInfo, 'author infor oin props');
-
-
-
-  const myPortableTextComponents: any = {
-    marks: {
-
-      link: ({ children, value }) => {
-        return <a href={value.href} className='!text-blue-500' >{children}</a>
-
-      },
-    },
-
-    // },
-    list: {
-      bullet: ({ children }) => <ul>{children}</ul>,
-      number: ({ children }) => <ol>{children}</ol>,
-    },
-    listItem: {
-      bullet: ({ children, index }) => (
-        <ListItem node={{ children }} index={index} isOrdered={false} />
-      ),
-      number: ({ children, index }) => (
-        <ListItem node={{ children }} index={index} isOrdered={true} />
-      ),
-    },
-    types: {
-      image: ({ value }) => {
-        return (
-          <SanityImage {...value} client={getClient(props.draftMode ? { token: props.token } : undefined)} />
-        );
-      },
-      table: ({ value }) => {
-        return (
-          <DecoratorTable>{value}</DecoratorTable>
-
-        );
-      },
-
-      dynamicComponent: ({ value }) => {
-        return <DynamicComponent {...value} client={getClient(props.draftMode ? { token: props.token } : undefined)} />
-      }
-    },
-  }
 
   return (
     <>
@@ -145,7 +100,7 @@ export default function ProjectSlugRoute(
         canonical={seoCanonical}
         jsonLD={jsonLD}
         contentType={post?.contentType} />
-      <Container >
+      <Layout >
         <MainImageSection post={post} />
         <section className={`post ${blogStyles.blog}`}>
           <div className="post__container">
@@ -153,8 +108,11 @@ export default function ProjectSlugRoute(
               <div className="flex  md:flex-row flex-col">
                 <div className="mt-12 flex md:flex-col flex-col-reverse md:w-2/3 w-full ">
                   <div className='post__content w-full '>
-                    <PortableText value={post.body}
-                      components={myPortableTextComponents} />
+                  <SanityPortableText
+                      content={post.body}
+                      draftMode={props.draftMode}
+                      token={props.token}
+                    />
                   </div>
                   <div className='md:hidden block'>
                     {authorInfo && <AuthorInfo contentType={post.contentType} author={authorInfo} />}
@@ -167,16 +125,14 @@ export default function ProjectSlugRoute(
                         <AuthorInfo contentType={post.contentType} author={authorInfo} />
                       </div>
                     }
-                    <RelatedFeaturesSection currentPostSlug={post.slug.current} allPosts={allPosts} />
-                    <ShareableLinks props={post.title ?? post.title} />
+                    <RelatedFeaturesSection  title={post?.title} allPosts={post?.relatedPosts} />
                   </div>
-
                 </div>
               </div>
             </Wrapper>
           </div>
         </section>
-      </Container>
+      </Layout>
     </>
   )
 }

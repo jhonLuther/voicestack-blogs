@@ -2,7 +2,7 @@
 import { Post } from '~/interfaces/post';
 import Image from 'next/image';
 import { urlForImage } from '~/lib/sanity.image';
-import Wrapper from '../commonSections/Wrapper';
+import Wrapper from '../../layout/Wrapper';
 import Card from '../Card';
 
 
@@ -12,7 +12,7 @@ interface FeaturedAndPopularBlogsProps {
 }
 
 const FeaturedAndPopularBlogs = ({ featuredBlog, popularBlogs }: FeaturedAndPopularBlogsProps) => {
-    console.log(featuredBlog, 'featuredBlog in featured and popular blog section');
+    // console.log(featuredBlog, 'featuredBlog in featured and popular blog section');
 
     return (
         <section className="flex flex-wrap md:flex-row flex-col w-full gap-20 justify-between my-8">

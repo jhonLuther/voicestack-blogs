@@ -13,6 +13,9 @@ interface BannerBlockProps {
 
 const BannerBlock: React.FC<BannerBlockProps> = ({ bannerBlock }) => {
 
+  console.log(bannerBlock, 'BannerBlock Contents');
+  
+
   return (
     <div
       className="flex flex-1 md:flex-row flex-col md:items-center rounded-[10px] p-8 my-8 md:gap-20 gap-4 justify-between "
@@ -24,8 +27,6 @@ const BannerBlock: React.FC<BannerBlockProps> = ({ bannerBlock }) => {
         </h2>
         <p className='!text-gray-100 !text-opacity-70 !text-lg !m-0'>{bannerBlock?.description ? bannerBlock?.description  : 'Learn how we can help you reduce claim rejections and denials.'}</p>
       </div>
-
-
       <div>
       <div
         className="bg-green-700 hover:bg-green-600 px-4 py-3 flex min-w-[200px] cursor-pointer rounded"

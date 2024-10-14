@@ -61,6 +61,11 @@ export default defineType({
       description: 'An image to accompany this testimonial',
     }),
     defineField({
+      name: 'body',
+      title: 'Body',
+      type: 'newContent',
+    }),
+    defineField({
       name: 'rating',
       title: 'Rating',
       type: 'number',
@@ -72,6 +77,18 @@ export default defineType({
       title: 'Date',
       type: 'date',
       description: 'The date this testimonial was created or published',
+    }),
+        // Tags Field
+    defineField({
+      name: 'tags',
+      title: 'Tags',
+      type: 'array',
+      of: [
+        {
+          type: 'reference',
+          to: [{ type: 'tag' }],
+        },
+      ],
     }),
   ],
   preview: {

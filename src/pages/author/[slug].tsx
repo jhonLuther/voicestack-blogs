@@ -2,8 +2,8 @@ import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import { useRouter } from 'next/router'
 import { getClient } from '~/lib/sanity.client'
 import { authorBySlugQuery, authorSlugsQuery, getAuthor, getauthorRelatedContents, getAuthors, getPost } from '~/lib/sanity.queries'
-import Container from '~/components/Container'
-import Wrapper from '~/components/commonSections/Wrapper'
+import Layout from '~/components/Layout'
+import Wrapper from '~/layout/Wrapper'
 import { readToken } from '~/lib/sanity.api'
 import { Author, Post } from '~/interfaces/post'
 import { SharedPageProps } from '../_app'
@@ -49,12 +49,11 @@ export const getStaticPaths = async () => {
   const client = getClient()
   const slugs = await client.fetch(authorSlugsQuery)
 
-  const paths = slugs?.map(({ slug }: { slug: string }) => {
-    if (slug) {
-      return `/author/${slug}`
-    }
-    return null
-  }).filter(Boolean)
+  console.log(slugs, 'slugs authors');
+
+  const paths = slugs?.map((slug: string) => ({
+    params: { slug }
+  })).filter(Boolean)
 
   return {
     paths,

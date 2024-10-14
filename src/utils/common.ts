@@ -20,9 +20,9 @@ export const fetchAuthor = (post) => {
         post,
         relevance: (post.tags?.filter(tag => currentTags.has(tag.tagName)) || []).length
       }))
-      .sort((a, b) => {
+      ?.sort((a, b) => {
         if (b.relevance !== a.relevance) {
-          return b.relevance - a.relevance; // Sort by tag relevance
+          return b.relevance - a.relevance; 
         }
         return new Date(b.post._createdAt).getTime() - new Date(a.post._createdAt).getTime();
       })
@@ -35,3 +35,9 @@ export const fetchAuthor = (post) => {
   
     return uniqueRelatedPosts;
   }
+  
+
+  export const capitalizeFirstLetter = (string) => {
+    if (!string) return '';
+    return string.charAt(0).toUpperCase() + string.slice(1) + 's';
+  };

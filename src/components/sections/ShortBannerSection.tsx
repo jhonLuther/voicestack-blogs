@@ -1,5 +1,5 @@
 import React from 'react'
-import Wrapper from '../commonSections/Wrapper'
+import Wrapper from '../../layout/Wrapper'
 import Link from 'next/link'
 
 function ShortBannerSection() {

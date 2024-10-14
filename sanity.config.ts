@@ -96,45 +96,28 @@ export default defineConfig({
       structure: (S) =>
         S.list()
           .title('Base')
-          // .items([
-          //   S.listItem()
-          //     .title('Site Settings')
-          //     .child(
-          //       S.document()
-          //         .schemaType('siteSettings')
-          //         .documentId('siteSettings'),
-          //     ),
-          //   ...S.documentTypeListItems().filter(
-          //     (listItem) => !['siteSettings'].includes(listItem.getId()),
-          //   ),
-          // ])'structureTool({
- 
           .items([
             S.listItem()
-              .title('Home Settings')
+              .title('Home Page')
               .icon(HomeIcon)
               .child(
                 S.document()
                   .schemaType('homeSettings')
                   .documentId('homeSettings'),
               ),
-            ...S.documentTypeListItems().filter(
-              (listItem) => !['homeSettings'].includes(listItem.getId()),
-            ),
-          ])
-          .items([
-            S.listItem()
-              .title('Global Settings')
-              .icon(CogIcon)
-              .child(
-                S.document()
-                  .schemaType('globalSettings')
-                  .documentId('globalSettings')
-              ),
-            ...S.documentTypeListItems().filter(
-              (listItem) => !['globalSettings'].includes(listItem.getId())
-            ),
-          ])          
+              S.documentTypeListItem('post').title('All Content'),
+              S.documentTypeListItem('author').title('Authors'),
+              S.documentTypeListItem('tag').title('Tags'),
+              S.documentTypeListItem('customer').title('Customer'),
+              S.documentTypeListItem('testimonial').title('Testimonial'),
+              // S.documentTypeListItem('testimonial').title('Testimonial'),
+            // ...S.documentTypeListItems().filter(
+            //   (listItem) => !['homeSettings'].includes(listItem.getId()) && !['globalSettings'].includes(listItem.getId())&& !['post'].includes(listItem.getId()),
+            // )
+          
+
+
+          ])         
     }),
 
     media({

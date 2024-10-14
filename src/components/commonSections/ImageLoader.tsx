@@ -32,7 +32,7 @@ const ImageLoader = ({
 }: ImageLoaderProps) => {
   const imageParent = useRef<HTMLDivElement>(null);
   const router = useRouter();
-  const [imageContainerDimensions, setImageContainerDimensions] = useState({
+  const [imageLayoutDimensions, setImageLayoutDimensions] = useState({
     height: 0,
     width: 0,
   });
@@ -73,7 +73,7 @@ const ImageLoader = ({
 
       const ratio = Math.round(imageWidth) / (imageProps?.width || 1);
       let height = ratio * (imageProps?.height || 1);
-      setImageContainerDimensions({
+      setImageLayoutDimensions({
         height: Math.round(height),
         width: Math.round(imageWidth),
       });
@@ -95,8 +95,8 @@ const ImageLoader = ({
         ref={imageParent}
         style={wrapperPadding ? { width: '100%', height: '100%' } : { width: '100%', paddingTop: `${calculateAspectRatio()}`, display: "flex", position: 'relative' }}
       >
-        {imageContainerDimensions.width > 0 &&
-        imageContainerDimensions.height > 0 &&
+        {imageLayoutDimensions.width > 0 &&
+        imageLayoutDimensions.height > 0 &&
         imageProps ? (
           <Image
             {...imageProps}
@@ -109,8 +109,8 @@ const ImageLoader = ({
               height: '100%',
               objectFit: 'cover'
             }}
-            width={imageContainerDimensions.width}
-            height={imageContainerDimensions.height}
+            width={imageLayoutDimensions.width}
+            height={imageLayoutDimensions.height}
             title={(image as any).title}
             priority={priority}
             quality={75}
