@@ -5,8 +5,8 @@ import Breadcrumb from './commonSections/BreadCrumb'
 import { formatDate } from '~/utils'
 import ImageLoader from './commonSections/ImageLoader'
 import { getClient } from '~/lib/sanity.client'
-import Container from './Container'
-import Wrapper from './commonSections/Wrapper'
+import Layout from './Layout'
+import Wrapper from '../layout/Wrapper'
 import useMediaQuery from '~/utils/useMediaQueryHook'
 import AuthorInfo from './commonSections/AuthorInfo'
 
@@ -41,7 +41,7 @@ const MainImageSection = ({ post, isAuthor }: Props) => {
 					</div>
 				</div>
 			</Wrapper>
-			{!isMobile && <div className='w-full flex absolute h-full justify-end'>
+			<div className='w-full md:flex hidden absolute h-full justify-end'>
 				<div className='md:w-1/2 w-1/3'>
 					<ImageLoader
 						image={post.mainImage || post.image}
@@ -50,7 +50,7 @@ const MainImageSection = ({ post, isAuthor }: Props) => {
 						client={client}
 					/>
 				</div>
-			</div>}
+			</div>
 		</div>
 	)
 }

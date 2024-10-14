@@ -5,10 +5,10 @@ import { readToken } from '~/lib/sanity.api';
 import { getClient } from '~/lib/sanity.client';
 import { getEbooks, getPodcasts, getTags, getWebinars } from '~/lib/sanity.queries';
 import { SharedPageProps } from '../_app';
-import Wrapper from '~/components/commonSections/Wrapper';
+import Wrapper from '~/layout/Wrapper';
 import LatestBlogs from '~/components/sections/LatestBlogSection';
 import Section from '~/components/Section';
-import Container from '~/components/Container';
+import Layout from '~/components/Layout';
 import TagSelect from '~/contentUtils/TagSelector';
 import AllcontentSection from '~/components/sections/AllcontentSection';
 
@@ -36,14 +36,14 @@ export const getStaticProps: GetStaticProps<
 const EbooksPage = ({ ebooks, allEbooks, tags }: { ebooks: Ebooks[], allEbooks: Ebooks[], tags: any }) => {
 
   return (
-    <Container>
+    <Layout>
         <Wrapper>
         </Wrapper>
         <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'}  revamp={true} contents={ebooks} />
         <Wrapper>
           <AllcontentSection className={'pb-9'}  allContent={allEbooks} hideSearch={true} cardType={'podcast-card'}/>
         </Wrapper>
-    </Container>
+    </Layout>
 
   );
 };

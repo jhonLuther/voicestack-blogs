@@ -1,6 +1,6 @@
 import React from "react";
 
-interface ContainerProps {
+interface LayoutProps {
   children?: React.ReactNode;
   extended?: boolean;
   display?: "hidden";
@@ -12,7 +12,7 @@ interface ContainerProps {
 
 }
 
-const Wrapper: React.FunctionComponent<ContainerProps> = ({
+const Wrapper: React.FunctionComponent<LayoutProps> = ({
   children,
   extended,
   display,
@@ -22,9 +22,11 @@ const Wrapper: React.FunctionComponent<ContainerProps> = ({
   fullWidth = false,
   removePadding = false,
 }) => {
+
+  
   return (
     <div
-      className={` ${fullWidth ? "w-full" : "max-w-7xl"}  ${removePadding ? "p-0" : "" } md:px-8 px-4 h-full   mx-auto w-full  ${className}`}
+      className={` ${fullWidth ? "w-full" : "max-w-7xl"}  ${removePadding ? "p-0" : "" } md:px-8 md:py-12 px-4 py-4 h-full   mx-auto w-full  ${className}`}
     >
       {children}
     </div>

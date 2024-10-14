@@ -5,10 +5,10 @@ import { readToken } from '~/lib/sanity.api';
 import { getClient } from '~/lib/sanity.client';
 import { getPodcasts, getTags } from '~/lib/sanity.queries';
 import { SharedPageProps } from '../_app';
-import Wrapper from '~/components/commonSections/Wrapper';
+import Wrapper from '~/layout/Wrapper';
 import LatestBlogs from '~/components/sections/LatestBlogSection';
 import Section from '~/components/Section';
-import Container from '~/components/Container';
+import Layout from '~/components/Layout';
 import TagSelect from '~/contentUtils/TagSelector';
 import AllcontentSection from '~/components/sections/AllcontentSection';
 
@@ -36,14 +36,14 @@ export const getStaticProps: GetStaticProps<
 const PodcastsPage = ({ podcasts, allPodcasts, tags }: { podcasts: Podcasts[], allPodcasts: Podcasts[], tags: any }) => {
 
   return (
-    <Container>
+    <Layout>
         <Wrapper>
         </Wrapper>
         <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'}  revamp={true} contents={podcasts} />
         <Wrapper>
           <AllcontentSection className={'pb-9'}  allContent={allPodcasts} hideSearch={true} cardType={'podcast-card'}/>
         </Wrapper>
-    </Container>
+    </Layout>
 
   );
 };

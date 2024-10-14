@@ -4,10 +4,10 @@ import { useRouter } from 'next/router';
 import { getClient } from '~/lib/sanity.client';
 import { getRelatedContents, getTestimonial, testimonialSlugsQuery } from '~/lib/sanity.queries';
 import { Testimonial } from '~/interfaces/post';
-import Wrapper from '~/components/commonSections/Wrapper';
+import Wrapper from '~/layout/Wrapper';
 import Image from 'next/image';
 import { readToken } from '~/lib/sanity.api';
-import Container from '~/components/Container';
+import Layout from '~/components/Layout';
 import { draftMode } from 'next/headers';
 import SanityPortableText from '~/components/Editor/sanityBlockEditor';
 import MainImageSection from '~/components/MainImageSection';
@@ -70,7 +70,7 @@ const TestimonialPage = ({ testimonial,draftMode,token }: Props) => {
 
   return (
 
-    <Container >
+    <Layout >
       <MainImageSection isAuthor={true} post={testimonial} />
       <Wrapper>
         <div className="flex  md:flex-row flex-col">
@@ -90,7 +90,7 @@ const TestimonialPage = ({ testimonial,draftMode,token }: Props) => {
           </div>
         </div>
       </Wrapper>
-    </Container>
+    </Layout>
   );
 };
 

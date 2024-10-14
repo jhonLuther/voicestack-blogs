@@ -3,7 +3,7 @@ import { Post } from '~/interfaces/post';
 import Card from '../Card';
 import { urlForImage } from '~/lib/sanity.image';
 import Image from 'next/image';
-import Wrapper from '../commonSections/Wrapper';
+import Wrapper from '../../layout/Wrapper';
 import Link from 'next/link';
 import useMediaQuery from '~/utils/useMediaQueryHook';
 

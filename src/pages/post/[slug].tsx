@@ -2,7 +2,7 @@ import { PortableText } from '@portabletext/react'
 import type { GetStaticProps, InferGetStaticPropsType } from 'next'
 import Image from 'next/image'
 import { useLiveQuery } from 'next-sanity/preview'
-import Container from '~/components/Container'
+import Layout from '~/components/Layout'
 import { readToken } from '~/lib/sanity.api'
 import { getClient } from '~/lib/sanity.client'
 import { urlForImage } from '~/lib/sanity.image'
@@ -20,7 +20,8 @@ import SEOHead from '~/layout/SeoHead'
 import { Post } from '~/interfaces/post'
 import { generateJSONLD } from '~/utils/generateJSONLD'
 import AuthorInfo from '~/components/commonSections/AuthorInfo'
-import Wrapper from '~/components/commonSections/Wrapper'
+import Wrapper from '~/layout/Wrapper'
+import { SanityImage } from '~/components/SanityImage'
 import RelatedFeaturesSection from '~/components/RelatedFeaturesSection'
 import MainImageSection from '~/components/MainImageSection'
 import SanityPortableText from '~/components/blockEditor/sanityBlockEditor'
@@ -89,7 +90,7 @@ export default function ProjectSlugRoute(
         canonical={seoCanonical}
         jsonLD={jsonLD}
         contentType={post?.contentType} />
-      <Container >
+      <Layout >
         <MainImageSection post={post} />
         <section className={`post ${blogStyles.blog}`}>
           <div className="post__container">
@@ -121,7 +122,7 @@ export default function ProjectSlugRoute(
             </Wrapper>
           </div>
         </section>
-      </Container>
+      </Layout>
     </>
   )
 }

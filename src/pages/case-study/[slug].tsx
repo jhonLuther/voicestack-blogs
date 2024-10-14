@@ -4,14 +4,14 @@ import { useRouter } from 'next/router';
 import { getClient } from '~/lib/sanity.client';
 import { caseStudySlugsQuery, getCaseStudy, getRelatedContents } from '~/lib/sanity.queries';
 import { CaseStudies } from '~/interfaces/post';
-import Wrapper from '~/components/commonSections/Wrapper';
+import Wrapper from '~/layout/Wrapper';
 import Image from 'next/image';
 import { readToken } from '~/lib/sanity.api';
 import { draftMode } from 'next/headers';
 import SanityPortableText from '~/components/Editor/sanityBlockEditor';
 import MainImageSection from '~/components/MainImageSection';
 import RelatedFeaturesSection from '~/components/RelatedFeaturesSection';
-import Container from '~/components/Container';
+import Layout from '~/components/Layout';
 import DynamicComponent from '~/layout/DynamicComponent';
 import AsideBannerBlock from '~/components/sections/asideBannerBlock';
 import PracticeProfile from '~/contentUtils/PracticeProfile';
@@ -68,7 +68,7 @@ const CaseStudyPage = ({ caseStudy, draftMode, token }: Props) => {
   }
 
   return (
-    <Container >
+    <Layout >
       <MainImageSection post={caseStudy} />
       <Wrapper>
         <div className="flex  md:flex-row flex-col">
@@ -90,7 +90,7 @@ const CaseStudyPage = ({ caseStudy, draftMode, token }: Props) => {
           </div>
         </div>
       </Wrapper>
-    </Container>
+    </Layout>
   );
 };
 

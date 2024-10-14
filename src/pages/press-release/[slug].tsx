@@ -4,14 +4,14 @@ import { useRouter } from 'next/router';
 import { getClient } from '~/lib/sanity.client';
 import { pressReleaseSlugsQuery, getCaseStudy, getPressRelease, getRelatedContents } from '~/lib/sanity.queries';
 import { CaseStudies, PressRelease } from '~/interfaces/post';
-import Wrapper from '~/components/commonSections/Wrapper';
+import Wrapper from '~/layout/Wrapper';
 import Image from 'next/image';
 import { readToken } from '~/lib/sanity.api';
 import { draftMode } from 'next/headers';
 import SanityPortableText from '~/components/Editor/sanityBlockEditor';
 import MainImageSection from '~/components/MainImageSection';
 import RelatedFeaturesSection from '~/components/RelatedFeaturesSection';
-import Container from '~/components/Container';
+import Layout from '~/components/Layout';
 import AsideBannerBlock from '~/components/sections/asideBannerBlock';
 import PracticeProfile from '~/contentUtils/PracticeProfile';
 
@@ -66,7 +66,7 @@ const PressReleasePage = ({ pressRelease, draftMode, token }: Props) => {
   }
 
   return (
-    <Container >
+    <Layout >
       <MainImageSection post={pressRelease} />
       <Wrapper>
         <div className="flex  md:flex-row flex-col">
@@ -86,7 +86,7 @@ const PressReleasePage = ({ pressRelease, draftMode, token }: Props) => {
           </div>
         </div>
       </Wrapper>
-    </Container>
+    </Layout>
   );
 };
 

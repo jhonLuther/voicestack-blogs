@@ -13,7 +13,7 @@ import AllcontentSection from "~/components/sections/AllcontentSection";
 import { formatDate } from "~/utils";
 import ShortBannerSection from "~/components/sections/ShortBannerSection";
 import BannerSubscribeSection from "~/components/sections/BannerSubscribeSection";
-import Wrapper from "~/components/commonSections/Wrapper";
+import Wrapper from "~/layout/Wrapper";
 import SliderSection from "~/components/sections/SliderSection";
 
 interface DynamicProps {

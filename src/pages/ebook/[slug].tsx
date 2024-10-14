@@ -3,12 +3,12 @@ import { useRouter } from 'next/router';
 import { getClient } from '~/lib/sanity.client';
 import { ebookSlugsQuery, getEbook, getPodcast, getPodcasts, getRelatedContents, getWebinar, getWebinars, podcastSlugsQuery, webinarSlugsQuery } from '~/lib/sanity.queries';
 import { Ebooks, Podcasts } from '~/interfaces/post';
-import Wrapper from '~/components/commonSections/Wrapper';
+import Wrapper from '~/layout/Wrapper';
 import Image from 'next/image';
 import { readToken } from '~/lib/sanity.api';
 import { urlForImage } from '~/lib/sanity.image';
 import SanityPortableText from '~/components/blockEditor/sanityBlockEditor';
-import Container from '~/components/Container';
+import Layout from '~/components/Layout';
 import MainImageSection from '~/components/MainImageSection';
 import RelatedFeaturesSection from '~/components/RelatedFeaturesSection';
 import DownloadEbook from '~/contentUtils/EbookDownloader';
@@ -60,7 +60,7 @@ const EbookPage = ({ ebook, draftMode, token }: Props) => {
 
   return (
 
-    <Container >
+    <Layout >
       <MainImageSection isAuthor={true} post={ebook} />
       <Wrapper>
         <div className="flex  md:flex-row flex-col">
@@ -81,7 +81,7 @@ const EbookPage = ({ ebook, draftMode, token }: Props) => {
           </div>
         </div>
       </Wrapper>
-    </Container>
+    </Layout>
   );
 };
 

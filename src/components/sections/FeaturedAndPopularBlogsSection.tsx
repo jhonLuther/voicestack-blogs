@@ -2,7 +2,7 @@
 import { Post } from '~/interfaces/post';
 import Image from 'next/image';
 import { urlForImage } from '~/lib/sanity.image';
-import Wrapper from '../commonSections/Wrapper';
+import Wrapper from '../../layout/Wrapper';
 import Card from '../Card';
 
 

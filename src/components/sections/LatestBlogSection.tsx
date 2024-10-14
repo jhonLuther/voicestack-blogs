@@ -1,7 +1,7 @@
 import React from 'react';
 import { Post } from '~/interfaces/post';
 import Card from '../Card';
-import Wrapper from '../commonSections/Wrapper';
+import Wrapper from '../../layout/Wrapper';
 import { capitalizeFirstLetter } from '~/utils/common';
 
 interface LatestBlogsProps {

@@ -3,12 +3,12 @@ import { useRouter } from 'next/router';
 import { getClient } from '~/lib/sanity.client';
 import { getPodcast, getPodcasts, getRelatedContents, podcastSlugsQuery } from '~/lib/sanity.queries';
 import { Podcasts } from '~/interfaces/post';
-import Wrapper from '~/components/commonSections/Wrapper';
+import Wrapper from '~/layout/Wrapper';
 import Image from 'next/image';
 import { readToken } from '~/lib/sanity.api';
 import { urlForImage } from '~/lib/sanity.image';
 import SanityPortableText from '~/components/blockEditor/sanityBlockEditor';
-import Container from '~/components/Container';
+import Layout from '~/components/Layout';
 import MainImageSection from '~/components/MainImageSection';
 import RelatedFeaturesSection from '~/components/RelatedFeaturesSection';
 import AllcontentSection from '~/components/sections/AllcontentSection';
@@ -61,7 +61,7 @@ const PodcastPage = ({ podcast, draftMode, token }: Props) => {
 
   return (
 
-    <Container >
+    <Layout >
       <MainImageSection isAuthor={true} post={podcast} />
       <Wrapper>
       {
@@ -91,7 +91,7 @@ const PodcastPage = ({ podcast, draftMode, token }: Props) => {
           </div>
         </div>
       </Wrapper>
-    </Container>
+    </Layout>
   );
 };
 
