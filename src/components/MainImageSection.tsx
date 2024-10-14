@@ -13,7 +13,7 @@ import useMediaQuery from '~/utils/useMediaQueryHook'
 
 const MainImageSection = ({ post }) => {
 
-    const isMobile:any = useMediaQuery(767);
+    const isMobile: any = useMediaQuery(767);
 
     // console.log(post);
 
@@ -27,7 +27,7 @@ const MainImageSection = ({ post }) => {
 
 
     return (
-        <div className='w-full flex gap-1 min-h-[423px] bg-black relative '>
+        <div className='w-full flex gap-1 min-h-[423px] bg-black relative items-center'>
 
             <Wrapper className="z-10 flex min-h-full h-auto">
                 <div className='flex flex-col items-start gap-32 bg-black text-white md:max-w-xl max-w-lg h-full justify-center pr-8'>
@@ -48,18 +48,18 @@ const MainImageSection = ({ post }) => {
             </Wrapper>
 
 
-        { !isMobile && <div className='w-full flex absolute h-full justify-end'>
-          <div className='md:w-1/2 w-1/3'>
+            {!isMobile && <div className='w-full flex absolute h-full justify-end'>
+                <div className='md:w-1/2 w-1/3'>
                     <ImageLoader
                         image={post.mainImage}
                         priority={true}
                         alt={post.title || "Post image"}
                         client={client}
                     />
-        </div>
-        </div>}
+                </div>
+            </div>}
 
-              
+
 
 
         </div>
