@@ -3,15 +3,11 @@ import { sanityClient } from '../../lib/sanity';
 import groq from 'groq';
 import { getClient } from '~/lib/sanity.client';
 import { readToken } from '~/lib/sanity.api';
-import { getPosts } from '~/lib/sanity.queries';
+import { getPosts, getSitemapData } from '~/lib/sanity.queries';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
-const query = groq`*[_type == "post" && defined(slug.current)]{
-  "url": slug.current,
-  contentType,
-  _updatedAt
-}`;
+
 
 function generateSiteMap(posts: any[]) {
   const staticPages = [
@@ -52,11 +48,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   try {
     const client = getClient(req?.preview ? { token: readToken } : undefined);
 
-    const posts = await client.fetch(query);
 
-    const allPosts = await getPosts(client)
-    
-    const sitemap = generateSiteMap(posts);
+    const data = await getSitemapData(client)
+
+    console.log(data,'IDATA');
+    const sitemap = generateSiteMap(data);
     res.setHeader('Content-Type', 'application/xml');
     res.write(sitemap);
     res.end();

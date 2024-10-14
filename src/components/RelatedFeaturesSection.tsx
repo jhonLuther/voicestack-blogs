@@ -36,10 +36,11 @@ const RelatedFeaturesSection: React.FC<RelatedFeaturesSectionProps> = ({ allPost
                                 {feature.postFields?.excerpt}
                             </p>
                             {feature.tags && feature.tags.length > 0 ? (
-
+                                // <Link href={`${feature?.tags[0].slug.current}`}>
                                 <h3 key={feature.tags[0]._id} className="text-[#EBECED] font-inter text-[14px] font-semibold leading-[24px]">
                                     {feature.tags[0].tagName}
                                 </h3>
+                                // </Link>
                             ) : ""}
                         </li>
                     ))}

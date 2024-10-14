@@ -273,6 +273,7 @@ const bodyFragment = `
           "customerDetails": customer->{
             name,
             slug,
+            role,
             bio,
             "picture": picture.asset->url
           },
@@ -874,6 +875,32 @@ export const relatedPostComponents = groq`
     }
   }
 `
+// sitemap queries **
+export const siteMapQuery =groq`*[_type == "post" && defined(slug.current)]{
+  "url": slug.current,
+  contentType,
+  _updatedAt
+} `;
+
+export const tagQuery =groq`*[_type == "tag" && defined(slug.current)]{
+  "url": slug.current,
+  "contentType": "tag",
+  _updatedAt
+} `;
+
+export const authorQuery =groq`*[_type == "author" && defined(slug.current)]{
+  "url": slug.current,
+  "contentType": "author",
+  _updatedAt
+} `;
+
+export const testiMonialQuery = groq`
+*[_type == "testimonial" && defined(slug.current)]{
+  "url": slug.current,
+  "contentType": "testimonial",
+  _updatedAt
+}
+`;
 
 export async function getRelatedContents(
   client: SanityClient,
@@ -1018,6 +1045,22 @@ export async function getPressRelease(
   }
   return null
 }
+
+export async function getSitemapData(
+  client: SanityClient,
+): Promise<Post[]> {
+  try {
+    const posts = await client.fetch(siteMapQuery);
+    const testimonials = await client.fetch(testiMonialQuery);
+    const tags = await client.fetch(tagQuery);
+    const authors = await client.fetch(authorQuery);
+    return [...posts, ...testimonials, ...tags, ...authors];
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+}
+
 // queries for static path generation **
 export const postSlugsQuery = groq`
 *[_type == "post" && defined(slug.current)][].slug.current
