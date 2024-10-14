@@ -20,6 +20,9 @@ export interface Post {
     mainImageV1?: ImageAsset
     body: PortableTextBlock[]
     dynamicComponents: any
+    estimatedReadingTime?: string
+    estimatedWordCount?: string 
+    numberOfCharacters ?: number
     
     seoTitle?: string
     seoDescription?: string
