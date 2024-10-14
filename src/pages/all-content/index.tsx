@@ -9,9 +9,9 @@ import { Post } from '~/interfaces/post';
 import TagSelect from '~/contentUtils/TagSelector';
 import { getClient } from '~/lib/sanity.client';
 import Wrapper from '~/layout/Wrapper';
-import { PostProvider } from '~/components/Context/postContext';
-import DynamicPages from '~/layout/DynamicPages';
 import AllcontentSection from '~/components/sections/AllcontentSection';
+import SEOHead from '~/layout/SeoHead';
+import { generateJSONLD } from '~/utils/generateJSONLD';
 
 
 
@@ -52,15 +52,37 @@ export const getStaticProps: GetStaticProps<SharedPageProps & { posts: Post[] }>
 
 
 export default function IndexPage(props: IndexPageProps) {
+    console.log(props,'props');
+    
+    
     const mainSection = useRef<HTMLDivElement>(null);
+    const content:any = props?.posts
 
+    const seoTitle = content.seoTitle || content.title;
+    const seoDescription = content.seoDescription || content.excerpt;
+    const seoKeywords = content.seoKeywords || '';
+    const seoRobots = content.seoRobots || 'index,follow';
+    // const seoCanonical = content.seoCanonical || `https://carestack.com/post/${content?.slug.current}`;
+    const jsonLD: any = generateJSONLD(content);
+  
+  
     return (
+      <>
+        {/* <SEOHead
+          title={seoTitle}
+          description={seoDescription}
+          keywords={seoKeywords}
+          robots={seoRobots}
+          canonical={seoCanonical}
+          jsonLD={jsonLD}
+          contentType={content?.contentType} /> */}
         <Layout>
             <Section ref={mainSection} className="flex-col py-12 bg-cs-gray">
                 <Wrapper>
-                    <AllcontentSection allContent={props?.posts} hideSearch={true} />
+                    <AllcontentSection allContent={content} hideSearch={true} />
                 </Wrapper>
             </Section>
         </Layout>
+        </>
     );
 }

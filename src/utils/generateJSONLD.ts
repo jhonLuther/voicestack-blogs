@@ -18,8 +18,6 @@ export function generateJSONLD(post: Post) {
 
   console.log(author,'author in json');
   
-  
-
   if (contentType) {
     switch (contentType) {
       case 'blog':
@@ -39,7 +37,7 @@ export function generateJSONLD(post: Post) {
             "https://a.storyblok.com/f/144863/1201x1201/a1d1cbd61c/carestack-favicon-1200x1200.png",
           author: {
             "@type": "Person",
-            name: author[0]?.name || "Unknown Author",
+            name: author && author[0]?.name || "Unknown Author",
             url: "https://carestack.com/company/leadership-team",
           },
           wordCount: estimatedWordCount ?? 0,
@@ -69,7 +67,7 @@ export function generateJSONLD(post: Post) {
           "name": post.title,
           "author": {
             "@type": "Person",
-            "name": author[0]?.name || "Unknown Author",
+            "name": author && author[0]?.name || "Unknown Author",
           },
           "datePublished": post._createdAt,
           "numberOfPages": post.ebookFields?.ebookPages || 0,
@@ -82,7 +80,7 @@ export function generateJSONLD(post: Post) {
           "headline": post.title,
           "author": {
             "@type": "Person",
-            "name": author[0]?.name || "Unknown Author",
+            "name": author && author[0]?.name || "Unknown Author",
           },
           "datePublished": post._createdAt,
           "articleBody": post.body,
@@ -106,7 +104,7 @@ export function generateJSONLD(post: Post) {
           "datePublished": post._createdAt,
           "author": {
             "@type": "Person",
-            "name": author[0]?.name || "Unknown Author",
+            "name": author && author[0]?.name || "Unknown Author",
           },
         });
       default:
@@ -131,13 +129,13 @@ export function generateJSONLD(post: Post) {
       "https://a.storyblok.com/f/144863/1201x1201/a1d1cbd61c/carestack-favicon-1200x1200.png",
     author: {
       "@type": "Person",
-      name: author[0]?.name || "Unknown Author",
+      name: author && author[0]?.name || "Unknown Author",
       url: "https://carestack.com/company/leadership-team",
     },
     wordCount: estimatedWordCount ?? 0,
     dateCreated: post._createdAt,
     inLanguage: "en-US",
-    copyrightYear: post._createdAt.split(' ')[2],
+    copyrightYear: post._createdAt?.split(' ')[2],
     copyrightHolder: {
       "@id": "https://carestack.com/#organization",
     },

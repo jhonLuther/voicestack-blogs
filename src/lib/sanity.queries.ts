@@ -142,6 +142,16 @@ export async function getPosts(
   }
   return await client.fetch(newPostsQuery)
 }
+export async function getPostsByLimit(
+  client: SanityClient,
+  startLimit?: number,
+  endLimit?: number,
+): Promise<Post[]> {
+
+   let newPostsQuery = postsQuery + `[${startLimit}...${endLimit}]`
+  
+  return await client.fetch(newPostsQuery)
+}
 export async function getIframes(client: SanityClient): Promise<Post[]> {
   return await client.fetch(iframesQuery)
 }
