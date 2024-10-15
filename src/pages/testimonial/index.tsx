@@ -31,10 +31,7 @@ export const getStaticProps: GetStaticProps<
 };
 
 const TestimonialsPage = ({ testimonials,allTestimonials }: { testimonials: Testimonial[],allTestimonials:Testimonial[] }) => {
-  console.log(testimonials, 'testimonials');
 
-  
-  
   return (
     <Layout>
         <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'}  revamp={true} contents={testimonials} />

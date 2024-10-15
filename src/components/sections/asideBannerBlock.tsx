@@ -8,7 +8,6 @@ interface AsidebannerBlockProps {
 
 const AsideBannerBlock: React.FC<AsidebannerBlockProps> = ({ contents }) => {
 
-  console.log(contents, 'AsideBannerBlock Contents');
   return (
     <div className='flex flex-col px-9 pt-16 pb-9 gap-9 bg-cs-green rounded-s '>
       {contents && contents?.asideBookFreeDemoBanner?.map((item, i) => {

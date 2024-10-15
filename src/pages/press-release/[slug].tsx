@@ -16,6 +16,7 @@ import AsideBannerBlock from '~/components/sections/asideBannerBlock';
 import PracticeProfile from '~/contentUtils/PracticeProfile';
 import { generateJSONLD } from '~/utils/generateJSONLD';
 import SEOHead from '~/layout/SeoHead';
+import { urlForImage } from '~/lib/sanity.image';
 
 interface Props {
   pressRelease: PressRelease;
@@ -60,9 +61,6 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
 
 const PressReleasePage = ({ pressRelease, draftMode, token }: Props) => {
   const router = useRouter();
-
-  console.log(pressRelease, 'pressRelease data ');
-
   if (router.isFallback) {
     return <div>Loading...</div>;
   }
@@ -84,6 +82,7 @@ const PressReleasePage = ({ pressRelease, draftMode, token }: Props) => {
         robots={seoRobots}
         canonical={seoCanonical}
         jsonLD={jsonLD}
+        ogImage={urlForImage(pressRelease?.mainImage)}
         contentType={pressRelease?.contentType} />
       <Layout >
         <MainImageSection post={pressRelease} />

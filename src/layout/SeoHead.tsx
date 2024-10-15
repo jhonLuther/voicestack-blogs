@@ -9,6 +9,7 @@ interface SEOHeadProps {
   canonical: string;
   jsonLD: string;
   contentType?:any;
+  ogImage ?: any;
   props?: {
     contentType: string;
   };
@@ -21,7 +22,8 @@ export default function SEOHead({
   robots,
   canonical,
   jsonLD,
-  props, 
+  props,
+  ogImage 
 }: SEOHeadProps) {
   return (
     <>
@@ -38,6 +40,9 @@ export default function SEOHead({
             id={`${props?.contentType ? props.contentType : "blog"}-jsonLd`}
             dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLD) }}
           />
+        )}
+        {ogImage && (
+          <meta id='ogImage' property="og:image" content={ogImage} key="ogImage" />
         )}
       </Head>
     </>

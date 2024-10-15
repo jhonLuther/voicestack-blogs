@@ -21,10 +21,7 @@ export const getStaticProps: GetStaticProps<
   Query
 > = async ({ draftMode = false, params = {} }) => {
   const client = getClient(draftMode ? { token: readToken } : undefined)
-  const tag = await getTag(client, params.slug)
-
-  console.log({tagin:tag});
-  
+  const tag = await getTag(client, params.slug)  
   const posts = await getPostsBySlug(client, params.slug)
 
   if (!tag) {
@@ -57,11 +54,6 @@ export default function TagPage({
   tag,
   posts,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-
-  // console.log(tag,'in tag tsx');
-
-  console.log({postsin:posts});
-  
   
   const router = useRouter()
 

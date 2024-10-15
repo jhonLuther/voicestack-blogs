@@ -51,9 +51,7 @@ export const getStaticProps: GetStaticProps<SharedPageProps & { posts: Post[] }>
 };
 
 
-export default function IndexPage(props: IndexPageProps) {
-    console.log(props,'props');
-    
+export default function IndexPage(props: IndexPageProps) {    
     
     const mainSection = useRef<HTMLDivElement>(null);
     const content:any = props?.posts

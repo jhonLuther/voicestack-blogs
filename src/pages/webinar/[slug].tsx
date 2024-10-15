@@ -28,9 +28,6 @@ interface Props {
 export const getStaticPaths: GetStaticPaths = async () => {
   const client = getClient();
   const slugs = await client.fetch(webinarSlugsQuery);
-
-  console.log(slugs, 'slugs podcast');
-
   const paths = slugs?.map((slug: string) => {
     return { params: { slug } };
   }) || [];
@@ -70,11 +67,7 @@ const WebinarPage = ({ webinar, draftMode, token }: Props) => {
   const seoRobots = webinar.seoRobots || 'index,follow';
   const seoCanonical = webinar.seoCanonical || `https://carestack.com/webinar/${webinar.slug.current}`;
   const jsonLD: any = generateJSONLD(webinar);
-
-
-  console.log(webinar, 'webinar');
   
-
   return (
     <>
       <SEOHead
@@ -84,13 +77,13 @@ const WebinarPage = ({ webinar, draftMode, token }: Props) => {
         robots={seoRobots}
         canonical={seoCanonical}
         jsonLD={jsonLD}
+        ogImage={urlForImage(webinar?.mainImage)}
         contentType={webinar?.contentType} />
       <Layout >
         <MainImageSection isAuthor={true} post={webinar} />
         <Wrapper>
           <div className="flex  md:flex-row flex-col">
             <div className="mt-12 flex md:flex-col flex-col-reverse md:w-2/3 w-full ">
-
             <VideoModal videoDetails={webinar?.videoManager} className={`pt-9 max-w-2xl   flex items-start`} />
               <div className='post__content w-full '>
                 <SanityPortableText

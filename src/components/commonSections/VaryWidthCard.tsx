@@ -17,10 +17,7 @@ interface VaryWidthCardProps {
 
   }
 export default function VaryWidthCard({ post }: { post: VaryWidthCardProps }) {
-
-  console.log(post.mainImage);
   
-
   return (
     <div className="flex flex-col w-full min-h-[250px] group hover:scale-105 transform duration-300">
       {post.mainImage ? (

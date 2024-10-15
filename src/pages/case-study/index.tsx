@@ -33,8 +33,6 @@ export const getStaticProps: GetStaticProps<
 };
 
 const CaseStudysPage = ({ caseStudies, allCaseStudies, tags }: { caseStudies: CaseStudies[], allCaseStudies: CaseStudies[], tags: any }) => {
-  console.log(caseStudies, 'caseStudies  IN  MAIN SECTON');
-
 
   return (
     <Layout>

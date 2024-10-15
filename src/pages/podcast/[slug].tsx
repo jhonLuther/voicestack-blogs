@@ -11,6 +11,7 @@ import MainImageSection from '~/components/MainImageSection';
 import RelatedFeaturesSection from '~/components/RelatedFeaturesSection';
 import { generateJSONLD } from '~/utils/generateJSONLD';
 import SEOHead from '~/layout/SeoHead';
+import { urlForImage } from '~/lib/sanity.image';
 
 interface Props {
   podcast: Podcasts;
@@ -22,9 +23,6 @@ interface Props {
 export const getStaticPaths: GetStaticPaths = async () => {
   const client = getClient();
   const slugs = await client.fetch(podcastSlugsQuery);
-
-  console.log(slugs, 'slugs podcast');
-
   const paths = slugs?.map((slug: string) => {
     return { params: { slug } };
   }) || [];
@@ -50,7 +48,6 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
 
 const PodcastPage = ({ podcast, draftMode, token }: Props) => {
   const router = useRouter();
-
   if (router.isFallback) {
     return <div>Loading...</div>;
   }
@@ -72,6 +69,7 @@ const PodcastPage = ({ podcast, draftMode, token }: Props) => {
         robots={seoRobots}
         canonical={seoCanonical}
         jsonLD={jsonLD}
+        ogImage={urlForImage(podcast?.mainImage)}
         contentType={podcast?.contentType} />
       <Layout >
         <MainImageSection isAuthor={true} post={podcast} />

@@ -48,9 +48,6 @@ export const getStaticProps: GetStaticProps<
 export const getStaticPaths = async () => {
   const client = getClient()
   const slugs = await client.fetch(authorSlugsQuery)
-
-  console.log(slugs, 'slugs authors');
-
   const paths = slugs?.map((slug: string) => ({
     params: { slug }
   })).filter(Boolean)
@@ -65,9 +62,6 @@ export default function AuthorPage({
   author,
   relatedContents
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-
-  console.log(relatedContents, 'relatedContents');
-
 
   const router = useRouter()
 

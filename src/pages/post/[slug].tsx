@@ -77,8 +77,7 @@ export default function ProjectSlugRoute(
   const seoRobots = post.seoRobots || 'index,follow';
   const seoCanonical = post.seoCanonical || `https://carestack.com/post/${post.slug.current}`;
   const authorInfo = post?.author
-  const jsonLD: any = generateJSONLD(post);
-
+  const jsonLD: any = generateJSONLD(post);  
 
   return (
     <>
@@ -89,6 +88,7 @@ export default function ProjectSlugRoute(
         robots={seoRobots}
         canonical={seoCanonical}
         jsonLD={jsonLD}
+        ogImage={urlForImage(post?.mainImage)}
         contentType={post?.contentType} />
       <Layout >
         <MainImageSection post={post} />

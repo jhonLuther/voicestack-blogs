@@ -25,9 +25,6 @@ interface Props {
 export const getStaticPaths: GetStaticPaths = async () => {
   const client = getClient();
   const slugs = await client.fetch(ebookSlugsQuery);
-
-  console.log(slugs, 'slugs podcast');
-
   const paths = slugs?.map((slug: string) => {
     return { params: { slug } };
   }) || [];
@@ -53,9 +50,6 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
 
 const EbookPage = ({ ebook, draftMode, token }: Props) => {
   const router = useRouter();
-
-  console.log(ebook, 'slugxx ');
-
   if (router.isFallback) {
     return <div>Loading...</div>;
   }
@@ -77,6 +71,7 @@ const EbookPage = ({ ebook, draftMode, token }: Props) => {
         robots={seoRobots}
         canonical={seoCanonical}
         jsonLD={jsonLD}
+        ogImage={urlForImage(ebook?.mainImage)}
         contentType={ebook?.contentType} />
       <Layout >
         <MainImageSection isAuthor={true} post={ebook} />

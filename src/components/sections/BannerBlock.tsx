@@ -13,9 +13,6 @@ interface BannerBlockProps {
 
 const BannerBlock: React.FC<BannerBlockProps> = ({ bannerBlock }) => {
 
-  // console.log(bannerBlock, 'BannerBlock Contents');
-  
-
   return (
     <div
       className="flex flex-1 md:flex-row flex-col md:items-center rounded-[10px] p-8 my-8 md:gap-20 gap-4 justify-between "

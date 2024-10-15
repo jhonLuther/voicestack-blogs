@@ -27,8 +27,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const client = getClient();
   const slugs = await client.fetch(articleSlugsQuery);
 
-  console.log(slugs, 'slugs podcast');
-
   const paths = slugs?.map((slug: string) => {
     return { params: { slug } };
   }) || [];
@@ -56,7 +54,6 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
 const ArticlePage = ({ articles, draftMode, token }: Props) => {
   
   const router = useRouter();
-  console.log(articles, 'slugxx ');
 
   if (router.isFallback) {
     return <div>Loading...</div>;
@@ -79,6 +76,7 @@ const ArticlePage = ({ articles, draftMode, token }: Props) => {
         robots={seoRobots}
         canonical={seoCanonical}
         jsonLD={jsonLD}
+        ogImage={urlForImage(articles?.mainImage)}
         contentType={articles?.contentType} />
     <Layout >
       <MainImageSection isAuthor={true} post={articles?.article} />

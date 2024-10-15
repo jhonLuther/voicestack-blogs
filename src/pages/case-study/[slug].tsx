@@ -14,6 +14,7 @@ import AsideBannerBlock from '~/components/sections/asideBannerBlock';
 import PracticeProfile from '~/contentUtils/PracticeProfile';
 import SEOHead from '~/layout/SeoHead';
 import { generateJSONLD } from '~/utils/generateJSONLD';
+import { urlForImage } from '~/lib/sanity.image';
 
 interface Props {
   caseStudy: CaseStudies;
@@ -25,7 +26,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const client = getClient();
   const slugs = await client.fetch(caseStudySlugsQuery);
 
-  console.log(slugs, 'slugs testimonials');
 
   const paths = slugs?.map((slug: string) => {
     return { params: { slug } };
@@ -58,8 +58,7 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
 }
 
 const CaseStudyPage = ({ caseStudy, draftMode, token }: Props) => {
-  const router = useRouter();
-
+  const router = useRouter();  
   if (router.isFallback) {
     return <div>Loading...</div>;
   }
@@ -81,6 +80,7 @@ const CaseStudyPage = ({ caseStudy, draftMode, token }: Props) => {
         robots={seoRobots}
         canonical={seoCanonical}
         jsonLD={jsonLD}
+        ogImage={urlForImage(caseStudy?.mainImage)}
         contentType={caseStudy?.contentType} />
       <Layout >
         <MainImageSection post={caseStudy} />

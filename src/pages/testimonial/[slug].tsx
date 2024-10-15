@@ -16,6 +16,7 @@ import PracticeProfile from '~/contentUtils/PracticeProfile';
 import podcast from '../podcast';
 import { generateJSONLD } from '~/utils/generateJSONLD';
 import SEOHead from '~/layout/SeoHead';
+import { urlForImage } from '~/lib/sanity.image';
 
 interface Props {
   testimonial: Testimonial;
@@ -61,7 +62,6 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
 
 // Testimonial page component
 const TestimonialPage = ({ testimonial, draftMode, token }: Props) => {
-  console.log(testimonial);
 
   const router = useRouter();
 
@@ -87,6 +87,7 @@ const TestimonialPage = ({ testimonial, draftMode, token }: Props) => {
         robots={seoRobots}
         canonical={seoCanonical}
         jsonLD={jsonLD}
+        ogImage={urlForImage(testimonial?.mainImage || testimonial?.image)}
         contentType={testimonial?.contentType} />
       <Layout >
         <MainImageSection isAuthor={true} post={testimonial} />
