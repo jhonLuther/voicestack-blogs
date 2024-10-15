@@ -13,9 +13,9 @@ import MainImageSection from '~/components/MainImageSection';
 import RelatedFeaturesSection from '~/components/RelatedFeaturesSection';
 import AllcontentSection from '~/components/sections/AllcontentSection';
 import PracticeProfile from '~/contentUtils/PracticeProfile';
-import VideoModal from '~/components/commonSections/VideoModal';
 import { generateJSONLD } from '~/utils/generateJSONLD';
 import SEOHead from '~/layout/SeoHead';
+import { VideoModal } from '~/components/commonSections/VideoModal';
 
 interface Props {
   webinar: Podcasts;
@@ -90,7 +90,8 @@ const WebinarPage = ({ webinar, draftMode, token }: Props) => {
         <Wrapper>
           <div className="flex  md:flex-row flex-col">
             <div className="mt-12 flex md:flex-col flex-col-reverse md:w-2/3 w-full ">
-            <VideoModal videoDetails={webinar?.videoManager} className={`pt-9  flex items-start`} />
+
+            <VideoModal videoDetails={webinar?.videoManager} className={`pt-9 max-w-2xl   flex items-start`} />
               <div className='post__content w-full '>
                 <SanityPortableText
                   content={webinar?.body}

@@ -5,7 +5,7 @@ interface VideoProps {
   className?: string;
 }
 
-const Video: React.FunctionComponent<VideoProps> = ({ videoDetails, className, ...props }) => {
+export const VideoModal: React.FunctionComponent<VideoProps> = ({ videoDetails, className, ...props }) => {
   if (!videoDetails) {
     return null
   }

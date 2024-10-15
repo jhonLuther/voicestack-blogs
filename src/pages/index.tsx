@@ -72,14 +72,10 @@ export default function IndexPage(props: IndexPageProps) {
 
   return (
     <Layout>
-     
-
         <DynamicPages posts={props.posts} tags={props.tags} testimonials={props.testimonials}
           homeSettings={homeSettings} popularBlogs={homeSettings?.popularBlogs}
           podcastData={props?.podcastData} latestPosts={latestPosts}
           featuredContents={homeSettings?.FeaturedContents} />
-
- 
     </Layout>
   );
 }
