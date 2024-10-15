@@ -13,13 +13,17 @@ export default defineType({
       type: 'image',
       icon: ImageIcon,
     }),
-   defineArrayMember({
+
+
+  defineArrayMember({
       title: 'Video',
+      name: 'videoReference',
       description: 'Select a video from the video manager',
       type: 'reference',
       to: [{ type: 'videoManager' }],
       icon: PlayIcon,
     }),
+    
     {
       type: 'table',
       icon: ThLargeIcon,
@@ -31,7 +35,6 @@ export default defineType({
     },
     defineArrayMember(htmlCode),
     defineArrayMember(dynamicComponent),
-    defineArrayMember(videoManager),
     defineArrayMember({
       title: 'Block',
       type: 'block',

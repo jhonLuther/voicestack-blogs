@@ -3,16 +3,18 @@ import * as React from "react";
 interface VideoProps {
   videoDetails: any;
   className?: string;
+
 }
 
-export const VideoModal: React.FunctionComponent<VideoProps> = ({ videoDetails, className, ...props }) => {
-  if (!videoDetails) {
+export const VideoModal: React.FunctionComponent<VideoProps> = ({ videoDetails, className, ...props }:any) => {
+  const videoData:any = props?.video || videoDetails;
+  if (!videoData) {
     return null
   }
 
   return (
-    <div className={`w-full h-full ${className}`}>
-      {videoDetails && videoDetails.length > 0 && videoDetails.map((item: any) => (
+    <div className={`w-full ${className}`}>
+      {Array.isArray(videoData) && videoData.length > 0 && videoData.map((item: any) => (
         <iframe
           src={getIframeUrl(item?.platform, item?.link)}
           title={item?.title}
@@ -22,6 +24,15 @@ export const VideoModal: React.FunctionComponent<VideoProps> = ({ videoDetails, 
           key={item._id}
         />
       ))}
+      {!Array.isArray(videoData) && (
+        <iframe
+          src={getIframeUrl(videoData?.platform, videoData?.link)}
+          title={videoData?.title}
+          frameBorder="0"
+          allowFullScreen
+          className="w-full h-full"
+        />
+      )}
     </div>
   );
 };

@@ -6,7 +6,6 @@ import { caseStudySlugsQuery, getCaseStudy, getRelatedContents } from '~/lib/san
 import { CaseStudies } from '~/interfaces/post';
 import Wrapper from '~/layout/Wrapper';
 import { readToken } from '~/lib/sanity.api';
-import SanityPortableText from '~/components/Editor/sanityBlockEditor';
 import MainImageSection from '~/components/MainImageSection';
 import RelatedFeaturesSection from '~/components/RelatedFeaturesSection';
 import Layout from '~/components/Layout';
@@ -15,6 +14,7 @@ import PracticeProfile from '~/contentUtils/PracticeProfile';
 import SEOHead from '~/layout/SeoHead';
 import { generateJSONLD } from '~/utils/generateJSONLD';
 import { urlForImage } from '~/lib/sanity.image';
+import SanityPortableText from '~/components/blockEditor/sanityBlockEditor';
 
 interface Props {
   caseStudy: CaseStudies;

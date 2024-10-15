@@ -270,6 +270,15 @@ export async function getPostsBySlug(
 const bodyFragment = `
   body[] {
     ...,
+      _type == "videoReference" => {
+      ...,
+      "video": @->{
+      _id,
+      title,
+      platform,
+      videoId,
+      }
+    },
     _type == "image" => {
       ...,
       asset->,

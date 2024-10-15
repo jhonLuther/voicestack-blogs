@@ -8,7 +8,6 @@ import Wrapper from '~/layout/Wrapper';
 import Image from 'next/image';
 import { readToken } from '~/lib/sanity.api';
 import { draftMode } from 'next/headers';
-import SanityPortableText from '~/components/Editor/sanityBlockEditor';
 import MainImageSection from '~/components/MainImageSection';
 import RelatedFeaturesSection from '~/components/RelatedFeaturesSection';
 import Layout from '~/components/Layout';
@@ -17,6 +16,7 @@ import PracticeProfile from '~/contentUtils/PracticeProfile';
 import { generateJSONLD } from '~/utils/generateJSONLD';
 import SEOHead from '~/layout/SeoHead';
 import { urlForImage } from '~/lib/sanity.image';
+import SanityPortableText from '~/components/blockEditor/sanityBlockEditor';
 
 interface Props {
   pressRelease: PressRelease;

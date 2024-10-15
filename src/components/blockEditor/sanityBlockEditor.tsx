@@ -5,6 +5,7 @@ import { SanityImage } from '~/components/SanityImage'
 import DecoratorTable from '~/components/DecoratorTable'
 import DynamicComponent from '~/layout/DynamicComponent'
 import ListItem from '~/components/typography/ListItem'
+import { VideoModal } from '../commonSections/VideoModal'
 
 interface SanityPortableTextProps {
   content: any
@@ -53,6 +54,14 @@ const SanityPortableText: React.FC<SanityPortableTextProps> = ({
           <SanityImage 
             {...value} 
             client={getClient(draftMode ? { token } : undefined)} 
+          />
+        )
+      },
+      videoReference: ({value}) => {
+        return (
+          <VideoModal
+            {...value}
+            client={getClient(draftMode ? { token } : undefined)}
           />
         )
       },
