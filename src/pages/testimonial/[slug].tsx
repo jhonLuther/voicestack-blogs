@@ -14,9 +14,11 @@ import MainImageSection from '~/components/MainImageSection';
 import RelatedFeaturesSection from '~/components/RelatedFeaturesSection';
 import PracticeProfile from '~/contentUtils/PracticeProfile';
 import podcast from '../podcast';
+import { generateJSONLD } from '~/utils/generateJSONLD';
+import SEOHead from '~/layout/SeoHead';
 
 interface Props {
-  testimonial: Testimonial; 
+  testimonial: Testimonial;
   draftMode: boolean;
   token: string;
 }
@@ -26,7 +28,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const slugs = await client.fetch(testimonialSlugsQuery);
 
   const paths = slugs?.map((slug: string) => {
-    return { params: { slug } }; 
+    return { params: { slug } };
   }) || [];
 
   return {
@@ -58,9 +60,9 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
 }
 
 // Testimonial page component
-const TestimonialPage = ({ testimonial,draftMode,token }: Props) => {
+const TestimonialPage = ({ testimonial, draftMode, token }: Props) => {
   console.log(testimonial);
-  
+
   const router = useRouter();
 
 
@@ -68,29 +70,46 @@ const TestimonialPage = ({ testimonial,draftMode,token }: Props) => {
     return <div>Loading...</div>;
   }
 
-  return (
+  const seoTitle = testimonial.seoTitle || testimonial.title;
+  const seoDescription = testimonial.seoDescription || testimonial.excerpt;
+  const seoKeywords = testimonial.seoKeywords || '';
+  const seoRobots = testimonial.seoRobots || 'index,follow';
+  const seoCanonical = testimonial.seoCanonical || `https://carestack.com/testimonial/${testimonial.slug.current}`;
+  const jsonLD: any = generateJSONLD(testimonial);
 
-    <Layout >
-      <MainImageSection isAuthor={true} post={testimonial} />
-      <Wrapper>
-        <div className="flex  md:flex-row flex-col">
-          <div className="mt-12 flex md:flex-col flex-col-reverse md:w-2/3 w-full ">
-            <div className='post__content w-full '>
-              <SanityPortableText
-                content={testimonial?.body}
-                draftMode={draftMode}
-                token={token}
-              />
+
+  return (
+    <>
+      <SEOHead
+        title={seoTitle}
+        description={seoDescription}
+        keywords={seoKeywords}
+        robots={seoRobots}
+        canonical={seoCanonical}
+        jsonLD={jsonLD}
+        contentType={testimonial?.contentType} />
+      <Layout >
+        <MainImageSection isAuthor={true} post={testimonial} />
+        <Wrapper>
+          <div className="flex  md:flex-row flex-col">
+            <div className="mt-12 flex md:flex-col flex-col-reverse md:w-2/3 w-full ">
+              <div className='post__content w-full '>
+                <SanityPortableText
+                  content={testimonial?.body}
+                  draftMode={draftMode}
+                  token={token}
+                />
+              </div>
+            </div>
+            <div className='flex-1 flex flex-col gap-12 mt-12  bg-red relative md:w-1/3 w-full'>
+              <div className='sticky top-12 flex flex-col gap-12'>
+                {testimonial?.relatedTestimonials?.length > 0 && <RelatedFeaturesSection title={testimonial?.title} allPosts={testimonial?.relatedTestimonials} />}
+              </div>
             </div>
           </div>
-          <div className='flex-1 flex flex-col gap-12 mt-12  bg-red relative md:w-1/3 w-full'>
-            <div className='sticky top-12 flex flex-col gap-12'>
-              {testimonial?.relatedTestimonials?.length > 0 && <RelatedFeaturesSection title={testimonial?.title} allPosts={testimonial?.relatedTestimonials} />}
-            </div>
-          </div>
-        </div>
-      </Wrapper>
-    </Layout>
+        </Wrapper>
+      </Layout>
+    </>
   );
 };
 

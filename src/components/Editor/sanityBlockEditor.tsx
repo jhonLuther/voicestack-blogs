@@ -28,8 +28,8 @@ const SanityPortableText: React.FC<SanityPortableTextProps> = ({
       },
     },
     list: {
-      bullet: ({children}) => <ul >{children}</ul>,
-      number: ({children}) => <ol >{children}</ol>,
+      bullet: ({children}) => <ul>{children}</ul>,
+      number: ({children}) => <ol>{children}</ol>,
     },
     listItem: {
       bullet: ({children, index}) => (
@@ -56,6 +56,14 @@ const SanityPortableText: React.FC<SanityPortableTextProps> = ({
           />
         )
       },
+      // videoManager: ({value}) => {
+      //   return (
+      //     <VideoModal 
+      //      {...value} 
+      //      client={getClient(draftMode ? { token } : undefined)} 
+      //     />
+      //   )
+      // },
       table: ({value}) => {
         return <DecoratorTable>{value}</DecoratorTable>
       },

@@ -37,8 +37,6 @@ const TestimonialsPage = ({ testimonials,allTestimonials }: { testimonials: Test
   
   return (
     <Layout>
-        <Wrapper>
-        </Wrapper>
         <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'}  revamp={true} contents={testimonials} />
         <Wrapper>
           <AllcontentSection className={'pb-9'}  allContent={allTestimonials} hideSearch={true} cardType={'podcast-card'}/>

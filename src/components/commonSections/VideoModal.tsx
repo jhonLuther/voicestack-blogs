@@ -1,22 +1,27 @@
 import * as React from "react";
 
 interface VideoProps {
-  platform: "vimeo" | "vidyard" | "youtube" | string;
-  link: string;
+  videoDetails: any;
   className?: string;
 }
 
-const Video: React.FunctionComponent<VideoProps> = ({ platform, link ,className}) => {
-  const iframeUrl = getIframeUrl(platform, link);
+const Video: React.FunctionComponent<VideoProps> = ({ videoDetails, className, ...props }) => {
+  if (!videoDetails) {
+    return null
+  }
 
   return (
     <div className={`w-full h-full ${className}`}>
-      <iframe
-        src={iframeUrl}
-        frameBorder="0"
-        allowFullScreen
-        className="w-full h-full"
-      />
+      {videoDetails && videoDetails.length > 0 && videoDetails.map((item: any) => (
+        <iframe
+          src={getIframeUrl(item?.platform, item?.link)}
+          title={item?.title}
+          frameBorder="0"
+          allowFullScreen
+          className="w-full h-full"
+          key={item._id}
+        />
+      ))}
     </div>
   );
 };
@@ -33,5 +38,3 @@ const getIframeUrl = (platform: string, link: string) => {
       throw new Error(`Unsupported platform: ${platform}`);
   }
 };
-
-export default Video;

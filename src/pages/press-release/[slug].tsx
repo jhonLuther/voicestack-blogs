@@ -14,6 +14,8 @@ import RelatedFeaturesSection from '~/components/RelatedFeaturesSection';
 import Layout from '~/components/Layout';
 import AsideBannerBlock from '~/components/sections/asideBannerBlock';
 import PracticeProfile from '~/contentUtils/PracticeProfile';
+import { generateJSONLD } from '~/utils/generateJSONLD';
+import SEOHead from '~/layout/SeoHead';
 
 interface Props {
   pressRelease: PressRelease;
@@ -65,28 +67,46 @@ const PressReleasePage = ({ pressRelease, draftMode, token }: Props) => {
     return <div>Loading...</div>;
   }
 
+  const seoTitle = pressRelease.seoTitle || pressRelease.title;
+  const seoDescription = pressRelease.seoDescription || pressRelease.excerpt;
+  const seoKeywords = pressRelease.seoKeywords || '';
+  const seoRobots = pressRelease.seoRobots || 'index,follow';
+  const seoCanonical = pressRelease.seoCanonical || `https://carestack.com/pressRelease/${pressRelease.slug.current}`;
+  const jsonLD: any = generateJSONLD(pressRelease);
+
+
   return (
-    <Layout >
-      <MainImageSection post={pressRelease} />
-      <Wrapper>
-        <div className="flex  md:flex-row flex-col">
-          <div className="mt-12 flex md:flex-col flex-col-reverse md:w-2/3 w-full ">
-            <div className='post__content w-full '>
-              <SanityPortableText
-                content={pressRelease.body}
-                draftMode={draftMode}
-                token={token}
-              />
+    <>
+      <SEOHead
+        title={seoTitle}
+        description={seoDescription}
+        keywords={seoKeywords}
+        robots={seoRobots}
+        canonical={seoCanonical}
+        jsonLD={jsonLD}
+        contentType={pressRelease?.contentType} />
+      <Layout >
+        <MainImageSection post={pressRelease} />
+        <Wrapper>
+          <div className="flex  md:flex-row flex-col">
+            <div className="mt-12 flex md:flex-col flex-col-reverse md:w-2/3 w-full ">
+              <div className='post__content w-full '>
+                <SanityPortableText
+                  content={pressRelease.body}
+                  draftMode={draftMode}
+                  token={token}
+                />
+              </div>
+            </div>
+            <div className='flex-1 flex flex-col gap-12 mt-12  bg-red relative md:w-1/3 w-full'>
+              <div className='sticky top-12 flex flex-col gap-12'>
+                {pressRelease?.relatedPressReleases.length > 0 && <RelatedFeaturesSection title={pressRelease?.title} allPosts={pressRelease?.relatedPressReleases} />}
+              </div>
             </div>
           </div>
-          <div className='flex-1 flex flex-col gap-12 mt-12  bg-red relative md:w-1/3 w-full'>
-            <div className='sticky top-12 flex flex-col gap-12'>
-              {pressRelease?.relatedPressReleases.length > 0 && <RelatedFeaturesSection title={pressRelease?.title} allPosts={pressRelease?.relatedPressReleases} />}
-            </div>
-          </div>
-        </div>
-      </Wrapper>
-    </Layout>
+        </Wrapper>
+      </Layout>
+    </>
   );
 };
 

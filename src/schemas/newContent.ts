@@ -1,9 +1,5 @@
 import { defineArrayMember, defineType } from 'sanity'
-import HighlightDecorator from '../components/HighlightDecorator'
-import DynamicComponent from '../../src/schemas/dynamicComponent'
-import { ImageIcon } from '@sanity/icons'
-import { ThLargeIcon } from '@sanity/icons'
-import { InsertBelowIcon } from '@sanity/icons'
+import { ImageIcon, PlayIcon, ThLargeIcon, InsertBelowIcon } from '@sanity/icons'
 import htmlCode from './htmlCode'
 import dynamicComponent from '../../src/schemas/dynamicComponent'
 import videoManager from './videoManager'
@@ -13,10 +9,17 @@ export default defineType({
   name: 'newContent',
   type: 'array',
   of: [
-    {
+    defineArrayMember({
       type: 'image',
       icon: ImageIcon,
-    },
+    }),
+   defineArrayMember({
+      title: 'Video',
+      description: 'Select a video from the video manager',
+      type: 'reference',
+      to: [{ type: 'videoManager' }],
+      icon: PlayIcon,
+    }),
     {
       type: 'table',
       icon: ThLargeIcon,
@@ -60,6 +63,7 @@ export default defineType({
                 name: 'href',
                 type: 'url',
               },
+              
             ],
           },
         ],

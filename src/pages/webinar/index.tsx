@@ -37,8 +37,6 @@ const WebinarsPage = ({ webinars, allWebinars, tags }: { webinars: Webinars[], a
 
   return (
     <Layout>
-        <Wrapper>
-        </Wrapper>
         <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'}  revamp={true} contents={webinars} />
         <Wrapper>
           <AllcontentSection className={'pb-9'}  allContent={allWebinars} hideSearch={true} cardType={'podcast-card'}/>

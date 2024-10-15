@@ -37,8 +37,6 @@ const PodcastsPage = ({ podcasts, allPodcasts, tags }: { podcasts: Podcasts[], a
 
   return (
     <Layout>
-        <Wrapper>
-        </Wrapper>
         <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'}  revamp={true} contents={podcasts} />
         <Wrapper>
           <AllcontentSection className={'pb-9'}  allContent={allPodcasts} hideSearch={true} cardType={'podcast-card'}/>

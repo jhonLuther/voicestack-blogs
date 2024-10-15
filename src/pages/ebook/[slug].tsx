@@ -12,6 +12,8 @@ import Layout from '~/components/Layout';
 import MainImageSection from '~/components/MainImageSection';
 import RelatedFeaturesSection from '~/components/RelatedFeaturesSection';
 import DownloadEbook from '~/contentUtils/EbookDownloader';
+import SEOHead from '~/layout/SeoHead';
+import { generateJSONLD } from '~/utils/generateJSONLD';
 
 interface Props {
   ebook: Ebooks;
@@ -58,30 +60,47 @@ const EbookPage = ({ ebook, draftMode, token }: Props) => {
     return <div>Loading...</div>;
   }
 
-  return (
+  const seoTitle = ebook.seoTitle || ebook.title;
+  const seoDescription = ebook.seoDescription || ebook.excerpt;
+  const seoKeywords = ebook.seoKeywords || '';
+  const seoRobots = ebook.seoRobots || 'index,follow';
+  const seoCanonical = ebook.seoCanonical || `https://carestack.com/ebook/${ebook.slug.current}`;
+  const jsonLD: any = generateJSONLD(ebook);
 
-    <Layout >
-      <MainImageSection isAuthor={true} post={ebook} />
-      <Wrapper>
-        <div className="flex  md:flex-row flex-col">
-          <div className="mt-12 flex md:flex-col flex-col-reverse md:w-2/3 w-full ">
-            <div className='post__content w-full '>
-              <DownloadEbook ebook={ebook}/>
-              <SanityPortableText
-                content={ebook?.body}
-                draftMode={draftMode}
-                token={token}
-              />
+
+  return (
+    <>
+      <SEOHead
+        title={seoTitle}
+        description={seoDescription}
+        keywords={seoKeywords}
+        robots={seoRobots}
+        canonical={seoCanonical}
+        jsonLD={jsonLD}
+        contentType={ebook?.contentType} />
+      <Layout >
+        <MainImageSection isAuthor={true} post={ebook} />
+        <Wrapper>
+          <div className="flex  md:flex-row flex-col">
+            <div className="mt-12 flex md:flex-col flex-col-reverse md:w-2/3 w-full ">
+              <div className='post__content w-full '>
+                <DownloadEbook ebook={ebook} />
+                <SanityPortableText
+                  content={ebook?.body}
+                  draftMode={draftMode}
+                  token={token}
+                />
+              </div>
+            </div>
+            <div className='flex-1 flex flex-col gap-12 mt-12  bg-red relative md:w-1/3 w-full'>
+              <div className='sticky top-12 flex flex-col gap-12'>
+                {ebook?.relatedEbooks.length > 0 && <RelatedFeaturesSection title={ebook?.title} allPosts={ebook?.relatedEbooks} />}
+              </div>
             </div>
           </div>
-          <div className='flex-1 flex flex-col gap-12 mt-12  bg-red relative md:w-1/3 w-full'>
-            <div className='sticky top-12 flex flex-col gap-12'>
-              {ebook?.relatedEbooks.length > 0 && <RelatedFeaturesSection title={ebook?.title} allPosts={ebook?.relatedEbooks} />}
-            </div>
-          </div>
-        </div>
-      </Wrapper>
-    </Layout>
+        </Wrapper>
+      </Layout>
+    </>
   );
 };
 

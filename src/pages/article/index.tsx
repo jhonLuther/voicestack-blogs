@@ -37,8 +37,6 @@ const ArticlesPage = ({ articles, allArticles, tags }: { articles: Articles[], a
 
   return (
     <Layout>
-        <Wrapper>
-        </Wrapper>
         <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'}  revamp={true} contents={articles} />
         <Wrapper>
           <AllcontentSection className={'pb-9'}  allContent={allArticles} hideSearch={true} cardType={'podcast-card'}/>

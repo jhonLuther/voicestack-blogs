@@ -14,6 +14,8 @@ import RelatedFeaturesSection from '~/components/RelatedFeaturesSection';
 import AllcontentSection from '~/components/sections/AllcontentSection';
 import PracticeProfile from '~/contentUtils/PracticeProfile';
 import VideoModal from '~/components/commonSections/VideoModal';
+import { generateJSONLD } from '~/utils/generateJSONLD';
+import SEOHead from '~/layout/SeoHead';
 
 interface Props {
   webinar: Podcasts;
@@ -57,36 +59,55 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
 const WebinarPage = ({ webinar, draftMode, token }: Props) => {
   const router = useRouter();
 
-  console.log(webinar, 'slugxx ');
 
   if (router.isFallback) {
     return <div>Loading...</div>;
   }
 
-  return (
+  const seoTitle = webinar.seoTitle || webinar.title;
+  const seoDescription = webinar.seoDescription || webinar.excerpt;
+  const seoKeywords = webinar.seoKeywords || '';
+  const seoRobots = webinar.seoRobots || 'index,follow';
+  const seoCanonical = webinar.seoCanonical || `https://carestack.com/webinar/${webinar.slug.current}`;
+  const jsonLD: any = generateJSONLD(webinar);
 
-    <Layout >
-      <MainImageSection isAuthor={true} post={webinar} />
-      <Wrapper>
-      <VideoModal className={`pt-9 max-w-xl flex items-start`} platform={`${webinar.platform ? webinar.platform : 'Youtube'}`} link={`${webinar.videoId ? webinar.videoId : '650959265'}`}/>
-        <div className="flex  md:flex-row flex-col">
-          <div className="mt-12 flex md:flex-col flex-col-reverse md:w-2/3 w-full ">
-            <div className='post__content w-full '>
-              <SanityPortableText
-                content={webinar?.body}
-                draftMode={draftMode}
-                token={token}
-              />
+
+  console.log(webinar, 'webinar');
+  
+
+  return (
+    <>
+      <SEOHead
+        title={seoTitle}
+        description={seoDescription}
+        keywords={seoKeywords}
+        robots={seoRobots}
+        canonical={seoCanonical}
+        jsonLD={jsonLD}
+        contentType={webinar?.contentType} />
+      <Layout >
+        <MainImageSection isAuthor={true} post={webinar} />
+        <Wrapper>
+          <div className="flex  md:flex-row flex-col">
+            <div className="mt-12 flex md:flex-col flex-col-reverse md:w-2/3 w-full ">
+            <VideoModal videoDetails={webinar?.videoManager} className={`pt-9  flex items-start`} />
+              <div className='post__content w-full '>
+                <SanityPortableText
+                  content={webinar?.body}
+                  draftMode={draftMode}
+                  token={token}
+                />
+              </div>
+            </div>
+            <div className='flex-1 flex flex-col gap-12 mt-12  bg-red relative md:w-1/3 w-full'>
+              <div className='sticky top-12 flex flex-col gap-12'>
+                {webinar?.relatedWebinars.length > 0 && <RelatedFeaturesSection title={webinar?.title} allPosts={webinar?.relatedWebinars} />}
+              </div>
             </div>
           </div>
-          <div className='flex-1 flex flex-col gap-12 mt-12  bg-red relative md:w-1/3 w-full'>
-            <div className='sticky top-12 flex flex-col gap-12'>
-              {webinar?.relatedWebinars.length > 0 && <RelatedFeaturesSection title={webinar?.title} allPosts={webinar?.relatedWebinars} />}
-            </div>
-          </div>
-        </div>
-      </Wrapper>
-    </Layout>
+        </Wrapper>
+      </Layout>
+    </>
   );
 };
 

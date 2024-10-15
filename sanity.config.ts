@@ -39,6 +39,18 @@ export default defineConfig({
   title: 'Project Name',
   projectId,
   dataset,
+  form: {
+    components: {
+      input: (props: any) => {
+        if (Array.isArray(props.groups) && props.groups.length > 0) {
+          if (props.groups[0].name === 'all-fields') {
+            props.groups.shift()
+          }
+        }
+        return props.renderDefault(props)
+      },
+    },
+  },
   //edit schemas in './src/schemas'
   schema,
   plugins: [

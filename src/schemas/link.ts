@@ -1,4 +1,3 @@
-// schemas/link.ts
 import { defineField, defineType } from 'sanity';
 
 export default defineType({

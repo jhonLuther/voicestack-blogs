@@ -59,6 +59,13 @@ export interface Post {
 // interfaces/post.ts
 // Example of Testimonial interface
 export interface Testimonial {
+  seoTitle: string
+  seoDescription: string
+  seoKeywords: string
+  seoRobots: string
+  seoCanonical: string
+  author: any
+  contentType: any
   relatedTestimonials: any[]
   body: any
   practiceName: any
@@ -72,6 +79,14 @@ export interface Testimonial {
   image?: string;
 }
 export interface Podcasts {
+  videoManager: any
+  seoTitle: string
+  seoDescription: string
+  seoKeywords: string
+  seoRobots: string
+  seoCanonical: string
+  author: any
+  contentType: any
   videoId: any
   platform: any
   relatedWebinars: any[]
@@ -90,6 +105,12 @@ export interface Podcasts {
   image?: string;
 }
 export interface Articles {
+  contentType: any
+  seoCanonical: string
+  seoRobots: string
+  seoKeywords: string
+  seoDescription: string
+  seoTitle: string
   relatedArticles: any[]
   article: any
   contents: any
@@ -103,8 +124,25 @@ export interface Articles {
   excerpt?: string; 
   summary?: string; 
   image?: string;
+  author?: {
+    length: number
+    name: string
+    _ref: string
+    _type: 'reference'
+  }
+
+  tags?: Array<{
+    [key: string]: any
+  }>
 }
 export interface CaseStudies {
+  seoTitle: string
+  seoDescription: string
+  seoKeywords: string
+  seoRobots: string
+  seoCanonical: string
+  author: any
+  contentType: any
   relatedCaseStudies: any[]
   practiceName: any
   practiceProfile: any
@@ -134,6 +172,13 @@ export interface Webinars {
   image?: string;
 }
 export interface Ebooks {
+  seoTitle: string
+  seoDescription: string
+  seoKeywords: string
+  seoRobots: string
+  seoCanonical: string
+  author: any
+  contentType: any
   relatedEbooks: any[]
   relatedWebinars: any[]
   practiceName: any
@@ -150,6 +195,13 @@ export interface Ebooks {
   image?: string;
 }
 export interface  PressRelease {
+  seoTitle: string
+  seoDescription: string
+  seoKeywords: string
+  seoRobots: string
+  seoCanonical: string
+  author: any
+  contentType: any
   relatedPressReleases: any[]
   practiceName: any
   practiceProfile: any

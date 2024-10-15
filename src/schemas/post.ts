@@ -101,47 +101,29 @@ export default defineType({
       type: 'text',
     }),
     defineField({
-      name: 'Video',
-      title: 'Video Link',
-      type: 'object',
-      icon: DocumentVideoIcon,
-      fields: [
+      name: 'videoManager',
+      title: 'Video',
+      type: 'array',
+      of: [
         {
-          name: 'platform',
-          title: 'Platform',
-          type: 'string',
-          options: {
-            list: [
-              { title: 'YouTube', value: 'youtube' },
-              { title: 'Vimeo', value: 'vimeo' },
-              { title: 'Vidyard', value: 'vidyard' },
-            ],
-          },
-        },
-        {
-          name: 'videoId',
-          title: 'Video ID',
-          description:"Paste the ID of the video you want to embed",
-          type: 'string',
+          type: 'reference',
+          to: [{ type: 'videoManager' }],
         },
       ],
       hidden: ({ parent }) =>
         parent.contentType !== 'webinar' ,
     }),
 
+    defineField({
+      name: 'htmlCode',
+      title: 'Embed Code',
+      description:'paste full iframe code',
+      type: 'text',
+      validation: Rule => Rule.required(),
+      hidden: ({ parent }) =>
+        parent.contentType !== 'podcast' ,
+    }),
 
-
-    defineField(
-      {
-        name: 'htmlCode',
-        title: 'Embed Code',
-        type: 'text',
-        description: 'Paste the HTML code you want to embed',
-        validation: Rule => Rule.required(),
-        hidden: ({ parent }) =>
-           parent.contentType !== 'podcast',
-      },
-    ),
 
     // Practice Profile Fields
     defineField({

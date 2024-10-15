@@ -1,15 +1,8 @@
 import {useNextSanityImage} from 'next-sanity-image'
 import Image from 'next/image';
-// import { readToken } from '~/lib/sanity.api'
-// import { getClient } from '~/lib/sanity.client'
-
-// const client = getClient({ token: readToken })
 export const SanityImage = ({ asset, client }) => {
   const imageProps = useNextSanityImage(client, asset) as { [key: string]: any };
-
-  // console.log({imageProps});
   
-
   if (!imageProps) return null;
 
   return (<Image 

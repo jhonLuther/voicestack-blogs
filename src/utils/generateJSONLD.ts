@@ -1,8 +1,9 @@
 import { Post } from '~/interfaces/post';
 import { fetchAuthor } from './common';
 
-export function generateJSONLD(post: Post) {
+export function generateJSONLD(post: any) {
   console.log({generatedPost:post});
+  
 
   const {
     author = null,
@@ -14,7 +15,7 @@ export function generateJSONLD(post: Post) {
   
 
   const contentType = post?.contentType;
-  // console.log(contentType,'contentType');
+  console.log(contentType,'contentType');
 
   console.log(author,'author in json');
   
@@ -83,7 +84,7 @@ export function generateJSONLD(post: Post) {
             "name": author && author[0]?.name || "Unknown Author",
           },
           "datePublished": post._createdAt,
-          "articleBody": post.body,
+          "description": post.excerpt,
         });
       case 'webinar':
         return JSON.stringify({
