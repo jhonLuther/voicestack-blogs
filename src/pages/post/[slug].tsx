@@ -25,6 +25,7 @@ import { SanityImage } from '~/components/SanityImage'
 import RelatedFeaturesSection from '~/components/RelatedFeaturesSection'
 import MainImageSection from '~/components/MainImageSection'
 import SanityPortableText from '~/components/blockEditor/sanityBlockEditor'
+import { Toc } from '~/contentUtils/sanity-toc'
 
 interface Query {
   [key: string]: string
@@ -110,6 +111,8 @@ export default function ProjectSlugRoute(
                 </div>
                 <div className='flex-1 flex flex-col gap-12 mt-12  bg-red relative md:w-1/3 w-full'>
                   <div className='sticky top-12 flex flex-col gap-12'>
+                  <Toc headings={ post?.headings} title="Blog content" />
+
                     {authorInfo &&
                       <div className=''>
                         <AuthorInfo contentType={post.contentType} author={authorInfo} />

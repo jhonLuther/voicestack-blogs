@@ -17,6 +17,8 @@ import { generateJSONLD } from '~/utils/generateJSONLD';
 import SEOHead from '~/layout/SeoHead';
 import { urlForImage } from '~/lib/sanity.image';
 import SanityPortableText from '~/components/blockEditor/sanityBlockEditor';
+import AuthorInfo from '~/components/commonSections/AuthorInfo';
+import { Toc } from '~/contentUtils/sanity-toc';
 
 interface Props {
   pressRelease: PressRelease;
@@ -99,6 +101,12 @@ const PressReleasePage = ({ pressRelease, draftMode, token }: Props) => {
             </div>
             <div className='flex-1 flex flex-col gap-12 mt-12  bg-red relative md:w-1/3 w-full'>
               <div className='sticky top-12 flex flex-col gap-12'>
+                <Toc headings={pressRelease?.headings} title="Article content" />
+                {pressRelease?.author &&
+                  <div className=''>
+                    <AuthorInfo contentType={pressRelease.contentType} author={pressRelease?.author} />
+                  </div>
+                }
                 {pressRelease?.relatedPressReleases.length > 0 && <RelatedFeaturesSection title={pressRelease?.title} allPosts={pressRelease?.relatedPressReleases} />}
               </div>
             </div>

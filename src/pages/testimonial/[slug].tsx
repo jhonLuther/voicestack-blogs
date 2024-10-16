@@ -17,6 +17,7 @@ import { generateJSONLD } from '~/utils/generateJSONLD';
 import SEOHead from '~/layout/SeoHead';
 import { urlForImage } from '~/lib/sanity.image';
 import SanityPortableText from '~/components/blockEditor/sanityBlockEditor';
+import { Toc } from '~/contentUtils/sanity-toc';
 
 interface Props {
   testimonial: Testimonial;
@@ -104,6 +105,7 @@ const TestimonialPage = ({ testimonial, draftMode, token }: Props) => {
             </div>
             <div className='flex-1 flex flex-col gap-12 mt-12  bg-red relative md:w-1/3 w-full'>
               <div className='sticky top-12 flex flex-col gap-12'>
+                <Toc headings={ testimonial?.headings} title="Testimonial content" />
                 {testimonial?.relatedTestimonials?.length > 0 && <RelatedFeaturesSection title={testimonial?.title} allPosts={testimonial?.relatedTestimonials} />}
               </div>
             </div>

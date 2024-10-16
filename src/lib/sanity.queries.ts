@@ -147,9 +147,8 @@ export async function getPostsByLimit(
   startLimit?: number,
   endLimit?: number,
 ): Promise<Post[]> {
+  let newPostsQuery = postsQuery + `[${startLimit}...${endLimit}]`
 
-   let newPostsQuery = postsQuery + `[${startLimit}...${endLimit}]`
-  
   return await client.fetch(newPostsQuery)
 }
 export async function getIframes(client: SanityClient): Promise<Post[]> {
@@ -266,7 +265,7 @@ export async function getPostsBySlug(
   return await client.fetch(newPostsQuery)
 }
 
-// Common Body query  for $portableText  update the dynamic component query here 
+// Common Body query  for $portableText  update the dynamic component query here
 const bodyFragment = `
   body[] {
     ...,
@@ -310,6 +309,20 @@ const bodyFragment = `
       asideBannerBlock,
     }
   }
+`
+//Table of contents
+const tocFragment = `
+   "headings": body[style in ["h1", "h2", "h3", "h4", "h5", "h6"]]{ 
+      "children": children[]{
+        "text": text,
+        "marks": marks,
+        "_type": _type,
+        "_key": _key
+      },
+      "style": style,
+      "_type": _type,
+      "_key": _key
+    }
 `
 
 export const podcastsQuery = groq`
@@ -436,6 +449,7 @@ export const artilclesQuery = groq`
   }
 }
 `
+
 export const caseStudiesQuery = groq`
 *[_type == "post" && contentType == "case-study" && defined(slug.current)] |  order(_updatedAt desc){
   _id,
@@ -489,6 +503,7 @@ export const postBySlugQuery = groq`
     excerpt,
     contentType,
    ${bodyFragment},
+   ${tocFragment},
     "numberOfCharacters": length(pt::text(body)),
     "estimatedWordCount": round(length(pt::text(body)) / 5),
     "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180),
@@ -537,6 +552,7 @@ export const testiMonialBySlugQuery = groq`
     image,
     rating,
     ${bodyFragment},
+    ${tocFragment},
     date,
     "tags": tags[]-> {
     _id,
@@ -556,6 +572,7 @@ export const podcastBySlugQuery = groq`
   excerpt,
   mainImage,
   ${bodyFragment},
+  ${tocFragment},
   "author": author[]-> {
     _id,
     name,
@@ -586,6 +603,7 @@ export const ebookBySlugQuery = groq`
       }
     },
     ${bodyFragment},
+    ${tocFragment},
     "author": author[]-> {
       _id,
       name,
@@ -618,6 +636,7 @@ export const webinarBySlugQuery = groq`
     excerpt,
     mainImage,
     ${bodyFragment},
+    ${tocFragment},
     "author": author[]-> {
       _id,
       name,
@@ -647,6 +666,7 @@ export const pressReleaseBySlugQuery = groq`
     excerpt,
     mainImage,
     ${bodyFragment},
+    ${tocFragment},
     "author": author[]-> {
       _id,
       name,
@@ -673,6 +693,7 @@ export const articleBySlugQuery = groq`
     excerpt,
     mainImage,
     ${bodyFragment},
+    ${tocFragment},
     "author": author[]-> {
       _id,
       name,
@@ -702,6 +723,7 @@ export const caseStudyBySlugQuery = groq`
     excerpt,
     mainImage,
     ${bodyFragment},
+    ${tocFragment},
     "author": author[]-> {
       _id,
       name,
@@ -740,23 +762,18 @@ export async function getPost(
 ): Promise<Post> {
   const post = await client.fetch(postBySlugQuery, {
     slug,
-  });
+  })
 
   if (post) {
-    const tagIds = post.tags?.map((tag: any) => tag?._id) || [];
+    const tagIds = post.tags?.map((tag: any) => tag?._id) || []
 
     if (tagIds.length > 0) {
-      const relatedPosts = await getRelatedPosts(
-        client,
-        slug,
-        'posts',
-        tagIds,
-      );
-      return { ...post, relatedPosts };
+      const relatedPosts = await getRelatedPosts(client, slug, 'posts', tagIds)
+      return { ...post, relatedPosts }
     }
-    return { ...post, relatedPosts: [] };
+    return { ...post, relatedPosts: [] }
   }
-  return null;
+  return null
 }
 
 export async function getIframe(
@@ -899,23 +916,23 @@ export const relatedPostComponents = groq`
   }
 `
 // sitemap queries **
-export const siteMapQuery =groq`*[_type == "post" && defined(slug.current)]{
+export const siteMapQuery = groq`*[_type == "post" && defined(slug.current)]{
   "url": slug.current,
   contentType,
   _updatedAt
-} `;
+} `
 
-export const tagQuery =groq`*[_type == "tag" && defined(slug.current)]{
+export const tagQuery = groq`*[_type == "tag" && defined(slug.current)]{
   "url": slug.current,
   "contentType": "tag",
   _updatedAt
-} `;
+} `
 
-export const authorQuery =groq`*[_type == "author" && defined(slug.current)]{
+export const authorQuery = groq`*[_type == "author" && defined(slug.current)]{
   "url": slug.current,
   "contentType": "author",
   _updatedAt
-} `;
+} `
 
 export const testiMonialQuery = groq`
 *[_type == "testimonial" && defined(slug.current)]{
@@ -923,7 +940,7 @@ export const testiMonialQuery = groq`
   "contentType": "testimonial",
   _updatedAt
 }
-`;
+`
 
 export async function getRelatedContents(
   client: SanityClient,
@@ -1069,18 +1086,16 @@ export async function getPressRelease(
   return null
 }
 
-export async function getSitemapData(
-  client: SanityClient,
-): Promise<Post[]> {
+export async function getSitemapData(client: SanityClient): Promise<Post[]> {
   try {
-    const posts = await client.fetch(siteMapQuery);
-    const testimonials = await client.fetch(testiMonialQuery);
-    const tags = await client.fetch(tagQuery);
-    const authors = await client.fetch(authorQuery);
-    return [...posts, ...testimonials, ...tags, ...authors];
+    const posts = await client.fetch(siteMapQuery)
+    const testimonials = await client.fetch(testiMonialQuery)
+    const tags = await client.fetch(tagQuery)
+    const authors = await client.fetch(authorQuery)
+    return [...posts, ...testimonials, ...tags, ...authors]
   } catch (error) {
-    console.error(error);
-    return [];
+    console.error(error)
+    return []
   }
 }
 

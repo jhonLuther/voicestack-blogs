@@ -1,11 +1,12 @@
 import React from 'react'
-import { PortableText, PortableTextReactComponents } from '@portabletext/react'
+import { PortableText, PortableTextReactComponents, toPlainText } from '@portabletext/react'
 import { getClient } from '~/lib/sanity.client'
 import { SanityImage } from '~/components/SanityImage'
 import DecoratorTable from '~/components/DecoratorTable'
 import DynamicComponent from '~/layout/DynamicComponent'
 import ListItem from '~/components/typography/ListItem'
 import { VideoModal } from '../commonSections/VideoModal'
+import slugify from 'slugify'
 
 interface SanityPortableTextProps {
   content: any
@@ -47,6 +48,22 @@ const SanityPortableText: React.FC<SanityPortableTextProps> = ({
           isOrdered={true} 
         />
       ),
+    },
+    block: {
+      h2: ({ children, value }) => {
+        // `value` is the single Portable Text block for this header
+        const slug = slugify(toPlainText(value));
+        return <h2 className='scroll-my-8' id={slug}>{children}</h2>;
+      },
+      h3: ({ children, value }) => {
+        const slug = slugify(toPlainText(value));
+        return <h3 className='scroll-my-8'  id={slug}>{children}</h3>;
+      },
+      h4: ({ children, value }) => {
+        const slug = slugify(toPlainText(value));
+        return <h4 className='scroll-my-8'  id={slug}>{children}</h4>;
+      },
+      // You can add similar setups for h1, h3, etc.
     },
     types: {
       image: ({value}) => {

@@ -12,6 +12,8 @@ import RelatedFeaturesSection from '~/components/RelatedFeaturesSection';
 import { generateJSONLD } from '~/utils/generateJSONLD';
 import SEOHead from '~/layout/SeoHead';
 import { urlForImage } from '~/lib/sanity.image';
+import { Toc } from '~/contentUtils/sanity-toc';
+import AuthorInfo from '~/components/commonSections/AuthorInfo';
 
 interface Props {
   podcast: Podcasts;

@@ -15,6 +15,7 @@ import SEOHead from '~/layout/SeoHead';
 import { generateJSONLD } from '~/utils/generateJSONLD';
 import { urlForImage } from '~/lib/sanity.image';
 import SanityPortableText from '~/components/blockEditor/sanityBlockEditor';
+import { Toc } from '~/contentUtils/sanity-toc';
 
 interface Props {
   caseStudy: CaseStudies;
@@ -98,6 +99,7 @@ const CaseStudyPage = ({ caseStudy, draftMode, token }: Props) => {
             </div>
             <div className='flex-1 flex flex-col gap-12 mt-12  bg-red relative md:w-1/3 w-full'>
               <div className='sticky top-12 flex flex-col gap-12'>
+              <Toc headings={ caseStudy?.headings} title="Case Study content" />
                 <AsideBannerBlock contents={caseStudy} />
                 {caseStudy?.relatedCaseStudies?.length > 0 && <RelatedFeaturesSection title={caseStudy?.title} allPosts={caseStudy?.relatedCaseStudies} />}
               </div>

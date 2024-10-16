@@ -15,6 +15,7 @@ import AllcontentSection from '~/components/sections/AllcontentSection';
 import PracticeProfile from '~/contentUtils/PracticeProfile';
 import SEOHead from '~/layout/SeoHead';
 import { generateJSONLD } from '~/utils/generateJSONLD';
+import { Toc } from '~/contentUtils/sanity-toc';
 
 interface Props {
   articles: Articles;
@@ -93,6 +94,7 @@ const ArticlePage = ({ articles, draftMode, token }: Props) => {
           </div>
           <div className='flex-1 flex flex-col gap-12 mt-12  bg-red relative md:w-1/3 w-full'>
             <div className='sticky top-12 flex flex-col gap-12'>
+              <Toc headings={ articles?.headings} title="Article content" />
               {articles?.relatedArticles?.length > 0 && <RelatedFeaturesSection title={articles?.title} allPosts={articles?.relatedArticles} />}
             </div>
           </div>
