@@ -13,9 +13,7 @@ export default {
       type: 'string',
       options: {
         list: [
-          { title: 'Text Block', value: 'textBlock' },
           { title: 'Book Free Demo Banner', value: 'bannerBlock' }, 
-          { title: 'Aside Book Free Demo Banner', value: 'asideBannerBlock' }, 
           { title: 'Testimonial Card', value: 'testimonialCard' },
                     //add the component name 
         ],
@@ -48,12 +46,6 @@ export default {
       title: 'Demo Banner Block',
       type: 'demoBannerBlock', 
       hidden: ({ parent }) => parent?.componentType !== 'bannerBlock',
-    },
-    {
-      name: 'asideBannerBlock',
-      title: 'Aside Banner Block',
-      type: 'asideBannerBlock', 
-      hidden: ({ parent }) => parent?.componentType !== 'asideBannerBlock',
     },
     {
       name: 'testimonialCard',

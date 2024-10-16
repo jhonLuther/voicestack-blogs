@@ -93,7 +93,7 @@ const ArticlePage = ({ articles, draftMode, token }: Props) => {
           </div>
           <div className='flex-1 flex flex-col gap-12 mt-12  bg-red relative md:w-1/3 w-full'>
             <div className='sticky top-12 flex flex-col gap-12'>
-              <RelatedFeaturesSection title={articles?.title} allPosts={articles?.relatedArticles} />
+              {articles?.relatedArticles?.length > 0 && <RelatedFeaturesSection title={articles?.title} allPosts={articles?.relatedArticles} />}
             </div>
           </div>
         </div>

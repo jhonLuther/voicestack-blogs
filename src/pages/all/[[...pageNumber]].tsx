@@ -48,7 +48,7 @@ export const getStaticProps: GetStaticProps<
 > = async ({ draftMode = false, params = {} }) => {
   const client = getClient(draftMode ? { token: readToken } : undefined)
   const pageNumber = parseInt(params?.pageNumber as string) || 1
-  const cardsPerPage = 3
+  const cardsPerPage = 3 // decide the contents per page 
 
   let startLimit = Math.floor((pageNumber - 1) * cardsPerPage)
   let endLimit = startLimit + cardsPerPage

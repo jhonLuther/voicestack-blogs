@@ -6,10 +6,7 @@ import { readToken } from '~/lib/sanity.api';
 import { getHomeSettings, getPosts, getTags, getTestiMonials } from '~/lib/sanity.queries';
 import type { SharedPageProps } from '~/pages/_app';
 import { Post } from '~/interfaces/post';
-import TagSelect from '~/contentUtils/TagSelector';
 import { getClient } from '~/lib/sanity.client';
-import Wrapper from '~/layout/Wrapper';
-import { PostProvider } from '~/components/Context/postContext';
 import DynamicPages from '~/layout/DynamicPages';
 
 
