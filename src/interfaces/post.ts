@@ -79,7 +79,7 @@ export interface Testimonial {
   image?: string;
 }
 export interface Podcasts {
-  videoManager: any
+  videos: any
   seoTitle: string
   seoDescription: string
   seoKeywords: string

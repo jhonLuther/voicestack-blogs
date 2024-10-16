@@ -27,6 +27,10 @@ import RelatedFeaturesSection from '~/components/RelatedFeaturesSection'
 import MainImageSection from '~/components/MainImageSection'
 import SanityPortableText from '~/components/blockEditor/sanityBlockEditor'
 import AllcontentSection from '~/components/sections/AllcontentSection'
+import Link from 'next/link'
+import {ChevronLeftIcon,ChevronRightIcon} from '@sanity/icons'
+import Pagination from '~/components/commonSections/Pagination'
+import { useRouter } from 'next/router'
 
 interface Query {
   [key: string]: string
@@ -35,27 +39,22 @@ interface Query {
 export const getStaticProps: GetStaticProps<
   SharedPageProps & {
     posts: Post[]
-    context?:{
-      cardsPerPage:number
+    context?: {
+      cardsPerPage: number
+      totalPosts: number
     }
   },
   Query
-> = async ({ draftMode = false, params = {}  }) => {
+> = async ({ draftMode = false, params = {} }) => {
   const client = getClient(draftMode ? { token: readToken } : undefined)
-  const pageNumber = parseInt(params?.pageNumber as string)
-  const cardsPerPage = 4 
-  // const cardsPerPage = parseInt(params?.cardsPerPage as string)
+  const pageNumber = parseInt(params?.pageNumber as string) || 1
+  const cardsPerPage = 3
 
-
-  let startLimit = (pageNumber - 1) * cardsPerPage
+  let startLimit = Math.floor((pageNumber - 1) * cardsPerPage)
   let endLimit = startLimit + cardsPerPage
 
-  // if(pageNumber > 1 ){
-
-  //  startLimit = (pageNumber-1) * 5
-  //  endLimit = startLimit + 5
-  // }
-  const posts = await getPostsByLimit(client,startLimit,endLimit);
+  const posts = await getPostsByLimit(client, startLimit, endLimit)
+  const totalPosts = await client.fetch(postSlugsQuery)
 
   if (!posts) {
     return {
@@ -68,47 +67,60 @@ export const getStaticProps: GetStaticProps<
       draftMode,
       token: draftMode ? readToken : '',
       posts,
+      context: {
+        cardsPerPage,
+        totalPosts: totalPosts.length,
+      },
     },
   }
 }
 
-export default function ProjectSlugRoute(
-  props: InferGetStaticPropsType<typeof getStaticProps> & { posts: any ,relatedContents: Post[]},
-) {
 
-  const [posts] = useLiveQuery(props.posts, postBySlugQuery, {
-    slug: props.posts?.slug?.current,
-  })
+
+export default function ProjectSlugRoute(
+  props: InferGetStaticPropsType<typeof getStaticProps> & {
+    posts: any
+    relatedContents: Post[]
+    currentPage:any
+  }
+) {
+  const router = useRouter();
+  const { pageNumber }:any = router.query;
+  const currentPage:number = Number(pageNumber) || 1; 
   
+  const { cardsPerPage, totalPosts } = props.context;
+  const numberOfPages = Math.ceil(totalPosts / cardsPerPage);
 
   return (
     <>
-  
-      <Layout >
-      <Wrapper>
-				<AllcontentSection allContent={posts}  />
-			</Wrapper>
-    
+      <Layout>
+        <Wrapper>
+          <AllcontentSection allContent={props.posts} />
+          <Pagination
+            currentPage={currentPage}
+            totalPages={numberOfPages}
+            baseUrl="/all"
+          />
+        </Wrapper>
       </Layout>
     </>
-  )
+  );
 }
+
 
 export const getStaticPaths = async () => {
   const client = getClient()
   const slugs = await client.fetch(postSlugsQuery)
 
   const numberOfPosts = slugs.length
-  const cardsPerPage = 5
+  const cardsPerPage = 4
   const numberOfPages = Math.ceil(numberOfPosts / cardsPerPage)
 
   const paths = []
 
   for (let i = 1; i <= numberOfPages; i++) {
-    paths.push({params:{ pageNumber: i.toString()}})
+    paths.push({ params: { pageNumber: i.toString() } })
   }
-
-
 
   return {
     paths: paths.map(({ params }) => `/all/${params.pageNumber}`),

@@ -16,9 +16,9 @@ import table from './table'
 import htmlCode from './htmlCode'
 import asideBannerBlock from './sections/asideBannerBlock'
 import testimonialCard from './sections/testimonialCard'
-import videoManager from './videoManager'
+import videos from './videos'
 
-export const schemaTypes = [post, iframe, blockContent, newContent, tag,dynamicComponent,demoBannerBlock,author,homeSettings,testiMonial,customer,link,globalSettings,table,htmlCode,asideBannerBlock,testimonialCard,videoManager]
+export const schemaTypes = [post, iframe, blockContent, newContent, tag,dynamicComponent,demoBannerBlock,author,homeSettings,testiMonial,customer,link,globalSettings,table,htmlCode,asideBannerBlock,testimonialCard,videos]
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [post, iframe, blockContent, newContent, tag,dynamicComponent,demoBannerBlock,author,homeSettings,testiMonial,customer,link,globalSettings,table,htmlCode,asideBannerBlock,testimonialCard,videoManager],
+  types: [post, iframe, blockContent, newContent, tag,dynamicComponent,demoBannerBlock,author,homeSettings,testiMonial,customer,link,globalSettings,table,htmlCode,asideBannerBlock,testimonialCard,videos],
 }

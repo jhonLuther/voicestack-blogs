@@ -16,7 +16,7 @@ interface Props {
 }
 
 const MainImageSection = ({ post, isAuthor }: Props) => {
-	
+
 	const isMobile: any = useMediaQuery(767);
 	const client = getClient()
 

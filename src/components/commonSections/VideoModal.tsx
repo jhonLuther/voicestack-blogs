@@ -12,11 +12,14 @@ export const VideoModal: React.FunctionComponent<VideoProps> = ({ videoDetails, 
     return null
   }
 
+  console.log(videoData, 'videoData');
+  
+
   return (
-    <div className={`w-full ${className}`}>
+    <div className={`w-full h-[500px] ${className} `}>
       {Array.isArray(videoData) && videoData.length > 0 && videoData.map((item: any) => (
         <iframe
-          src={getIframeUrl(item?.platform, item?.link)}
+          src={getIframeUrl(item?.platform, item?.videoId)}
           title={item?.title}
           frameBorder="0"
           allowFullScreen
@@ -26,7 +29,7 @@ export const VideoModal: React.FunctionComponent<VideoProps> = ({ videoDetails, 
       ))}
       {!Array.isArray(videoData) && (
         <iframe
-          src={getIframeUrl(videoData?.platform, videoData?.link)}
+          src={getIframeUrl(videoData?.platform, videoData?.videoId)}
           title={videoData?.title}
           frameBorder="0"
           allowFullScreen

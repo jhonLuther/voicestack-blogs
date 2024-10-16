@@ -1,4 +1,7 @@
 import React from 'react';
+import Breadcrumb from '~/components/commonSections/BreadCrumb';
+import Button from '~/components/commonSections/Button';
+import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection';
 
 const DownloadEbook = ({ ebook }) => {
   if (!ebook) {
@@ -20,7 +23,7 @@ const DownloadEbook = ({ ebook }) => {
 
   function download_file(fileURL, fileName) {
 
-    let windowObj :any = typeof window !== "undefined" ? window : null;
+    let windowObj: any = typeof window !== "undefined" ? window : null;
     // for non-IE
     if (!windowObj.ActiveXObject) {
       var save = document.createElement('a');
@@ -53,23 +56,21 @@ const DownloadEbook = ({ ebook }) => {
 
   return (
     <div className="p-6 rounded-lg mx-auto">
-      <h2 className="text-3xl font-bold mb-4">{ebook?.title}</h2>
-      <p className="text-lg mb-6">{ebook?.excerpt}</p>
-      <div className="flex space-x-4">
-        <a
-          href={pdfUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="bg-gray-300 no-underline text-green-800 px-4 py-2 rounded-lg font-medium hover:bg-gray-500 transition-all ease-out duration-300"
-        >
-          Read eBook
-        </a>
-        <button
-          onClick={() => { download_file(pdfUrl, `${ebook?.title}.pdf`) }}
-          className="bg-green-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-green-600 transition-all ease-out duration-300"
-        >
-          Download eBook
-        </button>
+      <Breadcrumb />
+      <div className='flex flex-col gap-12'>
+        <div>
+          <h2 className="text-3xl font-bold mb-4">{ebook?.title}</h2>
+          <p className="text-lg mb-6">{ebook?.excerpt}</p>
+          <div className="flex space-x-4">
+            <Button link={pdfUrl} className='bg-cs-gray-900' >
+              <span className='text-base font-medium'>{` Read eBook`}</span>
+            </Button>
+            <Button className='bg-cs-gray-900' onClick={() => { download_file(pdfUrl, `${ebook?.title}.pdf`) }}>
+              <span className='text-base font-medium'>{`Download`}</span>
+            </Button>
+          </div>
+        </div>
+        <BannerSubscribeSection version={'compact'} />
       </div>
     </div>
   );

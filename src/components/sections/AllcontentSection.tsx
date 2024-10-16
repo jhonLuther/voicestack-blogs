@@ -19,7 +19,7 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({ allContent, hideSearch 
   }
 
   const handleShowMore = () => {
-    setPostsToShow(prevPostsToShow => prevPostsToShow === 6 ? allContent.length : 6);
+    setPostsToShow(prevPostsToShow => prevPostsToShow === 9 ? allContent.length : 9);
   };
 
   return (
@@ -52,7 +52,7 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({ allContent, hideSearch 
       {allContent.length > postsToShow && (
         <div className="flex justify-center cursor-pointer">
           {redirect ? (
-            <Link href={'/all-content'}>
+            <Link href={'/all/1'}>
                 <span
                   className="text-base hover:bg-cs-gray-800 max-w-40 font-medium rounded-sm px-2 py-4 flex items-center text-white bg-cs-gray-900"
                 >

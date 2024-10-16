@@ -2,7 +2,7 @@ import { defineArrayMember, defineType } from 'sanity'
 import { ImageIcon, PlayIcon, ThLargeIcon, InsertBelowIcon } from '@sanity/icons'
 import htmlCode from './htmlCode'
 import dynamicComponent from '../../src/schemas/dynamicComponent'
-import videoManager from './videoManager'
+import videos from './videos'
 
 export default defineType({
   title: 'Block Content',
@@ -20,7 +20,7 @@ export default defineType({
       name: 'videoReference',
       description: 'Select a video from the video manager',
       type: 'reference',
-      to: [{ type: 'videoManager' }],
+      to: [{ type: 'videos' }],
       icon: PlayIcon,
     }),
     

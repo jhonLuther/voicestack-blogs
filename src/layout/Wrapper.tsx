@@ -26,7 +26,7 @@ const Wrapper: React.FunctionComponent<LayoutProps> = ({
   
   return (
     <div
-      className={` ${fullWidth ? "w-full" : "max-w-7xl"}  ${removePadding ? "p-0" : "" } md:px-8 md:py-12 px-4 py-4 h-full   mx-auto w-full  ${className}`}
+      className={` ${fullWidth ? "w-full" : "max-w-9xl"}  ${removePadding ? "p-0" : "" } px-4 md:py-12  py-4 h-full   mx-auto w-full  ${className}`}
     >
       {children}
     </div>

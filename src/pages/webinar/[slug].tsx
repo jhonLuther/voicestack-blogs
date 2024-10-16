@@ -16,6 +16,7 @@ import PracticeProfile from '~/contentUtils/PracticeProfile';
 import { generateJSONLD } from '~/utils/generateJSONLD';
 import SEOHead from '~/layout/SeoHead';
 import { VideoModal } from '~/components/commonSections/VideoModal';
+import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection';
 
 interface Props {
   webinar: Podcasts;
@@ -67,7 +68,7 @@ const WebinarPage = ({ webinar, draftMode, token }: Props) => {
   const seoRobots = webinar.seoRobots || 'index,follow';
   const seoCanonical = webinar.seoCanonical || `https://carestack.com/webinar/${webinar.slug.current}`;
   const jsonLD: any = generateJSONLD(webinar);
-  
+
   return (
     <>
       <SEOHead
@@ -82,9 +83,9 @@ const WebinarPage = ({ webinar, draftMode, token }: Props) => {
       <Layout >
         <MainImageSection isAuthor={true} post={webinar} />
         <Wrapper>
-          <div className="flex  md:flex-row flex-col">
+          <div className="flex  md:flex-row justify-between gap-20 flex-col">
             <div className="mt-12 flex md:flex-col flex-col-reverse md:w-2/3 w-full ">
-            <VideoModal videoDetails={webinar?.videoManager} className={`pt-9 max-w-2xl   flex items-start`} />
+              <VideoModal videoDetails={webinar?.videos} className={`pt-9   flex items-start`} />
               <div className='post__content w-full '>
                 <SanityPortableText
                   content={webinar?.body}
@@ -92,6 +93,8 @@ const WebinarPage = ({ webinar, draftMode, token }: Props) => {
                   token={token}
                 />
               </div>
+              <BannerSubscribeSection version={'compact'} />
+
             </div>
             <div className='flex-1 flex flex-col gap-12 mt-12  bg-red relative md:w-1/3 w-full'>
               <div className='sticky top-12 flex flex-col gap-12'>

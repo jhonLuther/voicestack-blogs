@@ -8,10 +8,15 @@ interface LatestBlogsProps {
   contents: any[]; 
   revamp?: boolean;
   className?: string;
+  cardLayout?: 'ebook' 
+  showPlayIcon?: boolean
 }
 
 
-const LatestBlogs: React.FC<LatestBlogsProps> = ({ contents, revamp, className }) => {
+const LatestBlogs: React.FC<LatestBlogsProps> = ({ contents, revamp, className,showPlayIcon }) => {
+
+  console.log(contents, 'contents');
+  
 
   if(!contents) {
     return null
@@ -38,7 +43,7 @@ const LatestBlogs: React.FC<LatestBlogsProps> = ({ contents, revamp, className }
             <section className='flex w-full gap-20 md:flex-row flex-col'>
               <div className='flex flex-col gap-9 md:max-w-[519px] w-full flex-1'>
                 <div className="flex flex-col w-full overflow-hidden">
-                  <Card cardType='top-image-contentType-card' key={firstBlog?._id || 1} cardColor='white' post={firstBlog} />
+                  <Card  showPlayIcon={showPlayIcon} cardType='top-image-contentType-card' key={firstBlog?._id || 1} cardColor='white' post={firstBlog} />
                 </div>
               </div>
               <div className='flex-grow flex-1 flex flex-col gap-8'>
@@ -56,9 +61,9 @@ const LatestBlogs: React.FC<LatestBlogsProps> = ({ contents, revamp, className }
         <section className='flex w-full gap-20 justify-between md:flex-row flex-col'>
           <div className='flex flex-col gap-9 md:max-w-[519px] w-full justify-between flex-1'>
             <h2 className='text-5xl text-black font-extrabold'>Latest</h2>
-            <div className='flex flex-col gap-8 last-child'>
+            <div className='flex flex-col gap-8  '>
               {otherBlogs.map((blog, i) => (
-                <Card key={i + 1 || blog._id} cardType='text-only-card' post={blog} />
+                <Card key={i + 1 || blog._id} cardType='text-only-card' isLast={i === otherBlogs.length - 1} post={blog} />
               ))}
             </div>
           </div>

@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { GetStaticProps } from 'next';
-import { Post, Testimonial, Podcasts } from '~/interfaces/post';
+import { Podcasts } from '~/interfaces/post';
 import { readToken } from '~/lib/sanity.api';
 import { getClient } from '~/lib/sanity.client';
 import { getPodcasts, getTags } from '~/lib/sanity.queries';
@@ -37,7 +37,7 @@ const PodcastsPage = ({ podcasts, allPodcasts, tags }: { podcasts: Podcasts[], a
 
   return (
     <Layout>
-        <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'}  revamp={true} contents={podcasts} />
+        <LatestBlogs showPlayIcon={true} className={'pt-11 pr-9 pb-16 pl-9'}  revamp={true} contents={podcasts} />
         <Wrapper>
           <AllcontentSection className={'pb-9'}  allContent={allPodcasts} hideSearch={true} cardType={'podcast-card'}/>
         </Wrapper>

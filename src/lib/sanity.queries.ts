@@ -319,6 +319,7 @@ export const podcastsQuery = groq`
   slug,
   duration,
   publishedAt,
+  mainImage,
   excerpt,
   "author": author[]-> {
     _id,
@@ -606,7 +607,7 @@ export const webinarBySlugQuery = groq`
     title,
     slug,
     contentType,
-    "videoManager": videoManager[]-> {
+    "videos": videos[]-> {
       _id,
       title,
       platform,

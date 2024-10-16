@@ -122,7 +122,7 @@ export default defineConfig({
               S.documentTypeListItem('tag').title('Tags'),
               S.documentTypeListItem('customer').title('Customer'),
               S.documentTypeListItem('testimonial').title('Testimonial'),
-              S.documentTypeListItem('videoManager').title('Video Manager'),
+              S.documentTypeListItem('videos').title('Videos'),
               // S.documentTypeListItem('testimonial').title('Testimonial'),
             // ...S.documentTypeListItems().filter(
             //   (listItem) => !['homeSettings'].includes(listItem.getId()) && !['globalSettings'].includes(listItem.getId())&& !['post'].includes(listItem.getId()),

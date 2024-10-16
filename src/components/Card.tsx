@@ -12,9 +12,11 @@ interface CardProps {
   cardType?: 'top-image-card' | 'text-only-card' | 'left-image-card' | 'ebook-card' | 'featured' | 'top-image-smallCard' | 'podcast-card' | 'top-image-contentType-card';
   className?: string;
   cardColor?: string
+  showPlayIcon?: boolean
+  isLast?: boolean;
 }
 
-export default function Card({ post, cardType, className, cardColor }: CardProps) {
+export default function Card({ post,isLast, cardType, className, cardColor,showPlayIcon= false }: CardProps) {
 
   const [linkUrl, setLinkUrl] = useState<string | null>(null); 
 
@@ -86,20 +88,20 @@ export default function Card({ post, cardType, className, cardColor }: CardProps
                     height={400}
                   />
                 )}
-                <div className="absolute gap-4 bottom-14 max-w-44 right-10 bg-white text-black p-3 rounded-full  shadow-md flex items-center">
-
+                {showPlayIcon && <div className="absolute gap-4 bottom-14 max-w-44 right-10 bg-white text-black p-3 rounded-full  shadow-md flex items-center">
+               
                   <div className='flex flex-col pl-5'>
                     <span className='text-xs font-semibold'>{`Listen Now`}</span>
                     <span className="text-xs font-normal text-cs-gray-700">{`${post.duration || '0:00'} min`}</span>
                   </div>
 
 
-                  <button className="flex items-center justify-center bg-black text-white p-2 rounded-full">
+                   <button className="flex items-center justify-center bg-black text-white p-2 rounded-full">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                       <path fill="currentColor" d="M8 5v14l11-7L8 5z" />
                     </svg>
                   </button>
-                </div>
+                </div>}
               </div>
             </div>
           </Link>
@@ -134,7 +136,7 @@ export default function Card({ post, cardType, className, cardColor }: CardProps
             : cardType === 'text-only-card' ? (
               <div className={`flex flex-col flex-1 w-full group hover:scale-100 transform duration-300 ${className} `}>
                 <Link href={linkUrl}>
-                  <div className={`border-b-2 pb-6 flex flex-col gap-3 ${cardColor === 'white' ? 'border-white' : 'border-gray-900'} group-hover:border-gray-600`}>
+                  <div className={`${!isLast && `border-b-2`} pb-6 flex flex-col gap-3 ${cardColor === 'white' ? 'border-white' : 'border-gray-900'} group-hover:border-gray-600`}>
                     {post.tags && post.tags[0] && (
                       <span className="uppercase font-inter text-sm font-medium">{post?.tags[0]?.tagName}</span>
                     )}

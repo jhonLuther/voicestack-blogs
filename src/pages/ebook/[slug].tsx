@@ -14,6 +14,7 @@ import RelatedFeaturesSection from '~/components/RelatedFeaturesSection';
 import DownloadEbook from '~/contentUtils/EbookDownloader';
 import SEOHead from '~/layout/SeoHead';
 import { generateJSONLD } from '~/utils/generateJSONLD';
+import EbookCard from '~/components/uiBlocks/EbookCard';
 
 interface Props {
   ebook: Ebooks;
@@ -74,22 +75,14 @@ const EbookPage = ({ ebook, draftMode, token }: Props) => {
         ogImage={urlForImage(ebook?.mainImage)}
         contentType={ebook?.contentType} />
       <Layout >
-        <MainImageSection isAuthor={true} post={ebook} />
         <Wrapper>
-          <div className="flex  md:flex-row flex-col">
-            <div className="mt-12 flex md:flex-col flex-col-reverse md:w-2/3 w-full ">
-              <div className='post__content w-full '>
-                <DownloadEbook ebook={ebook} />
-                <SanityPortableText
-                  content={ebook?.body}
-                  draftMode={draftMode}
-                  token={token}
-                />
-              </div>
+          <div className="flex  md:flex-row flex-col justify-between gap-20">
+            <div className="mt-12 flex md:flex-col flex-col-reverse md:max-w-xl w-full ">
+            <EbookCard ebook={ebook}/>
             </div>
-            <div className='flex-1 flex flex-col gap-12 mt-12  bg-red relative md:w-1/3 w-full'>
-              <div className='sticky top-12 flex flex-col gap-12'>
-                {ebook?.relatedEbooks.length > 0 && <RelatedFeaturesSection title={ebook?.title} allPosts={ebook?.relatedEbooks} />}
+            <div className='flex-1 flex flex-col gap-12 mt-12  bg-red relative md:max-w-lg w-full'>
+              <div className='flex flex-col gap-12'>
+              <DownloadEbook ebook={ebook} />
               </div>
             </div>
           </div>

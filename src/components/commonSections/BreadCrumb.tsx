@@ -4,7 +4,11 @@ import { useRouter } from 'next/router';
 import { breadCrumbJsonLd } from '~/utils/generateJSONLD';
 import Head from 'next/head';
 
-const Breadcrumb = () => {
+interface BreadCrumbProps {
+  className?: string
+}
+
+const Breadcrumb = ({className}:BreadCrumbProps) => {
   const router = useRouter();
   const [breadcrumbs, setBreadcrumbs] = useState([]);
   const pathSegments = useRef(router.asPath.split('/').filter(segment => segment !== ''));
@@ -41,7 +45,7 @@ const Breadcrumb = () => {
           />
         </Head>
       )}
-      <nav className='cursor-pointer mb-4' aria-label="Breadcrumb">
+      <nav className={`cursor-pointer mb-4 ${className}`} aria-label="Breadcrumb">
         <p className="line-clamp-1 uppercase overflow-hidden text-ellipsis">
           <span>
             <Link href="/">{`Home`}</Link>

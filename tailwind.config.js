@@ -18,6 +18,7 @@ module.exports = {
           'cs-purple':'#8347CF',
           'cs-black':'#151515',
           'cs-gray-900':'#18181B',
+          'cs-gray-100':'#D4D4D8',
           'cs-gray-800':'#38424D',
           'cs-gray-700':'#606871',
           'cs-gray-600':'#888E94',
@@ -33,7 +34,7 @@ module.exports = {
           'cs-dark-500' : '#202124'
         },
         maxWidth:{
-          '8xl':"80rem"
+          '9xl':"82rem"
         },
         fontFamily:{
           'sans':['Inter', 'sans-serif'],

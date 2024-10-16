@@ -3,9 +3,9 @@ import {DocumentVideoIcon} from '@sanity/icons'
 import {DatabaseIcon} from '@sanity/icons'
 
 export default defineType({
-  name: 'videoManager',
-  title: 'Video Manager',
-  icon: DatabaseIcon,
+  name: 'videos',
+  title: 'Videos',
+  icon: DocumentVideoIcon,
   type: 'document',
   fields: [
     defineField({

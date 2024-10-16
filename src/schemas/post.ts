@@ -101,13 +101,13 @@ export default defineType({
       type: 'text',
     }),
     defineField({
-      name: 'videoManager',
+      name: 'videos',
       title: 'Video',
       type: 'array',
       of: [
         {
           type: 'reference',
-          to: [{ type: 'videoManager' }],
+          to: [{ type: 'videos' }],
         },
       ],
       hidden: ({ parent }) =>
