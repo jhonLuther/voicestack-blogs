@@ -55,15 +55,6 @@ const SanityPortableText: React.FC<SanityPortableTextProps> = ({
         const slug = slugify(toPlainText(value));
         return <h2 className='scroll-my-8' id={slug}>{children}</h2>;
       },
-      h3: ({ children, value }) => {
-        const slug = slugify(toPlainText(value));
-        return <h3 className='scroll-my-8'  id={slug}>{children}</h3>;
-      },
-      h4: ({ children, value }) => {
-        const slug = slugify(toPlainText(value));
-        return <h4 className='scroll-my-8'  id={slug}>{children}</h4>;
-      },
-      // You can add similar setups for h1, h3, etc.
     },
     types: {
       image: ({value}) => {

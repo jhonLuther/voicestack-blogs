@@ -1,21 +1,20 @@
 import { GetStaticProps, GetStaticPaths } from 'next';
 import { useRouter } from 'next/router';
 import { getClient } from '~/lib/sanity.client';
-import { articleSlugsQuery, getArticle, getPodcast, getPodcasts, getRelatedContents, podcastSlugsQuery } from '~/lib/sanity.queries';
-import { Articles, Podcasts } from '~/interfaces/post';
+import { articleSlugsQuery, getArticle} from '~/lib/sanity.queries';
+import { Articles } from '~/interfaces/post';
 import Wrapper from '~/layout/Wrapper';
-import Image from 'next/image';
 import { readToken } from '~/lib/sanity.api';
 import { urlForImage } from '~/lib/sanity.image';
 import SanityPortableText from '~/components/blockEditor/sanityBlockEditor';
 import Layout from '~/components/Layout';
 import MainImageSection from '~/components/MainImageSection';
 import RelatedFeaturesSection from '~/components/RelatedFeaturesSection';
-import AllcontentSection from '~/components/sections/AllcontentSection';
-import PracticeProfile from '~/contentUtils/PracticeProfile';
 import SEOHead from '~/layout/SeoHead';
 import { generateJSONLD } from '~/utils/generateJSONLD';
 import { Toc } from '~/contentUtils/sanity-toc';
+import AuthorInfo from '~/components/commonSections/AuthorInfo';
+import ShareableLinks from '~/components/commonSections/ShareableLinks';
 
 interface Props {
   articles: Articles;
@@ -41,7 +40,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false, params = {} }) => {
   const client = getClient(draftMode ? { token: readToken } : undefined);
   const articles = await getArticle(client, params.slug as string);
-  
+
 
   return {
     props: {
@@ -53,7 +52,7 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
 };
 
 const ArticlePage = ({ articles, draftMode, token }: Props) => {
-  
+
   const router = useRouter();
 
   if (router.isFallback) {
@@ -70,7 +69,7 @@ const ArticlePage = ({ articles, draftMode, token }: Props) => {
 
   return (
     <>
-    <SEOHead
+      <SEOHead
         title={seoTitle}
         description={seoDescription}
         keywords={seoKeywords}
@@ -79,28 +78,34 @@ const ArticlePage = ({ articles, draftMode, token }: Props) => {
         jsonLD={jsonLD}
         ogImage={urlForImage(articles?.mainImage)}
         contentType={articles?.contentType} />
-    <Layout >
-      <MainImageSection isAuthor={true} post={articles?.article} />
-      <Wrapper>
-        <div className="flex  md:flex-row flex-col">
-          <div className="mt-12 flex md:flex-col flex-col-reverse md:w-2/3 w-full ">
-            <div className='post__content w-full '>
-              <SanityPortableText
-                content={articles?.body}
-                draftMode={draftMode}
-                token={token}
-              />
+      <Layout >
+        <MainImageSection isAuthor={true} post={articles?.article} />
+        <Wrapper>
+          <div className="flex  md:flex-row flex-col">
+            <div className="mt-12 flex md:flex-col flex-col-reverse md:w-2/3 w-full ">
+              <div className='post__content w-full '>
+                <SanityPortableText
+                  content={articles?.body}
+                  draftMode={draftMode}
+                  token={token}
+                />
+              </div>
+            </div>
+            <div className='flex-1 flex flex-col gap-12 mt-12  bg-red relative md:w-1/3 w-full'>
+              <div className='sticky top-12 flex flex-col gap-12'>
+                <Toc headings={articles?.headings} title="Article content" />
+                {articles?.author &&
+                  <div className=''>
+                    <AuthorInfo contentType={articles?.contentType} author={articles?.author} />
+                  </div>
+                }
+                <ShareableLinks props={articles?.title} />
+              </div>
             </div>
           </div>
-          <div className='flex-1 flex flex-col gap-12 mt-12  bg-red relative md:w-1/3 w-full'>
-            <div className='sticky top-12 flex flex-col gap-12'>
-              <Toc headings={ articles?.headings} title="Article content" />
-              {articles?.relatedArticles?.length > 0 && <RelatedFeaturesSection title={articles?.title} allPosts={articles?.relatedArticles} />}
-            </div>
-          </div>
-        </div>
-      </Wrapper>
-    </Layout>
+          {articles?.relatedArticles?.length > 0 && <RelatedFeaturesSection title={articles?.title} allPosts={articles?.relatedArticles} />}
+        </Wrapper>
+      </Layout>
     </>
   );
 };

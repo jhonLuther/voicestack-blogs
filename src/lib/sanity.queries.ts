@@ -312,7 +312,7 @@ const bodyFragment = `
 `
 //Table of contents
 const tocFragment = `
-   "headings": body[style in ["h1", "h2", "h3", "h4", "h5", "h6"]]{ 
+   "headings": body[style in ["h2"]]{ 
       "children": children[]{
         "text": text,
         "marks": marks,
@@ -548,11 +548,16 @@ export const testiMonialBySlugQuery = groq`
     excerpt,
     layoutSwitcher,
     hasVideo,
-    videoId,
     image,
     rating,
     ${bodyFragment},
     ${tocFragment},
+    "videos": videos[]-> {
+      _id,
+      title,
+      platform,
+      videoId,
+    },
     date,
     "tags": tags[]-> {
     _id,

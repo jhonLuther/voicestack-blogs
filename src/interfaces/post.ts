@@ -60,6 +60,9 @@ export interface Post {
 // interfaces/post.ts
 // Example of Testimonial interface
 export interface Testimonial {
+  videos: any
+  hasVideo: any
+  rating(rating: any): import("react").ReactNode | Iterable<import("react").ReactNode>
   headings: Headings
   seoTitle: string
   seoDescription: string

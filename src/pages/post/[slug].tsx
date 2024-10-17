@@ -26,6 +26,7 @@ import RelatedFeaturesSection from '~/components/RelatedFeaturesSection'
 import MainImageSection from '~/components/MainImageSection'
 import SanityPortableText from '~/components/blockEditor/sanityBlockEditor'
 import { Toc } from '~/contentUtils/sanity-toc'
+import ShareableLinks from '~/components/commonSections/ShareableLinks'
 
 interface Query {
   [key: string]: string
@@ -112,16 +113,16 @@ export default function ProjectSlugRoute(
                 <div className='flex-1 flex flex-col gap-12 mt-12  bg-red relative md:w-1/3 w-full'>
                   <div className='sticky top-12 flex flex-col gap-12'>
                   <Toc headings={ post?.headings} title="Blog content" />
-
                     {authorInfo &&
                       <div className=''>
                         <AuthorInfo contentType={post.contentType} author={authorInfo} />
                       </div>
                     }
-                    <RelatedFeaturesSection  title={post?.title} allPosts={post?.relatedPosts} />
+                    <ShareableLinks props={post?.title} />
                   </div>
                 </div>
               </div>
+              {post?.relatedPosts && <RelatedFeaturesSection  title={post?.title} allPosts={post?.relatedPosts} />}
             </Wrapper>
           </div>
         </section>

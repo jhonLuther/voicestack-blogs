@@ -107,10 +107,10 @@ const PressReleasePage = ({ pressRelease, draftMode, token }: Props) => {
                     <AuthorInfo contentType={pressRelease.contentType} author={pressRelease?.author} />
                   </div>
                 }
-                {pressRelease?.relatedPressReleases.length > 0 && <RelatedFeaturesSection title={pressRelease?.title} allPosts={pressRelease?.relatedPressReleases} />}
               </div>
             </div>
           </div>
+          {pressRelease?.relatedPressReleases.length > 0 && <RelatedFeaturesSection title={pressRelease?.title} allPosts={pressRelease?.relatedPressReleases} />}
         </Wrapper>
       </Layout>
     </>

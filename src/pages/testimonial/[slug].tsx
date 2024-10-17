@@ -18,6 +18,9 @@ import SEOHead from '~/layout/SeoHead';
 import { urlForImage } from '~/lib/sanity.image';
 import SanityPortableText from '~/components/blockEditor/sanityBlockEditor';
 import { Toc } from '~/contentUtils/sanity-toc';
+import ShareableLinks from '~/components/commonSections/ShareableLinks';
+import { setImage } from '~/utils/startRatings';
+import { VideoModal } from '~/components/commonSections/VideoModal';
 
 interface Props {
   testimonial: Testimonial;
@@ -78,7 +81,7 @@ const TestimonialPage = ({ testimonial, draftMode, token }: Props) => {
   const seoCanonical = testimonial.seoCanonical || `https://carestack.com/testimonial/${testimonial.slug.current}`;
   const jsonLD: any = generateJSONLD(testimonial);
 
-
+  console.log(testimonial,'testimonial');
   return (
     <>
       <SEOHead
@@ -96,6 +99,10 @@ const TestimonialPage = ({ testimonial, draftMode, token }: Props) => {
           <div className="flex  md:flex-row flex-col">
             <div className="mt-12 flex md:flex-col flex-col-reverse md:w-2/3 w-full ">
               <div className='post__content w-full '>
+              <div className='flex '>
+                {setImage(testimonial?.rating.toString())}
+                </div>
+                {testimonial.hasVideo && <VideoModal videoDetails={testimonial?.videos} className={`pt-9   flex items-start`} />}
                 <SanityPortableText
                   content={testimonial?.body}
                   draftMode={draftMode}
@@ -106,10 +113,11 @@ const TestimonialPage = ({ testimonial, draftMode, token }: Props) => {
             <div className='flex-1 flex flex-col gap-12 mt-12  bg-red relative md:w-1/3 w-full'>
               <div className='sticky top-12 flex flex-col gap-12'>
                 <Toc headings={ testimonial?.headings} title="Testimonial content" />
-                {testimonial?.relatedTestimonials?.length > 0 && <RelatedFeaturesSection title={testimonial?.title} allPosts={testimonial?.relatedTestimonials} />}
+                <ShareableLinks props={testimonial?.title} />
               </div>
             </div>
           </div>
+          {testimonial?.relatedTestimonials?.length > 0 && <RelatedFeaturesSection title={testimonial?.title} allPosts={testimonial?.relatedTestimonials} />}
         </Wrapper>
       </Layout>
     </>

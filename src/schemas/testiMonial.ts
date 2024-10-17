@@ -49,11 +49,16 @@ export default defineType({
       description: 'Whether a video is associated with this testimonial',
     }),
     defineField({
-        name: 'videoId',
-        title: 'Video ID',
-        type: 'string',
-        description: 'The ID of the video associated with this testimonial',
-      }),
+      name: 'videos',
+      title: 'Video',
+      type: 'array',
+      of: [
+        {
+          type: 'reference',
+          to: [{ type: 'videos' }],
+        },
+      ],
+    }),
     defineField({
       name: 'image',
       title: 'Image',
