@@ -16,7 +16,7 @@ export const VideoModal: React.FunctionComponent<VideoProps> = ({ videoDetails, 
   
 
   return (
-    <div className={`w-full h-[500px] ${className} `}>
+    <div className={`w-full h-[400px] ${className} `}>
       {Array.isArray(videoData) && videoData.length > 0 && videoData.map((item: any) => (
         <iframe
           src={getIframeUrl(item?.platform, item?.videoId)}

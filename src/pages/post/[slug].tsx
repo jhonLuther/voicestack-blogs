@@ -15,7 +15,6 @@ import {
   postsQuery,
 } from '~/lib/sanity.queries'
 import type { SharedPageProps } from '~/pages/_app'
-import blogStyles from '../../styles/components/blogStyles.module.scss'
 import SEOHead from '~/layout/SeoHead'
 import { Post } from '~/interfaces/post'
 import { generateJSONLD } from '~/utils/generateJSONLD'
@@ -94,7 +93,7 @@ export default function ProjectSlugRoute(
         contentType={post?.contentType} />
       <Layout >
         <MainImageSection post={post} />
-        <section className={`post ${blogStyles.blog}`}>
+        <section >
           <div className="post__container">
             <Wrapper>
               <div className="flex  md:flex-row flex-col">

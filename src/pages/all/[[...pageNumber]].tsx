@@ -1,36 +1,20 @@
-import { PortableText } from '@portabletext/react'
 import type { GetStaticProps, InferGetStaticPropsType } from 'next'
-import Image from 'next/image'
-import { useLiveQuery } from 'next-sanity/preview'
 import Layout from '~/components/Layout'
 import { readToken } from '~/lib/sanity.api'
 import { getClient } from '~/lib/sanity.client'
-import { urlForImage } from '~/lib/sanity.image'
 import {
-  getPost,
-  getPosts,
   getPostsByLimit,
-  getRelatedContents,
-  postBySlugQuery,
+  getTags,
   postSlugsQuery,
-  postsQuery,
 } from '~/lib/sanity.queries'
 import type { SharedPageProps } from '~/pages/_app'
-import blogStyles from '../../styles/components/blogStyles.module.scss'
-import SEOHead from '~/layout/SeoHead'
 import { Post } from '~/interfaces/post'
-import { generateJSONLD } from '~/utils/generateJSONLD'
-import AuthorInfo from '~/components/commonSections/AuthorInfo'
 import Wrapper from '~/layout/Wrapper'
-import { SanityImage } from '~/components/SanityImage'
-import RelatedFeaturesSection from '~/components/RelatedFeaturesSection'
-import MainImageSection from '~/components/MainImageSection'
-import SanityPortableText from '~/components/blockEditor/sanityBlockEditor'
 import AllcontentSection from '~/components/sections/AllcontentSection'
-import Link from 'next/link'
-import {ChevronLeftIcon,ChevronRightIcon} from '@sanity/icons'
 import Pagination from '~/components/commonSections/Pagination'
 import { useRouter } from 'next/router'
+import TagSelect from '~/contentUtils/TagSelector'
+import { useState } from 'react'
 
 interface Query {
   [key: string]: string
@@ -48,12 +32,14 @@ export const getStaticProps: GetStaticProps<
 > = async ({ draftMode = false, params = {} }) => {
   const client = getClient(draftMode ? { token: readToken } : undefined)
   const pageNumber = parseInt(params?.pageNumber as string) || 1
-  const cardsPerPage = 3 // decide the contents per page 
+  const cardsPerPage =  6// decide the contents per page 
 
   let startLimit = Math.floor((pageNumber - 1) * cardsPerPage)
   let endLimit = startLimit + cardsPerPage
 
   const posts = await getPostsByLimit(client, startLimit, endLimit)
+  const tags = await getTags(client);
+
   const totalPosts = await client.fetch(postSlugsQuery)
 
   if (!posts) {
@@ -67,6 +53,7 @@ export const getStaticProps: GetStaticProps<
       draftMode,
       token: draftMode ? readToken : '',
       posts,
+      tags,
       context: {
         cardsPerPage,
         totalPosts: totalPosts.length,
@@ -82,20 +69,37 @@ export default function ProjectSlugRoute(
     posts: any
     relatedContents: Post[]
     currentPage:any
+    tags?: any
   }
 ) {
   const router = useRouter();
+
+  const [selectedTag, setSelectedTag] = useState(null);
+
+  const handleTagChange = (tag) => {
+    setSelectedTag(tag);
+    // router.replace(`/all/${pageNumber}/${tag.slug.current}`);
+  };
   const { pageNumber }:any = router.query;
   const currentPage:number = Number(pageNumber) || 1; 
   
   const { cardsPerPage, totalPosts } = props.context;
   const numberOfPages = Math.ceil(totalPosts / cardsPerPage);
 
+  console.log(props.posts,'props.posts');
+
   return (
     <>
       <Layout>
         <Wrapper>
-          <AllcontentSection allContent={props.posts} />
+        <TagSelect
+					tags={props?.tags}
+					tagLimit={5}
+					showTags={true}
+          showHeading={true}
+          onTagChange={handleTagChange}
+				/>
+          <AllcontentSection  hideSearch={true} allContent={props.posts} />
           <Pagination
             currentPage={currentPage}
             totalPages={numberOfPages}

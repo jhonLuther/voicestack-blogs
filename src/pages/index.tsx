@@ -59,11 +59,7 @@ export const getStaticProps: GetStaticProps<SharedPageProps & { posts: Post[] }>
   }
 };
 
-
 export default function IndexPage(props: IndexPageProps) {
-  const mainSection = useRef<HTMLDivElement>(null);
-
-
   const homeSettings = props?.homeSettings[0];
   const latestPosts = props?.latestPosts;
 

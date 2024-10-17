@@ -47,14 +47,7 @@ const DynamicPages = ({
 	const router = useRouter();
 
 	const [currentPage, setCurrentPage] = useState(1);
-	const [selectedContentType, setSelectedContentType] = useState<string>('');
-	const [selectedTags, setSelectedTags] = useState<any>('');
-	const [selectedTimeFilter, setSelectedTimeFilter] = useState<string>('');
 	const [filteredPosts, setFilteredPosts] = useState<Post[]>(posts);
-
-	const contentTypes = posts
-		.map(type => type?.contentType)
-		.filter((name, index, self) => name && self.indexOf(name) === index);
 
 	const segmentSize = 9;// defines Content per page 
 	const segments = [];
@@ -64,28 +57,6 @@ const DynamicPages = ({
 
 	const currentSegment = segments[currentPage - 1] || [];
 
-	const handlePageChange = (page: number) => {
-		setCurrentPage(page);
-	};
-
-	const handleTagChange = (tag: string) => {
-		setSelectedTags(prevTags =>
-			prevTags.includes(tag)
-				? prevTags.filter(t => t !== tag)
-				: [...prevTags, tag]
-		);
-		setCurrentPage(1);
-	};
-
-	const handleContentTypeChange = (contentType: string) => {
-		setSelectedContentType(contentType);
-		setCurrentPage(1);
-	};
-
-	const handleTimeFilterChange = (filter: string) => {
-		setSelectedTimeFilter(filter);
-		setCurrentPage(1);
-	};
 
 	const featuredBlog = homeSettings?.FeaturedBlog || posts[0];
 
@@ -116,11 +87,7 @@ const DynamicPages = ({
 				<LatestBlogs contents={latestPosts} />
 				<ShortBannerSection />
 				<TagSelect
-					contentTypes={contentTypes}
 					tags={tags}
-					onTagChange={handleTagChange}
-					onTimeFilterChange={handleTimeFilterChange}
-					selectedTags={selectedTags}
 					tagLimit={5}
 					showTags={true}
 				/>

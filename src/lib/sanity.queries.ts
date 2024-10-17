@@ -6,22 +6,15 @@ import { Author, Post, Tag } from '~/interfaces/post'
 
 export const postsQuery = groq`
 *[_type == "post" && defined(slug.current)] | order(_createdAt desc) {
- ...,
- "excerpt":postFields.excerpt,
- contentType,
-  seoTitle,
-  seoDescription,
-  seoRobots,
-  seoKeywords,
-  seoCanonical,
-  seoJSONLD,
-  author[]-> {
-      _id,
-      name,
-      slug,
-      role,
-      bio,
-      "picture": picture.asset->url
+ mainImage,
+ title,
+ slug,
+ _id,
+  contentType,
+  tags[]->{
+    _id,
+    tagName,
+    slug
   },
 }
 `
@@ -146,10 +139,15 @@ export async function getPostsByLimit(
   client: SanityClient,
   startLimit?: number,
   endLimit?: number,
+  selectedTag?: string,
 ): Promise<Post[]> {
-  let newPostsQuery = postsQuery + `[${startLimit}...${endLimit}]`
+  let newPostsQuery = postsQuery + `[${startLimit}...${endLimit}]`;
 
-  return await client.fetch(newPostsQuery)
+  if (selectedTag) {
+    newPostsQuery += ` && tags[]->slug.current == "${selectedTag}"`;
+  }
+
+  return await client.fetch(newPostsQuery);
 }
 export async function getIframes(client: SanityClient): Promise<Post[]> {
   return await client.fetch(iframesQuery)
