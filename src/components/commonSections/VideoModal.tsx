@@ -12,7 +12,7 @@ export const VideoModal: React.FunctionComponent<VideoProps> = ({ videoDetails, 
     return null
   }
 
-  console.log(videoData, 'videoData');
+  // console.log(videoData, 'videoData');
   
 
   return (

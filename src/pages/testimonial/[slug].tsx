@@ -81,7 +81,7 @@ const TestimonialPage = ({ testimonial, draftMode, token }: Props) => {
   const seoCanonical = testimonial.seoCanonical || `https://carestack.com/testimonial/${testimonial.slug.current}`;
   const jsonLD: any = generateJSONLD(testimonial);
 
-  console.log(testimonial,'testimonial');
+  // console.log(testimonial,'testimonial');
   return (
     <>
       <SEOHead

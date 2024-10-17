@@ -1,29 +1,21 @@
 import { defineArrayMember, defineType } from 'sanity'
-import { ImageIcon, PlayIcon, ThLargeIcon, InsertBelowIcon } from '@sanity/icons'
+import HighlightDecorator from '../components/HighlightDecorator'
+import DynamicComponent from '../../src/schemas/dynamicComponent'
+import { ImageIcon } from '@sanity/icons'
+import { ThLargeIcon } from '@sanity/icons'
+import { InsertBelowIcon } from '@sanity/icons'
 import htmlCode from './htmlCode'
 import dynamicComponent from '../../src/schemas/dynamicComponent'
-import videos from './videos'
 
 export default defineType({
   title: 'Block Content',
   name: 'newContent',
   type: 'array',
   of: [
-    defineArrayMember({
+    {
       type: 'image',
       icon: ImageIcon,
-    }),
-
-
-  defineArrayMember({
-      title: 'Video',
-      name: 'videoReference',
-      description: 'Select a video from the video manager',
-      type: 'reference',
-      to: [{ type: 'videos' }],
-      icon: PlayIcon,
-    }),
-    
+    },
     {
       type: 'table',
       icon: ThLargeIcon,
@@ -33,6 +25,7 @@ export default defineType({
         pageSize: 10,
       },
     },
+    
     defineArrayMember(htmlCode),
     defineArrayMember(dynamicComponent),
     defineArrayMember({
@@ -40,6 +33,7 @@ export default defineType({
       type: 'block',
       styles: [
         { title: 'Normal', value: 'normal' },
+        // { title: 'H1', value: 'h1' },
         { title: 'H2', value: 'h2' },
         { title: 'H3', value: 'h3' },
         { title: 'H4', value: 'h4' },
@@ -66,7 +60,6 @@ export default defineType({
                 name: 'href',
                 type: 'url',
               },
-              
             ],
           },
         ],

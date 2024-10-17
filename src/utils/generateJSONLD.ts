@@ -2,7 +2,7 @@ import { Post } from '~/interfaces/post';
 import { fetchAuthor } from './common';
 
 export function generateJSONLD(post: any) {
-  console.log({generatedPost:post});
+  // console.log({generatedPost:post});
   
 
   const {
@@ -15,9 +15,9 @@ export function generateJSONLD(post: any) {
   
 
   const contentType = post?.contentType;
-  console.log(contentType,'contentType');
+  // console.log(contentType,'contentType');
 
-  console.log(author,'author in json');
+  // console.log(author,'author in json');
   
   if (contentType) {
     switch (contentType) {

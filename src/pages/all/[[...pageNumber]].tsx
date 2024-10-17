@@ -86,7 +86,7 @@ export default function ProjectSlugRoute(
   const { cardsPerPage, totalPosts } = props.context;
   const numberOfPages = Math.ceil(totalPosts / cardsPerPage);
 
-  console.log(props.posts,'props.posts');
+  // console.log(props.posts,'props.posts');
 
   return (
     <>

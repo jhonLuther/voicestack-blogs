@@ -15,7 +15,7 @@ interface LatestBlogsProps {
 
 const LatestBlogs: React.FC<LatestBlogsProps> = ({ contents, revamp, className,showPlayIcon }) => {
 
-  console.log(contents, 'contents');
+  // console.log(contents, 'contents');
   
 
   if(!contents) {
