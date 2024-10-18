@@ -150,10 +150,10 @@ export default function Card({ post,isLast, cardType, className, cardColor,showP
               cardType === 'top-image-smallCard' ? (
                 <Link href={`/post/${post.slug && post.slug.current}`}>
                   <div className="flex flex-col gap-1 group hover: transition duration-500 overflow-hidden">
-                    <div className='group-hover:scale-105 transition duration-500 overflow-hidden'>
+                    <div className='overflow-hidden'>
                       {post.mainImage && (
                         <Image
-                          className="w-full h-auto rounded-t-md min-h-[250px] object-center object-cover md:w-auto"
+                          className="w-full h-auto rounded-t-md min-h-[250px] object-center object-cover md:w-auto group-hover:scale-105 transition duration-500"
                           src={urlForImage(post.mainImage).width(519).height(537).url()}
                           height={537}
                           width={519}
@@ -241,42 +241,45 @@ export default function Card({ post,isLast, cardType, className, cardColor,showP
                     : (
 
                       // default card
-                      <div className="flex flex-col w-full min-h-[250px] group hover:scale-105 transform duration-300">
-                        {(post.mainImage || post.image) && (
-                          <Image
-                            className="w-auto min-h-[250px] object-center object-cover rounded-lg"
-                            src={
-                              post.mainImage
-                                ? urlForImage(post.mainImage).width(411).height(170).url()
-                                : urlForImage(post.image).width(411).height(170).url()
-                            }
-                            height={170}
-                            width={411}
-                            alt={post.title || 'Blog Image'}
-                          />
-                        )}
-                        <div className="mt-4">
-                          <h3 className="text-ellipsis h-auto line-clamp-1 overflow-hidden w-full">
-                            <Link href={`/post/${post.slug && post.slug.current}`}>
-                              <span className="text-gray-950 text-xl font-semibold group-hover:underline underline-offset-2">
-                                {post.title}
-                              </span>
-                            </Link>
-                          </h3>
-                          <div className="flex flex-col gap-1">
-                            {post.tags && post.tags.map((tag, i) => (
-                              <span key={tag?._id || i} className="text-violet-800">
-                                {tag?.tagName}
-                              </span>
-                            ))}
-                            {post.contentType && (
-                              <span className="text-sm uppercase text-cs-100">{post.contentType}</span>
-                            )}
-                            {post.author && (
-                              <span>{`${post.author.name ? ` by ${post.author.name}` : ""}`}</span>
-                            )}
+                      <div className="flex flex-col w-full min-h-[250px] group">
+                        <Link href={`/post/${post.slug && post.slug.current}`}>
+                          {(post.mainImage || post.image) && (
+                            <div className="overflow-hidden rounded-lg">
+                              <Image
+                                className="w-auto min-h-[250px] object-center object-cover rounded-lg group-hover:scale-110 transition-transform duration-300"
+                                src={
+                                  post.mainImage
+                                    ? urlForImage(post.mainImage).width(411).height(170).url()
+                                    : urlForImage(post.image).width(411).height(170).url()
+                                }
+                                height={170}
+                                width={411}
+                                alt={post.title || 'Blog Image'}
+                              />
+                            </div>
+                          )}
+                          <div className="mt-4">
+                            <h3 className="text-ellipsis h-auto line-clamp-1 overflow-hidden w-full">
+                              
+                                <span className="text-gray-950 text-xl font-semibold group-hover:underline underline-offset-2">
+                                  {post.title}
+                                </span>
+                            </h3>
+                            <div className="flex flex-col gap-1">
+                              {post.tags && post.tags.map((tag, i) => (
+                                <span key={tag?._id || i} className="text-violet-800">
+                                  {tag?.tagName}
+                                </span>
+                              ))}
+                              {post.contentType && (
+                                <span className="text-sm uppercase text-cs-100">{post.contentType}</span>
+                              )}
+                              {post.author && (
+                                <span>{`${post.author.name ? ` by ${post.author.name}` : ""}`}</span>
+                              )}
+                            </div>
                           </div>
-                        </div>
+                        </Link>
                       </div>
                     )}
     </React.Fragment>
