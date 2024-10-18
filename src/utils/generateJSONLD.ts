@@ -1,9 +1,8 @@
-import { Post } from '~/interfaces/post';
-import { fetchAuthor } from './common';
+import { Post } from '~/interfaces/post'
+import { fetchAuthor } from './common'
 
 export function generateJSONLD(post: any) {
   // console.log({generatedPost:post});
-  
 
   const {
     author = null,
@@ -11,188 +10,224 @@ export function generateJSONLD(post: any) {
     estimatedWordCount = null,
     excerpt = null,
     numberOfCharacters = null,
-  } = post || {};
-  
+  } = post || {}
 
-  const contentType = post?.contentType;
+  const contentType = post?.contentType
   // console.log(contentType,'contentType');
 
   // console.log(author,'author in json');
-  
+
   if (contentType) {
     switch (contentType) {
       case 'blog':
         return JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "BlogPosting",
+          '@context': 'https://schema.org',
+          '@type': 'BlogPosting',
           mainEntityOfPage: {
-            "@type": "WebPage",
-            "@id": `https://carestack.com${post.slug}`,
+            '@type': 'WebPage',
+            '@id': `https://carestack.com${post.slug}`,
             isPartOf: {
-              "@id": "https://carestack.com/#website",
+              '@id': 'https://carestack.com/#website',
             },
           },
           headline: post.title,
           description: excerpt,
           image:
-            "https://a.storyblok.com/f/144863/1201x1201/a1d1cbd61c/carestack-favicon-1200x1200.png",
+            'https://a.storyblok.com/f/144863/1201x1201/a1d1cbd61c/carestack-favicon-1200x1200.png',
           author: {
-            "@type": "Person",
-            name: author && author[0]?.name || "Unknown Author",
-            url: "https://carestack.com/company/leadership-team",
+            '@type': 'Person',
+            name: (author && author[0]?.name) || 'Unknown Author',
+            url: 'https://carestack.com/company/leadership-team',
           },
           wordCount: estimatedWordCount ?? 0,
           dateCreated: post._createdAt,
-          inLanguage: "en-US",
+          inLanguage: 'en-US',
           copyrightYear: post._createdAt.split(' ')[2],
           copyrightHolder: {
-            "@id": "https://carestack.com/#organization",
+            '@id': 'https://carestack.com/#organization',
           },
           publisher: {
-            "@type": "Organization",
-            name: "CareStack",
-            url: "https://carestack.com",
+            '@type': 'Organization',
+            name: 'CareStack',
+            url: 'https://carestack.com',
             logo: {
-              "@type": "ImageObject",
-              inLanguage: "en-US",
-              url: "https://a.storyblok.com/f/144863/1201x1201/a1d1cbd61c/carestack-favicon-1200x1200.png",
+              '@type': 'ImageObject',
+              inLanguage: 'en-US',
+              url: 'https://a.storyblok.com/f/144863/1201x1201/a1d1cbd61c/carestack-favicon-1200x1200.png',
               width: 1200,
               height: 1200,
             },
           },
-        });
+        })
       case 'ebook':
         return JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "Book",
-          "name": post.title,
-          "author": {
-            "@type": "Person",
-            "name": author && author[0]?.name || "Unknown Author",
+          '@context': 'https://schema.org',
+          '@type': 'Book',
+          name: post.title,
+          author: {
+            '@type': 'Person',
+            name: (author && author[0]?.name) || 'Unknown Author',
           },
-          "datePublished": post._createdAt,
-          "numberOfPages": post.ebookFields?.ebookPages || 0,
-          "description": post.excerpt,
-        });
+          datePublished: post._createdAt,
+          numberOfPages: post.ebookFields?.ebookPages || 0,
+          description: post.excerpt,
+        })
       case 'article':
         return JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "Article",
-          "headline": post.title,
-          "author": {
-            "@type": "Person",
-            "name": author && author[0]?.name || "Unknown Author",
+          '@context': 'https://schema.org',
+          '@type': 'Article',
+          headline: post.title,
+          author: {
+            '@type': 'Person',
+            name: (author && author[0]?.name) || 'Unknown Author',
           },
-          "datePublished": post._createdAt,
-          "description": post.excerpt,
-        });
+          datePublished: post._createdAt,
+          description: post.excerpt,
+        })
       case 'webinar':
         return JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "Event",
-          "name": post.title,
-          "startDate": post._createdAt,
-          "description": post.excerpt,
-          "eventAttendanceMode": "https://schema.org/OnlineEventAttendanceMode",
-          "eventStatus": "https://schema.org/EventScheduled",
-        });
+          '@context': 'https://schema.org',
+          '@type': 'Event',
+          name: post.title,
+          startDate: post._createdAt,
+          description: post.excerpt,
+          eventAttendanceMode: 'https://schema.org/OnlineEventAttendanceMode',
+          eventStatus: 'https://schema.org/EventScheduled',
+        })
+      case 'case-study':
+        return JSON.stringify({
+          '@type': 'NewsArticle',
+          '@context': 'https://schema.org',
+          headline: post.excerpt || '',
+          author: [
+            {
+              name: post.author[0]?.name || '',
+            },
+          ],
+          startDate: new Date(),
+          description: post.author[0]?.bio || '',
+          creator: 'CareStack',
+          inLanguage: ['en_us', 'en-GB'],
+          sameAs: 'https://carestack.com/',
+        })
       case 'podcast':
         return JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "PodcastEpisode",
-          "name": post.title,
-          "description": post.excerpt,
-          "datePublished": post._createdAt,
-          "author": {
-            "@type": "Person",
-            "name": author && author[0]?.name || "Unknown Author",
+          '@context': 'https://schema.org',
+          '@type': 'PodcastEpisode',
+          name: post.title,
+          description: post.excerpt,
+          datePublished: post._createdAt,
+          author: {
+            '@type': 'Person',
+            name: (author && author[0]?.name) || 'Unknown Author',
           },
-        });
+        })
       default:
-        return '{}'; 
+        return '{}'
     }
   }
 
-  // Default BlogPosting schema 
+  // Default BlogPosting schema
   const defaultJSONLD = {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
     mainEntityOfPage: {
-      "@type": "WebPage",
-      "@id": `https://carestack.com${post.slug}`,
+      '@type': 'WebPage',
+      '@id': `https://carestack.com${post.slug}`,
       isPartOf: {
-        "@id": "https://carestack.com/#website",
+        '@id': 'https://carestack.com/#website',
       },
     },
     headline: post.title,
     description: excerpt,
     image:
-      "https://a.storyblok.com/f/144863/1201x1201/a1d1cbd61c/carestack-favicon-1200x1200.png",
+      'https://a.storyblok.com/f/144863/1201x1201/a1d1cbd61c/carestack-favicon-1200x1200.png',
     author: {
-      "@type": "Person",
-      name: author && author[0]?.name || "Unknown Author",
-      url: "https://carestack.com/company/leadership-team",
+      '@type': 'Person',
+      name: (author && author[0]?.name) || 'Unknown Author',
+      url: 'https://carestack.com/company/leadership-team',
     },
     wordCount: estimatedWordCount ?? 0,
     dateCreated: post._createdAt,
-    inLanguage: "en-US",
+    inLanguage: 'en-US',
     copyrightYear: post._createdAt?.split(' ')[2],
     copyrightHolder: {
-      "@id": "https://carestack.com/#organization",
+      '@id': 'https://carestack.com/#organization',
     },
     publisher: {
-      "@type": "Organization",
-      name: "CareStack",
-      url: "https://carestack.com",
+      '@type': 'Organization',
+      name: 'CareStack',
+      url: 'https://carestack.com',
       logo: {
-        "@type": "ImageObject",
-        inLanguage: "en-US",
-        url: "https://a.storyblok.com/f/144863/1201x1201/a1d1cbd61c/carestack-favicon-1200x1200.png",
+        '@type': 'ImageObject',
+        inLanguage: 'en-US',
+        url: 'https://a.storyblok.com/f/144863/1201x1201/a1d1cbd61c/carestack-favicon-1200x1200.png',
         width: 1200,
         height: 1200,
       },
     },
-  };
-
-
-  let customJSONLD = {};
-  try {
-    customJSONLD = JSON.parse(post.seoJSONLD || '{}');
-  } catch (error) {
-    console.error('Error parsing custom JSON-LD:', error);
   }
 
-  return JSON.stringify({ ...defaultJSONLD, ...customJSONLD });
+  let customJSONLD = {}
+  try {
+    customJSONLD = JSON.parse(post.seoJSONLD || '{}')
+  } catch (error) {
+    console.error('Error parsing custom JSON-LD:', error)
+  }
+
+  return JSON.stringify({ ...defaultJSONLD, ...customJSONLD })
 }
 
+export function indexPageJsonLd(params: any) {
+  return JSON.stringify({
+    maintainer: 'CareSTack',
+    publisher: 'CareSTack',
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline:
+      params?.posts?.map((e: any) => {
+        return [e.title]
+      }) || [],
+    text:
+      params?.latestPosts?.map((e: any) => {
+        return [e.title]
+      }) || [],
+    copyrightHolder: {
+      '@id': 'https://carestack.com/#organization',
+    },
+    name: params.title,
+    startDate: params._createdAt,
+    description: params.excerpt,
+  })
+}
 
 export function breadCrumbJsonLd(breadCrumbList: any[]) {
-  const baseUrl = `https://carestack.com`;
+  const baseUrl = `https://carestack.com`
   const itemListElement = breadCrumbList.map((item, index) => {
     return index !== breadCrumbList.length - 1
       ? {
-          "@type": "ListItem",
+          '@type': 'ListItem',
           position: index + 2,
           name: item.breadcrumb,
           item: `${baseUrl}${item.href}/`,
         }
       : {
-          "@type": "ListItem",
+          '@type': 'ListItem',
           position: index + 2,
           name: item.breadcrumb,
-        };
-  });
+        }
+  })
   return {
-    "@context": "https://schema.org/",
-    "@type": "BreadcrumbList",
+    '@context': 'https://schema.org/',
+    '@type': 'BreadcrumbList',
     itemListElement: [
       {
-        "@type": "ListItem",
+        '@type': 'ListItem',
         position: 1,
-        name: "Home",
+        name: 'Home',
         item: `${baseUrl}/`,
       },
       ...itemListElement,
     ],
-  };
+  }
 }

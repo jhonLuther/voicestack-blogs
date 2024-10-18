@@ -12,6 +12,7 @@ import { useRouter } from 'next/router';
 import siteConfig from '../../../config/siteConfig';
 import React, { useRef } from 'react';
 import Pagination from '~/components/commonSections/Pagination';
+import CustomHead from '~/utils/customHead' 
 
 export const getStaticProps: GetStaticProps<SharedPageProps & { caseStudies: CaseStudies[]; totalPages: number }> = async (context) => {
   const draftMode = context.preview || false;
@@ -48,6 +49,7 @@ const CaseStudiesPage = ({ caseStudies,latestCaseStudies, totalPages }: { caseSt
 
   return (
     <Layout>
+      <CustomHead props={caseStudies} />
       <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'} revamp={true} contents={latestCaseStudies} />
       <Wrapper>
         <AllcontentSection

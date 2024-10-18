@@ -7,11 +7,14 @@ import { getHomeSettings, getPosts, getTags, getTestiMonials } from '~/lib/sanit
 import type { SharedPageProps } from '~/pages/_app';
 import { Post } from '~/interfaces/post';
 import { getClient } from '~/lib/sanity.client';
-import DynamicPages from '~/layout/DynamicPages';
+import DynamicPages from '~/layout/DynamicPages'
+import { indexPageJsonLd } from '~/utils/generateJSONLD'
+import Head from 'next/head'
 
 
 
 interface IndexPageProps {
+  contentType: string;
   latestPosts: any;
   podcastData: any;
   draftMode: boolean;
@@ -65,10 +68,19 @@ export default function IndexPage(props: IndexPageProps) {
 
   return (
     <Layout>
-        <DynamicPages posts={props.posts} tags={props.tags} testimonials={props.testimonials}
-          homeSettings={homeSettings} popularBlogs={homeSettings?.popularBlogs}
-          podcastData={props?.podcastData} latestPosts={latestPosts}
-          featuredContents={homeSettings?.FeaturedContents} />
+      <Head>
+        <script type="application/ld+json">{indexPageJsonLd(props)}</script>
+      </Head>
+      <DynamicPages
+        posts={props.posts}
+        tags={props.tags}
+        testimonials={props.testimonials}
+        homeSettings={homeSettings}
+        popularBlogs={homeSettings?.popularBlogs}
+        podcastData={props?.podcastData}
+        latestPosts={latestPosts}
+        featuredContents={homeSettings?.FeaturedContents}
+      />
     </Layout>
-  );
+  )
 }
