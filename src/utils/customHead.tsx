@@ -11,11 +11,10 @@ export default function CustomHead({ props }: CustomHeadProps) {
   return (
     <div>
       {props
-        ? props.map((e: CaseStudies) => {
+        ? props.map((e: CaseStudies,i:number) => {
             let data = generateJSONLD(e)
-            console.log(data)
             return (
-              <Head>
+              <Head key={i}>
                 <script
                   type="application/ld+json"
                   dangerouslySetInnerHTML={{ __html: data }}
