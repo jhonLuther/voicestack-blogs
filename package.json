@@ -1,4 +1,5 @@
 {
+  "name": "carestack-website-resources",
   "private": true,
   "scripts": {
     "build": "next build",

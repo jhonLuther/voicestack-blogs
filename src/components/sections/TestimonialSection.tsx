@@ -46,7 +46,7 @@ const TestimonialSection = ({ testimonials }: TestimonialSectionProps) => {
                                     </Link>
                                 </div>
 
-                                <blockquote className="mt-6 line-clamp-4 overflow-hidden  md:text-5xl text-2xl font-extrabold font-manrope leading-tight">
+                                <blockquote className="mt-6 line-clamp-4 overflow-hidden  md:text-5xl text-2xl font-extrabold font-manrope leading-[1.2] md:leading-[1.2]">
                                     {`"${testimonialItem.excerpt ? testimonialItem.excerpt : "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore fugiat nulla pariatur."}"`}
                                 </blockquote>
 
