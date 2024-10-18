@@ -1,40 +1,55 @@
-import { GetStaticProps } from 'next';
-import { Podcasts, PressRelease } from '~/interfaces/post';
-import { readToken } from '~/lib/sanity.api';
-import { getClient } from '~/lib/sanity.client';
-import { getPressReleases, getPressReleasesCount } from '~/lib/sanity.queries';
-import { SharedPageProps } from '../_app';
+import { GetStaticProps, GetStaticPaths } from 'next';
+import { useRouter } from 'next/router';
 import Layout from '~/components/Layout';
 import Wrapper from '~/layout/Wrapper';
-import LatestBlogs from '~/components/sections/LatestBlogSection';
 import AllcontentSection from '~/components/sections/AllcontentSection';
-import { useRouter } from 'next/router';
-import siteConfig from '../../../config/siteConfig';
+import { getClient } from '~/lib/sanity.client';
+import { readToken } from '~/lib/sanity.api';
+import { SharedPageProps } from '../../_app';
+import { Articles, CaseStudies, Ebooks, Podcasts, PressRelease } from '~/interfaces/post';
+import siteConfig from '../../../../config/siteConfig';
 import React, { useRef } from 'react';
 import Pagination from '~/components/commonSections/Pagination';
+import { getPressReleases, getPressReleasesCount } from '~/lib/sanity.queries';
 
-export const getStaticProps: GetStaticProps<SharedPageProps & { pressReleases: PressRelease[]; totalPages: number }> = async (context) => {
+export const getStaticPaths: GetStaticPaths = async () => {
+  const client = getClient();
+  const allPressReleases: any = await getPressReleases(client);
+  const totalPages = Math.ceil(allPressReleases.length / siteConfig.pagination.childItemsPerPage);
+
+  const paths = Array.from({ length: totalPages - 1 }, (_, i) => ({
+    params: { pageNumber: (i + 2).toString() },
+  }));
+
+  return { paths, fallback: false };
+};
+
+export const getStaticProps: GetStaticProps<
+  SharedPageProps & { pressReleases: PressRelease[]; pageNumber: number; totalPages: number }
+> = async (context) => {
   const draftMode = context.preview || false;
   const client = getClient(draftMode ? { token: readToken } : undefined);
-  const itemsPerPage = siteConfig.pagination.childItemsPerPage;
 
-  const pressReleases: any = await getPressReleases(client, 0, itemsPerPage);
-  const latestPressReleases: any = await getPressReleases(client, 0, 3);
+
+  const pageNumber = Number(context.params?.pageNumber) || 1;
+  const itemsPerPage = siteConfig.pagination.childItemsPerPage;
+  const skip = (pageNumber - 1) * itemsPerPage;
+
+  const pressReleases: any = await getPressReleases(client, skip, itemsPerPage);
   const totalPressReleases = await getPressReleasesCount(client);
   const totalPages = Math.ceil(totalPressReleases / itemsPerPage);
-
   return {
     props: {
       draftMode,
       token: draftMode ? readToken : '',
       pressReleases,
-      latestPressReleases,
+      pageNumber,
       totalPages,
     },
   };
 };
 
-const PressReleasePage = ({ pressReleases,latestPressReleases, totalPages }: { pressReleases: Podcasts[];latestPressReleases: Podcasts[]; totalPages: number }) => {
+const PaginatedPressReleasePage = ({ pressReleases, pageNumber, totalPages }: { pressReleases: Podcasts[]; pageNumber: number; totalPages: number }) => {
   const router = useRouter();
   const baseUrl = useRef(`/${siteConfig.pageURLs.pressRelease}`).current;
 
@@ -48,7 +63,6 @@ const PressReleasePage = ({ pressReleases,latestPressReleases, totalPages }: { p
 
   return (
     <Layout>
-      <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'} revamp={true} contents={latestPressReleases} />
       <Wrapper>
         <AllcontentSection
           baseUrl={baseUrl}
@@ -60,7 +74,7 @@ const PressReleasePage = ({ pressReleases,latestPressReleases, totalPages }: { p
         />
         <Pagination
           totalPages={totalPages}
-          currentPage={1}
+          currentPage={pageNumber}
           baseUrl={baseUrl}
           onPageChange={handlePageChange}
           enablePageSlug={true}
@@ -70,4 +84,4 @@ const PressReleasePage = ({ pressReleases,latestPressReleases, totalPages }: { p
   );
 };
 
-export default PressReleasePage;
+export default PaginatedPressReleasePage;

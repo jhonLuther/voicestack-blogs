@@ -1,40 +1,55 @@
-import { GetStaticProps } from 'next';
-import { CaseStudies } from '~/interfaces/post';
-import { readToken } from '~/lib/sanity.api';
-import { getClient } from '~/lib/sanity.client';
-import {getCaseStudies, getCaseStudiesCount } from '~/lib/sanity.queries';
-import { SharedPageProps } from '../_app';
+import { GetStaticProps, GetStaticPaths } from 'next';
+import { useRouter } from 'next/router';
 import Layout from '~/components/Layout';
 import Wrapper from '~/layout/Wrapper';
-import LatestBlogs from '~/components/sections/LatestBlogSection';
 import AllcontentSection from '~/components/sections/AllcontentSection';
-import { useRouter } from 'next/router';
-import siteConfig from '../../../config/siteConfig';
+import { getClient } from '~/lib/sanity.client';
+import { getArticles, getArticlesCount, getCaseStudies, getCaseStudiesCount } from '~/lib/sanity.queries';
+import { readToken } from '~/lib/sanity.api';
+import { SharedPageProps } from '../../_app';
+import { Articles, CaseStudies } from '~/interfaces/post';
+import siteConfig from '../../../../config/siteConfig';
 import React, { useRef } from 'react';
 import Pagination from '~/components/commonSections/Pagination';
 
-export const getStaticProps: GetStaticProps<SharedPageProps & { caseStudies: CaseStudies[]; totalPages: number }> = async (context) => {
+export const getStaticPaths: GetStaticPaths = async () => {
+  const client = getClient();
+  const allArticles: any = await getCaseStudies(client);
+  const totalPages = Math.ceil(allArticles.length / siteConfig.pagination.childItemsPerPage);
+
+  const paths = Array.from({ length: totalPages - 1 }, (_, i) => ({
+    params: { pageNumber: (i + 2).toString() },
+  }));
+
+  return { paths, fallback: false };
+};
+
+export const getStaticProps: GetStaticProps<
+  SharedPageProps & { caseStudies: CaseStudies[]; pageNumber: number; totalPages: number }
+> = async (context) => {
   const draftMode = context.preview || false;
   const client = getClient(draftMode ? { token: readToken } : undefined);
-  const itemsPerPage = siteConfig.pagination.childItemsPerPage;
 
-  const caseStudies: any = await getCaseStudies(client, 0, itemsPerPage);
-  const latestCaseStudies: any = await getCaseStudies(client, 0, 3);
+
+  const pageNumber = Number(context.params?.pageNumber) || 1;
+  const itemsPerPage = siteConfig.pagination.childItemsPerPage;
+  const skip = (pageNumber - 1) * itemsPerPage;
+
+  const caseStudies: any = await getCaseStudies(client, skip, itemsPerPage);
   const totalCaseStudies = await getCaseStudiesCount(client);
   const totalPages = Math.ceil(totalCaseStudies / itemsPerPage);
-
   return {
     props: {
       draftMode,
       token: draftMode ? readToken : '',
       caseStudies,
-      latestCaseStudies,
+      pageNumber,
       totalPages,
     },
   };
 };
 
-const CaseStudiesPage = ({ caseStudies,latestCaseStudies, totalPages }: { caseStudies: CaseStudies[];latestCaseStudies: CaseStudies[]; totalPages: number }) => {
+const PaginatedCaseStudyPage = ({ caseStudies, pageNumber, totalPages }: { caseStudies: CaseStudies[]; pageNumber: number; totalPages: number }) => {
   const router = useRouter();
   const baseUrl = useRef(`/${siteConfig.pageURLs.caseStudy}`).current;
 
@@ -48,7 +63,6 @@ const CaseStudiesPage = ({ caseStudies,latestCaseStudies, totalPages }: { caseSt
 
   return (
     <Layout>
-      <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'} revamp={true} contents={latestCaseStudies} />
       <Wrapper>
         <AllcontentSection
           baseUrl={baseUrl}
@@ -60,7 +74,7 @@ const CaseStudiesPage = ({ caseStudies,latestCaseStudies, totalPages }: { caseSt
         />
         <Pagination
           totalPages={totalPages}
-          currentPage={1}
+          currentPage={pageNumber}
           baseUrl={baseUrl}
           onPageChange={handlePageChange}
           enablePageSlug={true}
@@ -70,4 +84,4 @@ const CaseStudiesPage = ({ caseStudies,latestCaseStudies, totalPages }: { caseSt
   );
 };
 
-export default CaseStudiesPage;
+export default PaginatedCaseStudyPage;

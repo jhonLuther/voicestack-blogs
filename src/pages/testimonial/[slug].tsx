@@ -64,11 +64,9 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
   };
 }
 
-// Testimonial page component
 const TestimonialPage = ({ testimonial, draftMode, token }: Props) => {
 
   const router = useRouter();
-
 
   if (router.isFallback) {
     return <div>Loading...</div>;
@@ -81,7 +79,6 @@ const TestimonialPage = ({ testimonial, draftMode, token }: Props) => {
   const seoCanonical = testimonial.seoCanonical || `https://carestack.com/testimonial/${testimonial.slug.current}`;
   const jsonLD: any = generateJSONLD(testimonial);
 
-  // console.log(testimonial,'testimonial');
   return (
     <>
       <SEOHead

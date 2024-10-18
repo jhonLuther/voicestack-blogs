@@ -1,40 +1,55 @@
-import { GetStaticProps } from 'next';
-import { Webinars } from '~/interfaces/post';
-import { readToken } from '~/lib/sanity.api';
-import { getClient } from '~/lib/sanity.client';
-import { getWebinars, getWebinarsCount } from '~/lib/sanity.queries';
-import { SharedPageProps } from '../_app';
+import { GetStaticProps, GetStaticPaths } from 'next';
+import { useRouter } from 'next/router';
 import Layout from '~/components/Layout';
 import Wrapper from '~/layout/Wrapper';
-import LatestBlogs from '~/components/sections/LatestBlogSection';
 import AllcontentSection from '~/components/sections/AllcontentSection';
-import { useRouter } from 'next/router';
-import siteConfig from '../../../config/siteConfig';
+import { getClient } from '~/lib/sanity.client';
+import { readToken } from '~/lib/sanity.api';
+import { SharedPageProps } from '../../_app';
+import { Webinars } from '~/interfaces/post';
+import siteConfig from '../../../../config/siteConfig';
 import React, { useRef } from 'react';
 import Pagination from '~/components/commonSections/Pagination';
+import {getWebinars, getWebinarsCount} from '~/lib/sanity.queries';
 
-export const getStaticProps: GetStaticProps<SharedPageProps & { webinars: Webinars[]; totalPages: number }> = async (context) => {
+export const getStaticPaths: GetStaticPaths = async () => {
+  const client = getClient();
+  const allWebinars: any = await getWebinars(client);
+  const totalPages = Math.ceil(allWebinars.length / siteConfig.pagination.childItemsPerPage);
+
+  const paths = Array.from({ length: totalPages - 1 }, (_, i) => ({
+    params: { pageNumber: (i + 2).toString() },
+  }));
+
+  return { paths, fallback: false };
+};
+
+export const getStaticProps: GetStaticProps<
+  SharedPageProps & { webinars: Webinars[]; pageNumber: number; totalPages: number }
+> = async (context) => {
   const draftMode = context.preview || false;
   const client = getClient(draftMode ? { token: readToken } : undefined);
-  const itemsPerPage = siteConfig.pagination.childItemsPerPage;
 
-  const webinars: any = await getWebinars(client, 0, itemsPerPage);
-  const latestWebinars: any = await getWebinars(client, 0, 3);
+
+  const pageNumber = Number(context.params?.pageNumber) || 1;
+  const itemsPerPage = siteConfig.pagination.childItemsPerPage;
+  const skip = (pageNumber - 1) * itemsPerPage;
+
+  const webinars: any = await getWebinars(client, skip, itemsPerPage);
   const totalWebinars = await getWebinarsCount(client);
   const totalPages = Math.ceil(totalWebinars / itemsPerPage);
-
   return {
     props: {
       draftMode,
       token: draftMode ? readToken : '',
       webinars,
-      latestWebinars,
+      pageNumber,
       totalPages,
     },
   };
 };
 
-const TestimonialsPage = ({ webinars,latestWebinars, totalPages }: { webinars: Webinars[];latestWebinars: Webinars[]; totalPages: number }) => {
+const PaginatedWebinarsPage = ({ webinars, pageNumber, totalPages }: { webinars: Webinars[]; pageNumber: number; totalPages: number }) => {
   const router = useRouter();
   const baseUrl = useRef(`/${siteConfig.pageURLs.webinar}`).current;
 
@@ -48,7 +63,6 @@ const TestimonialsPage = ({ webinars,latestWebinars, totalPages }: { webinars: W
 
   return (
     <Layout>
-      <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'} revamp={true} contents={latestWebinars} />
       <Wrapper>
         <AllcontentSection
           baseUrl={baseUrl}
@@ -60,7 +74,7 @@ const TestimonialsPage = ({ webinars,latestWebinars, totalPages }: { webinars: W
         />
         <Pagination
           totalPages={totalPages}
-          currentPage={1}
+          currentPage={pageNumber}
           baseUrl={baseUrl}
           onPageChange={handlePageChange}
           enablePageSlug={true}
@@ -70,4 +84,4 @@ const TestimonialsPage = ({ webinars,latestWebinars, totalPages }: { webinars: W
   );
 };
 
-export default TestimonialsPage;
+export default PaginatedWebinarsPage;

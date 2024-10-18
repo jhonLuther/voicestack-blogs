@@ -1,40 +1,55 @@
-import { GetStaticProps } from 'next';
-import {Testimonial } from '~/interfaces/post';
-import { readToken } from '~/lib/sanity.api';
-import { getClient } from '~/lib/sanity.client';
-import { getTestiMonials, getTestiMonialsCount } from '~/lib/sanity.queries';
-import { SharedPageProps } from '../_app';
+import { GetStaticProps, GetStaticPaths } from 'next';
+import { useRouter } from 'next/router';
 import Layout from '~/components/Layout';
 import Wrapper from '~/layout/Wrapper';
-import LatestBlogs from '~/components/sections/LatestBlogSection';
 import AllcontentSection from '~/components/sections/AllcontentSection';
-import { useRouter } from 'next/router';
-import siteConfig from '../../../config/siteConfig';
+import { getClient } from '~/lib/sanity.client';
+import { readToken } from '~/lib/sanity.api';
+import { SharedPageProps } from '../../_app';
+import { Testimonial } from '~/interfaces/post';
+import siteConfig from '../../../../config/siteConfig';
 import React, { useRef } from 'react';
 import Pagination from '~/components/commonSections/Pagination';
+import { getTestiMonials, getTestiMonialsCount } from '~/lib/sanity.queries';
 
-export const getStaticProps: GetStaticProps<SharedPageProps & { testimonials: Testimonial[]; totalPages: number }> = async (context) => {
+export const getStaticPaths: GetStaticPaths = async () => {
+  const client = getClient();
+  const allTestimonials: any = await getTestiMonials(client);
+  const totalPages = Math.ceil(allTestimonials.length / siteConfig.pagination.childItemsPerPage);
+
+  const paths = Array.from({ length: totalPages - 1 }, (_, i) => ({
+    params: { pageNumber: (i + 2).toString() },
+  }));
+
+  return { paths, fallback: false };
+};
+
+export const getStaticProps: GetStaticProps<
+  SharedPageProps & { testimonials: Testimonial[]; pageNumber: number; totalPages: number }
+> = async (context) => {
   const draftMode = context.preview || false;
   const client = getClient(draftMode ? { token: readToken } : undefined);
-  const itemsPerPage = siteConfig.pagination.childItemsPerPage;
 
-  const testimonials: any = await getTestiMonials(client, 0, itemsPerPage);
-  const latestTestimonials: any = await getTestiMonials(client, 0, 3);
+
+  const pageNumber = Number(context.params?.pageNumber) || 1;
+  const itemsPerPage = siteConfig.pagination.childItemsPerPage;
+  const skip = (pageNumber - 1) * itemsPerPage;
+
+  const testimonials: any = await getTestiMonials(client, skip, itemsPerPage);
   const totalTestimonials = await getTestiMonialsCount(client);
   const totalPages = Math.ceil(totalTestimonials / itemsPerPage);
-
   return {
     props: {
       draftMode,
       token: draftMode ? readToken : '',
       testimonials,
-      latestTestimonials,
+      pageNumber,
       totalPages,
     },
   };
 };
 
-const TestimonialsPage = ({ testimonials,latestTestimonials, totalPages }: { testimonials: Testimonial[];latestTestimonials: Testimonial[]; totalPages: number }) => {
+const PaginatedTestimonialsPage = ({ testimonials, pageNumber, totalPages }: { testimonials: Testimonial[]; pageNumber: number; totalPages: number }) => {
   const router = useRouter();
   const baseUrl = useRef(`/${siteConfig.pageURLs.testimonial}`).current;
 
@@ -48,7 +63,6 @@ const TestimonialsPage = ({ testimonials,latestTestimonials, totalPages }: { tes
 
   return (
     <Layout>
-      <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'} revamp={true} contents={latestTestimonials} />
       <Wrapper>
         <AllcontentSection
           baseUrl={baseUrl}
@@ -60,7 +74,7 @@ const TestimonialsPage = ({ testimonials,latestTestimonials, totalPages }: { tes
         />
         <Pagination
           totalPages={totalPages}
-          currentPage={1}
+          currentPage={pageNumber}
           baseUrl={baseUrl}
           onPageChange={handlePageChange}
           enablePageSlug={true}
@@ -70,4 +84,4 @@ const TestimonialsPage = ({ testimonials,latestTestimonials, totalPages }: { tes
   );
 };
 
-export default TestimonialsPage;
+export default PaginatedTestimonialsPage;

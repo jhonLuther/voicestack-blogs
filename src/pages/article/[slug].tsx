@@ -59,8 +59,8 @@ const ArticlePage = ({ articles, draftMode, token }: Props) => {
     return <div>Loading...</div>;
   }
 
-  const seoTitle = articles?.seoTitle || articles.title;
-  const seoDescription = articles.seoDescription || articles.excerpt;
+  const seoTitle = articles?.seoTitle || articles?.title;
+  const seoDescription = articles.seoDescription || articles?.excerpt;
   const seoKeywords = articles.seoKeywords || '';
   const seoRobots = articles.seoRobots || 'index,follow';
   const seoCanonical = articles.seoCanonical || `https://carestack.com/articles/${articles.slug.current}`;

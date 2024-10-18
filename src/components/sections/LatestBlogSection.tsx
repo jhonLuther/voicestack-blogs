@@ -31,7 +31,7 @@ const LatestBlogs: React.FC<LatestBlogsProps> = ({ contents, revamp, className,s
     'press-release': 'Press Releases',
   }
 
-  const contentType = contents &&  contents.find(c => c.contentType)?.contentType;
+  const contentType = contents &&  contents?.find(c => c.contentType)?.contentType;
   const displayName = types[contentType];  
   const [firstBlog, ...otherBlogs] =  contents && contents;
   

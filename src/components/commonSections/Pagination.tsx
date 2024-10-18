@@ -1,70 +1,58 @@
 import { useRouter } from 'next/router';
 import { ChevronLeftIcon, ChevronRightIcon } from '@sanity/icons';
+import React from 'react';
 
-const Pagination = ({ totalPages, baseUrl }:any) => {
+const Pagination = ({ totalPages, currentPage, baseUrl, onPageChange, enablePageSlug = false }: { 
+  totalPages: number, 
+  currentPage: number, 
+  baseUrl: string,
+  onPageChange: (page: number) => void,
+  enablePageSlug?: boolean
+}) => {
   const router = useRouter();
-  const { pageNumber }:any = router.query;
-  const currentPage:any = parseInt(pageNumber) || 1; 
 
-  const handlePageChange = (pageNumber) => {
-    router.push(`${baseUrl}/${pageNumber}`);
+  const handlePageChange = (page: number) => {
+    if (page !== currentPage) {
+      onPageChange(page);
+      if (page === 1) {
+        router.push(baseUrl);
+      } else if (enablePageSlug) {
+        router.push(`${baseUrl}/page/${page}`);
+      } else {
+        router.push(`${baseUrl}/${page}`);
+      }
+    }
   };
 
   const renderPageNumbers = () => {
-    const visiblePageNumbers = [...Array(totalPages)].map((_, i) => i + 1).filter(
-      (number) =>
-        number === 1 ||
-        number === totalPages ||
-        (number >= currentPage - 1 && number <= currentPage + 1)
-    );
+    const visiblePages = Array.from({ length: totalPages }, (_, i) => i + 1);
 
-    return visiblePageNumbers.map((number, index, array) => {
-      if (index > 0 && number - array[index - 1] > 1) {
-        return (
-          <span key={`ellipsis-${number}`} className="px-2 py-1">
-            ...
-          </span>
-        );
-      }
-
-      return (
-        <button
-          key={number}
-          onClick={() => handlePageChange(number)}
-          className={`px-3 py-1 rounded-md ${
-            currentPage === number
-              ? 'bg-cs-green-200 text-white'
-              : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-          }`}
-        >
-          {number}
-        </button>
-      );
-    });
+    return visiblePages.map((number) => (
+      <button
+        key={number}
+        onClick={() => handlePageChange(number)}
+        className={`px-3 py-1 ${currentPage === number ? 'bg-blue-600 text-white' : 'bg-gray-200 text-black'}`}
+        disabled={currentPage === number}
+      >
+        {number}
+      </button>
+    ));
   };
 
   return (
-    <div className="flex items-center justify-center space-x-2 mt-8">
+    <div className="flex space-x-2">
       <button
-        onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
-        className={`px-3 py-1 rounded-md ${
-          currentPage === 1
-            ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-            : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-        }`}
+        onClick={() => handlePageChange(currentPage - 1)}
         disabled={currentPage === 1}
+        className="px-3 py-1 bg-gray-200 text-black"
       >
-        <ChevronLeftIcon  height={25} />
+        <ChevronLeftIcon height={25} />
       </button>
       {renderPageNumbers()}
       <button
-        onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
-        className={`px-3 py-1 rounded-md ${
-          currentPage === totalPages
-            ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-            : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-        }`}
+        onClick={() => handlePageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
+        className="px-3 py-1 bg-gray-200 text-black"
       >
         <ChevronRightIcon height={25} />
       </button>

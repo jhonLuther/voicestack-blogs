@@ -23,7 +23,7 @@ export const iframesQuery = groq`*[_type == "iframes" && defined(slug.current)] 
 
 export const authorsQuery = groq`*[_type == "author" && defined(slug.current)] | order(_createdAt desc)`
 
-export const tagsQuery = groq`*[_type == "tag" && defined(slug.current)] | order(_createdAt desc)`
+export const tagsQuery = groq`*[_type == "tag"]`
 
 // combined query testimonials with associated customer names
 export const testiMonialsQuery = groq`
@@ -159,76 +159,145 @@ export async function getTags(client: SanityClient): Promise<Tag[]> {
   return await client.fetch(tagsQuery)
 }
 
-export async function getTestiMonials(
+export async function getPostsByTagAndLimit(
   client: SanityClient,
-  limit?: number,
-): Promise<Post[]> {
-  let newTestiMonialsQuery = testiMonialsQuery
-  if (limit > 0) {
-    newTestiMonialsQuery = testiMonialsQuery + `[0...${limit}]`
-  }
-  return await client.fetch(newTestiMonialsQuery)
+  tagId: string,
+  start: number,
+  end: number
+) {
+  return client.fetch(
+    groq`*[_type == "post" && references($tagId)] | order(publishedAt desc) [$start...$end] {
+      title,
+      mainImage,
+      blogColor,
+      excerpt,
+      slug,
+    }`,
+    { tagId, start, end }
+  )
 }
 
-export async function getPodcasts(
+export async function getTestiMonials(
   client: SanityClient,
+  skip: number = 0,
   limit?: number,
 ): Promise<Post[]> {
-  let newPodCastQuery = podcastsQuery
-  if (limit > 0) {
-    newPodCastQuery = podcastsQuery + `[0...${limit}]`
+  let newTestiMonialsQuery = testiMonialsQuery;
+
+  if (limit !== undefined) {
+    newTestiMonialsQuery += `[${skip}...${skip + limit}]`;
   }
-  return await client.fetch(newPodCastQuery)
+
+  return await client.fetch(newTestiMonialsQuery);
+}
+
+export async function getTestiMonialsCount(client: SanityClient): Promise<number> {
+  const countQuery = groq`count(${testiMonialsQuery})`;
+  return await client.fetch(countQuery);
+}
+export async function getPodcasts(
+  client: SanityClient,
+  skip: number = 0, 
+  limit?: number,  
+): Promise<Post[]> {
+  let newPodCastQuery = podcastsQuery;
+  if (limit !== undefined) {
+    newPodCastQuery += `[${skip}...${skip + limit}]`;
+  }
+  return await client.fetch(newPodCastQuery);
+}
+
+export async function getPodcastsCount(client: SanityClient): Promise<number> {
+  const countQuery = groq`count(${podcastsQuery})`;
+  return await client.fetch(countQuery);
 }
 export async function getWebinars(
   client: SanityClient,
+  skip: number = 0,
   limit?: number,
 ): Promise<Post[]> {
-  let newWebinarQuery = webinarsQuery
-  if (limit > 0) {
-    newWebinarQuery = webinarsQuery + `[0...${limit}]`
+  let newWebinarQuery = webinarsQuery;
+
+  if (limit !== undefined) {
+    newWebinarQuery += `[${skip}...${skip + limit}]`;
   }
-  return await client.fetch(newWebinarQuery)
+
+  return await client.fetch(newWebinarQuery);
+}
+
+export async function getWebinarsCount(client: SanityClient): Promise<number> {
+  const countQuery = groq`count(${webinarsQuery})`;
+  return await client.fetch(countQuery);
 }
 export async function getEbooks(
   client: SanityClient,
-  limit?: number,
+  skip: number = 0, 
+  limit?: number,    
 ): Promise<Post[]> {
-  let newEbooksQuery = ebooksQuery
-  if (limit > 0) {
-    newEbooksQuery = ebooksQuery + `[0...${limit}]`
+  let newEbooksQuery = ebooksQuery;
+
+  if (limit !== undefined) {
+    newEbooksQuery += `[${skip}...${skip + limit}]`;
   }
-  return await client.fetch(newEbooksQuery)
+
+  return await client.fetch(newEbooksQuery);
 }
+
+export async function getEbooksCount(client: SanityClient): Promise<number> {
+  const countQuery = groq`count(${ebooksQuery})`;
+  return await client.fetch(countQuery);
+}
+
 export async function getArticles(
   client: SanityClient,
-  limit?: number,
+  skip: number = 0,
+  limit?: number
 ): Promise<Post[]> {
-  let newArticles = artilclesQuery
-  if (limit > 0) {
-    newArticles = artilclesQuery + `[0...${limit}]`
+  let query = artilclesQuery;
+  
+  if (skip > 0 || limit !== undefined) {
+    query += `[${skip}..${limit ? skip + limit : ''}]`;
   }
-  return await client.fetch(newArticles)
+  
+  return await client.fetch(query);
+}
+
+export async function getArticlesCount(client: SanityClient): Promise<number> {
+  const countQuery = groq`count(${artilclesQuery})`;
+  return await client.fetch(countQuery);
 }
 export async function getCaseStudies(
   client: SanityClient,
+  skip: number = 0,
   limit?: number,
 ): Promise<Post[]> {
-  let newCaseStudyQuery = caseStudiesQuery
-  if (limit > 0) {
-    newCaseStudyQuery = caseStudiesQuery + `[0...${limit}]`
+  let newCaseStudyQuery = caseStudiesQuery; 
+
+  if (skip > 0 || limit !== undefined) {
+    newCaseStudyQuery += `[${skip}...${limit !== undefined ? skip + limit : ''}]`;
   }
-  return await client.fetch(newCaseStudyQuery)
+
+  return await client.fetch(newCaseStudyQuery);
+}
+export async function getCaseStudiesCount(client: SanityClient): Promise<number> {
+  const countQuery = groq`count(${caseStudiesQuery})`;
+  return await client.fetch(countQuery);
 }
 export async function getPressReleases(
   client: SanityClient,
+  skip: number = 0,
   limit?: number,
 ): Promise<Post[]> {
-  let newPressReleaseQuery = pressReleasesQuery
-  if (limit > 0) {
-    newPressReleaseQuery = pressReleasesQuery + `[0...${limit}]`
+  let newPressReleaseQuery = pressReleasesQuery;
+  if (limit !== undefined) {
+    newPressReleaseQuery += `[${skip}...${skip + limit}]`;
   }
-  return await client.fetch(newPressReleaseQuery)
+  return await client.fetch(newPressReleaseQuery);
+}
+
+export async function getPressReleasesCount(client: SanityClient): Promise<number> {
+  const countQuery = groq`count(${pressReleasesQuery})`;
+  return await client.fetch(countQuery);
 }
 
 export async function getPostsBySlug(
@@ -757,6 +826,7 @@ export const tagBySlugQuery = groq`
     slug,
   }
 `
+
 export const iframeBySlugQuery = groq`*[_type == "iframes" && slug.current == $slug][0]`
 
 export async function getPost(
@@ -827,6 +897,17 @@ export async function getTag(client: SanityClient, slug: string): Promise<any> {
   return await client.fetch(tagBySlugQuery, {
     slug,
   })
+}
+
+export const getPostsByTag = (client:SanityClient, tagId) => {
+  return client.fetch(groq`
+    *[_type == "post" && references($tagId)] {
+      title,
+      slug,
+      mainImage,
+      _createdAt
+    }
+  `, { tagId })
 }
 export async function getCaseStudy(
   client: SanityClient,

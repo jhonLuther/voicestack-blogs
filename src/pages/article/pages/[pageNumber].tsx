@@ -1,40 +1,55 @@
-import { GetStaticProps } from 'next';
-import { Articles } from '~/interfaces/post';
-import { readToken } from '~/lib/sanity.api';
-import { getClient } from '~/lib/sanity.client';
-import { getArticles, getArticlesCount } from '~/lib/sanity.queries';
-import { SharedPageProps } from '../_app';
+import { GetStaticProps, GetStaticPaths } from 'next';
+import { useRouter } from 'next/router';
 import Layout from '~/components/Layout';
 import Wrapper from '~/layout/Wrapper';
-import LatestBlogs from '~/components/sections/LatestBlogSection';
 import AllcontentSection from '~/components/sections/AllcontentSection';
-import { useRouter } from 'next/router';
-import siteConfig from '../../../config/siteConfig';
+import { getClient } from '~/lib/sanity.client';
+import { getArticles, getArticlesCount } from '~/lib/sanity.queries';
+import { readToken } from '~/lib/sanity.api';
+import { SharedPageProps } from '../../_app';
+import { Articles } from '~/interfaces/post';
+import siteConfig from '../../../../config/siteConfig';
 import React, { useRef } from 'react';
 import Pagination from '~/components/commonSections/Pagination';
 
-export const getStaticProps: GetStaticProps<SharedPageProps & { articles: Articles[]; totalPages: number }> = async (context) => {
+export const getStaticPaths: GetStaticPaths = async () => {
+  const client = getClient();
+  const allArticles: any = await getArticles(client);
+  const totalPages = Math.ceil(allArticles.length / siteConfig.pagination.childItemsPerPage);
+
+  const paths = Array.from({ length: totalPages - 1 }, (_, i) => ({
+    params: { pageNumber: (i + 2).toString() },
+  }));
+
+  return { paths, fallback: false };
+};
+
+export const getStaticProps: GetStaticProps<
+  SharedPageProps & { articles: Articles[]; pageNumber: number; totalPages: number }
+> = async (context) => {
   const draftMode = context.preview || false;
   const client = getClient(draftMode ? { token: readToken } : undefined);
-  const itemsPerPage = siteConfig.pagination.childItemsPerPage;
 
-  const articles: any = await getArticles(client, 0, itemsPerPage);
-  const latestArticles: any = await getArticles(client, 0, 3);
+
+  const pageNumber = Number(context.params?.pageNumber) || 1;
+  const itemsPerPage = siteConfig.pagination.childItemsPerPage;
+  const skip = (pageNumber - 1) * itemsPerPage;
+
+  const articles: any = await getArticles(client, skip, itemsPerPage);
   const totalArticles = await getArticlesCount(client);
   const totalPages = Math.ceil(totalArticles / itemsPerPage);
-
   return {
     props: {
       draftMode,
       token: draftMode ? readToken : '',
       articles,
-      latestArticles,
+      pageNumber,
       totalPages,
     },
   };
 };
 
-const ArticlesPage = ({ articles,latestArticles, totalPages }: { articles: Articles[];latestArticles: Articles[]; totalPages: number }) => {
+const PaginatedArticlesPage = ({ articles, pageNumber, totalPages }: { articles: Articles[]; pageNumber: number; totalPages: number }) => {
   const router = useRouter();
   const baseUrl = useRef(`/${siteConfig.pageURLs.article}`).current;
 
@@ -48,7 +63,6 @@ const ArticlesPage = ({ articles,latestArticles, totalPages }: { articles: Artic
 
   return (
     <Layout>
-      <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'} revamp={true} contents={latestArticles} />
       <Wrapper>
         <AllcontentSection
           baseUrl={baseUrl}
@@ -60,7 +74,7 @@ const ArticlesPage = ({ articles,latestArticles, totalPages }: { articles: Artic
         />
         <Pagination
           totalPages={totalPages}
-          currentPage={1}
+          currentPage={pageNumber}
           baseUrl={baseUrl}
           onPageChange={handlePageChange}
           enablePageSlug={true}
@@ -70,4 +84,4 @@ const ArticlesPage = ({ articles,latestArticles, totalPages }: { articles: Artic
   );
 };
 
-export default ArticlesPage;
+export default PaginatedArticlesPage;
