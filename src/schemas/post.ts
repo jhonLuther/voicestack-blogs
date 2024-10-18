@@ -96,6 +96,19 @@ export default defineType({
       },
     }),
     defineField({
+      name: 'region',
+      title: 'Region',
+      type: 'string',
+      initialValue: 'global',
+      options: {
+        list: [
+          { title: 'India', value: 'india' },
+          { title: 'US', value: 'EN' },
+          { title: 'UK', value: 'EN-GB' },
+        ],
+      },
+    }),
+    defineField({
       name: 'excerpt',
       title: 'Short Description',
       type: 'text',

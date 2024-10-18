@@ -3,7 +3,7 @@ import type { GetStaticProps, InferGetStaticPropsType } from 'next';
 import Layout from '~/components/Layout';
 import Section from '~/components/Section';
 import { readToken } from '~/lib/sanity.api';
-import { getHomeSettings, getPosts, getTags, getTestiMonials } from '~/lib/sanity.queries';
+import { getHomeSettings, getPosts, getSiteSettings, getTags, getTestiMonials } from '~/lib/sanity.queries';
 import type { SharedPageProps } from '~/pages/_app';
 import { Post } from '~/interfaces/post';
 import { getClient } from '~/lib/sanity.client';
@@ -12,6 +12,7 @@ import DynamicPages from '~/layout/DynamicPages';
 
 
 interface IndexPageProps {
+  siteSettings: any;
   latestPosts: any;
   podcastData: any;
   draftMode: boolean;
@@ -31,6 +32,7 @@ export const getStaticProps: GetStaticProps<SharedPageProps & { posts: Post[] }>
     const tags = await getTags(client);
     const testimonials = await getTestiMonials(client);
     const homeSettings = await getHomeSettings(client);
+    const siteSettings = await getSiteSettings(client);
 
     return {
       props: {
@@ -41,6 +43,7 @@ export const getStaticProps: GetStaticProps<SharedPageProps & { posts: Post[] }>
         tags,
         testimonials,
         homeSettings,
+        siteSettings
       },
     };
   } catch (error) {
@@ -62,6 +65,10 @@ export const getStaticProps: GetStaticProps<SharedPageProps & { posts: Post[] }>
 export default function IndexPage(props: IndexPageProps) {
   const homeSettings = props?.homeSettings[0];
   const latestPosts = props?.latestPosts;
+  const siteSettings = props?.siteSettings;
+
+  console.log(siteSettings,'siteSettings');
+  
 
   return (
     <Layout>

@@ -50,7 +50,7 @@ const LatestBlogs: React.FC<LatestBlogsProps> = ({ contents, revamp, className,s
                 <h2 className='text-5xl text-white font-extrabold'>{displayName}</h2>
                 <div className='flex flex-col gap-8 last-child text-white'>
                   {otherBlogs.map((blog, i) => (
-                    <Card key={i + 1 || blog._id} cardType='text-only-card' cardColor='white' post={blog} />
+                    <Card key={i + 1 || blog._id} cardType='text-only-card'  isLast={i === otherBlogs.length - 1} cardColor='white' post={blog} />
                   ))}
                 </div>
               </div>

@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import { Fragment, useState } from 'react';
+import { useRouter } from 'next/router';
+import { Fragment, useEffect, useState } from 'react';
 
 interface TagSelectProps {
   tags: any[];
@@ -19,11 +20,21 @@ export default function TagSelect({
   onTagChange,
 }: TagSelectProps) {
   const [visibleTagCount, setVisibleTagCount] = useState(tagLimit);
-  
-  const [selectedTag, setSelectedTag] = useState(tags[0]?.slug?.current || '');
+  const [selectedTag, setSelectedTag] = useState('');
+  const router = useRouter();
+
+  useEffect(() => {
+    const slug = router.query.slug as string || tags[0]?.slug?.current || '';
+    setSelectedTag(slug);
+    localStorage.setItem('selectedTag', slug); 
+  }, [router.query.slug, tags]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [selectedTag]);
 
   const onTagChanges = (tag: any) => {
-    setSelectedTag(tag.slug.current); 
+    setSelectedTag(tag.slug.current);
     if (onTagChange) {
       onTagChange(tag);
     }
@@ -40,18 +51,17 @@ export default function TagSelect({
   return (
     <Fragment>
       {showTags && (
-        <div className='flex flex-col gap-9'>
+        <div className="flex flex-col gap-9">
           {showHeading && selectedTag && (
-            <h2 className='md:text-5xl text-xl text-center font-manrope font-extrabold text-cs-gray-900'>
+            <h2 className="md:text-5xl text-xl text-center font-manrope font-extrabold text-cs-gray-900">
               {`"${tags.find(tag => tag.slug.current === selectedTag)?.tagName || ''}"`}
             </h2>
           )}
           <ul className={`flex gap-2 pb-8 flex-wrap border-b-2 border-gray-900 ${className}`}>
             {tags &&
               tags.slice(0, visibleTagCount).map((tag, i) => (
-                <Link key={i} href={`/browse/${tag.slug.current ? tag.slug.current : ''}`}>
+                <Link key={i} href={`/browse/${tag.slug.current}`} scroll={false}>
                   <li
-                    key={i}
                     onClick={() => onTagChanges(tag)}
                     className={`flex group hover:transition duration-500 content-center items-center gap-4 text px-2 py-3 text-lg font-medium 
                       border rounded text-center cursor-pointer hover:underline underline-offset-4
@@ -61,7 +71,7 @@ export default function TagSelect({
                           : 'bg-gray-300 text-black'
                       }`}
                   >
-                    <span className='text-lg font-medium'>{tag.tagName}</span>
+                    <span className="text-lg font-medium">{tag.tagName}</span>
                   </li>
                 </Link>
               ))}
@@ -70,7 +80,7 @@ export default function TagSelect({
                 onClick={visibleTagCount < tags.length ? handleShowMore : handleShowLess}
                 className={`bg-black flex content-center items-center gap-4 px-2 py-3 text-xs p-1 border rounded text-center cursor-pointer bg-gray-300`}
               >
-                <span className='text-lg font-medium'>
+                <span className="text-lg font-medium">
                   {visibleTagCount < tags.length ? 'More...' : 'Less...'}
                 </span>
               </li>

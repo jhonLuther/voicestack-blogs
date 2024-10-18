@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { urlForImage } from '~/lib/sanity.image';
 import Wrapper from '../../layout/Wrapper';
 import Card from '../Card';
+import Link from 'next/link';
 
 
 interface FeaturedAndPopularBlogsProps {
@@ -29,16 +30,15 @@ const FeaturedAndPopularBlogs = ({ featuredBlog, popularBlogs }: FeaturedAndPopu
                     <Card cardType="left-image-card" key={index} post={blog} />
                 ))}
                 <div className='flex items-center gap-3 hover:scale-95 transform duration-300 cursor-pointer'>
+                    <Link href={'/browse'}>
                     <span className='text-4xl text-cs-black font-semibold'> {`Show More`}</span>
+                    </Link>
                     <svg xmlns="http://www.w3.org/2000/svg" width="29" height="30" viewBox="0 0 29 30" fill="none">
                         <path d="M0 2.5H27M27 2.5V29.5M27 2.5L3.375 26.125" stroke="#151515" strokeWidth="4" />
                     </svg>
                 </div>
             </div>
         </section>
-
-
-
 
     );
 };

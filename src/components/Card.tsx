@@ -108,7 +108,7 @@ export default function Card({ post,isLast, cardType, className, cardColor,showP
         )
           :
           cardType === 'left-image-card' ? (
-            <Link href={`/post/${post.slug && post.slug.current}`}>
+            <Link href={linkUrl}>
               <div className={`flex flex-row gap-4 items-center group hover: transition duration-500 ${className}`}>
                 {post.mainImage && (
                   <Image
@@ -148,7 +148,7 @@ export default function Card({ post,isLast, cardType, className, cardColor,showP
               </div>
             ) :
               cardType === 'top-image-smallCard' ? (
-                <Link href={`/post/${post.slug && post.slug.current}`}>
+                <Link href={linkUrl}>
                   <div className="flex flex-col gap-1 group hover: transition duration-500 overflow-hidden">
                     <div className='group-hover:scale-105 transition duration-500 overflow-hidden'>
                       {post.mainImage && (
@@ -257,7 +257,7 @@ export default function Card({ post,isLast, cardType, className, cardColor,showP
                         )}
                         <div className="mt-4">
                           <h3 className="text-ellipsis h-auto line-clamp-1 overflow-hidden w-full">
-                            <Link href={`/post/${post.slug && post.slug.current}`}>
+                            <Link href={linkUrl}>
                               <span className="text-gray-950 text-xl font-semibold group-hover:underline underline-offset-2">
                                 {post.title}
                               </span>

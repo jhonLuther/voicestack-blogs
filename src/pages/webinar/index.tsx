@@ -34,7 +34,7 @@ export const getStaticProps: GetStaticProps<SharedPageProps & { webinars: Webina
   };
 };
 
-const TestimonialsPage = ({ webinars,latestWebinars, totalPages }: { webinars: Webinars[];latestWebinars: Webinars[]; totalPages: number }) => {
+const WebinarsPage = ({ webinars,latestWebinars, totalPages }: { webinars: Webinars[];latestWebinars: Webinars[]; totalPages: number }) => {
   const router = useRouter();
   const baseUrl = useRef(`/${siteConfig.pageURLs.webinar}`).current;
 
@@ -70,4 +70,4 @@ const TestimonialsPage = ({ webinars,latestWebinars, totalPages }: { webinars: W
   );
 };
 
-export default TestimonialsPage;
+export default WebinarsPage;

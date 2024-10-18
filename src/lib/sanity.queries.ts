@@ -125,6 +125,11 @@ export const homeSettingsQuery = groq`
   }
 `
 
+const siteSettingsQuery = groq`*[_type == "siteSetting"] | order(_createdAt desc) {
+...,
+
+}`;
+
 export async function getPosts(
   client: SanityClient,
   limit?: number,
@@ -561,6 +566,10 @@ export const authorRelatedContentQuery = groq`
 
 export async function getHomeSettings(client: SanityClient): Promise<Post[]> {
   return await client.fetch(homeSettingsQuery)
+}
+
+export async function getSiteSettings(client: SanityClient): Promise<any> {
+  return await client.fetch(siteSettingsQuery);
 }
 
 export const postBySlugQuery = groq`

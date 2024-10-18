@@ -14,6 +14,7 @@ import SEOHead from '~/layout/SeoHead';
 import { urlForImage } from '~/lib/sanity.image';
 import { Toc } from '~/contentUtils/sanity-toc';
 import AuthorInfo from '~/components/commonSections/AuthorInfo';
+import ShareableLinks from '~/components/commonSections/ShareableLinks';
 
 interface Props {
   podcast: Podcasts;
@@ -98,10 +99,11 @@ const PodcastPage = ({ podcast, draftMode, token }: Props) => {
             </div>
             <div className='flex-1 flex flex-col gap-12 mt-12  bg-red relative md:w-1/3 w-full'>
               <div className='sticky top-12 flex flex-col gap-12'>
-                {podcast?.relatedPodcasts.length > 0 && <RelatedFeaturesSection title={podcast?.title} allPosts={podcast?.relatedPodcasts} />}
+              <ShareableLinks props={podcast?.title} />
               </div>
             </div>
           </div>
+          {podcast?.relatedPodcasts.length > 0 && <RelatedFeaturesSection title={podcast?.title} allPosts={podcast?.relatedPodcasts} />}
         </Wrapper>
       </Layout>
     </>
