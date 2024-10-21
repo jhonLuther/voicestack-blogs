@@ -404,6 +404,7 @@ export const podcastsQuery = groq`
   slug,
   duration,
   publishedAt,
+  contentType,
   mainImage,
   excerpt,
   "author": author[]-> {

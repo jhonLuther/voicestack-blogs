@@ -14,9 +14,10 @@ import DurationSection from './commonSections/DurationSection'
 interface Props {
 	post?: any
 	isAuthor?: any
+	enableDate?:boolean
 }
 
-const MainImageSection = ({ post, isAuthor }: Props) => {
+const MainImageSection = ({ post, isAuthor ,enableDate = false }: Props) => {
 
 	const isMobile: any = useMediaQuery(767);
 	const client = getClient()
@@ -40,8 +41,7 @@ const MainImageSection = ({ post, isAuthor }: Props) => {
 						</p>
 						{isAuthor && <AuthorInfo className={"mt-8"} contentType={post.contentType} author={post?.author} />}
 						{
-							<DurationSection duration={post?.estimatedReadingTime} date={post?.date} />
-	
+						enableDate  &&	<DurationSection duration={post?.estimatedReadingTime} date={post?.date} />
 						}
 					</div>
 				</div>
