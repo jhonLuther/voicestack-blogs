@@ -4,6 +4,66 @@ import groq from 'groq'
 import { type SanityClient } from 'next-sanity'
 import { Author, Post, Tag } from '~/interfaces/post'
 
+// Common Body query  for $portableText  update the dynamic component query here
+const bodyFragment = `
+  body[] {
+    ...,
+      _type == "videoReference" => {
+      ...,
+      "video": @->{
+      _id,
+      title,
+      platform,
+      videoId,
+      }
+    },
+    _type == "image" => {
+      ...,
+      asset->,
+    },
+    _type == "dynamicComponent" => {
+      ...,
+      testimonialCard {
+        testimonial-> {
+          testimonialName,
+          excerpt,
+          "customerDetails": customer->{
+            name,
+            slug,
+            role,
+            bio,
+            "picture": picture.asset->url
+          },
+          image {
+            asset->{
+              url,
+              metadata
+            }
+          },
+          rating,
+          date
+        }
+      },
+      bannerBlock,
+      asideBannerBlock,
+    }
+  }
+`
+//Table of contents
+const tocFragment = `
+   "headings": body[style in ["h2"]]{ 
+      "children": children[]{
+        "text": text,
+        "marks": marks,
+        "_type": _type,
+        "_key": _key
+      },
+      "style": style,
+      "_type": _type,
+      "_key": _key
+    }
+`
+
 export const postsQuery = groq`
 *[_type == "post" && defined(slug.current)] | order(_createdAt desc) {
  mainImage,
@@ -11,6 +71,14 @@ export const postsQuery = groq`
  slug,
  _id,
   contentType,
+  author[]-> {
+      _id,
+      name,
+      slug,
+  },
+  "date": date,
+  ${bodyFragment},
+  "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180),
   tags[]->{
     _id,
     tagName,
@@ -337,65 +405,6 @@ export async function getPostsBySlug(
   return await client.fetch(newPostsQuery)
 }
 
-// Common Body query  for $portableText  update the dynamic component query here
-const bodyFragment = `
-  body[] {
-    ...,
-      _type == "videoReference" => {
-      ...,
-      "video": @->{
-      _id,
-      title,
-      platform,
-      videoId,
-      }
-    },
-    _type == "image" => {
-      ...,
-      asset->,
-    },
-    _type == "dynamicComponent" => {
-      ...,
-      testimonialCard {
-        testimonial-> {
-          testimonialName,
-          excerpt,
-          "customerDetails": customer->{
-            name,
-            slug,
-            role,
-            bio,
-            "picture": picture.asset->url
-          },
-          image {
-            asset->{
-              url,
-              metadata
-            }
-          },
-          rating,
-          date
-        }
-      },
-      bannerBlock,
-      asideBannerBlock,
-    }
-  }
-`
-//Table of contents
-const tocFragment = `
-   "headings": body[style in ["h2"]]{ 
-      "children": children[]{
-        "text": text,
-        "marks": marks,
-        "_type": _type,
-        "_key": _key
-      },
-      "style": style,
-      "_type": _type,
-      "_key": _key
-    }
-`
 
 export const podcastsQuery = groq`
 *[_type == "post" && contentType == "podcast" && defined(slug.current)] |  order(_updatedAt desc){
@@ -404,6 +413,7 @@ export const podcastsQuery = groq`
   slug,
   duration,
   publishedAt,
+  contentType,
   mainImage,
   excerpt,
   "author": author[]-> {
@@ -578,6 +588,8 @@ export const postBySlugQuery = groq`
     slug,
     excerpt,
     contentType,
+    "region": region,
+    "date": date,
    ${bodyFragment},
    ${tocFragment},
     "numberOfCharacters": length(pt::text(body)),
@@ -626,8 +638,13 @@ export const testiMonialBySlugQuery = groq`
     hasVideo,
     image,
     rating,
+    "region": region,
+    "date": date,
     ${bodyFragment},
     ${tocFragment},
+    "numberOfCharacters": length(pt::text(body)),
+    "estimatedWordCount": round(length(pt::text(body)) / 5),
+    "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180),
     "videos": videos[]-> {
       _id,
       title,
@@ -652,6 +669,8 @@ export const podcastBySlugQuery = groq`
   publishedAt,
   excerpt,
   mainImage,
+  "region": region,
+  "date": date,
   ${bodyFragment},
   ${tocFragment},
   "author": author[]-> {
@@ -678,6 +697,11 @@ export const ebookBySlugQuery = groq`
     publishedAt,
     excerpt,
     mainImage,
+    "region": region,
+    "date": date,
+    "numberOfCharacters": length(pt::text(body)),
+    "estimatedWordCount": round(length(pt::text(body)) / 5),
+    "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180),
     attachment{
       asset->{
         url
@@ -716,6 +740,11 @@ export const webinarBySlugQuery = groq`
     publishedAt,
     excerpt,
     mainImage,
+    "region": region,
+    "date": date,
+    "numberOfCharacters": length(pt::text(body)),
+    "estimatedWordCount": round(length(pt::text(body)) / 5),
+    "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180),
     ${bodyFragment},
     ${tocFragment},
     "author": author[]-> {
@@ -742,10 +771,15 @@ export const pressReleaseBySlugQuery = groq`
     "audioFile": Video.link,
     "platform": Video.platform,
     "htmlCode": Video.htmlCode, 
+    "numberOfCharacters": length(pt::text(body)),
+    "estimatedWordCount": round(length(pt::text(body)) / 5),
+    "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180),
     duration,
     publishedAt,
     excerpt,
     mainImage,
+    "region": region,
+    "date": date,
     ${bodyFragment},
     ${tocFragment},
     "author": author[]-> {
@@ -775,6 +809,11 @@ export const articleBySlugQuery = groq`
     mainImage,
     ${bodyFragment},
     ${tocFragment},
+    "numberOfCharacters": length(pt::text(body)),
+    "estimatedWordCount": round(length(pt::text(body)) / 5),
+    "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180),
+    "region": region,
+    "date": date,
     "author": author[]-> {
       _id,
       name,
@@ -803,6 +842,9 @@ export const caseStudyBySlugQuery = groq`
     publishedAt,
     excerpt,
     mainImage,
+    "numberOfCharacters": length(pt::text(body)),
+    "estimatedWordCount": round(length(pt::text(body)) / 5),
+    "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180),
     ${bodyFragment},
     ${tocFragment},
     "author": author[]-> {

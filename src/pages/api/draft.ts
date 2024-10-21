@@ -1,3 +1,4 @@
+import siteConfig from 'config/siteConfig'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { isValidSecret } from 'sanity-plugin-iframe-pane/is-valid-secret'
 
@@ -17,11 +18,10 @@ export default async function preview(
 
   const secret = typeof query.secret === 'string' ? query.secret : undefined
   const slug = typeof query.slug === 'string' ? query.slug : undefined
-  const contentType = typeof query.type === 'string' ? query.type : undefined
 
-  if (!secret) {
+  if (!secret || !slug) {
     res.status(401)
-    res.send('Invalid secret')
+    res.send('Invalid secret or missing slug')
     return
   }
 
@@ -30,26 +30,35 @@ export default async function preview(
     token: readToken,
   })
 
-  // This is the most common way to check for auth, but we encourage you to use your existing auth
-  // infra to protect your token and securely transmit it to the client
   const validSecret = await isValidSecret(authClient, previewSecretId, secret)
   if (!validSecret) {
     return res.status(401).send('Invalid secret')
   }
 
-  if (contentType=="author" && slug) {
-    res.setDraftMode({ enable: true })
-    res.writeHead(307, { Location: `/author/${slug}` })
-    res.end()
-    return
-  }
-  if (contentType=="post" && slug) {
-    res.setDraftMode({ enable: true })
-    res.writeHead(307, { Location: `/post/${slug}` })
-    res.end()
-    return
-  }
+  try {
+    const document = await authClient.fetch(
+      `*[slug.current == $slug][0]{ _type, contentType, slug }`,
+      { slug }
+    )
 
-  res.status(404).send('Slug query parameter is required')
-  res.end()
+    if (document) {
+      const actualContentType = document.contentType || document._type
+      if (Object.values(siteConfig.pageURLs).map(url => url.slice(1)).includes(actualContentType)) {
+        res.setDraftMode({ enable: true })
+        res.writeHead(307, { Location: `/${actualContentType}/${slug}` })
+        res.end()
+        return
+      } else if (actualContentType === 'post') {
+        res.setDraftMode({ enable: true })
+        res.writeHead(307, { Location: `/post/${slug}` })
+        res.end()
+        return
+      }
+    }
+
+    res.status(404).send('Requested slug not found please check with siteconfig urls')
+  } catch (error) {
+    console.error('Error in preview function:', error)
+    res.status(500).send('Internal Server Error')
+  }
 }

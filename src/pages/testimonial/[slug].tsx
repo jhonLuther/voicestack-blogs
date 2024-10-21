@@ -101,7 +101,7 @@ const TestimonialPage = ({ testimonial, draftMode, token }: Props) => {
             </div>
             <div className='flex-1 flex flex-col gap-12 mt-12  bg-red relative md:w-1/3 w-full'>
               <div className='sticky top-12 flex flex-col gap-12'>
-                <Toc headings={ testimonial?.headings} title="Testimonial content" />
+                <Toc headings={ testimonial?.headings} title="Contents" />
                 <ShareableLinks props={testimonial?.title} />
               </div>
             </div>

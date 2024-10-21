@@ -1,4 +1,4 @@
-import { defineArrayMember, defineType } from 'sanity'
+import { defineArrayMember, defineField, defineType } from 'sanity'
 import HighlightDecorator from '../components/HighlightDecorator'
 import DynamicComponent from '../../src/schemas/dynamicComponent'
 import { ImageIcon } from '@sanity/icons'
@@ -15,6 +15,18 @@ export default defineType({
     {
       type: 'image',
       icon: ImageIcon,
+      fields: [
+        {
+          title: 'Title',
+          name: 'title',
+          type: 'string',
+        },
+        {
+          title: 'Alt Text',
+          name: 'alt',
+          type: 'string',
+        },
+      ],
     },
     {
       type: 'table',
@@ -28,6 +40,13 @@ export default defineType({
     
     defineArrayMember(htmlCode),
     defineArrayMember(dynamicComponent),
+    defineArrayMember({
+      title: 'Video',
+      name: 'videoReference',
+      description: 'Select a video from the video manager',
+      type: 'reference',
+      to: [{ type: 'videos' }],
+    }),
     defineArrayMember({
       title: 'Block',
       type: 'block',

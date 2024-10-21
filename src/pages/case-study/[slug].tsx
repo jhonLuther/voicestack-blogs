@@ -86,12 +86,9 @@ const CaseStudyPage = ({ caseStudy, draftMode, token }: Props) => {
                 />
               </div>
             </div>
-            <div className="flex-1 flex flex-col gap-12 mt-12  bg-red relative md:w-1/3 w-full">
-              <div className="sticky top-12 flex flex-col gap-12">
-                <Toc
-                  headings={caseStudy?.headings}
-                  title="Case Study content"
-                />
+            <div className='flex-1 flex flex-col gap-12 mt-12  bg-red relative md:w-1/3 w-full'>
+              <div className='sticky top-12 flex flex-col gap-12'>
+              <Toc headings={ caseStudy?.headings} title="Contents" />
                 <ShareableLinks props={caseStudy?.title} />
                 <AsideBannerBlock contents={caseStudy} />
               </div>

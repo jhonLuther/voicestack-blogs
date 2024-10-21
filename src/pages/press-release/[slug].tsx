@@ -83,7 +83,7 @@ const PressReleasePage = ({ pressRelease, draftMode, token }: Props) => {
         ogImage={urlForImage(pressRelease?.mainImage)}
         contentType={pressRelease?.contentType} />
       <Layout >
-        <MainImageSection post={pressRelease} />
+        <MainImageSection enableDate={true} post={pressRelease} />
         <Wrapper>
           <div className="flex  md:flex-row flex-col">
             <div className="mt-12 flex md:flex-col flex-col-reverse md:w-2/3 w-full ">
@@ -97,7 +97,7 @@ const PressReleasePage = ({ pressRelease, draftMode, token }: Props) => {
             </div>
             <div className='flex-1 flex flex-col gap-12 mt-12  bg-red relative md:w-1/3 w-full'>
               <div className='sticky top-12 flex flex-col gap-12'>
-                <Toc headings={pressRelease?.headings} title="Article content" />
+                <Toc headings={pressRelease?.headings} title="Contents" />
                 {pressRelease?.author &&
                   <div className=''>
                     <AuthorInfo contentType={pressRelease.contentType} author={pressRelease?.author} />
