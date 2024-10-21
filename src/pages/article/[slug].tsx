@@ -59,9 +59,6 @@ const ArticlePage = ({ articles, draftMode, token }: Props) => {
   const seoCanonical = articles.seoCanonical || `https://carestack.com/articles/${articles.slug.current}`;
   const jsonLD: any = generateJSONLD(articles);
 
-  console.log(articles, 'article');
-  
-
 
   return (
     <>
@@ -75,7 +72,7 @@ const ArticlePage = ({ articles, draftMode, token }: Props) => {
         ogImage={urlForImage(articles?.mainImage)}
         contentType={articles?.contentType} />
       <Layout >
-        <MainImageSection enableDate={true}  post={articles} />
+        <MainImageSection  enableDate={true}  post={articles} />
         <Wrapper>
           <div className="flex  md:flex-row flex-col">
             <div className="mt-12 flex md:flex-col flex-col-reverse md:w-2/3 w-full ">

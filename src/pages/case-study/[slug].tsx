@@ -79,7 +79,7 @@ const CaseStudyPage = ({ caseStudy, draftMode, token }: Props) => {
         ogImage={urlForImage(caseStudy?.mainImage)}
         contentType={caseStudy?.contentType} />
       <Layout >
-        <MainImageSection post={caseStudy} />
+        <MainImageSection isAuthor={true} post={caseStudy} />
         <Wrapper>
           <div className="flex  md:flex-row flex-col">
             <div className="mt-12 flex md:flex-col flex-col-reverse md:w-2/3 w-full ">

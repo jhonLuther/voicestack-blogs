@@ -15,12 +15,13 @@ import siteConfig from 'config/siteConfig'
 interface Props {
 	post?: any
 	isAuthor?: any
-	enableDate?: boolean
+	enableDate?:boolean
+	isAudio?:boolean
 }
 
-const MainImageSection = ({ post, isAuthor, enableDate = false }: Props) => {
+const MainImageSection = ({ post, isAuthor ,enableDate = false ,isAudio= false}: Props) => {
 	console.log(post);
-
+	
 
 	const isMobile: any = useMediaQuery(767);
 	const client = getClient()
@@ -44,20 +45,19 @@ const MainImageSection = ({ post, isAuthor, enableDate = false }: Props) => {
 						</p>
 						{isAuthor && <AuthorInfo className={"mt-8"} contentType={post.contentType} author={post?.author} />}
 						{
-							enableDate && <DurationSection isAudio={true} duration={post?.estimatedReadingTime ? post.estimatedReadingTime : post.duration} date={post?.date ? post?.date : ""} />
+						enableDate  &&	<DurationSection isAudio={isAudio} duration={post?.estimatedReadingTime ? post.estimatedReadingTime : post.duration } date={post?.date ? post?.date : ""} />
 						}
 					</div>
 				</div>
 			</Wrapper>
 			<div className='w-full md:flex hidden absolute h-full justify-end'>
 				<div className='md:w-1/2 w-1/3'>
-					{post.mainImage || post.image&&  <ImageLoader
+					<ImageLoader
 						image={post.mainImage || post.image}
 						priority={true}
 						alt={post.title || "Post image"}
 						client={client}
 					/>
-					}
 				</div>
 			</div>
 		</div>

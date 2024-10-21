@@ -87,7 +87,7 @@ const PodcastPage = ({ podcast,previous,next, draftMode, token }: Props) => {
         ogImage={urlForImage(podcast?.mainImage)}
         contentType={podcast?.contentType} />
       <Layout >
-        <MainImageSection enableDate={true} post={podcast} />
+        <MainImageSection isAudio={true} enableDate={true} post={podcast} />
         <Wrapper removePadding={true}>
           {
             podcast.htmlCode &&
