@@ -10,6 +10,8 @@ import { SharedPageProps } from '../_app'
 import Image from 'next/image'
 import RelatedFeaturesSection from '~/components/RelatedFeaturesSection'
 import Card from '~/components/Card'
+import AllcontentSection from '~/components/sections/AllcontentSection'
+import siteConfig from 'config/siteConfig'
 
 interface Query {
   [key: string]: string
@@ -63,43 +65,39 @@ export default function AuthorPage({
   relatedContents
 }: InferGetStaticPropsType<typeof getStaticProps>) {
 
-  const router = useRouter()
-
-  if (router.isFallback) {
-    return <div>Loading...</div>
-  }
+  console.log(relatedContents,'RELATED CONTENTS');
+  
 
   return (
+    <Layout >
     <Wrapper>
-      <section className="flex flex-col mx-auto  w-full h-full items-center">
-        <div className='flex flex-col items-center gap-4'>
+        <div className='flex md:flex-row flex-col items-center gap-16'> 
+          <div>
           {author.picture && (
             <Image
               src={author.picture}
               alt={author.name}
-              width={150}
-              height={150}
-              className='rounded-full'
+              width={360}
+              height={360}
+              className='rounded-s'
             />
           )}
-          <h1 className='text-2xl font-semibold'>{author.name}</h1>
-          <p className='text-lg font-normal'>{author.role}</p>
-        </div>
-        <p className='max-w-3xl text-lg font-normal'>{author.bio}</p>
-
-        <div className='flex flex-col max-w-3xl items-center gap-4 mt-8'>
-          <h2 className='text-2xl font-semibold'>{`More Like This`}</h2>
-          <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1  gap-y-9 gap-4">
-            {relatedContents &&
-              relatedContents?.length > 0 && (
-                relatedContents.map((contents) => (
-                  <Card key={contents._id} post={contents} />
-                ))
-              )
-            }
+          </div>
+          <div className=' flex flex-col gap-6'>
+          <h2 className='md:text-6xl text-2xl text-cs-gray-900  font-extrabold font-manrope '>{author.name}</h2>
+          <p className='md:text-4xl text-xl text-cs-dark-500 font-manrope font-semibold pb-6 border-b-2 border-cs-darkBlack' >{author.role}</p>
+          <p className='max-w-3xl text-xl text-cs-gray-900   font-normal'>{author.bio}</p> 
           </div>
         </div>
-      </section>
+        {relatedContents && <AllcontentSection
+          className={'pb-9'}
+          allContent={relatedContents}
+          hideSearch={true}
+          itemsPerPage={siteConfig.pagination.childItemsPerPage}
+          redirect={true}
+        />}
     </Wrapper>
+    </Layout >
+
   )
 }

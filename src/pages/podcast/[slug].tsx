@@ -1,7 +1,7 @@
 import { GetStaticProps, GetStaticPaths } from 'next';
 import { useRouter } from 'next/router';
 import { getClient } from '~/lib/sanity.client';
-import { getPodcast, getPodcasts, getRelatedContents, podcastSlugsQuery } from '~/lib/sanity.queries';
+import { getAllPodcastSlugs, getPodcast, getPodcasts, getRelatedContents, podcastSlugsQuery } from '~/lib/sanity.queries';
 import { Podcasts } from '~/interfaces/post';
 import Wrapper from '~/layout/Wrapper';
 import { readToken } from '~/lib/sanity.api';
@@ -14,11 +14,15 @@ import SEOHead from '~/layout/SeoHead';
 import { urlForImage } from '~/lib/sanity.image';
 import { Toc } from '~/contentUtils/sanity-toc';
 import AuthorInfo from '~/components/commonSections/AuthorInfo';
+import ShareableLinks from '~/components/commonSections/ShareableLinks';
 
 interface Props {
   podcast: Podcasts;
   draftMode: boolean;
   token: string;
+  allSlugs?: any;
+  previous?:any;
+  next?:any;
 }
 
 
@@ -38,21 +42,33 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false, params = {} }) => {
   const client = getClient(draftMode ? { token: readToken } : undefined);
   const podcast = await getPodcast(client, params.slug as string);
+  const currentSlug:any = params?.slug;
+  
+  // const allSlugs = await getAllPodcastSlugs(client, currentSlug);
+
+  const { current, previous, next } = await getAllPodcastSlugs(client, currentSlug);
+
+  
+
+
 
   return {
     props: {
       draftMode,
       token: draftMode ? readToken : '',
       podcast,
+      previous ,
+      next,
     },
   };
 };
 
-const PodcastPage = ({ podcast, draftMode, token }: Props) => {
-  const router = useRouter();
-  if (router.isFallback) {
-    return <div>Loading...</div>;
+const PodcastPage = ({ podcast,previous,next, draftMode, token }: Props) => {
+  if(!podcast) {
+    return <div>Podcast not found</div>
   }
+   console.log(previous,next);
+
 
   const seoTitle = podcast.seoTitle || podcast.title;
   const seoDescription = podcast.seoDescription || podcast.excerpt;
@@ -84,7 +100,6 @@ const PodcastPage = ({ podcast, draftMode, token }: Props) => {
             )
           }
         </Wrapper>
-
         <Wrapper>
           <div className="flex  md:flex-row flex-col">
             <div className="mt-12 flex md:flex-col flex-col-reverse md:w-2/3 w-full ">
@@ -98,10 +113,11 @@ const PodcastPage = ({ podcast, draftMode, token }: Props) => {
             </div>
             <div className='flex-1 flex flex-col gap-12 mt-12  bg-red relative md:w-1/3 w-full'>
               <div className='sticky top-12 flex flex-col gap-12'>
-                {podcast?.relatedPodcasts.length > 0 && <RelatedFeaturesSection title={podcast?.title} allPosts={podcast?.relatedPodcasts} />}
+              <ShareableLinks props={podcast?.title} />
               </div>
             </div>
           </div>
+          {podcast?.relatedPodcasts.length > 0 && <RelatedFeaturesSection title={podcast?.title} allPosts={podcast?.relatedPodcasts} />}
         </Wrapper>
       </Layout>
     </>

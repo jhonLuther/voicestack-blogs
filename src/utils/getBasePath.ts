@@ -15,6 +15,6 @@ export const getBasePath = (router: NextRouter, contentType: string): string => 
     case router.pathname.startsWith('/case-study'):
       return 'case-study';
     default:
-      return 'post'; 
+      return 'blog'; 
   }
 };

@@ -35,7 +35,6 @@ export default function SEOHead({
         <link rel="canonical" href={canonical} key="canonical" />
         {jsonLD && ( 
           <script
-            key={`blogJSON-${0.5 * Math.random()}`}
             type="application/ld+json"
             id={`${props?.contentType ? props.contentType : "blog"}-jsonLd`}
             dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLD) }}

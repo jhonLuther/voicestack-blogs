@@ -125,6 +125,11 @@ export const homeSettingsQuery = groq`
   }
 `
 
+const siteSettingsQuery = groq`*[_type == "siteSetting"] | order(_createdAt desc) {
+...,
+
+}`;
+
 export async function getPosts(
   client: SanityClient,
   limit?: number,
@@ -561,6 +566,10 @@ export const authorRelatedContentQuery = groq`
 
 export async function getHomeSettings(client: SanityClient): Promise<Post[]> {
   return await client.fetch(homeSettingsQuery)
+}
+
+export async function getSiteSettings(client: SanityClient): Promise<any> {
+  return await client.fetch(siteSettingsQuery);
 }
 
 export const postBySlugQuery = groq`
@@ -1088,6 +1097,26 @@ export async function getPodcast(
   }
   return null
 }
+
+export const getAllPodcastSlugs = async (
+  client: any,
+  currentSlug: string
+): Promise<{ current: string; previous: string | null; next: string | null }> => {
+  const query = `
+    *[_type == "post" && contentType == "podcast"] | order(_updatedAt desc) {
+      "slug": slug.current
+    }
+  `;
+
+  const result = await client.fetch(query);
+  const slugs = result.map((item: { slug: string }) => item.slug);
+
+  const currentIndex = slugs.indexOf(currentSlug);
+  const previousSlug = currentIndex > 0 ? slugs[currentIndex - 1] : null;
+  const nextSlug = currentIndex < slugs.length - 1 ? slugs[currentIndex + 1] : null;
+
+  return { current: currentSlug, previous: previousSlug, next: nextSlug };
+};
 
 export async function getArticle(
   client: SanityClient,

@@ -96,6 +96,19 @@ export default defineType({
       },
     }),
     defineField({
+      name: 'region',
+      title: 'Region',
+      type: 'string',
+      initialValue: 'global',
+      options: {
+        list: [
+          { title: 'Global', value: 'global' },
+          { title: 'US', value: 'EN' },
+          { title: 'UK', value: 'EN-GB' },
+        ],
+      },
+    }),
+    defineField({
       name: 'excerpt',
       title: 'Short Description',
       type: 'text',
@@ -119,7 +132,6 @@ export default defineType({
       title: 'Embed Code',
       description:'paste full iframe code',
       type: 'text',
-      validation: Rule => Rule.required(),
       hidden: ({ parent }) =>
         parent.contentType !== 'podcast' ,
     }),
