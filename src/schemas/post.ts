@@ -102,7 +102,7 @@ export default defineType({
       initialValue: 'global',
       options: {
         list: [
-          { title: 'India', value: 'india' },
+          { title: 'Global', value: 'global' },
           { title: 'US', value: 'EN' },
           { title: 'UK', value: 'EN-GB' },
         ],
@@ -132,7 +132,6 @@ export default defineType({
       title: 'Embed Code',
       description:'paste full iframe code',
       type: 'text',
-      validation: Rule => Rule.required(),
       hidden: ({ parent }) =>
         parent.contentType !== 'podcast' ,
     }),

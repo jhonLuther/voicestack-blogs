@@ -50,7 +50,6 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
   if (!testimonial) {
     return {
       notFound: true,
-      revalidate: 60,
     };
   }
 

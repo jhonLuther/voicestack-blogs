@@ -1,7 +1,7 @@
 import { GetStaticProps, GetStaticPaths } from 'next';
 import { useRouter } from 'next/router';
 import { getClient } from '~/lib/sanity.client';
-import { getPodcast, getPodcasts, getRelatedContents, podcastSlugsQuery } from '~/lib/sanity.queries';
+import { getAllPodcastSlugs, getPodcast, getPodcasts, getRelatedContents, podcastSlugsQuery } from '~/lib/sanity.queries';
 import { Podcasts } from '~/interfaces/post';
 import Wrapper from '~/layout/Wrapper';
 import { readToken } from '~/lib/sanity.api';
@@ -20,6 +20,9 @@ interface Props {
   podcast: Podcasts;
   draftMode: boolean;
   token: string;
+  allSlugs?: any;
+  previous?:any;
+  next?:any;
 }
 
 
@@ -39,17 +42,36 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false, params = {} }) => {
   const client = getClient(draftMode ? { token: readToken } : undefined);
   const podcast = await getPodcast(client, params.slug as string);
+  const currentSlug:any = params?.slug;
+  
+  // const allSlugs = await getAllPodcastSlugs(client, currentSlug);
+
+  const { current, previous, next } = await getAllPodcastSlugs(client, currentSlug);
+
+  
+
+
 
   return {
     props: {
       draftMode,
       token: draftMode ? readToken : '',
       podcast,
+      previous ,
+      next,
     },
   };
 };
 
-const PodcastPage = ({ podcast, draftMode, token }: Props) => {
+const PodcastPage = ({ podcast,previous,next, draftMode, token }: Props) => {
+  if(!podcast) {
+    return <div>Podcast not found</div>
+  }
+
+
+   console.log(previous,next);
+
+  
   const router = useRouter();
   if (router.isFallback) {
     return <div>Loading...</div>;
@@ -85,7 +107,6 @@ const PodcastPage = ({ podcast, draftMode, token }: Props) => {
             )
           }
         </Wrapper>
-
         <Wrapper>
           <div className="flex  md:flex-row flex-col">
             <div className="mt-12 flex md:flex-col flex-col-reverse md:w-2/3 w-full ">

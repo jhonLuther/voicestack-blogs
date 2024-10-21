@@ -66,7 +66,6 @@ const Footer = ({ className }) => {
   return (
     <footer className={`bg-gray-900 text-white pt-32 pb-12 ${className}`}>
       <div className="container mx-auto px-4 max-w-7xl flex flex-col gap-24">
-        {/* Top Section */}
         <div>
         <div className="text-left mb-8 flex items-center justify-between md:flex-row flex-col">
           <div>
@@ -119,7 +118,7 @@ const Footer = ({ className }) => {
         {/* Footer Bottom */}
         <div className="mt-10 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
           <div>
-            <span>© 2017 - 2023 Good Methods Global Inc. All rights reserved.</span>
+            <span>{`© 2017 - 2023 Good Methods Global Inc. All rights reserved`}.</span>
           </div>
           <div className="flex space-x-6 mt-4 md:mt-0">
             {['Terms of use', 'Privacy policy', 'Do not sell my information'].map((item, idx) => (

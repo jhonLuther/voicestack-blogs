@@ -29,14 +29,14 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
 
   return (
     <section className={`mt-9 ${className}`}>
-      {!hideSearch && (
-        <div className="md:flex-row flex-col gap-8 flex items-center justify-between py-9">
-          <h2 className="text-cs-black text-5xl font-manrope font-extrabold">{`Browse All`}</h2>
+      <div className="md:flex-row flex-col gap-8 flex items-center justify-between py-9">
+        <h2 className="text-cs-black text-5xl font-manrope font-extrabold">{`Browse All`}</h2>
+        {!hideSearch && (
           <div className="relative max-w-xl flex-1">
             <SearchBar />
           </div>
-        </div>
-      )}
+        )}
+      </div>
       <div className={`grid 
         ${cardType === 'podcast-card' ? 'lg:grid-cols-2 md:grid-cols-1' : 'lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1'} 
         gap-y-9 
