@@ -49,8 +49,8 @@ const CaseStudiesPage = ({ caseStudies,latestCaseStudies, totalPages }: { caseSt
 
   return (
     <Layout>
-      {caseStudies?.map((e) => {
-        return <CustomHead props={e} type="caseStudy" />
+      {caseStudies?.map((e,i) => {
+        return <CustomHead props={e} type="caseStudy"  key={i}/>
       })}
       <LatestBlogs
         className={'pt-11 pr-9 pb-16 pl-9'}
