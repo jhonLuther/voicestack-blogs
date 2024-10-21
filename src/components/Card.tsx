@@ -6,6 +6,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import router from 'next/router';
 import { getBasePath } from '~/utils/getBasePath';
+import { formatDateShort } from '~/utils/formateDate';
 
 interface CardProps {
 	post: Post;
@@ -17,9 +18,6 @@ interface CardProps {
 }
 
 export default function Card({ post, isLast, cardType, className, cardColor, showPlayIcon = false }: CardProps) {
-
-	console.log(post, 'post');
-	
 
 	const [linkUrl, setLinkUrl] = useState<string | null>(null);
 
@@ -130,7 +128,7 @@ export default function Card({ post, isLast, cardType, className, cardColor, sho
 										{post.title}
 									</h2>
 									<p className="text-gray-700">{post.desc || ''}</p>
-									<span className="text-gray-500 text-sm">{post.author?.name || ''} · {formatDate(post._createdAt)}</span>
+									<span className="text-gray-500 text-sm">{post.author[0]?.name || ''} · {`${post?.estimatedReadingTime} min read `}</span>
 								</div>
 							</div>
 						</Link>

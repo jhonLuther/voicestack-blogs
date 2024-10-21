@@ -4,6 +4,66 @@ import groq from 'groq'
 import { type SanityClient } from 'next-sanity'
 import { Author, Post, Tag } from '~/interfaces/post'
 
+// Common Body query  for $portableText  update the dynamic component query here
+const bodyFragment = `
+  body[] {
+    ...,
+      _type == "videoReference" => {
+      ...,
+      "video": @->{
+      _id,
+      title,
+      platform,
+      videoId,
+      }
+    },
+    _type == "image" => {
+      ...,
+      asset->,
+    },
+    _type == "dynamicComponent" => {
+      ...,
+      testimonialCard {
+        testimonial-> {
+          testimonialName,
+          excerpt,
+          "customerDetails": customer->{
+            name,
+            slug,
+            role,
+            bio,
+            "picture": picture.asset->url
+          },
+          image {
+            asset->{
+              url,
+              metadata
+            }
+          },
+          rating,
+          date
+        }
+      },
+      bannerBlock,
+      asideBannerBlock,
+    }
+  }
+`
+//Table of contents
+const tocFragment = `
+   "headings": body[style in ["h2"]]{ 
+      "children": children[]{
+        "text": text,
+        "marks": marks,
+        "_type": _type,
+        "_key": _key
+      },
+      "style": style,
+      "_type": _type,
+      "_key": _key
+    }
+`
+
 export const postsQuery = groq`
 *[_type == "post" && defined(slug.current)] | order(_createdAt desc) {
  mainImage,
@@ -11,6 +71,14 @@ export const postsQuery = groq`
  slug,
  _id,
   contentType,
+  author[]-> {
+      _id,
+      name,
+      slug,
+  },
+  "date": date,
+  ${bodyFragment},
+  "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180),
   tags[]->{
     _id,
     tagName,
@@ -337,65 +405,6 @@ export async function getPostsBySlug(
   return await client.fetch(newPostsQuery)
 }
 
-// Common Body query  for $portableText  update the dynamic component query here
-const bodyFragment = `
-  body[] {
-    ...,
-      _type == "videoReference" => {
-      ...,
-      "video": @->{
-      _id,
-      title,
-      platform,
-      videoId,
-      }
-    },
-    _type == "image" => {
-      ...,
-      asset->,
-    },
-    _type == "dynamicComponent" => {
-      ...,
-      testimonialCard {
-        testimonial-> {
-          testimonialName,
-          excerpt,
-          "customerDetails": customer->{
-            name,
-            slug,
-            role,
-            bio,
-            "picture": picture.asset->url
-          },
-          image {
-            asset->{
-              url,
-              metadata
-            }
-          },
-          rating,
-          date
-        }
-      },
-      bannerBlock,
-      asideBannerBlock,
-    }
-  }
-`
-//Table of contents
-const tocFragment = `
-   "headings": body[style in ["h2"]]{ 
-      "children": children[]{
-        "text": text,
-        "marks": marks,
-        "_type": _type,
-        "_key": _key
-      },
-      "style": style,
-      "_type": _type,
-      "_key": _key
-    }
-`
 
 export const podcastsQuery = groq`
 *[_type == "post" && contentType == "podcast" && defined(slug.current)] |  order(_updatedAt desc){
