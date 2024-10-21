@@ -302,7 +302,7 @@ export default function Card({ post, isLast, cardType, className, cardColor, sho
                             />
 
                           }
-                          <div className="mt-4">top-image-contentType-card
+                          <div className="mt-4">
                             <h3 className="text-ellipsis h-auto line-clamp-1 overflow-hidden w-full">
 
                               <span className="text-gray-950 text-xl font-semibold group-hover:underline underline-offset-2">
