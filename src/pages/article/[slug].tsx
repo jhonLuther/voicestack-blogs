@@ -69,15 +69,6 @@ const ArticlePage = ({ articles, draftMode, token }: Props) => {
 
   return (
     <>
-      <SEOHead
-        title={seoTitle}
-        description={seoDescription}
-        keywords={seoKeywords}
-        robots={seoRobots}
-        canonical={seoCanonical}
-        jsonLD={jsonLD}
-        ogImage={urlForImage(articles?.mainImage)}
-        contentType={articles?.contentType} />
       <Layout >
         <MainImageSection isAuthor={true} post={articles} />
         <Wrapper>

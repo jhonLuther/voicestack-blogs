@@ -1,5 +1,6 @@
 import { Post } from '~/interfaces/post'
 import { fetchAuthor } from './common'
+import { urlForImage } from '~/lib/sanity.image'
 
 export function generateJSONLD(post: any) {
   // console.log({generatedPost:post});
@@ -99,9 +100,12 @@ export function generateJSONLD(post: any) {
           '@type': 'NewsArticle',
           '@context': 'https://schema.org',
           headline: post.excerpt || '',
+          image:urlForImage(post?.mainImage).width(10).height(10).url(),
+          
           author: [
             {
               name: post.author[0]?.name || '',
+              url:'www.carestack.com'
             },
           ],
           startDate: new Date(),

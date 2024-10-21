@@ -17,6 +17,7 @@ import { urlForImage } from '~/lib/sanity.image';
 import SanityPortableText from '~/components/blockEditor/sanityBlockEditor';
 import { Toc } from '~/contentUtils/sanity-toc';
 import ShareableLinks from '~/components/commonSections/ShareableLinks';
+import CustomHead from '~/utils/customHead';
 
 interface Props {
   caseStudy: CaseStudies;
@@ -75,21 +76,13 @@ const CaseStudyPage = ({ caseStudy, draftMode, token }: Props) => {
 
   return (
     <>
-      <SEOHead
-        title={seoTitle}
-        description={seoDescription}
-        keywords={seoKeywords}
-        robots={seoRobots}
-        canonical={seoCanonical}
-        jsonLD={jsonLD}
-        ogImage={urlForImage(caseStudy?.mainImage)}
-        contentType={caseStudy?.contentType} />
-      <Layout >
+      <CustomHead props={caseStudy} type="caseStudy" />
+      <Layout>
         <MainImageSection post={caseStudy} />
         <Wrapper>
           <div className="flex  md:flex-row flex-col">
             <div className="mt-12 flex md:flex-col flex-col-reverse md:w-2/3 w-full ">
-              <div className='post__content w-full '>
+              <div className="post__content w-full ">
                 <PracticeProfile contents={caseStudy} />
                 <SanityPortableText
                   content={caseStudy.body}
@@ -98,19 +91,27 @@ const CaseStudyPage = ({ caseStudy, draftMode, token }: Props) => {
                 />
               </div>
             </div>
-            <div className='flex-1 flex flex-col gap-12 mt-12  bg-red relative md:w-1/3 w-full'>
-              <div className='sticky top-12 flex flex-col gap-12'>
-              <Toc headings={ caseStudy?.headings} title="Case Study content" />
+            <div className="flex-1 flex flex-col gap-12 mt-12  bg-red relative md:w-1/3 w-full">
+              <div className="sticky top-12 flex flex-col gap-12">
+                <Toc
+                  headings={caseStudy?.headings}
+                  title="Case Study content"
+                />
                 <ShareableLinks props={caseStudy?.title} />
                 <AsideBannerBlock contents={caseStudy} />
               </div>
             </div>
           </div>
-          {caseStudy?.relatedCaseStudies?.length > 0 && <RelatedFeaturesSection title={caseStudy?.title} allPosts={caseStudy?.relatedCaseStudies} />}
+          {caseStudy?.relatedCaseStudies?.length > 0 && (
+            <RelatedFeaturesSection
+              title={caseStudy?.title}
+              allPosts={caseStudy?.relatedCaseStudies}
+            />
+          )}
         </Wrapper>
       </Layout>
     </>
-  );
+  )
 };
 
 export default CaseStudyPage;

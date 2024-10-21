@@ -35,16 +35,6 @@ const Breadcrumb = ({className}:BreadCrumbProps) => {
 
   return (
     <Fragment>
-      {breadcrumbs.length > 0 && (
-        <Head>
-          <script
-            key={`breadcrumbJSON-${router.asPath}`}
-            id='breadcrumbJSON'
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
-          />
-        </Head>
-      )}
       <nav className={`cursor-pointer mb-4 ${className}`} aria-label="Breadcrumb">
         <p className="line-clamp-1 uppercase overflow-hidden text-ellipsis">
           <span>

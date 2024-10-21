@@ -1,18 +1,18 @@
-import Head from 'next/head';
-import Script from 'next/script';
+import Head from 'next/head'
+import Script from 'next/script'
 
 interface SEOHeadProps {
-  title: string;
-  description: string;
-  keywords: string;
-  robots: string;
-  canonical: string;
-  jsonLD: string;
-  contentType?:any;
-  ogImage ?: any;
+  title: string
+  description: string
+  keywords: string
+  robots: string
+  canonical: string
+  jsonLD: string
+  contentType?: any
+  ogImage?: any
   props?: {
-    contentType: string;
-  };
+    contentType: string
+  }
 }
 
 export default function SEOHead({
@@ -23,7 +23,7 @@ export default function SEOHead({
   canonical,
   jsonLD,
   props,
-  ogImage 
+  ogImage,
 }: SEOHeadProps) {
   return (
     <>
@@ -33,17 +33,22 @@ export default function SEOHead({
         <meta name="keywords" content={keywords} key="keywords" />
         <meta name="robots" content={robots} key="robots" />
         <link rel="canonical" href={canonical} key="canonical" />
-        {jsonLD && ( 
+        {jsonLD && (
           <script
             type="application/ld+json"
-            id={`${props?.contentType ? props.contentType : "blog"}-jsonLd`}
+            id={`${props?.contentType ? props.contentType : 'blog'}-jsonLd`}
             dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLD) }}
           />
         )}
         {ogImage && (
-          <meta id='ogImage' property="og:image" content={ogImage} key="ogImage" />
+          <meta
+            id="ogImage"
+            property="og:image"
+            content={ogImage}
+            key="ogImage"
+          />
         )}
       </Head>
     </>
-  );
+  )
 }
