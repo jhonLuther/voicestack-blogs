@@ -23,7 +23,7 @@ const SanityPortableText: React.FC<SanityPortableTextProps> = ({
     marks: {
       link: ({value, children}) => {
         return (
-          <a href={value?.href} className="!text-blue-500">
+          <a href={value?.href} target='_blank' className="!text-blue-500">
             {children}
           </a>
         )

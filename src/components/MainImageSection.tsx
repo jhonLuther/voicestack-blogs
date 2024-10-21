@@ -9,6 +9,7 @@ import Layout from './Layout'
 import Wrapper from '../layout/Wrapper'
 import useMediaQuery from '~/utils/useMediaQueryHook'
 import AuthorInfo from './commonSections/AuthorInfo'
+import DurationSection from './commonSections/DurationSection'
 
 interface Props {
 	post?: any
@@ -38,6 +39,10 @@ const MainImageSection = ({ post, isAuthor }: Props) => {
 							{post.excerpt ? post.excerpt : 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur except.'}
 						</p>
 						{isAuthor && <AuthorInfo className={"mt-8"} contentType={post.contentType} author={post?.author} />}
+						{
+							<DurationSection duration={post?.estimatedReadingTime} date={post?.date} />
+	
+						}
 					</div>
 				</div>
 			</Wrapper>

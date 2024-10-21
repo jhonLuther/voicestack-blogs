@@ -18,6 +18,9 @@ interface CardProps {
 
 export default function Card({ post, isLast, cardType, className, cardColor, showPlayIcon = false }: CardProps) {
 
+	console.log(post, 'post');
+	
+
 	const [linkUrl, setLinkUrl] = useState<string | null>(null);
 
 	useEffect(() => {
