@@ -34,7 +34,9 @@ const TestimonialSection = ({ testimonials }: TestimonialSectionProps) => {
                                     <p className="text-sm max-w-max flex-1 text-white font-bold px-1 py-2 flex items-center rounded-sm bg-cs-darkBlack  uppercase">{testimonialItem.testimonialName}
                                     </p>
                                     <Link
-                                        href={testimonialItem.slug.current && `/testimonial/${testimonialItem.slug.current}`}
+                                        href={'/'}
+                                        // href={testimonialItem.slug.current && `/testimonial/${testimonialItem.slug.current}`}
+
                                         className="text-sm font-semibold flex items-center space-x-1 hover:scale-90 transition duration-300 ease-in-out"
                                     >
                                         <span className='text-xs font-medium'>{`Read Now`}</span>
@@ -47,7 +49,7 @@ const TestimonialSection = ({ testimonials }: TestimonialSectionProps) => {
                                 </div>
 
                                 <blockquote className="mt-6 line-clamp-4 overflow-hidden  md:text-5xl text-2xl font-extrabold font-manrope leading-[1.2] md:leading-[1.2]">
-                                    {`"${testimonialItem.excerpt ? testimonialItem.excerpt : "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore fugiat nulla pariatur."}"`}
+                                    {`${testimonialItem.excerpt ? testimonialItem.excerpt : "Duis aute irure dolor in reprehenderit in voluptate pariatur."}`}
                                 </blockquote>
 
                                 <div className='flex flex-col my-8'>

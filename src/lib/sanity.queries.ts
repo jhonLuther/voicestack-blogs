@@ -673,9 +673,6 @@ export const podcastBySlugQuery = groq`
   "date": date,
   ${bodyFragment},
   ${tocFragment},
-  "numberOfCharacters": length(pt::text(body)),
-  "estimatedWordCount": round(length(pt::text(body)) / 5),
-  "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180),
   "author": author[]-> {
     _id,
     name,

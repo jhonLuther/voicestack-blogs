@@ -49,9 +49,6 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
   const { current, previous, next } = await getAllPodcastSlugs(client, currentSlug);
 
   
-
-
-
   return {
     props: {
       draftMode,
@@ -90,8 +87,8 @@ const PodcastPage = ({ podcast,previous,next, draftMode, token }: Props) => {
         ogImage={urlForImage(podcast?.mainImage)}
         contentType={podcast?.contentType} />
       <Layout >
-        <MainImageSection isAuthor={true} post={podcast} />
-        <Wrapper>
+        <MainImageSection enableDate={true} post={podcast} />
+        <Wrapper removePadding={true}>
           {
             podcast.htmlCode &&
             (
@@ -113,6 +110,7 @@ const PodcastPage = ({ podcast,previous,next, draftMode, token }: Props) => {
             </div>
             <div className='flex-1 flex flex-col gap-12 mt-12  bg-red relative md:w-1/3 w-full'>
               <div className='sticky top-12 flex flex-col gap-12'>
+              <AuthorInfo contentType={'podcast'} author={podcast?.author} />
               <ShareableLinks props={podcast?.title} />
               </div>
             </div>
