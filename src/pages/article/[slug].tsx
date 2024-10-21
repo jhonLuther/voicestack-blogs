@@ -15,6 +15,7 @@ import { generateJSONLD } from '~/utils/generateJSONLD';
 import { Toc } from '~/contentUtils/sanity-toc';
 import AuthorInfo from '~/components/commonSections/AuthorInfo';
 import ShareableLinks from '~/components/commonSections/ShareableLinks';
+import CustomHead from '~/utils/customHead';
 
 interface Props {
   articles: Articles;
@@ -62,6 +63,7 @@ const ArticlePage = ({ articles, draftMode, token }: Props) => {
 
   return (
     <>
+    <CustomHead props={articles} type="articleExpanded"/>
       <Layout >
         <MainImageSection isAuthor={true} post={articles} />
         <Wrapper>

@@ -100,11 +100,11 @@ export function generateJSONLD(post: any) {
           '@type': 'NewsArticle',
           '@context': 'https://schema.org',
           headline: post.excerpt || '',
-          image:urlForImage(post?.mainImage).width(10).height(10).url(),
+          image: urlForImage(post?.mainImage).width(10).height(10).url(),
           author: [
             {
-              name: post.author[0]?.name || '',
-              url:'www.carestack.com'
+              '@type': 'Person',
+              // name: 'Patrick Coombe',
             },
           ],
           startDate: new Date(),

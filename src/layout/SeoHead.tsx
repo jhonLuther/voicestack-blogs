@@ -37,7 +37,7 @@ export default function SEOHead({
           <script
             type="application/ld+json"
             id={`${props?.contentType ? props.contentType : 'blog'}-jsonLd`}
-            dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLD) }}
+            dangerouslySetInnerHTML={{ __html: jsonLD }}
           />
         )}
         {ogImage && (

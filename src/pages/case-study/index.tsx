@@ -49,8 +49,14 @@ const CaseStudiesPage = ({ caseStudies,latestCaseStudies, totalPages }: { caseSt
 
   return (
     <Layout>
-      <CustomHead props={caseStudies} />
-      <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'} revamp={true} contents={latestCaseStudies} />
+      {caseStudies?.map((e) => {
+        return <CustomHead props={e} type="caseStudy" />
+      })}
+      <LatestBlogs
+        className={'pt-11 pr-9 pb-16 pl-9'}
+        revamp={true}
+        contents={latestCaseStudies}
+      />
       <Wrapper>
         <AllcontentSection
           baseUrl={baseUrl}
@@ -69,7 +75,7 @@ const CaseStudiesPage = ({ caseStudies,latestCaseStudies, totalPages }: { caseSt
         />
       </Wrapper>
     </Layout>
-  );
+  )
 };
 
 export default CaseStudiesPage;

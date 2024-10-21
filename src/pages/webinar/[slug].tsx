@@ -17,6 +17,7 @@ import { generateJSONLD } from '~/utils/generateJSONLD';
 import SEOHead from '~/layout/SeoHead';
 import { VideoModal } from '~/components/commonSections/VideoModal';
 import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection';
+import CustomHead from '~/utils/customHead';
 
 interface Props {
   webinar: Podcasts;
@@ -65,15 +66,7 @@ const WebinarPage = ({ webinar, draftMode, token }: Props) => {
 
   return (
     <>
-      <SEOHead
-        title={seoTitle}
-        description={seoDescription}
-        keywords={seoKeywords}
-        robots={seoRobots}
-        canonical={seoCanonical}
-        jsonLD={jsonLD}
-        ogImage={urlForImage(webinar?.mainImage)}
-        contentType={webinar?.contentType} />
+      <CustomHead props ={webinar} type="webinar"/>
       <Layout >
         <MainImageSection isAuthor={true} post={webinar} />
         <Wrapper>
