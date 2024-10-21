@@ -101,7 +101,6 @@ export function generateJSONLD(post: any) {
           '@context': 'https://schema.org',
           headline: post.excerpt || '',
           image:urlForImage(post?.mainImage).width(10).height(10).url(),
-          
           author: [
             {
               name: post.author[0]?.name || '',
