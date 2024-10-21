@@ -1,5 +1,5 @@
 import React, { useId } from 'react'
-import { generateJSONLD } from './generateJSONLD'
+import { breadCrumbJsonLd, generateJSONLD } from './generateJSONLD'
 import Head from 'next/head'
 import { urlForImage } from '~/lib/sanity.image'
 import { getIframeUrl } from '~/components/commonSections/VideoModal'
@@ -18,10 +18,22 @@ export default function CustomHead({ props, type = null }: any) {
     )
   }
 
+  const breadCrumbJson = (data: any) => {
+    const metadata = breadCrumbJsonLd(data)
+    return (
+      <Head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(metadata) }}
+        ></script>
+      </Head>
+    )
+  }
+
   if (props && type === null) {
     return props.map((e, i) => {
       const data = generateJSONLD(e)
-      console.log(data, 'data')
+
       return head(e, i)
     })
   } else if (props && type == 'caseStudy') {
@@ -138,7 +150,7 @@ export default function CustomHead({ props, type = null }: any) {
       organizer: {
         '@type': 'Organization',
         name: 'CareStack',
-        url: 'https://yourwebsite.com',
+        url: 'https://carestack.com',
       },
       performer: {
         '@type': 'Person',
@@ -155,5 +167,7 @@ export default function CustomHead({ props, type = null }: any) {
       },
     }
     return head(metaData, randomId)
+  } else if (props && type === 'breadCrumbs') {
+    return breadCrumbJson(props)
   }
 }
