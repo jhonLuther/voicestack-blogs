@@ -50,10 +50,6 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
 };
 
 const EbookPage = ({ ebook, draftMode, token }: Props) => {
-  const router = useRouter();
-  if (router.isFallback) {
-    return <div>Loading...</div>;
-  }
 
   const seoTitle = ebook.seoTitle || ebook.title;
   const seoDescription = ebook.seoDescription || ebook.excerpt;

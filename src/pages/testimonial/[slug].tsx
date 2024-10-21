@@ -50,7 +50,6 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
   if (!testimonial) {
     return {
       notFound: true,
-      revalidate: 60,
     };
   }
 
@@ -65,13 +64,6 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
 }
 
 const TestimonialPage = ({ testimonial, draftMode, token }: Props) => {
-
-  const router = useRouter();
-
-  if (router.isFallback) {
-    return <div>Loading...</div>;
-  }
-
   const seoTitle = testimonial.seoTitle || testimonial.title;
   const seoDescription = testimonial.seoDescription || testimonial.excerpt;
   const seoKeywords = testimonial.seoKeywords || '';

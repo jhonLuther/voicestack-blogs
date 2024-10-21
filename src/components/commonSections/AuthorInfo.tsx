@@ -11,8 +11,6 @@ interface AuthorProps {
 
 const  AuthorInfo = ({ author, contentType,className }:AuthorProps) => {
 
-  
-
   if (!author) {
     return null
   }

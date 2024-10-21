@@ -61,11 +61,6 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
 }
 
 const CaseStudyPage = ({ caseStudy, draftMode, token }: Props) => {
-  const router = useRouter();  
-  if (router.isFallback) {
-    return <div>Loading...</div>;
-  }
-
   const seoTitle = caseStudy.seoTitle || caseStudy.title;
   const seoDescription = caseStudy.seoDescription || caseStudy.excerpt;
   const seoKeywords = caseStudy.seoKeywords || '';

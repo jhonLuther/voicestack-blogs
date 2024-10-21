@@ -62,10 +62,6 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
 }
 
 const PressReleasePage = ({ pressRelease, draftMode, token }: Props) => {
-  const router = useRouter();
-  if (router.isFallback) {
-    return <div>Loading...</div>;
-  }
 
   const seoTitle = pressRelease.seoTitle || pressRelease.title;
   const seoDescription = pressRelease.seoDescription || pressRelease.excerpt;

@@ -55,12 +55,6 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
 };
 
 const WebinarPage = ({ webinar, draftMode, token }: Props) => {
-  const router = useRouter();
-
-
-  if (router.isFallback) {
-    return <div>Loading...</div>;
-  }
 
   const seoTitle = webinar.seoTitle || webinar.title;
   const seoDescription = webinar.seoDescription || webinar.excerpt;
