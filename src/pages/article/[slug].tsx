@@ -16,6 +16,9 @@ import { Toc } from '~/contentUtils/sanity-toc';
 import AuthorInfo from '~/components/commonSections/AuthorInfo';
 import ShareableLinks from '~/components/commonSections/ShareableLinks';
 
+const router = useRouter();
+
+
 interface Props {
   articles: Articles;
   draftMode: boolean;
@@ -53,7 +56,6 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
 
 const ArticlePage = ({ articles, draftMode, token }: Props) => {
 
-  const router = useRouter();
 
   if (router.isFallback) {
     return <div>Loading...</div>;

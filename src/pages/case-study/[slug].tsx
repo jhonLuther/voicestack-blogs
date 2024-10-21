@@ -18,6 +18,8 @@ import SanityPortableText from '~/components/blockEditor/sanityBlockEditor';
 import { Toc } from '~/contentUtils/sanity-toc';
 import ShareableLinks from '~/components/commonSections/ShareableLinks';
 
+const router = useRouter();  
+
 interface Props {
   caseStudy: CaseStudies;
   draftMode: boolean;
@@ -60,7 +62,6 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
 }
 
 const CaseStudyPage = ({ caseStudy, draftMode, token }: Props) => {
-  const router = useRouter();  
   if (router.isFallback) {
     return <div>Loading...</div>;
   }

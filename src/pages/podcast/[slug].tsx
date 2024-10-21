@@ -15,6 +15,8 @@ import { urlForImage } from '~/lib/sanity.image';
 import { Toc } from '~/contentUtils/sanity-toc';
 import AuthorInfo from '~/components/commonSections/AuthorInfo';
 import ShareableLinks from '~/components/commonSections/ShareableLinks';
+  
+const router = useRouter();
 
 interface Props {
   podcast: Podcasts;
@@ -67,12 +69,8 @@ const PodcastPage = ({ podcast,previous,next, draftMode, token }: Props) => {
   if(!podcast) {
     return <div>Podcast not found</div>
   }
-
-
    console.log(previous,next);
 
-  
-  const router = useRouter();
   if (router.isFallback) {
     return <div>Loading...</div>;
   }

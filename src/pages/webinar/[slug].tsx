@@ -18,6 +18,8 @@ import SEOHead from '~/layout/SeoHead';
 import { VideoModal } from '~/components/commonSections/VideoModal';
 import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection';
 
+const router = useRouter();
+
 interface Props {
   webinar: Podcasts;
   allWebinars: any;
@@ -55,7 +57,6 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
 };
 
 const WebinarPage = ({ webinar, draftMode, token }: Props) => {
-  const router = useRouter();
 
 
   if (router.isFallback) {

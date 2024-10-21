@@ -22,6 +22,9 @@ import ShareableLinks from '~/components/commonSections/ShareableLinks';
 import { setImage } from '~/utils/startRatings';
 import { VideoModal } from '~/components/commonSections/VideoModal';
 
+const router = useRouter();
+
+
 interface Props {
   testimonial: Testimonial;
   draftMode: boolean;
@@ -65,7 +68,6 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
 
 const TestimonialPage = ({ testimonial, draftMode, token }: Props) => {
 
-  const router = useRouter();
 
   if (router.isFallback) {
     return <div>Loading...</div>;
