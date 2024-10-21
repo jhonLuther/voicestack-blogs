@@ -16,6 +16,7 @@ const siteConfig = {
       pressRelease: "/press-release",
       testimonial: "/testimonial",
       webinar: "/webinar",
+      author: "/author",
     },
     content: {
       defaultSort: "date",

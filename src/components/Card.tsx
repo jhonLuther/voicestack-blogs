@@ -248,12 +248,12 @@ export default function Card({ post, isLast, cardType, className, cardColor, sho
                             </div>
 
                           }
-                          {/* <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="absolute inset-0 flex items-center justify-center">
                             <svg xmlns="http://www.w3.org/2000/svg" width="56" height="55" viewBox="0 0 56 55" fill="none">
                               <rect x="0.5" width="55" height="55" rx="27.5" fill="black" />
                               <path d="M21.2549 18.8935C21.2549 17.6708 22.5997 16.9255 23.6365 17.5735L37.8221 26.4395C38.7976 27.0492 38.7976 28.4698 37.8221 29.0795L23.6365 37.9455C22.5997 38.5935 21.2549 37.8481 21.2549 36.6255V18.8935Z" fill="white" />
                             </svg>
-                          </div> */}
+                          </div>
                         </div>
                         <div className="flex flex-col h-full justify-center flex-1 gap-3">
                           {post.tags && post.tags[0] && (

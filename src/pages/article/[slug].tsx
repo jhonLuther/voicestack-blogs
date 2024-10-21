@@ -52,6 +52,11 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
 };
 
 const ArticlePage = ({ articles, draftMode, token }: Props) => {
+  
+  if(!articles){
+    return 
+  }
+
   const seoTitle = articles?.seoTitle || articles?.title;
   const seoDescription = articles.seoDescription || articles?.excerpt;
   const seoKeywords = articles.seoKeywords || '';
