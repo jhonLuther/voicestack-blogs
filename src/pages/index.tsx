@@ -11,8 +11,6 @@ import DynamicPages from '~/layout/DynamicPages'
 import { indexPageJsonLd } from '~/utils/generateJSONLD'
 import Head from 'next/head'
 
-
-
 interface IndexPageProps {
   siteSettings: any;
   contentType: string;

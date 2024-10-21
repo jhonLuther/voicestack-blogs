@@ -9,13 +9,15 @@ import Layout from './Layout'
 import Wrapper from '../layout/Wrapper'
 import useMediaQuery from '~/utils/useMediaQueryHook'
 import AuthorInfo from './commonSections/AuthorInfo'
+import DurationSection from './commonSections/DurationSection'
 
 interface Props {
 	post?: any
 	isAuthor?: any
+	enableDate?:boolean
 }
 
-const MainImageSection = ({ post, isAuthor }: Props) => {
+const MainImageSection = ({ post, isAuthor ,enableDate = false }: Props) => {
 
 	const isMobile: any = useMediaQuery(767);
 	const client = getClient()
@@ -38,6 +40,9 @@ const MainImageSection = ({ post, isAuthor }: Props) => {
 							{post.excerpt ? post.excerpt : 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur except.'}
 						</p>
 						{isAuthor && <AuthorInfo className={"mt-8"} contentType={post.contentType} author={post?.author} />}
+						{
+						enableDate  &&	<DurationSection duration={post?.estimatedReadingTime} date={post?.date} />
+						}
 					</div>
 				</div>
 			</Wrapper>

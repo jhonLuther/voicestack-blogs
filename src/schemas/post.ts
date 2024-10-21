@@ -109,6 +109,14 @@ export default defineType({
       },
     }),
     defineField({
+      title: 'Date',
+      name: 'date',
+      type: 'date',
+      options: {
+        dateFormat: 'YYYY-MM-DD'
+      }
+    }),
+    defineField({
       name: 'excerpt',
       title: 'Short Description',
       type: 'text',
