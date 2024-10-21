@@ -15,8 +15,6 @@ import { urlForImage } from '~/lib/sanity.image';
 import { Toc } from '~/contentUtils/sanity-toc';
 import AuthorInfo from '~/components/commonSections/AuthorInfo';
 import ShareableLinks from '~/components/commonSections/ShareableLinks';
-  
-const router = useRouter();
 
 interface Props {
   podcast: Podcasts;
@@ -71,9 +69,6 @@ const PodcastPage = ({ podcast,previous,next, draftMode, token }: Props) => {
   }
    console.log(previous,next);
 
-  if (router.isFallback) {
-    return <div>Loading...</div>;
-  }
 
   const seoTitle = podcast.seoTitle || podcast.title;
   const seoDescription = podcast.seoDescription || podcast.excerpt;

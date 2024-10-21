@@ -22,9 +22,6 @@ import ShareableLinks from '~/components/commonSections/ShareableLinks';
 import { setImage } from '~/utils/startRatings';
 import { VideoModal } from '~/components/commonSections/VideoModal';
 
-const router = useRouter();
-
-
 interface Props {
   testimonial: Testimonial;
   draftMode: boolean;
@@ -67,12 +64,6 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
 }
 
 const TestimonialPage = ({ testimonial, draftMode, token }: Props) => {
-
-
-  if (router.isFallback) {
-    return <div>Loading...</div>;
-  }
-
   const seoTitle = testimonial.seoTitle || testimonial.title;
   const seoDescription = testimonial.seoDescription || testimonial.excerpt;
   const seoKeywords = testimonial.seoKeywords || '';

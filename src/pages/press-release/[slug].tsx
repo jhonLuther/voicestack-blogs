@@ -20,9 +20,6 @@ import SanityPortableText from '~/components/blockEditor/sanityBlockEditor';
 import AuthorInfo from '~/components/commonSections/AuthorInfo';
 import { Toc } from '~/contentUtils/sanity-toc';
 
-const router = useRouter();
-
-
 interface Props {
   pressRelease: PressRelease;
   draftMode: boolean;
@@ -65,9 +62,6 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
 }
 
 const PressReleasePage = ({ pressRelease, draftMode, token }: Props) => {
-  if (router.isFallback) {
-    return <div>Loading...</div>;
-  }
 
   const seoTitle = pressRelease.seoTitle || pressRelease.title;
   const seoDescription = pressRelease.seoDescription || pressRelease.excerpt;

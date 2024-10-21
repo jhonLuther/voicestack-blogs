@@ -13,8 +13,6 @@ import Card from '~/components/Card'
 import AllcontentSection from '~/components/sections/AllcontentSection'
 import siteConfig from 'config/siteConfig'
 
-const router = useRouter()
-
 interface Query {
   [key: string]: string
 }
@@ -66,11 +64,6 @@ export default function AuthorPage({
   author,
   relatedContents
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-
-
-  if (router.isFallback) {
-    return <div>Loading...</div>
-  }
 
   console.log(relatedContents,'RELATED CONTENTS');
   

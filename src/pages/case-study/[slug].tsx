@@ -17,9 +17,6 @@ import { urlForImage } from '~/lib/sanity.image';
 import SanityPortableText from '~/components/blockEditor/sanityBlockEditor';
 import { Toc } from '~/contentUtils/sanity-toc';
 import ShareableLinks from '~/components/commonSections/ShareableLinks';
-
-const router = useRouter();  
-
 interface Props {
   caseStudy: CaseStudies;
   draftMode: boolean;
@@ -62,10 +59,6 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
 }
 
 const CaseStudyPage = ({ caseStudy, draftMode, token }: Props) => {
-  if (router.isFallback) {
-    return <div>Loading...</div>;
-  }
-
   const seoTitle = caseStudy.seoTitle || caseStudy.title;
   const seoDescription = caseStudy.seoDescription || caseStudy.excerpt;
   const seoKeywords = caseStudy.seoKeywords || '';
