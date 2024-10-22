@@ -114,7 +114,9 @@ export default defineType({
       type: 'date',
       options: {
         dateFormat: 'YYYY-MM-DD'
-      }
+      },
+      hidden: ({ parent }) =>
+        parent.contentType == 'podcast' ,
     }),
     defineField({
       name: 'excerpt',

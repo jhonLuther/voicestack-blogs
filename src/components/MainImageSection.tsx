@@ -10,14 +10,18 @@ import Wrapper from '../layout/Wrapper'
 import useMediaQuery from '~/utils/useMediaQueryHook'
 import AuthorInfo from './commonSections/AuthorInfo'
 import DurationSection from './commonSections/DurationSection'
+import siteConfig from 'config/siteConfig'
 
 interface Props {
 	post?: any
 	isAuthor?: any
 	enableDate?:boolean
+	isAudio?:boolean
 }
 
-const MainImageSection = ({ post, isAuthor ,enableDate = false }: Props) => {
+const MainImageSection = ({ post, isAuthor ,enableDate = false ,isAudio= false}: Props) => {
+	console.log(post);
+	
 
 	const isMobile: any = useMediaQuery(767);
 	const client = getClient()
@@ -41,7 +45,7 @@ const MainImageSection = ({ post, isAuthor ,enableDate = false }: Props) => {
 						</p>
 						{isAuthor && <AuthorInfo className={"mt-8"} contentType={post.contentType} author={post?.author} />}
 						{
-						enableDate  &&	<DurationSection duration={post?.estimatedReadingTime} date={post?.date} />
+						enableDate  &&	<DurationSection isAudio={isAudio} duration={post?.estimatedReadingTime ? post.estimatedReadingTime : post.duration } date={post?.date ? post?.date : ""} />
 						}
 					</div>
 				</div>

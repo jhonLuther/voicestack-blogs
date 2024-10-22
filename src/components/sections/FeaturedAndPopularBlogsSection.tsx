@@ -14,6 +14,9 @@ interface FeaturedAndPopularBlogsProps {
 
 const FeaturedAndPopularBlogs = ({ featuredBlog, popularBlogs }: FeaturedAndPopularBlogsProps) => {
 
+    console.log(popularBlogs,'popularBlogs');
+    
+
     return (
         <section className="flex flex-wrap md:flex-row flex-col w-full gap-20 justify-between my-8">
             <div className="flex flex-col gap-9 md:max-w-[519px]  w-full flex-1">

@@ -17,7 +17,7 @@ function BannerSubscribeSection({ version }: BannerSubscribeSectionProps) {
       <div className={`${version === "compact" ? ' ' : 'bg-cs-gray-900  p-9  '} text-white rounded flex gap-3`}>
         <div className='flex flex-col gap-6 flex-1'>
           <div className='flex  gap-1 justify-start content-start align items-start md:flex-row flex-col'>
-            <h2 className={` ${version === "compact" ? ' text-black md:text-4xl text-right  text-2xl' : 'text-white md:text-5xl  text-2xl '} font-manrope font-extrabold`}>Subscribe to CS Growth Digest</h2>
+            <h2 className={` ${version === "compact" ? ' text-black md:text-4xl  text-2xl' : 'text-white md:text-5xl  text-2xl '} font-manrope font-extrabold`}>Subscribe to CS Growth Digest</h2>
             {version !== "compact" &&<p className="md:text-lg text-base font-medium">Get the best, coolest, and latest in the dental industry delivered to your inbox each week.</p>}
           </div>
           <div className={`flex md:flex-row flex-col gap-3 

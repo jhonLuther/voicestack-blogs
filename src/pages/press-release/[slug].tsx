@@ -83,7 +83,7 @@ const PressReleasePage = ({ pressRelease, draftMode, token }: Props) => {
         ogImage={urlForImage(pressRelease?.mainImage)}
         contentType={pressRelease?.contentType} />
       <Layout >
-        <MainImageSection post={pressRelease} />
+        <MainImageSection enableDate={true} post={pressRelease} />
         <Wrapper>
           <div className="flex  md:flex-row flex-col">
             <div className="mt-12 flex md:flex-col flex-col-reverse md:w-2/3 w-full ">
