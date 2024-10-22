@@ -23,11 +23,12 @@ import {
   projectId,
 } from '~/lib/sanity.api'
 import { schema } from '~/schemas'
+import siteConfig from 'config/siteConfig'
 
 const iframeOptions = {
   url: defineUrlResolver({
     base: '/api/draft',
-    requiresSlug: ['post', 'author'],
+    requiresSlug: Object.values(siteConfig.pageURLs).map(url => url.slice(1)),
   }),
   urlSecretId: previewSecretId,
   reload: { button: true },
@@ -168,7 +169,7 @@ export default defineConfig({
     // Add the "Open preview" action
     previewUrl({
       base: '/api/draft',
-      requiresSlug: ['post', 'author'],
+      requiresSlug: Object.values(siteConfig.pageURLs).map(url => url.slice(1)),
       urlSecretId: previewSecretId,
     }),
     // Vision lets you query your content with GROQ in the studio

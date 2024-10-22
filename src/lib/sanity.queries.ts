@@ -4,6 +4,66 @@ import groq from 'groq'
 import { type SanityClient } from 'next-sanity'
 import { Author, Post, Tag } from '~/interfaces/post'
 
+// Common Body query  for $portableText  update the dynamic component query here
+const bodyFragment = `
+  body[] {
+    ...,
+      _type == "videoReference" => {
+      ...,
+      "video": @->{
+      _id,
+      title,
+      platform,
+      videoId,
+      }
+    },
+    _type == "image" => {
+      ...,
+      asset->,
+    },
+    _type == "dynamicComponent" => {
+      ...,
+      testimonialCard {
+        testimonial-> {
+          testimonialName,
+          excerpt,
+          "customerDetails": customer->{
+            name,
+            slug,
+            role,
+            bio,
+            "picture": picture.asset->url
+          },
+          image {
+            asset->{
+              url,
+              metadata
+            }
+          },
+          rating,
+          date
+        }
+      },
+      bannerBlock,
+      asideBannerBlock,
+    }
+  }
+`
+//Table of contents
+const tocFragment = `
+   "headings": body[style in ["h2"]]{ 
+      "children": children[]{
+        "text": text,
+        "marks": marks,
+        "_type": _type,
+        "_key": _key
+      },
+      "style": style,
+      "_type": _type,
+      "_key": _key
+    }
+`
+
 export const postsQuery = groq`
 *[_type == "post" && defined(slug.current)] | order(_createdAt desc) {
  mainImage,
@@ -11,6 +71,14 @@ export const postsQuery = groq`
  slug,
  _id,
   contentType,
+  author[]-> {
+      _id,
+      name,
+      slug,
+  },
+  "date": date,
+  ${bodyFragment},
+  "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180),
   tags[]->{
     _id,
     tagName,
@@ -337,65 +405,6 @@ export async function getPostsBySlug(
   return await client.fetch(newPostsQuery)
 }
 
-// Common Body query  for $portableText  update the dynamic component query here
-const bodyFragment = `
-  body[] {
-    ...,
-      _type == "videoReference" => {
-      ...,
-      "video": @->{
-      _id,
-      title,
-      platform,
-      videoId,
-      }
-    },
-    _type == "image" => {
-      ...,
-      asset->,
-    },
-    _type == "dynamicComponent" => {
-      ...,
-      testimonialCard {
-        testimonial-> {
-          testimonialName,
-          excerpt,
-          "customerDetails": customer->{
-            name,
-            slug,
-            role,
-            bio,
-            "picture": picture.asset->url
-          },
-          image {
-            asset->{
-              url,
-              metadata
-            }
-          },
-          rating,
-          date
-        }
-      },
-      bannerBlock,
-      asideBannerBlock,
-    }
-  }
-`
-//Table of contents
-const tocFragment = `
-   "headings": body[style in ["h2"]]{ 
-      "children": children[]{
-        "text": text,
-        "marks": marks,
-        "_type": _type,
-        "_key": _key
-      },
-      "style": style,
-      "_type": _type,
-      "_key": _key
-    }
-`
 
 export const podcastsQuery = groq`
 *[_type == "post" && contentType == "podcast" && defined(slug.current)] |  order(_updatedAt desc){
@@ -664,9 +673,6 @@ export const podcastBySlugQuery = groq`
   "date": date,
   ${bodyFragment},
   ${tocFragment},
-  "numberOfCharacters": length(pt::text(body)),
-  "estimatedWordCount": round(length(pt::text(body)) / 5),
-  "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180),
   "author": author[]-> {
     _id,
     name,
@@ -1137,7 +1143,12 @@ export async function getPodcast(
 export const getAllPodcastSlugs = async (
   client: any,
   currentSlug: string
-): Promise<{ current: string; previous: string | null; next: string | null }> => {
+): Promise<{
+  current: { slug: string; number: number };
+  previous: string;
+  next: string;
+  totalPodcasts: number;
+}> => {
   const query = `
     *[_type == "post" && contentType == "podcast"] | order(_updatedAt desc) {
       "slug": slug.current
@@ -1145,14 +1156,27 @@ export const getAllPodcastSlugs = async (
   `;
 
   const result = await client.fetch(query);
-  const slugs = result.map((item: { slug: string }) => item.slug);
+  const slugs = result?.map((item: { slug: string }) => item.slug);
 
-  const currentIndex = slugs.indexOf(currentSlug);
-  const previousSlug = currentIndex > 0 ? slugs[currentIndex - 1] : null;
-  const nextSlug = currentIndex < slugs.length - 1 ? slugs[currentIndex + 1] : null;
+  const currentIndex = slugs?.indexOf(currentSlug);
 
-  return { current: currentSlug, previous: previousSlug, next: nextSlug };
+  if (currentIndex === -1) {
+    throw new Error(`Slug ${currentSlug} not found`);
+  }
+
+  const totalPodcasts = slugs?.length;
+
+  const previousSlug = slugs[(currentIndex - 1 + totalPodcasts) % totalPodcasts];
+  const nextSlug = slugs[(currentIndex + 1) % totalPodcasts];
+
+  return {
+    current: { slug: currentSlug, number: currentIndex + 1 },
+    previous: previousSlug,
+    next: nextSlug,
+    totalPodcasts
+  };
 };
+
 
 export async function getArticle(
   client: SanityClient,

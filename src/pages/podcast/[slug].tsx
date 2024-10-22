@@ -15,6 +15,8 @@ import { urlForImage } from '~/lib/sanity.image';
 import { Toc } from '~/contentUtils/sanity-toc';
 import AuthorInfo from '~/components/commonSections/AuthorInfo';
 import ShareableLinks from '~/components/commonSections/ShareableLinks';
+import Link from 'next/link';
+import PodcastNavigator from '~/contentUtils/PodcastNavigator';
 
 interface Props {
   podcast: Podcasts;
@@ -23,6 +25,8 @@ interface Props {
   allSlugs?: any;
   previous?:any;
   next?:any;
+  totalPodcasts?:any;
+  currentNumber?:any;
 }
 
 
@@ -43,15 +47,9 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
   const client = getClient(draftMode ? { token: readToken } : undefined);
   const podcast = await getPodcast(client, params.slug as string);
   const currentSlug:any = params?.slug;
-  
-  // const allSlugs = await getAllPodcastSlugs(client, currentSlug);
-
-  const { current, previous, next } = await getAllPodcastSlugs(client, currentSlug);
+  const { current,totalPodcasts, previous, next } = await getAllPodcastSlugs(client, currentSlug);
 
   
-
-
-
   return {
     props: {
       draftMode,
@@ -59,16 +57,17 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
       podcast,
       previous ,
       next,
+      currentNumber: current.number,
+      totalPodcasts,
     },
   };
 };
 
-const PodcastPage = ({ podcast,previous,next, draftMode, token }: Props) => {
+const PodcastPage = ({ podcast,previous,next,currentNumber,totalPodcasts, draftMode, token }: Props) => {
+
   if(!podcast) {
     return <div>Podcast not found</div>
   }
-   console.log(previous,next);
-
 
   const seoTitle = podcast.seoTitle || podcast.title;
   const seoDescription = podcast.seoDescription || podcast.excerpt;
@@ -90,8 +89,9 @@ const PodcastPage = ({ podcast,previous,next, draftMode, token }: Props) => {
         ogImage={urlForImage(podcast?.mainImage)}
         contentType={podcast?.contentType} />
       <Layout >
-        <MainImageSection isAuthor={true} post={podcast} />
-        <Wrapper>
+        <MainImageSection isAudio={true} enableDate={true} post={podcast} />
+        <Wrapper removePadding={true}>
+        <PodcastNavigator className={`mt-16`} currentNumber={currentNumber}  totalPodcasts={totalPodcasts}   nextSlug={next ? next  :'/'} prevSlug={previous? previous : '/'} />
           {
             podcast.htmlCode &&
             (
@@ -113,6 +113,7 @@ const PodcastPage = ({ podcast,previous,next, draftMode, token }: Props) => {
             </div>
             <div className='flex-1 flex flex-col gap-12 mt-12  bg-red relative md:w-1/3 w-full'>
               <div className='sticky top-12 flex flex-col gap-12'>
+              <AuthorInfo contentType={'podcast'} author={podcast?.author} />
               <ShareableLinks props={podcast?.title} />
               </div>
             </div>
