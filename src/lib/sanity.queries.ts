@@ -1143,7 +1143,12 @@ export async function getPodcast(
 export const getAllPodcastSlugs = async (
   client: any,
   currentSlug: string
-): Promise<{ current: string; previous: string | null; next: string | null }> => {
+): Promise<{
+  current: { slug: string; number: number };
+  previous: string;
+  next: string;
+  totalPodcasts: number;
+}> => {
   const query = `
     *[_type == "post" && contentType == "podcast"] | order(_updatedAt desc) {
       "slug": slug.current
@@ -1151,14 +1156,27 @@ export const getAllPodcastSlugs = async (
   `;
 
   const result = await client.fetch(query);
-  const slugs = result.map((item: { slug: string }) => item.slug);
+  const slugs = result?.map((item: { slug: string }) => item.slug);
 
-  const currentIndex = slugs.indexOf(currentSlug);
-  const previousSlug = currentIndex > 0 ? slugs[currentIndex - 1] : null;
-  const nextSlug = currentIndex < slugs.length - 1 ? slugs[currentIndex + 1] : null;
+  const currentIndex = slugs?.indexOf(currentSlug);
 
-  return { current: currentSlug, previous: previousSlug, next: nextSlug };
+  if (currentIndex === -1) {
+    throw new Error(`Slug ${currentSlug} not found`);
+  }
+
+  const totalPodcasts = slugs?.length;
+
+  const previousSlug = slugs[(currentIndex - 1 + totalPodcasts) % totalPodcasts];
+  const nextSlug = slugs[(currentIndex + 1) % totalPodcasts];
+
+  return {
+    current: { slug: currentSlug, number: currentIndex + 1 },
+    previous: previousSlug,
+    next: nextSlug,
+    totalPodcasts
+  };
 };
+
 
 export async function getArticle(
   client: SanityClient,
