@@ -31,15 +31,26 @@ module.exports = {
           'cs-darkBlack':'#000',
           'cs-green' : '#277E78',
           'cs-green-200' : '#42BA78',
-          'cs-dark-500' : '#202124'
+          'cs-dark-500' : '#202124',
+          'cs-primary' : '#42BA78'
         },
+
         maxWidth:{
           '9xl':"82rem"
         },
+
         fontFamily:{
           'sans':['Inter', 'sans-serif'],
           'manrope':['Manrope', 'Inter', 'sans-serif']
-        }
+        },
+
+        backgroundImage: {
+          'gradient-text': 'linear-gradient(90deg, #FEF08A 0%, #60A5FA 100%)',  
+        },
+
+        letterSpacing: {
+          tighterText: '-0.48px',
+        },
 
       },
     },
