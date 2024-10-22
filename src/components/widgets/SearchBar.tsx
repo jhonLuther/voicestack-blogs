@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface SearchBarProps {
-    header: boolean;
+    header?: boolean;
 }
 
 function SearchBar({header}:SearchBarProps) {
