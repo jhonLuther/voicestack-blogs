@@ -51,24 +51,26 @@ export default function TagSelect({
   return (
     <Fragment>
       {showTags && (
-        <div className="flex flex-col gap-9">
+        <div className="flex flex-col gap-6 pb-8 md:pb-12 pt-8 md:pt-16 border-b-2 border-gray-900">
           {showHeading && selectedTag && (
             <h2 className="md:text-5xl text-xl text-center font-manrope font-extrabold text-cs-gray-900">
               {`"${tags.find(tag => tag.slug.current === selectedTag)?.tagName || ''}"`}
             </h2>
           )}
-          <ul className={`flex gap-2 pb-8 flex-wrap border-b-2 border-gray-900 ${className}`}>
+
+          <h2 className='text-[18px] font-medium leading-[1.6]'>Recommended Topics</h2>
+          <ul className={`flex gap-2 flex-wrap ${className}`}>
             {tags &&
               tags.slice(0, visibleTagCount).map((tag, i) => (
                 <Link key={i} href={`/browse/${tag.slug.current}`} scroll={false}>
                   <li
                     onClick={() => onTagChanges(tag)}
-                    className={`flex group hover:transition duration-500 content-center items-center gap-4 text px-2 py-3 text-lg font-medium 
-                      border rounded text-center cursor-pointer hover:underline underline-offset-4
+                    className={`flex group hover:transition duration-500 content-center items-center gap-4 py-2 px-[18px] text-base font-normal 
+                      border border-gray-200 rounded-lg text-center cursor-pointer 
                       ${
                         selectedTag === tag.slug.current
-                          ? 'bg-gray-900 text-white'
-                          : 'bg-gray-300 text-black'
+                          ? 'bg-zinc-500 text-zinc-200'
+                          : 'bg-zinc-100 text-zinc-900 hover:bg-zinc-500 hover:text-zinc-200'
                       }`}
                   >
                     <span className="text-lg font-medium">{tag.tagName}</span>
@@ -78,10 +80,10 @@ export default function TagSelect({
             {tags.length > tagLimit && (
               <li
                 onClick={visibleTagCount < tags.length ? handleShowMore : handleShowLess}
-                className={`bg-black flex content-center items-center gap-4 px-2 py-3 text-xs p-1 border rounded text-center cursor-pointer bg-gray-300`}
+                className={`bg-zinc-100 text-zinc-900 hover:bg-zinc-500 hover:text-zinc-200 flex content-center items-center gap-4 py-2 px-[18px] text-xs p-1 border border-gray-200 rounded-lg text-center cursor-pointer`}
               >
                 <span className="text-lg font-medium">
-                  {visibleTagCount < tags.length ? 'More...' : 'Less...'}
+                  {visibleTagCount < tags.length ? 'See More Topics...' : 'See Less...'}
                 </span>
               </li>
             )}

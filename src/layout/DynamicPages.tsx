@@ -85,10 +85,9 @@ const DynamicPages = ({
 		<>
 			<Wrapper >
 				<LatestBlogs contents={latestPosts} />
-				<ShortBannerSection />
 				<TagSelect
 					tags={tags}
-					tagLimit={5}
+					tagLimit={8}
 					showTags={true}
 				/>
 				<FeaturedAndPopularBlogs featuredBlog={featuredBlog} popularBlogs={popularBlogList} />
@@ -98,6 +97,7 @@ const DynamicPages = ({
 			<TestimonialSection testimonials={testimonialList} />
 			<Wrapper>
 				<AllcontentSection allContent={posts} redirect={true} />
+				<ShortBannerSection />
 			</Wrapper>
 
 		</>
