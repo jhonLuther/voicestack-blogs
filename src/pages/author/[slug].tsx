@@ -12,6 +12,7 @@ import RelatedFeaturesSection from '~/components/RelatedFeaturesSection'
 import Card from '~/components/Card'
 import AllcontentSection from '~/components/sections/AllcontentSection'
 import siteConfig from 'config/siteConfig'
+import Section from '~/components/Section'
 
 interface Query {
   [key: string]: string
@@ -65,38 +66,39 @@ export default function AuthorPage({
   relatedContents
 }: InferGetStaticPropsType<typeof getStaticProps>) {
 
-  console.log(relatedContents,'RELATED CONTENTS');
-  
 
   return (
     <Layout >
-    <Wrapper>
-        <div className='flex md:flex-row flex-col items-center gap-16'> 
-          <div>
-          {author.picture && (
-            <Image
-              src={author.picture}
-              alt={author.name}
-              width={360}
-              height={360}
-              className='rounded-s'
-            />
-          )}
+      <Section className='justify-center'>
+        <Wrapper className={`flex-col`}>
+          <div className='flex md:flex-row flex-col items-center gap-16'>
+            <div>
+              {author.picture && (
+                <Image
+                  src={author.picture}
+                  alt={author.name}
+                  width={360}
+                  height={360}
+                  className='rounded-s'
+                />
+              )}
+            </div>
+            <div className=' flex flex-col gap-6'>
+              <h2 className='md:text-6xl text-2xl text-cs-gray-900  font-extrabold font-manrope '>{author.name}</h2>
+              <p className='md:text-4xl text-xl text-cs-dark-500 font-manrope font-semibold pb-6 border-b-2 border-cs-darkBlack' >{author.role}</p>
+              <p className='max-w-3xl text-xl text-cs-gray-900   font-normal'>{author.bio}</p>
+            </div>
           </div>
-          <div className=' flex flex-col gap-6'>
-          <h2 className='md:text-6xl text-2xl text-cs-gray-900  font-extrabold font-manrope '>{author.name}</h2>
-          <p className='md:text-4xl text-xl text-cs-dark-500 font-manrope font-semibold pb-6 border-b-2 border-cs-darkBlack' >{author.role}</p>
-          <p className='max-w-3xl text-xl text-cs-gray-900   font-normal'>{author.bio}</p> 
-          </div>
-        </div>
-        {relatedContents && <AllcontentSection
-          className={'pb-9'}
-          allContent={relatedContents}
-          hideSearch={true}
-          itemsPerPage={siteConfig.pagination.childItemsPerPage}
-          redirect={true}
-        />}
-    </Wrapper>
+          {relatedContents &&
+            <AllcontentSection
+              className={'pb-9'}
+              allContent={relatedContents}
+              hideSearch={true}
+              itemsPerPage={siteConfig.pagination.childItemsPerPage}
+              redirect={true}
+            />}
+        </Wrapper>
+      </Section>
     </Layout >
 
   )

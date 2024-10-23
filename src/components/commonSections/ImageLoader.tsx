@@ -119,7 +119,6 @@ const ImageLoader: React.FC<ImageLoaderProps> = ({
             src={imageUrl}
             alt={props.altText || image.altText}
             title={props.title ||  image.title || ''}
-            
             fill
             className=" top-0 left-0 object-cover"
           />

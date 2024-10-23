@@ -449,7 +449,7 @@ export const webinarsQuery = groq`
   publishedAt,
   excerpt,
  ${imageFragment},
-  body,
+  ${bodyFragment},
   "author": author[]-> {
     _id,
     name,
@@ -474,7 +474,7 @@ export const ebooksQuery = groq`
   publishedAt,
   excerpt,
  ${imageFragment},
-  body,
+  ${bodyFragment},
   "author": author[]-> {
     _id,
     name,
@@ -501,7 +501,7 @@ export const pressReleasesQuery = groq`
   publishedAt,
   excerpt,
  ${imageFragment},
-  body,
+  ${bodyFragment},
   "author": author[]-> {
     _id,
     name,
@@ -528,7 +528,8 @@ export const artilclesQuery = groq`
   publishedAt,
   excerpt,
  ${imageFragment},
-  body,
+  ${bodyFragment},
+  "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180),
   "author": author[]-> {
     _id,
     name,
@@ -556,7 +557,7 @@ export const caseStudiesQuery = groq`
   publishedAt,
   excerpt,
  ${imageFragment},
-  body,
+  ${bodyFragment},
   "author": author[]-> {
     _id,
     name,
@@ -582,7 +583,7 @@ export const authorRelatedContentQuery = groq`
     publishedAt,
     excerpt,
    ${imageFragment},
-    body,
+    ${bodyFragment},
   }
 `
 
@@ -946,7 +947,7 @@ export async function getauthorRelatedContents(
     publishedAt,
     excerpt,
    ${imageFragment},
-    body,
+    ${bodyFragment},
   }
       `
   }
