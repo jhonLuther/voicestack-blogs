@@ -12,6 +12,7 @@ interface LatestBlogsProps {
   className?: string;
   cardLayout?: 'ebook'
   showPlayIcon?: boolean
+  page?: string
 }
 
 

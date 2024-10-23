@@ -54,7 +54,6 @@ const DynamicPages = ({
 	return (
 		<>
 			<LatestBlogs contents={latestPosts} />
-			<ShortBannerSection />
 			<TagSelect
 				tags={tags}
 				tagLimit={5}
@@ -65,6 +64,7 @@ const DynamicPages = ({
 			<SliderSection items={carouselItems} />
 			<TestimonialSection testimonials={testimonialList} />
 			<AllcontentSection allContent={posts} hideSearch={true} redirect={true} />
+			<ShortBannerSection />
 		</>
 	);
 };

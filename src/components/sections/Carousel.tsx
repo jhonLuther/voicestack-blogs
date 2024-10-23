@@ -30,7 +30,8 @@ const Carousel: React.FC<CarouselProps> = ({ items, swiperRef }) => {
         modules={[Navigation, Pagination]}
         spaceBetween={30}
         slidesPerView={1}
-        pagination={{ clickable: true }}
+        // pagination={{ clickable: true }}
+        
         breakpoints={{
           640: {
             slidesPerView: 2,
@@ -39,6 +40,7 @@ const Carousel: React.FC<CarouselProps> = ({ items, swiperRef }) => {
             slidesPerView: 3,
           },
         }}
+        
         onSwiper={(swiper) => {
           swiperRef.current = swiper; 
         }}
@@ -48,6 +50,13 @@ const Carousel: React.FC<CarouselProps> = ({ items, swiperRef }) => {
             <Card cardType='ebook-card' post={item} />
           </SwiperSlide>
         ))}
+        {/* {items.map((item) => (
+          <SwiperSlide key={item._id}>
+            <Card cardType='ebook-card' post={item} />
+          </SwiperSlide>
+        ))} */}
+
+        
       </Swiper>
 
     </>
