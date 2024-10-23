@@ -8,7 +8,7 @@ import Section from '../Section';
 
 interface LatestBlogsProps {
   contents: any[];
-  revamp?: boolean;
+  reverse?: boolean;
   className?: string;
   cardLayout?: 'ebook'
   showPlayIcon?: boolean
@@ -16,7 +16,7 @@ interface LatestBlogsProps {
 }
 
 
-const LatestBlogs: React.FC<LatestBlogsProps> = ({ contents, revamp, className, showPlayIcon }) => {
+const LatestBlogs: React.FC<LatestBlogsProps> = ({ contents, reverse, className, showPlayIcon }) => {
 
   // console.log(contents, 'contents');
 
@@ -38,38 +38,13 @@ const LatestBlogs: React.FC<LatestBlogsProps> = ({ contents, revamp, className, 
   const displayName = types[contentType];
   const [firstBlog, ...otherBlogs] = contents && contents;
 
-  // console.log(firstBlog,'firstBlog');
-
-
   return (
     <React.Fragment>
-     {
-      revamp ? (
-        <div className={`bg-cs-gray-900 text-white ${className}`}>
-          <Wrapper>
-            <section className='flex w-full gap-20 md:flex-row flex-col'>
-              <div className='flex flex-col gap-9 md:max-w-[519px] w-full flex-1'>
-                <div className="flex flex-col w-full overflow-hidden">
-                  <Card showPlayIcon={showPlayIcon} cardType='top-image-contentType-card' key={firstBlog?._id || 1} cardColor='white' post={firstBlog} />
-                </div>
-              </div>
-              <div className='flex-grow flex-1 flex flex-col gap-8'>
-                <h2 className='text-5xl text-white font-extrabold'>{displayName}</h2>
-                <div className='flex flex-col gap-8 last-child text-white'>
-                  {otherBlogs.map((blog, i) => (
-                    <Card key={i + 1 || blog._id} cardType='text-only-card' isLast={i === otherBlogs.length - 1} cardColor='white' post={blog} />
-                  ))}
-                </div>
-              </div>
-            </section>
-          </Wrapper>
-        </div>
-      ) : (
         <Section className='justify-center py-24 bg-gray-900 text-white' >
-          <Wrapper className={`justify-between md:flex-row flex-col gap-24`}>
-            <div className='flex flex-col gap-9 md:max-w-[519px] w-full  flex-1'>
+          <Wrapper className={`md:flex-row flex-col ${reverse ? 'md:flex-row-reverse' : ''} md:gap-36 gap-12`}>
+            <div className='flex flex-col gap-9 md:w-5/12 w-full'>
               <H2Large >
-                Latest
+                {reverse ? displayName :`Latest`}
               </H2Large>
               <div className='flex flex-col gap-8  '>
                 {otherBlogs.map((blog, i) => (
@@ -77,15 +52,13 @@ const LatestBlogs: React.FC<LatestBlogsProps> = ({ contents, revamp, className, 
                 ))}
               </div>
             </div>
-            <div className='flex-grow flex-1'>
-              <div className="flex flex-col w-full overflow-hidden">
-                <Card cardType='top-image-card' key={firstBlog?._id} post={firstBlog} />
+            <div className=' md:w-6/12 w-full'>
+              <div className="flex flex-col w-full overflow-hidden ">
+                <Card reverse={reverse} cardType='top-image-card' key={firstBlog?._id} post={firstBlog} />
               </div>
             </div>
           </Wrapper>
-
         </Section>
-      )}
     </React.Fragment>
   );
 };

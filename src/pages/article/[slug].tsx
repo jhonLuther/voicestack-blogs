@@ -15,6 +15,7 @@ import { generateJSONLD } from '~/utils/generateJSONLD';
 import { Toc } from '~/contentUtils/sanity-toc';
 import AuthorInfo from '~/components/commonSections/AuthorInfo';
 import ShareableLinks from '~/components/commonSections/ShareableLinks';
+import Section from '~/components/Section';
 
 interface Props {
   articles: Articles;
@@ -78,7 +79,8 @@ const ArticlePage = ({ articles, draftMode, token }: Props) => {
         contentType={articles?.contentType} />
       <Layout >
         <MainImageSection  enableDate={true}  post={articles} />
-        <Wrapper>
+        <Section className='justify-center'>
+          <Wrapper className={`flex-col`} >
           <div className="flex  md:flex-row flex-col">
             <div className="mt-12 flex md:flex-col flex-col-reverse md:w-2/3 w-full ">
               <div className='post__content w-full '>
@@ -102,7 +104,8 @@ const ArticlePage = ({ articles, draftMode, token }: Props) => {
             </div>
           </div>
           {articles?.relatedArticles?.length > 0 && <RelatedFeaturesSection title={articles?.title} allPosts={articles?.relatedArticles} />}
-        </Wrapper>
+          </Wrapper>
+          </Section>
       </Layout>
     </>
   );
