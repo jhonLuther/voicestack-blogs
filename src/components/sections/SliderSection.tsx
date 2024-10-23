@@ -26,7 +26,6 @@ const SliderSection: React.FC<BannerBlockProps> = ({ items }) => {
   }
 
   return (
-    <React.Fragment>
       <section className="my-9">
         <div className="flex justify-between pb-9">
           <h2 className="text-2xl font-bold mb-4">{`Ebooks and Webinars`}</h2>
@@ -41,8 +40,6 @@ const SliderSection: React.FC<BannerBlockProps> = ({ items }) => {
         </div>
         <Carousel items={items} swiperRef={swiperRef} />
       </section>
-
-    </React.Fragment>
   );
 };
 

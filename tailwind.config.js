@@ -39,6 +39,9 @@ module.exports = {
         fontFamily:{
           'sans':['Inter', 'sans-serif'],
           'manrope':['Manrope', 'Inter', 'sans-serif']
+        },
+        lineHeight:{
+          'tighter':"1.1"
         }
 
       },

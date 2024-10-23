@@ -64,7 +64,6 @@ export default function ProjectSlugRoute(
 	return (
 		<>
 			<Layout >
-				<Wrapper>
 					<TagSelect
 						tags={tags}
 						tagLimit={5}
@@ -78,7 +77,6 @@ export default function ProjectSlugRoute(
 						currentPage={0}
 						enablePageSlug={true}
 					/>
-				</Wrapper>
 			</Layout>
 		</>
 	)

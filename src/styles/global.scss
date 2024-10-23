@@ -94,10 +94,7 @@ body, #__next {
 }
 
 .post__content{
-  @apply  prose md:prose lg:prose-lg prose-h2:font-manrope prose-h3:font-manrope; 
-}
-.post__content li{
-  @apply list-none;
+  @apply  prose prose-sm md:prose-base lg:prose-lg prose-h2:font-manrope prose-h3:font-manrope; 
 }
 
 

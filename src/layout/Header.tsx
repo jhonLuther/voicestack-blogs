@@ -4,7 +4,7 @@ import SearchBar from '~/components/widgets/SearchBar';
 import ProgressBar from '~/utils/progressBar/progressBar';
 
 const navigationLinks = [
-  { href: "/case-study", label: "Case Study" },
+  { href: "/case-study", label: "Case Studies" },
   { href: "/article", label: "Articles" },
   { href: "/podcast", label: "Podcasts" },
   { href: "/ebook", label: "Ebooks" },
