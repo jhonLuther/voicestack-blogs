@@ -1,6 +1,8 @@
 import { useRouter } from 'next/router';
 import { ChevronLeftIcon, ChevronRightIcon } from '@sanity/icons';
 import React from 'react';
+import Section from '../Section';
+import Wrapper from '~/layout/Wrapper';
 
 const Pagination = ({ totalPages, currentPage, baseUrl, onPageChange, enablePageSlug = false }: { 
   totalPages: number, 
@@ -40,6 +42,8 @@ const Pagination = ({ totalPages, currentPage, baseUrl, onPageChange, enablePage
   };
 
   return (
+    <Section  className={` justify-center `}>
+      <Wrapper  className={` justify-center `}>
     <div className="flex space-x-2">
       <button
         onClick={() => handlePageChange(currentPage - 1)}
@@ -57,6 +61,8 @@ const Pagination = ({ totalPages, currentPage, baseUrl, onPageChange, enablePage
         <ChevronRightIcon height={25} />
       </button>
     </div>
+    </Wrapper>
+    </Section>
   );
 };
 

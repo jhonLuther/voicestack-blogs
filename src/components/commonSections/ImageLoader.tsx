@@ -44,20 +44,23 @@ const ImageLoader: React.FC<ImageLoaderProps> = ({
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [clientWidth, setClientWidth] = useState<number>(width);  
+  const [clientHeight, setClientHeight] = useState<number>(height);  
 
   useEffect(() => {
     if (useClientWidth && containerRef.current) {
-      const handleResize = (width: number) => {
+      const handleResize = (width: number, height: number) => {
         setClientWidth(width);
+        setClientHeight(height);
       };
 
       const resizeObserver = new ResizeObserver((entries) => {
         for (let entry of entries) {
-          handleResize(entry.contentRect.width);
+          handleResize(entry.contentRect.width, entry.contentRect.height);
+
         }
       });
 
-      handleResize(containerRef.current.clientWidth);
+      handleResize(containerRef.current.clientWidth, containerRef.current.clientHeight);
       resizeObserver.observe(containerRef.current);
 
       return () => resizeObserver.disconnect();
@@ -76,6 +79,7 @@ const ImageLoader: React.FC<ImageLoaderProps> = ({
     if (useClientWidth) {
       const aspectRatio = image?.metadata?.dimensions?.aspectRatio || 1.5;
       const calculatedHeight = Math.round(clientWidth / aspectRatio);
+
       
       url = urlForImage(image._id, {
         width: clientWidth,
@@ -98,23 +102,26 @@ const ImageLoader: React.FC<ImageLoaderProps> = ({
     return null;
   }
 
-  const aspectRatio = image?.metadata?.dimensions?.aspectRatio || width / height;
+  // const aspectRatio = image?.metadata?.dimensions?.aspectRatio 
+  const aspectRatio = clientWidth /clientHeight 
 
   if (useClientWidth) {
     return (
-      <div ref={containerRef} className={`relative w-full ${className}`}>
+      <div ref={containerRef} className={`relative w-full h-full    ${className}`}>
         <div
-          className="relative"
+          className="relative w-full h-full flex"
           style={{
             paddingTop: `${(1 / aspectRatio) * 100}%`
           }}
         >
+     
           <Image
             src={imageUrl}
             alt={props.altText || image.altText}
             title={props.title ||  image.title || ''}
+            
             fill
-            className="absolute top-0 left-0 w-full h-full object-cover"
+            className=" top-0 left-0 object-cover"
           />
         </div>
       </div>
@@ -122,14 +129,14 @@ const ImageLoader: React.FC<ImageLoaderProps> = ({
   }
 
   return (
-    <div className={`relative ${className}`} style={{ width, height }}>
+    <div className={`relative  ${className}`} style={{ width, height }}>
       <Image
         src={imageUrl}
         alt={props.altText ||image.altText  || 'blog card image'}
         title={props.title || image.title || 'blog card image'}
-        width={width}
-        height={height}
-        className="object-cover"
+        width={clientWidth}
+        height={clientHeight}
+        className="object-cover h-auto"
       />
     </div>
   );

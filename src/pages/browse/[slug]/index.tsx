@@ -74,12 +74,8 @@ export default function TagPage({
   }
 
 
-  console.log({tag});
-  
-
   return (
     <Layout>
-      <Wrapper>
         <h1 className='md:text-5xl text-xl font-extrabold font-manrope text-center'>{tag?.tagName}</h1>
         <TagSelect 
           tags={allTags} 
@@ -95,7 +91,6 @@ export default function TagPage({
           currentPage={1}
           enablePageSlug={true}
         />
-      </Wrapper>
     </Layout>
   )
 }

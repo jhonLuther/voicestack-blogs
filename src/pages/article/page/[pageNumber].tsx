@@ -63,13 +63,12 @@ const PaginatedArticlesPage = ({ articles, pageNumber, totalPages }: { articles:
 
   return (
     <Layout>
-      <Wrapper>
         <AllcontentSection
           baseUrl={baseUrl}
           className={'pb-9'}
           allContent={articles}
           hideSearch={true}
-          cardType={'podcast-card'}
+          cardType="left-image-card"
           itemsPerPage={siteConfig.pagination.childItemsPerPage}
         />
         <Pagination
@@ -79,7 +78,6 @@ const PaginatedArticlesPage = ({ articles, pageNumber, totalPages }: { articles:
           onPageChange={handlePageChange}
           enablePageSlug={true}
         />
-      </Wrapper>
     </Layout>
   );
 };

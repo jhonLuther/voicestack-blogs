@@ -25,29 +25,29 @@ interface Query {
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const client = getClient();
-    const pageNumber = params?.pageNumber ? parseInt(params.pageNumber as string, 10) : 1;
-  
-  const cardsPerPage = siteConfig.pagination.itemsPerPage || 5;
-  const startLimit = (pageNumber - 1) * cardsPerPage;
+	const client = getClient();
+	const pageNumber = params?.pageNumber ? parseInt(params.pageNumber as string, 10) : 1;
 
-  const tags = await getTags(client);
+	const cardsPerPage = siteConfig.pagination.itemsPerPage || 5;
+	const startLimit = (pageNumber - 1) * cardsPerPage;
 
-  const endLimit = startLimit + cardsPerPage;
+	const tags = await getTags(client);
 
-  const posts = await getPostsByLimit(client, startLimit, cardsPerPage);
-  const totalPosts = await getPosts(client);
-  
-  const totalPages = Math.ceil(totalPosts.length / cardsPerPage);
+	const endLimit = startLimit + cardsPerPage;
 
-  return {
-    props: {
-      posts,
+	const posts = await getPostsByLimit(client, startLimit, cardsPerPage);
+	const totalPosts = await getPosts(client);
+
+	const totalPages = Math.ceil(totalPosts.length / cardsPerPage);
+
+	return {
+		props: {
+			posts,
 			tags,
-      totalPages,
-      currentPage: pageNumber,
-    },
-  };
+			totalPages,
+			currentPage: pageNumber,
+		},
+	};
 };
 
 
@@ -64,19 +64,19 @@ export default function ProjectSlugRoute(
 	return (
 		<>
 			<Layout >
-					<TagSelect
-						tags={tags}
-						tagLimit={5}
-						showTags={true}
-					/>
-					<AllcontentSection hideSearch={true} allContent={posts} />
-					<Pagination
-						totalPages={totalPages}
-						baseUrl="/browse"
-						onPageChange={handlePageChange}
-						currentPage={0}
-						enablePageSlug={true}
-					/>
+				<TagSelect
+					tags={tags}
+					tagLimit={5}
+					showTags={true}
+				/>
+				<AllcontentSection hideSearch={true} allContent={posts} />
+				<Pagination
+					totalPages={totalPages}
+					baseUrl="/browse"
+					onPageChange={handlePageChange}
+					currentPage={0}
+					enablePageSlug={true}
+				/>
 			</Layout>
 		</>
 	)

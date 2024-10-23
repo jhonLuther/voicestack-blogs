@@ -11,17 +11,18 @@ import useMediaQuery from '~/utils/useMediaQueryHook'
 import AuthorInfo from './commonSections/AuthorInfo'
 import DurationSection from './commonSections/DurationSection'
 import siteConfig from 'config/siteConfig'
+import Section from './Section'
 
 interface Props {
 	post?: any
 	isAuthor?: any
-	enableDate?:boolean
-	isAudio?:boolean
+	enableDate?: boolean
+	isAudio?: boolean
 }
 
-const MainImageSection = ({ post, isAuthor ,enableDate = false ,isAudio= false}: Props) => {
+const MainImageSection = ({ post, isAuthor, enableDate = false, isAudio = false }: Props) => {
 	console.log(post);
-	
+
 
 	const isMobile: any = useMediaQuery(767);
 	const client = getClient()
@@ -32,8 +33,8 @@ const MainImageSection = ({ post, isAuthor ,enableDate = false ,isAudio= false}:
 
 	return (
 		<div className='w-full flex gap-1 min-h-[423px] items-center bg-black relative '>
-
-			<Wrapper className="z-10 flex min-h-full h-auto">
+			<Section className={`items-start`}>
+			<Wrapper className="z-10 flex h-auto">
 				<div className='flex flex-col items-start gap-32 bg-black text-white md:max-w-xl max-w-lg h-full justify-center pr-8'>
 					<div className='flex flex-col items-start '>
 						<Breadcrumb />
@@ -45,7 +46,7 @@ const MainImageSection = ({ post, isAuthor ,enableDate = false ,isAudio= false}:
 						</p>
 						{isAuthor && <AuthorInfo className={"mt-8"} contentType={post.contentType} author={post?.author} />}
 						{
-						enableDate  &&	<DurationSection isAudio={isAudio} duration={post?.estimatedReadingTime ? post.estimatedReadingTime : post.duration } date={post?.date ? post?.date : ""} />
+							enableDate && <DurationSection isAudio={isAudio} duration={post?.estimatedReadingTime ? post.estimatedReadingTime : post.duration} date={post?.date ? post?.date : ""} />
 						}
 					</div>
 				</div>
@@ -60,6 +61,7 @@ const MainImageSection = ({ post, isAuthor ,enableDate = false ,isAudio= false}:
 					/>
 				</div>
 			</div>
+			</Section>
 		</div>
 	)
 }

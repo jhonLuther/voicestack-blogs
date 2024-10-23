@@ -20,9 +20,10 @@ interface CardProps {
 	showPlayIcon?: boolean
 	isLast?: boolean;
 	varyingIndex?: any
+	reverse?: boolean
 }
 
-export default function Card({ post, isLast, cardType, className, cardColor, varyingIndex, showPlayIcon = false }: CardProps) {
+export default function Card({ post, isLast, cardType,reverse, className, cardColor, varyingIndex, showPlayIcon = false }: CardProps) {
 
 	const [linkUrl, setLinkUrl] = useState<string | null>(null);
 
@@ -42,13 +43,13 @@ export default function Card({ post, isLast, cardType, className, cardColor, var
 		<React.Fragment>
 			{cardType === 'top-image-card' ? (
 				<Link href={linkUrl}>
-					<div className="flex flex-col gap-1 group overflow-hidden">
-						<div className='overflow-hidden rounded-t-lg'>
+					<div className={`flex flex-col gap-1 ${reverse ? 'flex-col-reverse' : ''} group overflow-hidden`}>
+						<div className={`overflow-hidden ${reverse ? 'rounded-b-lg' : 'rounded-t-lg'}`}>
 							{(post.mainImage) ? (
-								<div className="w-auto  block min-h-[350px] h-[350px] object-center object-cover transform transition duration-500"
+								<div className="w-auto transform transition duration-500"
 								>
 									<ImageLoader
-										className='transform  duration-300 group-hover:scale-105'
+										className='transform md:h-[350px] h-[200px]  duration-300 group-hover:scale-105'
 										image={post?.mainImage}
 										useClientWidth={true}
 									/>
@@ -61,7 +62,7 @@ export default function Card({ post, isLast, cardType, className, cardColor, var
 								/>
 							}
 						</div>
-						<div className="flex rounded-b-lg p-9 bg-bg-green flex-col items-start gap-10 flex-1">
+						<div className={`flex ${reverse ? 'rounded-t-lg' : 'rounded-b-lg'} p-9 bg-bg-green flex-col items-start gap-10 flex-1`}>
 							<div className="flex flex-col gap-3">
 								{post.contentType && (
 									<SubText className='text-white' >
@@ -76,7 +77,7 @@ export default function Card({ post, isLast, cardType, className, cardColor, var
 								</DescriptionText>
 							</div>
 							{post.author && post.author.length > 0 && (
-								<AuthorInfo author={post.author} />
+								<AuthorInfo  author={post.author} />
 							)}
 						</div>
 					</div>
@@ -154,7 +155,7 @@ export default function Card({ post, isLast, cardType, className, cardColor, var
 						: cardType === 'text-only-card' ? (
 							<div className={`flex flex-col flex-1 w-full group hover:scale-100 transform duration-300 ${className} `}>
 								<Link href={linkUrl}>
-									<div className={`${!isLast && `border-b-2`} pb-6 flex flex-col gap-3 border-b-2 border-gray-800`}>
+									<div className={`${!isLast && `border-b-2`} pb-6 flex flex-col gap-3  border-gray-800`}>
 										{post.contentType && (
 											<SubText >
 												{post.contentType}
@@ -170,36 +171,35 @@ export default function Card({ post, isLast, cardType, className, cardColor, var
 							cardType === 'top-image-smallCard' ? (
 								<Link href={linkUrl}>
 									<div className="flex flex-col gap-1 group hover: transition duration-500 overflow-hidden">
-										<div className='overflow-hidden'>
+										<div className='overflow-hidden '>
 											{post.mainImage && (
 												<ImageLoader
-													className="w-full h-auto rounded-t-md min-h-[250px] object-center object-cover md:w-auto group-hover:scale-105 transition duration-500"
+													className="w-full  object-cover transform md:h-[350px] h-[200px]  duration-300 group-hover:scale-105"
 													image={post.mainImage}
-
 												/>
 											)}
 										</div>
-										<div className="flex py-10 px-9  rounded-b-md bg-cs-purple flex-col items-start gap-10 flex-1">
-											<div className="flex flex-col gap-3">
+										<div className="flex  p-9  bg-cs-purple flex-col items-start gap-10 flex-1">
+											<div className="flex flex-col gap-2 text-white">
 												{post.contentType && (
-													<SubText >
+													<SubText className='text-white' >
 														{post.contentType}
 													</SubText>
 												)}
-												<h2 className="card-content md:text-5xl text-2xl font-manrope text-white font-extrabold group-hover: group-hover:underline underline-offset-4">{post.title}</h2>
-												<p className="text-white font-inter text-lg font-normal line-clamp-2 overflow-hidden">
+												<H3XL >
+													{post.title}
+												</H3XL>
+												<DescriptionText className='text-opacity-70 line-clamp-3 overflow-hidden text-ellipsis'>
 													{post.desc ? post.desc : post.excerpt}
-												</p>
+												</DescriptionText>
+												{post.author && post.author.length > 0 && (
+												<AuthorInfo author={post.author} />
+											)}
 											</div>
-											<span className="text-white font-inter text-lg font-semibold">
-												{post.author?.name || ''}
-											</span>
 										</div>
 									</div>
 								</Link>
 							) :
-
-
 
 								cardType === 'featured' ? (
 									<div className="card featured-card">
@@ -219,11 +219,13 @@ export default function Card({ post, isLast, cardType, className, cardColor, var
 									cardType === 'podcast-card' ? (
 										<Link href={linkUrl}>
 											<div className={`flex gap-6 items-center justify-center transition-all duration-500 h-full  rounded-lg ${className}`}>
-												<div className="relative w-48 h-48">
+												<div className="relative ">
 													{post.mainImage && (
 														<ImageLoader
-															className=" object-cover w-48 h-48"
+															className=" object-cover"
 															image={post.mainImage}
+			
+								
 														/>
 													)
 

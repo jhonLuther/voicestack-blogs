@@ -48,14 +48,13 @@ const EbooksPage = ({ ebooks,latestEbooks, totalPages }: { ebooks: Ebooks[];late
 
   return (
     <Layout>
-      <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'} revamp={true} contents={latestEbooks} />
-      <Wrapper>
+      <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'} reverse={true} contents={latestEbooks} />
         <AllcontentSection
           baseUrl={baseUrl}
           className={'pb-9'}
           allContent={ebooks}
           hideSearch={true}
-          cardType={'podcast-card'}
+          cardType="left-image-card"
           itemsPerPage={siteConfig.pagination.childItemsPerPage}
         />
         <Pagination
@@ -65,7 +64,6 @@ const EbooksPage = ({ ebooks,latestEbooks, totalPages }: { ebooks: Ebooks[];late
           onPageChange={handlePageChange}
           enablePageSlug={true}
         />
-      </Wrapper>
     </Layout>
   );
 };

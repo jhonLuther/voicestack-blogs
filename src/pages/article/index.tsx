@@ -48,14 +48,13 @@ const ArticlesPage = ({ articles,latestArticles, totalPages }: { articles: Artic
 
   return (
     <Layout>
-      <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'} revamp={true} contents={latestArticles} />
-      <Wrapper>
+      <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'} reverse={true} contents={latestArticles} />
         <AllcontentSection
           baseUrl={baseUrl}
           className={'pb-9'}
           allContent={articles}
           hideSearch={true}
-          cardType={'podcast-card'}
+          cardType="left-image-card"
           itemsPerPage={siteConfig.pagination.childItemsPerPage}
         />
         <Pagination
@@ -65,7 +64,6 @@ const ArticlesPage = ({ articles,latestArticles, totalPages }: { articles: Artic
           onPageChange={handlePageChange}
           enablePageSlug={true}
         />
-      </Wrapper>
     </Layout>
   );
 };

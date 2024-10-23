@@ -13,6 +13,7 @@ interface ImageDimensions {
 }
 
 export const urlForImage = (source: any, dimensions?: ImageDimensions) => {
+
   if (typeof source === 'string') {
     source = {
       asset: {
@@ -30,6 +31,8 @@ export const urlForImage = (source: any, dimensions?: ImageDimensions) => {
   let urlBuilder = imageBuilder.image(source).auto('format');
 
   if (dimensions) {
+    console.log({dimensions});
+    
     if (dimensions.width) {
       urlBuilder = urlBuilder.width(Math.round(dimensions.width));
     }
@@ -38,6 +41,9 @@ export const urlForImage = (source: any, dimensions?: ImageDimensions) => {
     }
     urlBuilder = urlBuilder.quality(dimensions.quality || 90);
   }
+
+  console.log({url:urlBuilder.url()});
+  
 
   return urlBuilder.url();
 };

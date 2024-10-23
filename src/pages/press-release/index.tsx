@@ -48,14 +48,13 @@ const PressReleasePage = ({ pressReleases,latestPressReleases, totalPages }: { p
 
   return (
     <Layout>
-      <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'} revamp={true} contents={latestPressReleases} />
-      <Wrapper>
+      <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'} reverse={true} contents={latestPressReleases} />
         <AllcontentSection
           baseUrl={baseUrl}
           className={'pb-9'}
           allContent={pressReleases}
           hideSearch={true}
-          cardType={'podcast-card'}
+          cardType="left-image-card"
           itemsPerPage={siteConfig.pagination.childItemsPerPage}
         />
         <Pagination
@@ -65,7 +64,6 @@ const PressReleasePage = ({ pressReleases,latestPressReleases, totalPages }: { p
           onPageChange={handlePageChange}
           enablePageSlug={true}
         />
-      </Wrapper>
     </Layout>
   );
 };

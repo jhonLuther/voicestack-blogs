@@ -10,7 +10,7 @@ interface LatestBlogsProps {
   allContent: any[];
   hideSearch?: boolean;
   className?: string;
-  cardType?: 'podcast-card' | 'ebook-card' | 'featured' | 'top-image-smallCard';
+  cardType?: 'podcast-card' | 'ebook-card' | 'featured' | 'top-image-smallCard' | "left-image-card";
   redirect?: boolean;
   baseUrl?: string;
   itemsPerPage?: number;
@@ -24,7 +24,7 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
   itemsPerPage,
   redirect = false,
 }) => {
-  const postsToShow = itemsPerPage || siteConfig.pagination.itemsPerPage // Fixed to 4
+  const postsToShow = itemsPerPage || siteConfig.pagination.itemsPerPage;
 
   if (!allContent) {
     return null;
@@ -42,9 +42,9 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
         )}
       </div>
       <div className={`grid 
-        ${cardType === 'podcast-card' ? 'lg:grid-cols-2 md:grid-cols-1' : 'lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1'} 
+        ${cardType === 'left-image-card' ? 'lg:grid-cols-2 md:grid-cols-1' : 'lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1'} 
         gap-y-9 
-        ${cardType === 'podcast-card' ? 'gap-x-12' : 'gap-4'} 
+        ${cardType === 'left-image-card' ? 'gap-x-12' : 'gap-4'} 
         pb-16`}>
         {allContent && allContent.length > 0 ? (
           allContent.slice(0, postsToShow).map((post, index) => (

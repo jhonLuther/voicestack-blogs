@@ -22,14 +22,14 @@ const FeaturedAndPopularBlogs = ({ featuredBlog, popularBlogs }: FeaturedAndPopu
   return (
     <Section className="justify-center py-9">
       <Wrapper className={`justify-between md:flex-row flex-col gap-24`}>
-        <div className="flex flex-col gap-9 md:max-w-[519px]  w-full flex-1">
+        <div className="flex flex-col gap-9 md:w-5/12 w-full flex-1">
           <div className="flex flex-col">
-            <div className="md:max-w-[519px]  w-full  overflow-hidden flex-1">
+            <div className=" w-full  overflow-hidden flex-1">
               <Card cardType="top-image-smallCard" post={featuredBlog} />
             </div>
           </div>
         </div>
-        <div className="flex flex-col gap-8 justify-between flex-1">
+        <div className="flex flex-col gap-8 justify-between md:w-6/12 w-full">
           <H2Large>
             Most Popular
           </H2Large>
