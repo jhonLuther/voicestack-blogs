@@ -11,7 +11,10 @@ import H4Large from './typography/H4Large';
 import H3XL from './typography/H3XL';
 import AuthorInfo from './commonSections/AuthorInfo';
 import DescriptionText from './typography/DescriptionText';
+import Image from 'next/image';
 
+import SoundIcon from '../assets/speakerIcon.svg';
+import PlayIcon from '../assets/playButton.svg';
 interface CardProps {
 	post: Post;
 	cardType?: 'top-image-card' | 'text-only-card' | 'left-image-card' | 'ebook-card' | 'featured' | 'top-image-smallCard' | 'podcast-card' | 'top-image-contentType-card';
@@ -23,7 +26,7 @@ interface CardProps {
 	reverse?: boolean
 }
 
-export default function Card({ post, isLast, cardType,reverse, className, cardColor, varyingIndex, showPlayIcon = false }: CardProps) {
+export default function Card({ post, isLast, cardType, reverse, className, cardColor, varyingIndex, showPlayIcon = false }: CardProps) {
 
 	const [linkUrl, setLinkUrl] = useState<string | null>(null);
 
@@ -77,7 +80,7 @@ export default function Card({ post, isLast, cardType,reverse, className, cardCo
 								</DescriptionText>
 							</div>
 							{post.author && post.author.length > 0 && (
-								<AuthorInfo  author={post.author} />
+								<AuthorInfo author={post.author} />
 							)}
 						</div>
 					</div>
@@ -127,27 +130,41 @@ export default function Card({ post, isLast, cardType,reverse, className, cardCo
 					:
 					cardType === 'left-image-card' ? (
 						<Link href={linkUrl}>
-							<div className={`flex flex-row gap-4 items-center group hover: transition duration-500 ${className}`}>
+							<div className={`flex flex-row gap-6 relative items-center group hover: transition duration-500 ${className}`}>
 								{post.mainImage && (
-									<ImageLoader
-										className="rounded-md object-cover group-hover:scale-105 transition duration-500"
-										image={post.mainImage}
-										height={173}
-										width={240}
-									/>
+									<div className="w-auto rounded-lg transform transition duration-500 overflow-hidden"
+									>
+										<ImageLoader
+											className='transform md:h-[350px] rounded-lg h-[200px]  duration-300 group-hover:scale-105'
+											image={post?.mainImage}
+											width={200}
+											height={154}
+										/>
+									</div>
 								)}
-								<div className="flex flex-col flex-1">
+								<div className="flex flex-col flex-1 gap-2">
 									{post.contentType && (
 										<SubText >
 											{post.contentType}
 										</SubText>
 									)}
-									<H4Large className={`group-hover: group-hover:underline underline-offset-4`}>
+									<H4Large className={`group-hover: group-hover:underline underline-offset-4 line-clamp-3 text-ellipsis overflow-hidden`}>
 										{post.title}
 									</H4Large>
-									<p className="text-gray-700">{post.desc || ''}</p>
-									<span className="text-gray-500 text-sm">{post.author[0]?.name || ''} · {`${post?.estimatedReadingTime} min read `}</span>
+									<span className="text-gray-500 text-sm mt-1">{post.author[0]?.name || ''} · {`${post?.estimatedReadingTime ? post.estimatedReadingTime : post.duration} ${post.contentType === 'article' ? 'min read' : '' }   `}</span>
 								</div>
+
+								{
+									post.contentType === 'podcast' ? (
+										<div className='absolute bottom-2 left-2'>
+											<Image src={SoundIcon} alt="soundIcon" />
+										</div>) :
+										post.contentType === 'webinar' ? (
+											<div className='absolute bottom-2 left-2'>
+												<Image src={PlayIcon} alt="playIcon" />
+											</div>
+										) : ""
+								}
 							</div>
 						</Link>
 					)
@@ -193,8 +210,8 @@ export default function Card({ post, isLast, cardType,reverse, className, cardCo
 													{post.desc ? post.desc : post.excerpt}
 												</DescriptionText>
 												{post.author && post.author.length > 0 && (
-												<AuthorInfo author={post.author} />
-											)}
+													<AuthorInfo author={post.author} />
+												)}
 											</div>
 										</div>
 									</div>
@@ -287,18 +304,29 @@ export default function Card({ post, isLast, cardType,reverse, className, cardCo
 										: (
 
 											// default card
-											<div className={`flex flex-col w-full min-h-[250px] group  `}>
+											<div className={`flex flex-col w-full min-h-[250px] group relative `}>
 												<Link href={linkUrl}>
 													{(post.mainImage || post.image) && (
-														<div className="overflow-hidden ">
-															<ImageLoader
-																className=" object-center object-cover group-hover:scale-110 transition-transform duration-300"
-																image={post?.mainImage}
-																alt={post.title || 'Blog Image'}
-																height={varyingIndex ? 553 : 173}
-																width={411}
-															/>
-														</div>
+                            <div className="overflow-hidden relative  w-full">
+                            <ImageLoader
+                              className="object-cover group-hover:scale-110 transition-transform duration-300"
+                              image={post?.mainImage}
+                              alt={post.title || 'Blog Image'}
+                              height={varyingIndex ? 553 : 173}
+                              width={411}
+                            />
+                            {
+																post.contentType === 'podcast' ? (
+																	<div className='absolute bottom-2 left-2'>
+																		<Image src={SoundIcon} alt="soundIcon" />
+																	</div>) :
+																	post.contentType === 'webinar' ? (
+																		<div className='absolute bottom-2 left-2'>
+																			<Image src={PlayIcon} alt="playIcon" />
+																		</div>
+																	) : ""
+															}
+                          </div>
 													)
 													}
 													<div className="mt-4 flex flex-col gap-1">

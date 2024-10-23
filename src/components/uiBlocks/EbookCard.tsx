@@ -2,15 +2,20 @@ import React from 'react';
 import Image from 'next/image';
 import { urlForImage } from '~/lib/sanity.image';
 import Breadcrumb from '../commonSections/BreadCrumb';
+import ImageLoader from '../commonSections/ImageLoader';
+import Section from '../Section';
+import Wrapper from '~/layout/Wrapper';
 
 const EbookCard = ({ ebook }) => {
+	console.log(ebook, 'ebook');
+	
 	return (
 		<div className="max-w-2xl bg-white rounded-l-lg rounded-r-3xl overflow-hidden shadow-lg">
 			<div className='overflow-hidden'>
-				{(ebook?.mainImage || ebook?.image) && (
-					<Image
+				{(ebook?.mainImage) && (
+					<ImageLoader
 						className="w-auto  block min-h-[400px] object-center object-cover group-hover: scale-100 transition duration-500 "
-						src={urlForImage(ebook.mainImage || ebook.image).width(700).height(350).url()}
+						image={ebook?.mainImage}
 						height={350}
 						width={700}
 						alt={ebook.title || 'Blog Image'}

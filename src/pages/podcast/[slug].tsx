@@ -17,6 +17,7 @@ import AuthorInfo from '~/components/commonSections/AuthorInfo';
 import ShareableLinks from '~/components/commonSections/ShareableLinks';
 import Link from 'next/link';
 import PodcastNavigator from '~/contentUtils/PodcastNavigator';
+import Section from '~/components/Section';
 
 interface Props {
   podcast: Podcasts;
@@ -90,7 +91,8 @@ const PodcastPage = ({ podcast,previous,next,currentNumber,totalPodcasts, draftM
         contentType={podcast?.contentType} />
       <Layout >
         <MainImageSection isAudio={true} enableDate={true} post={podcast} />
-        <Wrapper removePadding={true}>
+        <Section className='justify-center'>
+        <Wrapper className={'flex-col'}>
         <PodcastNavigator className={`mt-16`} currentNumber={currentNumber}  totalPodcasts={totalPodcasts}   nextSlug={next ? next  :'/'} prevSlug={previous? previous : '/'} />
           {
             podcast.htmlCode &&
@@ -99,8 +101,6 @@ const PodcastPage = ({ podcast,previous,next,currentNumber,totalPodcasts, draftM
               </div>
             )
           }
-        </Wrapper>
-        <Wrapper>
           <div className="flex  md:flex-row flex-col">
             <div className="mt-12 flex md:flex-col flex-col-reverse md:w-2/3 w-full ">
               <div className='post__content w-full '>
@@ -120,6 +120,7 @@ const PodcastPage = ({ podcast,previous,next,currentNumber,totalPodcasts, draftM
           </div>
           {podcast?.relatedPodcasts.length > 0 && <RelatedFeaturesSection title={podcast?.title} allPosts={podcast?.relatedPodcasts} />}
         </Wrapper>
+        </Section>
       </Layout>
     </>
   );

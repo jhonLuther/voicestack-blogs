@@ -15,7 +15,7 @@ function BannerSubscribeSection({ version }: BannerSubscribeSectionProps) {
   };
 
   return (
-    <Section className='justify-center py-24' >
+    <Section className='justify-center' >
       <Wrapper className={`flex-col`}>
         <div className={`${version === "compact" ? ' ' : 'bg-cs-gray-900  p-9  '} text-white rounded flex gap-3`}>
           <div className='flex flex-col gap-6 flex-1'>
