@@ -1,6 +1,6 @@
 const siteConfig = {
     pagination: {
-      itemsPerPage: 6, // in main page
+      itemsPerPage: 12, // in main page
       childItemsPerPage:9, // decides Content per page in child pages
       currentPage: 1,
       totalItems: 100
@@ -17,6 +17,9 @@ const siteConfig = {
       testimonial: "/testimonial",
       webinar: "/webinar",
       author: "/author",
+    },
+    paginationBaseUrls:{
+      base:"/browse"
     },
     content: {
       defaultSort: "date",

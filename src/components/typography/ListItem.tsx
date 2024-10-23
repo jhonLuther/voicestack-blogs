@@ -3,19 +3,19 @@ import { PortableText } from '@portabletext/react';
 
 const ListItem = ({ node, index, isOrdered }) => {
   const listItemStyle = {
-    marginBottom: '0.5rem',
-    paddingLeft: '1rem',
+    // marginBottom: '0.5rem',
+    // paddingLeft: '1rem',
   };
 
   const bulletStyle = {
-    display: 'inline-block',
-    marginRight: '0.5rem',
-    fontWeight: '',
+    // display: 'inline-block',
+    // marginRight: '0.5rem',
+    // fontWeight: '',
   };
 
   const getBulletPoint = () => {
     if (isOrdered) {
-      return <span style={bulletStyle}>{index + 1}.</span>;
+      return <span style={bulletStyle}>{index + 1}. </span>;
     } else {
       return <span style={bulletStyle}>•</span>;
     }

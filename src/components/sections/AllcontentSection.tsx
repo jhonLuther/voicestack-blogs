@@ -2,6 +2,9 @@ import React from 'react';
 import Card from '../Card';
 import SearchBar from '../widgets/SearchBar';
 import Link from 'next/link';
+import siteConfig from 'config/siteConfig';
+import Wrapper from '~/layout/Wrapper';
+import Section from '../Section';
 
 interface LatestBlogsProps {
   allContent: any[];
@@ -21,14 +24,15 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
   itemsPerPage,
   redirect = false,
 }) => {
-  const postsToShow = itemsPerPage || 9 // Fixed to 4
+  const postsToShow = itemsPerPage || siteConfig.pagination.itemsPerPage // Fixed to 4
 
   if (!allContent) {
     return null;
   }
 
   return (
-    <section className={`mt-9 ${className}`}>
+    <Section className={` justify-center py-24 ${className}`}>
+      <Wrapper className={`flex-col`}>
       <div className="md:flex-row flex-col gap-8 flex items-center justify-between py-9">
         <h2 className="text-cs-black text-5xl font-manrope font-extrabold">{`Browse All`}</h2>
         {!hideSearch && (
@@ -44,9 +48,9 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
         pb-16`}>
         {allContent && allContent.length > 0 ? (
           allContent.slice(0, postsToShow).map((post, index) => (
-            // className={`${(index >= 3 && (index - 3) % 9 === 0) ? 'lg:row-span-2' : ''}`}
-            <div id={index.toString()} key={post._id || index} >
-              <Card cardType={cardType} cardColor='white' post={post} />
+            <div id={index.toString()} key={post._id || index} className={`${(index >= 3 && (index - 3) % 9 === 0) ? 'row-span-2' : ''}` } >
+              <Card   
+              varyingIndex={(index >= 3 && (index - 3) % 9 === 0) ? true : false} cardType={cardType} cardColor='white' post={post} />
             </div>
           ))
         ) : (
@@ -57,14 +61,15 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
       </div>
       {allContent.length > postsToShow && redirect && (
         <div className="flex justify-center cursor-pointer">
-          <Link href={'/browse'}>
+          <Link href={siteConfig.paginationBaseUrls.base}>
             <span className="text-base hover:bg-cs-gray-800 max-w-40 font-medium rounded-sm px-2 py-4 flex items-center text-white bg-cs-gray-900">
               {`View All`}
             </span>
           </Link>
         </div>
       )}
-    </section>
+      </Wrapper>
+    </Section>
   );
 };
 

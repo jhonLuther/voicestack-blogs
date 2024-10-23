@@ -1,141 +1,138 @@
-import Image from "next/image";
-import React, { useEffect, useRef, useState } from "react";
-import { useNextSanityImage } from "next-sanity-image";
-import { useRouter } from "next/router";
-import { SanityImageSource } from "@sanity/image-url/lib/types/types";
-import useBoundingWidth from "~/utils/boundingWIdthHook";
+import Image from 'next/image';
+import React, { useEffect, useState, useRef } from 'react';
+import { urlForImage } from '~/lib/sanity.image';
+
+interface SanityImageAsset {
+  _ref: string;
+  _type: 'reference';
+}
+
+interface SanityImage {
+  _id: any;
+  _type: 'image';
+  asset: SanityImageAsset;
+  metadata: {
+    dimensions: {
+      aspectRatio: number;
+      width: number;
+      height: number;
+    };
+  };
+}
 
 interface ImageLoaderProps {
-  height?: number;
   width?: number;
-  image: SanityImageSource;
+  height?: number;
+  image: any;
+  alt?: string;
+  title?: string;
+  className?: string;
   useClientWidth?: boolean;
-  priority?: boolean;
-  maxWidth?: number;
-  wrapperPadding?: boolean;
-  client?: any;
   [x: string]: any;
 }
 
-type DeviceType = 'smallMobile' | 'largeMobile' | 'tab' | 'largerDevice' | null;
-
-const ImageLoader = ({
-  height,
-  width,
-  useClientWidth,
-  maxWidth,
+const ImageLoader: React.FC<ImageLoaderProps> = ({
   image,
-  priority,
-  wrapperPadding,
-  client,
-  ...rest
-}: ImageLoaderProps) => {
-  const imageParent = useRef<HTMLDivElement>(null);
-  const router = useRouter();
-  const [imageLayoutDimensions, setImageLayoutDimensions] = useState({
-    height: 0,
-    width: 0,
-  });
+  width = 700,
+  height = 400,
+  alt,
+  title,
+  className = '',
+  useClientWidth = false,
+  ...props
+}) => {
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [clientWidth, setClientWidth] = useState<number>(width);  
 
-  let deviceObtained = useBoundingWidth() as DeviceType;
+  useEffect(() => {
+    if (useClientWidth && containerRef.current) {
+      const handleResize = (width: number) => {
+        setClientWidth(width);
+      };
 
-  const imageProps = useNextSanityImage(client, image, {
-    imageBuilder: (imageUrlBuilder, options) => {
-      return imageUrlBuilder
-        .width(options.width || Math.min(maxWidth || 2000, 2000))
-        .quality(options.quality || 75)
-        .fit('clip');
-    },
-  });
-  
+      const resizeObserver = new ResizeObserver((entries) => {
+        for (let entry of entries) {
+          handleResize(entry.contentRect.width);
+        }
+      });
 
-  if (!image) {
+      handleResize(containerRef.current.clientWidth);
+      resizeObserver.observe(containerRef.current);
+
+      return () => resizeObserver.disconnect();
+    }
+  }, [useClientWidth]);
+
+  useEffect(() => {
+    if (!image) return;
+
+    if (typeof image === 'string') {
+      setImageUrl(image);
+      return;
+    }
+
+    let url;
+    if (useClientWidth) {
+      const aspectRatio = image?.metadata?.dimensions?.aspectRatio || 1.5;
+      const calculatedHeight = Math.round(clientWidth / aspectRatio);
+      
+      url = urlForImage(image._id, {
+        width: clientWidth,
+        height: calculatedHeight,
+        quality: 90
+      });
+    } else {
+      url = urlForImage(image._id, {
+        width: width,
+        height: height,
+        quality: 90
+      });
+    }
+
+    setImageUrl(url);
+  }, [image, clientWidth, useClientWidth, width, height]);
+
+  if (!imageUrl) {
+    console.warn('Failed to generate image URL');
     return null;
   }
 
-  const calculateRenderValues = () => {
-    if (imageParent.current) {
-      let imageWidth;
-      if (maxWidth) {
-        imageWidth = maxWidth;
-      } else {
-        const imageRect = imageParent.current.getBoundingClientRect();
-        imageWidth = imageRect.width;
-        if (deviceObtained === "smallMobile") {
-          imageWidth = 600;
-        } else if (deviceObtained === "largeMobile") {
-          imageWidth = 767;
-        } else if (deviceObtained === "tab") {
-          imageWidth = 1024;
-        }
-        // For 'largerDevice', use the container width
-      }
-
-      const ratio = Math.round(imageWidth) / (imageProps?.width || 1);
-      let height = ratio * (imageProps?.height || 1);
-      setImageLayoutDimensions({
-        height: Math.round(height),
-        width: Math.round(imageWidth),
-      });
-    }
-  };
-
-  // useEffect(() => {
-  //   calculateRenderValues();
-  // }, [imageParent, deviceObtained, router.asPath, image, maxWidth]);
-
-  const calculateAspectRatio = () => {
-    const ratio = imageProps ? (imageProps.height / imageProps.width) * 100 : 0;
-    return `${ratio.toFixed(5)}%`;
-  };
+  const aspectRatio = image?.metadata?.dimensions?.aspectRatio || width / height;
 
   if (useClientWidth) {
     return (
-      <div
-        ref={imageParent}
-        style={wrapperPadding ? { width: '100%', height: '100%' } : { width: '100%', paddingTop: `${calculateAspectRatio()}`, display: "flex", position: 'relative' }}
-      >
-        {imageLayoutDimensions.width > 0 &&
-        imageLayoutDimensions.height > 0 &&
-        imageProps ? (
+      <div ref={containerRef} className={`relative w-full ${className}`}>
+        <div
+          className="relative"
+          style={{
+            paddingTop: `${(1 / aspectRatio) * 100}%`
+          }}
+        >
           <Image
-            {...imageProps}
-            alt={(image as any).alt || ""}
-            style={wrapperPadding ? {} : {
-              position: 'absolute',
-              top: '0',
-              left: '0',
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover'
-            }}
-            width={imageLayoutDimensions.width}
-            height={imageLayoutDimensions.height}
-            title={(image as any).title}
-            priority={priority}
-            quality={75}
+            src={imageUrl}
+            alt={props.altText || image.altText}
+            title={props.title ||  image.title || ''}
+            fill
+            className="absolute top-0 left-0 w-full h-full object-cover"
           />
-        ) : null}
+        </div>
       </div>
     );
-  } else {
-    return imageProps ? (
-      <Image
-        {...imageProps}
-        alt={(image as any).alt || ""}
-        width={width || imageProps.width}
-        height={height || imageProps.height}
-        title={(image as any).title}
-        quality={75}
-        style={{
-          width: '100%',
-          height: '100%',
-          objectFit: 'cover'
-        }}
-        {...rest}
-      />
-    ) : null;
   }
+
+  return (
+    <div className={`relative ${className}`} style={{ width, height }}>
+      <Image
+        src={imageUrl}
+        alt={props.altText ||image.altText  || 'blog card image'}
+        title={props.title || image.title || 'blog card image'}
+        width={width}
+        height={height}
+        className="object-cover"
+      />
+    </div>
+  );
 };
 
 export default ImageLoader;

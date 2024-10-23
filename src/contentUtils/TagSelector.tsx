@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Fragment, useEffect, useState } from 'react';
+import Section from '~/components/Section';
+import Wrapper from '~/layout/Wrapper';
 
 interface TagSelectProps {
   tags: any[];
@@ -49,7 +51,8 @@ export default function TagSelect({
   };
 
   return (
-    <Fragment>
+    <Section className='justify-center '>
+      <Wrapper>
       {showTags && (
         <div className="flex flex-col gap-6 pb-8 md:pb-12 pt-8 md:pt-16 border-b-2 border-gray-900">
           {showHeading && selectedTag && (
@@ -90,6 +93,7 @@ export default function TagSelect({
           </ul>
         </div>
       )}
-    </Fragment>
+      </Wrapper>
+    </Section>
   );
 }
