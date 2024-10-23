@@ -76,6 +76,7 @@ const ArticlesPage = ({ articles,latestArticles, totalPages }: { articles: Artic
           baseUrl={baseUrl}
           onPageChange={handlePageChange}
           enablePageSlug={true}
+          content={articles}
         />
       </Wrapper>
     </Layout>

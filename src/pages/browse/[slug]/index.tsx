@@ -94,6 +94,7 @@ export default function TagPage({
           onPageChange={handlePageChange}
           currentPage={1}
           enablePageSlug={true}
+          content={posts}
         />
       </Wrapper>
     </Layout>

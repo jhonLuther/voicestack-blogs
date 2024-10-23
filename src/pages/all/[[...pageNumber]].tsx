@@ -99,20 +99,17 @@ export default function ProjectSlugRoute(
 
   return (
     <>
-      <Layout >
+      <Layout>
         <Wrapper>
-        <TagSelect
-					tags={tags}
-					tagLimit={5}
-					showTags={true}
-				/>
+          <TagSelect tags={tags} tagLimit={5} showTags={true} />
           <AllcontentSection allContent={posts} />
           <Pagination
             totalPages={totalPages}
             baseUrl="/all"
             onPageChange={handlePageChange}
-             currentPage={0}  
-            />
+            currentPage={0}
+            content={posts}
+          />
         </Wrapper>
       </Layout>
     </>

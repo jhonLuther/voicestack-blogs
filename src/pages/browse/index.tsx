@@ -77,6 +77,7 @@ export default function ProjectSlugRoute(
 						onPageChange={handlePageChange}
 						currentPage={0}
 						enablePageSlug={true}
+						content={posts}
 					/>
 				</Wrapper>
 			</Layout>

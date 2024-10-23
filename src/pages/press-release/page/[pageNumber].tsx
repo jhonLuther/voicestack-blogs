@@ -78,6 +78,7 @@ const PaginatedPressReleasePage = ({ pressReleases, pageNumber, totalPages }: { 
           baseUrl={baseUrl}
           onPageChange={handlePageChange}
           enablePageSlug={true}
+          content={pressReleases}
         />
       </Wrapper>
     </Layout>

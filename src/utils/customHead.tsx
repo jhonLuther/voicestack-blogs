@@ -4,7 +4,12 @@ import Head from 'next/head'
 import { urlForImage } from '~/lib/sanity.image'
 import { getIframeUrl } from '~/components/commonSections/VideoModal'
 
-export default function CustomHead({ props, type = null }: any) {
+export default function CustomHead({
+  props,
+  type = null,
+  pageNumber = null,
+  paginationType ="",
+}: any) {
   const randomId = useId() + Math.log(Math.random())
 
   const head = (data, i) => {
@@ -31,7 +36,7 @@ export default function CustomHead({ props, type = null }: any) {
   }
 
   if (props && type === null) {
-    return props.map((e, i) => {
+    return props?.map((e, i) => {
       const data = generateJSONLD(e)
 
       return head(e, i)
@@ -169,5 +174,32 @@ export default function CustomHead({ props, type = null }: any) {
     return head(metaData, randomId)
   } else if (props && type === 'breadCrumbs') {
     return breadCrumbJson(props)
+    
+  } else if ( props && type === 'pagination') {
+    const metaData = {
+      '@context': 'https://schema.org',
+      '@type': 'ItemList',
+      author: {
+        '@type': 'Person',
+        description: props?.map((ele) => {
+          return ele.excerpt
+        }),
+        name: props?.map((ele) => {
+          return ele?.author?.map((a)=>a.name)
+        }),
+        url: 'https://carestack.com',
+      },
+      itemListElement: [
+        {
+          '@type': 'ListItem',
+          position: pageNumber ?? 1,
+          url:  props && props[0] ? `www.carestack.com/${props[0]?.contentType}/page/${pageNumber}`: "www.carestack.com"
+        },
+      ],
+      numberOfItems: 3,
+      name: paginationType,
+    }
+    return head(metaData, randomId)
   }
 }
+
