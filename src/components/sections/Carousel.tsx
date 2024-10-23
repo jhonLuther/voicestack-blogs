@@ -50,11 +50,11 @@ const Carousel: React.FC<CarouselProps> = ({ items, swiperRef }) => {
             <Card cardType='ebook-card' post={item} />
           </SwiperSlide>
         ))}
-        {/* {items.map((item) => (
+        {items.map((item) => (
           <SwiperSlide key={item._id}>
             <Card cardType='ebook-card' post={item} />
           </SwiperSlide>
-        ))} */}
+        ))}
 
         
       </Swiper>

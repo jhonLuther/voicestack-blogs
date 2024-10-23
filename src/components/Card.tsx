@@ -236,20 +236,19 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
 									cardType === 'podcast-card' ? (
 										<Link href={linkUrl}>
 											<div className={`flex gap-6 items-center justify-center transition-all duration-500 h-full  rounded-lg ${className}`}>
-												<div className="relative ">
-													{post.mainImage && (
-														<ImageLoader
-															className=" object-cover"
-															image={post.mainImage}
-														/>
-													)
-													}
-													<div className="absolute inset-0 flex items-center justify-center">
-														<svg xmlns="http://www.w3.org/2000/svg" width="56" height="55" viewBox="0 0 56 55" fill="none">
-															<rect x="0.5" width="55" height="55" rx="27.5" fill="black" />
-															<path d="M21.2549 18.8935C21.2549 17.6708 22.5997 16.9255 23.6365 17.5735L37.8221 26.4395C38.7976 27.0492 38.7976 28.4698 37.8221 29.0795L23.6365 37.9455C22.5997 38.5935 21.2549 37.8481 21.2549 36.6255V18.8935Z" fill="white" />
-														</svg>
-													</div>
+												{post.mainImage && (
+													<ImageLoader
+														className=" object-cover"
+														image={post.mainImage}
+		
+							
+													/>
+												)}
+												<div className="absolute inset-0 flex items-center justify-center">
+													<svg xmlns="http://www.w3.org/2000/svg" width="56" height="55" viewBox="0 0 56 55" fill="none">
+														<rect x="0.5" width="55" height="55" rx="27.5" fill="black" />
+														<path d="M21.2549 18.8935C21.2549 17.6708 22.5997 16.9255 23.6365 17.5735L37.8221 26.4395C38.7976 27.0492 38.7976 28.4698 37.8221 29.0795L23.6365 37.9455C22.5997 38.5935 21.2549 37.8481 21.2549 36.6255V18.8935Z" fill="white" />
+													</svg>
 												</div>
 												<div className="flex flex-col h-full justify-center flex-1 gap-3">
 													{post.contentType && (
@@ -266,6 +265,40 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
 												</div>
 											</div>
 										</Link>
+									): cardType === 'ebook-card' ? (
+										<div className={`flex flex-col w-full min-h-[250px] group`}>
+												<Link href={linkUrl}>
+													<div className='relative'>
+														{(post.mainImage || post.image) && (
+															<div className="overflow-hidden absolute left-0 right-0 top-0 bottom-0">
+																<ImageLoader
+																	className="object-center object-cover group-hover:scale-110 transition-transform duration-300"
+																	image={post?.mainImage}
+																	alt={post.title || 'Blog Image'}
+																	height={varyingIndex ? 553 : 173}
+																	width={411}
+																	useClientWidth={true}
+																/>
+															</div>
+														)}
+														<div className="mt-4 flex flex-col gap-1 relative p-8">
+															<div className="bg-white rounded p-5">
+																{post.contentType && (
+																	<SubText >
+																		{post.contentType}
+																	</SubText>
+																)}
+																<H4Large className={`group-hover: group-hover:underline underline-offset-4`}>
+																	{post.title}
+																</H4Large>
+																{post.author && post.author.length > 0 && (
+																	<span className='text-[12px] font-medium'>{`by ${post.author[0].name ? post.author[0].name : ''}`}</span>
+																)}
+															</div>
+														</div>
+													</div>
+												</Link>
+											</div>
 									)
 
 										: (

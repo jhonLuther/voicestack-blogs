@@ -53,12 +53,12 @@ const DynamicPages = ({
 
 	return (
 		<>
-			<LatestBlogs contents={latestPosts} />
 			<TagSelect
 				tags={tags}
-				tagLimit={5}
+				tagLimit={7}
 				showTags={true}
 			/>
+			<LatestBlogs contents={latestPosts} />
 			<FeaturedAndPopularBlogs featuredBlog={featuredBlog} popularBlogs={popularBlogList} />
 			<BannerSubscribeSection />
 			<SliderSection items={carouselItems} />

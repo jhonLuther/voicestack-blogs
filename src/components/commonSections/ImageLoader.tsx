@@ -27,6 +27,7 @@ interface ImageLoaderProps {
   alt?: string;
   title?: string;
   className?: string;
+  imageClassName? : string;
   useClientWidth?: boolean;
   [x: string]: any;
 }
@@ -38,6 +39,7 @@ const ImageLoader: React.FC<ImageLoaderProps> = ({
   alt,
   title,
   className = '',
+  imageClassName = "",
   useClientWidth = false,
   ...props
 }) => {
@@ -133,9 +135,9 @@ const ImageLoader: React.FC<ImageLoaderProps> = ({
         src={imageUrl}
         alt={props.altText ||image.altText  || 'blog card image'}
         title={props.title || image.title || 'blog card image'}
-        width={clientWidth}
-        height={clientHeight}
-        className="object-cover h-auto"
+        width={width}
+        height={height}
+        className={`object-cover ${imageClassName}`}
       />
     </div>
   );
