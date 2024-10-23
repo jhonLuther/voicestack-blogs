@@ -79,7 +79,7 @@ const WebinarPage = ({ webinar, draftMode, token }: Props) => {
       <MainImageSection isAuthor={true} post={webinar} />
 
         <Section className='justify-center'>
-          <Wrapper>
+          <Wrapper className={'flex-col'}>
 
         <div className="flex  md:flex-row justify-between gap-20 flex-col">
             <div className="mt-12 flex md:flex-col flex-col-reverse md:w-2/3 w-full ">

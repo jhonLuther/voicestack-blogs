@@ -86,7 +86,7 @@ const PressReleasePage = ({ pressRelease, draftMode, token }: Props) => {
       <Layout >
         <MainImageSection enableDate={true} post={pressRelease} />
         <Section className='justify-center'>
-        <Wrapper>
+        <Wrapper className={'flex-col'}>
           <div className="flex  md:flex-row flex-col">
             <div className="mt-12 flex md:flex-col flex-col-reverse md:w-2/3 w-full ">
               <div className='post__content w-full '>

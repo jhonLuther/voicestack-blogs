@@ -17,6 +17,7 @@ import { urlForImage } from '~/lib/sanity.image';
 import SanityPortableText from '~/components/blockEditor/sanityBlockEditor';
 import { Toc } from '~/contentUtils/sanity-toc';
 import ShareableLinks from '~/components/commonSections/ShareableLinks';
+import Section from '~/components/Section';
 interface Props {
   caseStudy: CaseStudies;
   draftMode: boolean;
@@ -80,7 +81,8 @@ const CaseStudyPage = ({ caseStudy, draftMode, token }: Props) => {
         contentType={caseStudy?.contentType} />
       <Layout >
         <MainImageSection isAuthor={true} post={caseStudy} />
-        <Wrapper>
+        <Section className='justify-center'>
+        <Wrapper className={'flex-col'}>
           <div className="flex  md:flex-row flex-col">
             <div className="mt-12 flex md:flex-col flex-col-reverse md:w-2/3 w-full ">
               <div className='post__content w-full '>
@@ -102,6 +104,7 @@ const CaseStudyPage = ({ caseStudy, draftMode, token }: Props) => {
           </div>
           {caseStudy?.relatedCaseStudies?.length > 0 && <RelatedFeaturesSection title={caseStudy?.title} allPosts={caseStudy?.relatedCaseStudies} />}
         </Wrapper>
+        </Section>
       </Layout>
     </>
   );

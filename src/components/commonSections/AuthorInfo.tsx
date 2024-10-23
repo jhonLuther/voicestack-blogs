@@ -24,10 +24,10 @@ const  AuthorInfo = ({ author, contentType,className,showMultiple = false }:Auth
 
     return (
       <div className='flex flex-col gap-4'>
-        {Array.isArray(author)  && author.map((authors, index) => (
-          <Link className={`${className} !no-underline`}  key={authors._id || index} href={`/author/${authors.slug && authors.slug.current && authors.slug.current}`}>
+        {Array.isArray(author)  &&  author && author.map((authors, index) => (
+          <Link className={`${className} !no-underline`}  key={authors?._id || index} href={`/author/${authors?.slug && authors?.slug.current && authors?.slug.current}`}>
             <div className="author-info flex gap-4 cursor-pointer items-center">
-              {authors.picture && (
+              {authors?.picture && (
                 <Image
                   alt={authors.name}
                   className=" rounded-full !m-0"
@@ -37,8 +37,8 @@ const  AuthorInfo = ({ author, contentType,className,showMultiple = false }:Auth
                 />
               )}
               <div className='flex flex-col'>
-                <span className='!font-semibold text-lg leading-tight !no-underline'>{authors.name}</span>
-                <span className='text-base text-gray-600 !no-underline' >{authors.role}</span>
+                <span className='!font-semibold text-lg leading-tight !no-underline'>{authors?.name}</span>
+                <span className='text-base text-gray-600 !no-underline' >{authors?.role}</span>
               </div>
             </div>
           </Link>
