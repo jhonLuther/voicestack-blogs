@@ -83,8 +83,8 @@ const DynamicPages = ({
 
 	return (
 		<>
+			<LatestBlogs contents={latestPosts} />
 			<Wrapper >
-				<LatestBlogs contents={latestPosts} />
 				<TagSelect
 					tags={tags}
 					tagLimit={8}

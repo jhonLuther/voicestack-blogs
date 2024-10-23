@@ -10,10 +10,11 @@ interface LatestBlogsProps {
   className?: string;
   cardLayout?: 'ebook' 
   showPlayIcon?: boolean
+  page?: string
 }
 
 
-const LatestBlogs: React.FC<LatestBlogsProps> = ({ contents, revamp, className,showPlayIcon }) => {
+const LatestBlogs: React.FC<LatestBlogsProps> = ({ contents, revamp, className, showPlayIcon, page }) => {
 
   // console.log(contents, 'contents');
   
@@ -37,7 +38,8 @@ const LatestBlogs: React.FC<LatestBlogsProps> = ({ contents, revamp, className,s
   
   return (
     <React.Fragment>
-      {revamp ? (
+      {/* {
+      revamp ? (
         <div className={`bg-cs-gray-900 text-white ${className}`}>
           <Wrapper>
             <section className='flex w-full gap-20 md:flex-row flex-col'>
@@ -57,23 +59,27 @@ const LatestBlogs: React.FC<LatestBlogsProps> = ({ contents, revamp, className,s
             </section>
           </Wrapper>
         </div>
-      ) : (
-        <section className='flex w-full gap-20 justify-between md:flex-row flex-col'>
-          <div className='flex flex-col gap-9 md:max-w-[519px] w-full justify-between flex-1'>
-            <h2 className='text-5xl text-black font-extrabold'>Latest</h2>
-            <div className='flex flex-col gap-8  '>
-              {otherBlogs.map((blog, i) => (
-                <Card key={i + 1 || blog._id} cardType='text-only-card' isLast={i === otherBlogs.length - 1} post={blog} />
-              ))}
-            </div>
-          </div>
-          <div className='flex-grow flex-1'>
-            <div className="flex flex-col w-full overflow-hidden">
-              <Card cardType='top-image-card' key={firstBlog?._id} post={firstBlog} />
-            </div>
-          </div>
-        </section>
-      )}
+      ) : ( */}
+        <div className={`bg-zinc-900`}>
+          <Wrapper>
+            <section className={`flex w-full gap-20 justify-between  ${(revamp || page === "article") ? 'md:flex-row-reverse flex-col-reverse' : 'md:flex-row flex-col'}`}>
+              <div className='flex flex-col gap-9 md:max-w-[519px] w-full flex-1'>
+                <h2 className='text-5xl text-white font-extrabold'>Latest</h2>
+                <div className='flex flex-col gap-8'>
+                  {otherBlogs.map((blog, i) => (
+                    <Card key={i + 1 || blog._id} cardType='text-only-card' isLast={i === otherBlogs.length - 1} post={blog}  cardColor='white'/>
+                  ))}
+                </div>
+              </div>
+              <div className={`flex-grow flex-1 max-w-[602px]`}>
+                <div className="flex flex-col w-full overflow-hidden">
+                  <Card direction={`${page === "article" && 'reverse'}`} cardType={`${revamp ? 'top-image-contentType-card' : 'top-image-card'}`}  key={firstBlog?._id} post={firstBlog} cardColor='white'/>
+                </div>
+              </div>
+            </section>
+          </Wrapper>
+        </div>
+      {/* )} */}
     </React.Fragment>
   );
 };

@@ -48,7 +48,7 @@ const ArticlesPage = ({ articles,latestArticles, totalPages }: { articles: Artic
 
   return (
     <Layout>
-      <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'} revamp={true} contents={latestArticles} />
+      <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'} page="article" contents={latestArticles} />
       <Wrapper>
         <AllcontentSection
           baseUrl={baseUrl}

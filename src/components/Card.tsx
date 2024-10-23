@@ -16,11 +16,13 @@ interface CardProps {
   cardColor?: string
   showPlayIcon?: boolean
   isLast?: boolean;
+	direction?: string;
 }
 
-export default function Card({ post, isLast, cardType, className, cardColor, showPlayIcon = false }: CardProps) {
+export default function Card({ post, isLast, cardType, className, cardColor, showPlayIcon = false, direction }: CardProps) {
 
   const [linkUrl, setLinkUrl] = useState<string | null>(null);
+	const reverse = direction === "reverse";
 
   useEffect(() => {
     if (router.isReady && post?.slug) {
@@ -38,11 +40,11 @@ export default function Card({ post, isLast, cardType, className, cardColor, sho
     <React.Fragment>
       {cardType === 'top-image-card' ? (
         <Link href={linkUrl}>
-          <div className="flex flex-col gap-1 group overflow-hidden">
+          <div className={`flex gap-1 rounded-lg group overflow-hidden ${reverse ? 'flex-col-reverse' : 'flex-col'}`}>
             <div className='overflow-hidden'>
               {(post.mainImage || post.image) ? (
                 <Image
-                  className="w-auto rounded-b-md block min-h-[250px] object-center object-cover group-hover: scale-100 transition duration-500 "
+                  className="w-auto block min-h-[250px] object-center object-cover group-hover: scale-100 transition duration-500 "
                   src={urlForImage(post.mainImage || post.image).width(700).height(350).url()}
                   height={350}
                   width={700}
@@ -60,7 +62,7 @@ export default function Card({ post, isLast, cardType, className, cardColor, sho
                 </div>
               }
             </div>
-            <div className="flex pt-[42px] px-9 pb-[42px] rounded-t-md bg-bg-green flex-col items-start gap-10 flex-1">
+            <div className="flex pt-[42px] px-9 pb-[42px] bg-orange-700 flex-col items-start gap-10 flex-1">
               <div className="flex flex-col gap-3">
                 {post.tags && post.tags[0] && (
                   <span className="uppercase text-white font-inter text-sm font-medium">
@@ -158,11 +160,11 @@ export default function Card({ post, isLast, cardType, className, cardColor, sho
             : cardType === 'text-only-card' ? (
               <div className={`flex flex-col flex-1 w-full group hover:scale-100 transform duration-300 ${className} `}>
                 <Link href={linkUrl}>
-                  <div className={`${!isLast && `border-b-2`} pb-6 flex flex-col gap-3 ${cardColor === 'white' ? 'border-white' : 'border-gray-900'} group-hover:border-gray-600`}>
+                  <div className={`${!isLast && `border-b`} pb-6 flex flex-col gap-3 ${cardColor === 'white' ? 'border-zinc-800' : 'border-gray-900'} group-hover:border-gray-600`}>
                     {post.tags && post.tags[0] && (
-                      <span className="uppercase font-inter text-sm font-medium">{post?.tags[0]?.tagName}</span>
+                      <span className={`uppercase font-inter text-sm font-medium ${cardColor === 'white' && 'text-zinc-500'}`}>{post?.tags[0]?.tagName}</span>
                     )}
-                    <h3 className={`text-4xl font-bold font-manrope ${cardColor === 'white' ? 'text-white' : 'text-gray-900'} w-full group-hover: group-hover:underline underline-offset-4`}>
+                    <h3 className={`text-4xl font-bold font-manrope ${cardColor === 'white' ? 'text-zinc-200' : 'text-gray-900'} w-full group-hover: group-hover:underline underline-offset-4`}>
                       {post.title}
                     </h3>
                   </div>
