@@ -45,7 +45,7 @@ export default function Card({ post, isLast, cardType, className, cardColor, var
 					<div className="flex flex-col gap-1 group overflow-hidden">
 						<div className='overflow-hidden rounded-t-lg'>
 							{(post.mainImage) ? (
-								<div className="w-auto  block min-h-[350px] object-center object-cover transform transition duration-500"
+								<div className="w-auto  block min-h-[350px] h-[350px] object-center object-cover transform transition duration-500"
 								>
 									<ImageLoader
 										className='transform  duration-300 group-hover:scale-105'
