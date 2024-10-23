@@ -17,24 +17,26 @@ const Pagination = ({
   baseUrl: string,
   onPageChange: (page: number) => void,
   enablePageSlug?: boolean
+  content?: any
 }) => {
-  const router = useRouter();
+  const router = useRouter()
 
   const handlePageChange = (page: number) => {
     if (page !== currentPage) {
-      onPageChange(page);
+      onPageChange(page)
       if (page === 1) {
-        router.push(baseUrl);
+        router.push(baseUrl)
       } else if (enablePageSlug) {
-        router.push(`${baseUrl}/page/${page}`);
+        router.push(`${baseUrl}/page/${page}`)
       } else {
-        router.push(`${baseUrl}/${page}`);
+        router.push(`${baseUrl}/${page}`)
       }
     }
-  };
+  }
+
 
   const renderPageNumbers = () => {
-    const visiblePages = Array.from({ length: totalPages }, (_, i) => i + 1);
+    const visiblePages = Array.from({ length: totalPages }, (_, i) => i + 1)
 
     return visiblePages.map((number) => (
       <button
@@ -103,4 +105,4 @@ const Pagination = ({
   );
 };
 
-export default Pagination;
+export default Pagination

@@ -25,10 +25,9 @@ const TestimonialSection = ({ testimonials }: TestimonialSectionProps) => {
   const isMobile: any = useMediaQuery(767);
 
   return (
-    <Section className='md:!p-0 justify-center'>
+    <Section className='gap-0 bg-[#F5C6C6] p-11 justify-center relative flex content-center items-center'>
 
-      <div className="  gap-0 bg-[#F5C6C6] p-11 relative flex content-center items-center" >
-        <Wrapper className="flex-col items-center">
+        <Wrapper>
           {testimonials && testimonials.length && testimonials.map((testimonialItem, i) => (
             <div className='flex md:flex-row flex-col  content-center items-center' key={i}>
               <div className='flex  md:px-14   px-0 py-9 flex-1 gap-8'>
@@ -77,7 +76,6 @@ const TestimonialSection = ({ testimonials }: TestimonialSectionProps) => {
           ))
           }
         </Wrapper>
-      </div>
     </Section>
   );
 };
