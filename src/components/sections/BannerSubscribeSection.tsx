@@ -17,29 +17,34 @@ function BannerSubscribeSection({ version }: BannerSubscribeSectionProps) {
   return (
     <Section className='justify-center' >
       <Wrapper className={`flex-col`}>
-        <div className={`${version === "compact" ? ' ' : 'bg-cs-gray-900  p-9  '} text-white rounded flex gap-3`}>
+        <div className={`bg-white flex gap-3`}>
           <div className='flex flex-col gap-6 flex-1'>
-            <div className='flex  gap-1 justify-start content-start align items-start md:flex-row flex-col'>
-              <h2 className={` ${version === "compact" ? ' text-black md:text-4xl  text-2xl' : 'text-white md:text-5xl  text-2xl '} font-manrope font-extrabold`}>Subscribe to CS Growth Digest</h2>
-              {version !== "compact" && <p className="md:text-lg text-base font-medium">Get the best, coolest, and latest in the dental industry delivered to your inbox each week.</p>}
+
+            <div className='flex gap-1 justify-between content-start align items-start md:flex-row flex-col'>
+              <h2 className={`text-zinc-900 md:text-5xl text-2xlfont-monrope tracking-[-0.96px] font-manrope font-extrabold`}>Subscribe to<br/> <span className=' bg-gradient-text2 bg-clip-text text-transparent '>Dentistry’s Inner Circle</span></h2>
+              <p className="md:text-lg text-base font-medium max-w-[392px] self-end">Get the best, coolest, and latest in the dental industry delivered to your inbox each week.</p>
             </div>
-            <div className={`flex md:flex-row flex-col gap-3 
-            items-center m rounded border-2 justify-between  ${version === "compact" ? 'px-5 py-4 border-cs-gray-100 ' : 'bg-cs-gray-900 md:py-6 py-3 md:px-8 px-4  border-cs-gray-800'}`}>
+
+            <div className={`flex md:flex-row flex-col gap-3 items-center rounded border justify-between py-3 md:py-4 pl-6 pr-4 border-zinc-300`}>
               <input id="default-search"
                 type="email"
                 placeholder="Enter your email address"
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
-                className="block  flex-1  md:max-w-2xl  w-full p-4 
-                 text-cs-gray-600  font-medium text-2x   bg-transparent focus:ring-blue-500 focus:border-blue-500 dark:bg-transparent  focus:outline-none dark:placeholder-gray-400 dark:text-cs-gray-600 dark:focus:border-blue-500"
+                className="block flex-1 md:max-w-2xl  w-full py-2 
+                 text-cs-gray-600 font-medium text-2x bg-transparent focus:ring-blue-500 focus:border-blue-500 dark:bg-transparent focus:outline-none dark:placeholder-gray-400 dark:text-cs-gray-600 dark:focus:border-blue-500"
                 required />
+
               <Button className='bg-cs-gray-900' onClick={handleSubmit}>
                 <span className='text-base font-medium'>Submit</span>
               </Button>
             </div>
+
           </div>
         </div>
-        <p className="mt-4 text-base font-semibold text-cs-lightGray-900">You can unsubscribe at any time, no hard feelings. <span className='underline underline-offset-2'>{`Privacy policy.`} </span></p>
+
+        <p className="mt-4 text-base font-medium text-zinc-500 leading-[1.2]">You can unsubscribe at any time, no hard feelings. <span className='underline underline-offset-2'>{`Privacy policy.`} </span></p>
+
       </Wrapper>
     </Section>
   );
