@@ -59,7 +59,7 @@ const TagsCarousel: React.FC<TagsCarouselProps> = ({ tags, selectedTag, onTagCha
               className={`flex py-1 text-[14px] font-medium leading-[1.5] text-center cursor-pointer justify-center
                 ${ selectedTag === tag.slug.current
                     ? 'text-zinc-300'
-                    : 'text-zinc-400 hover:hover:text-zinc-300'
+                    : 'text-zinc-400 hover:text-zinc-300'
                 }`}
             >
               <Link href={`/browse/${tag.slug.current}`} scroll={false}>
