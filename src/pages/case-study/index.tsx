@@ -13,6 +13,7 @@ import siteConfig from '../../../config/siteConfig';
 import React, { useRef } from 'react';
 import Pagination from '~/components/commonSections/Pagination';
 import CustomHead from '~/utils/customHead' 
+import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection';
 
 export const getStaticProps: GetStaticProps<SharedPageProps & { caseStudies: CaseStudies[]; totalPages: number }> = async (context) => {
   const draftMode = context.preview || false;
@@ -69,6 +70,7 @@ const CaseStudiesPage = ({ caseStudies,latestCaseStudies, totalPages }: { caseSt
           onPageChange={handlePageChange}
           enablePageSlug={true}
         />
+        <BannerSubscribeSection />
     </Layout>
   )
 };

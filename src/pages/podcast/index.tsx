@@ -13,6 +13,7 @@ import siteConfig from '../../../config/siteConfig';
 import React, { useRef } from 'react';
 import Pagination from '~/components/commonSections/Pagination';
 import CustomHead from '~/utils/customHead';
+import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection';
 
 export const getStaticProps: GetStaticProps<SharedPageProps & { podcasts: Podcasts[]; totalPages: number }> = async (context) => {
   const draftMode = context.preview || false;
@@ -56,7 +57,7 @@ const PodcastsPage = ({ podcasts,latestPodcasts, totalPages }: { podcasts: Podca
           className={'pb-9'}
           allContent={podcasts}
           hideSearch={true}
-          cardType="left-image-card"
+          cardType="podcast-card"
           itemsPerPage={siteConfig.pagination.childItemsPerPage}
         />
         <Pagination
@@ -66,6 +67,7 @@ const PodcastsPage = ({ podcasts,latestPodcasts, totalPages }: { podcasts: Podca
           onPageChange={handlePageChange}
           enablePageSlug={true}
         />
+        <BannerSubscribeSection />
     </Layout>
   );
 };

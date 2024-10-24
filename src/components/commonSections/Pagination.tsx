@@ -73,7 +73,7 @@ const Pagination = ({
   `;
 
   return (
-    <Section className="justify-center">
+    <Section className="justify-center md:pb-12 md:pt-16">
       <Wrapper className="justify-center">
         <div className="flex items-center space-x-2">
           <button

@@ -11,6 +11,7 @@ import siteConfig from '../../../../config/siteConfig';
 import React, { useRef } from 'react';
 import Pagination from '~/components/commonSections/Pagination';
 import { getPressReleases, getPressReleasesCount } from '~/lib/sanity.queries';
+import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection';
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const client = getClient();
@@ -79,6 +80,7 @@ const PaginatedPressReleasePage = ({ pressReleases, pageNumber, totalPages }: { 
           enablePageSlug={true}
           content={pressReleases}
         />
+        <BannerSubscribeSection />
     </Layout>
   );
 };

@@ -13,6 +13,7 @@ import siteConfig from '../../../config/siteConfig';
 import React, { useRef } from 'react';
 import Pagination from '~/components/commonSections/Pagination';
 import CustomHead from '~/utils/customHead';
+import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection';
 
 export const getStaticProps: GetStaticProps<SharedPageProps & { articles: Articles[]; totalPages: number }> = async (context) => {
   const draftMode = context.preview || false;
@@ -36,7 +37,7 @@ export const getStaticProps: GetStaticProps<SharedPageProps & { articles: Articl
 };
 
 const ArticlesPage = ({ articles,latestArticles, totalPages }: { articles: Articles[];latestArticles: Articles[]; totalPages: number }) => {
-  console.log(articles,"articles")
+  console.log(latestArticles,"latestArticles")
   const router = useRouter();
   const baseUrl = useRef(`/${siteConfig.pageURLs.article}`).current;
 
@@ -72,6 +73,7 @@ const ArticlesPage = ({ articles,latestArticles, totalPages }: { articles: Artic
           enablePageSlug={true}
           content={articles}
         />
+        <BannerSubscribeSection />
     </Layout>
   )
 };

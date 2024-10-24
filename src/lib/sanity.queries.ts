@@ -137,6 +137,7 @@ export const homeSettingsQuery = groq`
        id,
       "desc": postFields.excerpt,
       title,
+      contentType,
      ${imageFragment},
       slug,
       author[]-> {
@@ -157,6 +158,7 @@ export const homeSettingsQuery = groq`
       _id,
       testimonialName,
       slug,
+      
       "customer": customer-> {
         _id,
         name,
@@ -174,6 +176,11 @@ export const homeSettingsQuery = groq`
     },
 
     popularBlogs[]->{
+      _id,
+      slug,
+      "desc": postFields.excerpt,
+      title,
+      contentType,
      ${imageFragment},
      ${bodyFragment},
      "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180),
@@ -184,6 +191,11 @@ export const homeSettingsQuery = groq`
     },
 
     FeaturedContents[]->{
+      _id,
+      slug,
+      contentType,
+      "desc": postFields.excerpt,
+      title,
       ${imageFragment},
      ${bodyFragment},
      "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180),
@@ -195,6 +207,8 @@ export const homeSettingsQuery = groq`
 
     FeaturedBlog->{
       title,
+        contentType,
+
      ${imageFragment},
       blogColor,
       excerpt,
@@ -443,6 +457,7 @@ export const podcastsQuery = groq`
   "author": author[]-> {
     _id,
     name,
+    role,
     slug,
     bio,
     "picture": picture.asset->url,
@@ -465,6 +480,7 @@ export const webinarsQuery = groq`
   "author": author[]-> {
     _id,
     name,
+    role,
     slug,
     bio,
     "picture": picture.asset->url,
@@ -493,6 +509,7 @@ export const ebooksQuery = groq`
   "author": author[]-> {
     _id,
     name,
+    role,
     slug,
     bio,
     "picture": picture.asset->url,
@@ -523,6 +540,7 @@ export const pressReleasesQuery = groq`
   "author": author[]-> {
     _id,
     name,
+    role,
     slug,
     bio,
     "picture": picture.asset->url,
@@ -551,6 +569,7 @@ export const artilclesQuery = groq`
   "author": author[]-> {
     _id,
     name,
+    role,
     slug,
     bio,
     "picture": picture.asset->url,
@@ -579,6 +598,7 @@ export const caseStudiesQuery = groq`
   "author": author[]-> {
     _id,
     name,
+    role,
     slug,
     bio,
     "picture": picture.asset->url,
@@ -881,6 +901,7 @@ export const caseStudyBySlugQuery = groq`
     "author": author[]-> {
       _id,
       name,
+      role,
       slug,
       bio,
       "picture": picture.asset->url,

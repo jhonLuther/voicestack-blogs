@@ -11,6 +11,7 @@ import siteConfig from '../../../../config/siteConfig';
 import React, { useRef } from 'react';
 import Pagination from '~/components/commonSections/Pagination';
 import { getTestiMonials, getTestiMonialsCount } from '~/lib/sanity.queries';
+import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection';
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const client = getClient();
@@ -63,13 +64,12 @@ const PaginatedTestimonialsPage = ({ testimonials, pageNumber, totalPages }: { t
 
   return (
     <Layout>
-      <Wrapper>
         <AllcontentSection
           baseUrl={baseUrl}
           className={'pb-9'}
           allContent={testimonials}
           hideSearch={true}
-          cardType={'podcast-card'}
+          cardType="left-image-card"
           itemsPerPage={siteConfig.pagination.childItemsPerPage}
         />
         <Pagination
@@ -79,7 +79,7 @@ const PaginatedTestimonialsPage = ({ testimonials, pageNumber, totalPages }: { t
           onPageChange={handlePageChange}
           enablePageSlug={true}
         />
-      </Wrapper>
+        <BannerSubscribeSection />
     </Layout>
   );
 };

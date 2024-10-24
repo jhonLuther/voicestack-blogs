@@ -8,6 +8,7 @@ import AllcontentSection from '~/components/sections/AllcontentSection'
 import TagSelect from '~/contentUtils/TagSelector'
 import Wrapper from '~/layout/Wrapper'
 import Pagination from '~/components/commonSections/Pagination'
+import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection'
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const client = getClient();
@@ -86,6 +87,7 @@ export default function TagPagePaginated({
           enablePageSlug={true}
           content={posts}
         />
+        <BannerSubscribeSection />
     </Layout>
   )
 }

@@ -5,6 +5,8 @@ import Link from 'next/link';
 import siteConfig from 'config/siteConfig';
 import Wrapper from '~/layout/Wrapper';
 import Section from '../Section';
+import { ArrowTopRightIcon } from '@sanity/icons'
+
 
 interface LatestBlogsProps {
   allContent: any[];
@@ -31,9 +33,9 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
   }
 
   return (
-    <Section className={` justify-center py-24 ${className}`}>
+    <Section className={` justify-center md:pb-0 md:pt-24`}>
       <Wrapper className={`flex-col`}>
-        <div className="md:flex-row flex-col gap-8 flex items-center justify-between py-9">
+        <div className="md:flex-row flex-col gap-8 flex items-center justify-between pb-12">
           <h2 className="text-cs-black text-5xl font-manrope font-extrabold">{`Explore All`}</h2>
           {!hideSearch && (
             <div className="relative max-w-xl flex-1">
@@ -46,19 +48,20 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
 
             <span className='text-xs font-medium'>{`Browse All`}</span>
             <span className="text-xl">
-              <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10" fill="none">
-                <path d="M0 0.5H9M9 0.5V9.5M9 0.5L1.125 8.375" stroke="#151515" />
-              </svg>
+            <ArrowTopRightIcon className='group-hover:translate-y-[-2px] transition-transform duration-300' height={20} width={20} />
             </span>
           </div>
           </Link>}
 
         </div>
         <div className={`grid 
-        ${cardType === 'left-image-card' ? 'lg:grid-cols-2 md:grid-cols-1' : 'lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1'} 
-        gap-y-9 
-        ${cardType === 'left-image-card' ? 'gap-x-12' : 'gap-4'} 
-        pb-16`}>
+          ${cardType === 'left-image-card' 
+            ? 'lg:grid-cols-2 md:grid-cols-1 gap-x-16 gap-y-12' 
+            : cardType === 'podcast-card' 
+            ? 'lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-x-9 gap-y-8' 
+            : 'lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-x-9 gap-y-8'
+          }
+        `}>
           {allContent && allContent.length > 0 ? (
             allContent.slice(0, postsToShow).map((post, index) => (
               <div id={index.toString()} key={post._id || index} className={`${(index >= 3 && (index - 3) % 9 === 0) && cardType !== 'left-image-card' ? 'row-span-2' : ''}`} >
