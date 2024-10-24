@@ -54,7 +54,7 @@ const LatestBlogs: React.FC<LatestBlogsProps> = ({ contents, reverse, className,
             </div>
             <div className=' md:w-6/12 w-full'>
               <div className="flex flex-col w-full overflow-hidden ">
-                <Card reverse={reverse} cardType='top-image-card' key={firstBlog?._id} post={firstBlog} />
+                <Card reverse={reverse} cardType='top-image-card'  key={firstBlog?._id} post={firstBlog} />
               </div>
             </div>
           </Wrapper>

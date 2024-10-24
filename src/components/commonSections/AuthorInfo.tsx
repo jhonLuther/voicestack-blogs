@@ -8,9 +8,10 @@ interface AuthorProps {
   contentType?: string
   className?: string
   showMultiple?: boolean
+  showNameOnly?: boolean
 }
 
-const  AuthorInfo = ({ author, contentType,className,showMultiple = false }:AuthorProps) => {
+const  AuthorInfo = ({ author, contentType,className,showMultiple = false,showNameOnly = false }:AuthorProps) => {
 
   if (!author) {
     return null
@@ -38,7 +39,7 @@ const  AuthorInfo = ({ author, contentType,className,showMultiple = false }:Auth
               )}
               <div className='flex flex-col'>
                 <span className='!font-semibold text-lg leading-tight !no-underline'>{authors?.name}</span>
-                <span className='text-base text-gray-600 !no-underline' >{authors?.role}</span>
+                {!showNameOnly && <span className='text-base text-gray-600 !no-underline' >{authors?.role}</span>}
               </div>
             </div>
           </Link>

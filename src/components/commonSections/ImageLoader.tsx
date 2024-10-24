@@ -82,14 +82,13 @@ const ImageLoader: React.FC<ImageLoaderProps> = ({
       const aspectRatio = image?.metadata?.dimensions?.aspectRatio || 1.5;
       const calculatedHeight = Math.round(clientWidth / aspectRatio);
 
-      
-      url = urlForImage(image._id, {
+      url = urlForImage(image._id || image, {
         width: clientWidth,
         height: calculatedHeight,
         quality: 90
       });
     } else {
-      url = urlForImage(image._id, {
+      url = urlForImage(image._id || image, {
         width: width,
         height: height,
         quality: 90
@@ -130,13 +129,14 @@ const ImageLoader: React.FC<ImageLoaderProps> = ({
   }
 
   return (
-    <div className={`relative  ${className}`} style={{ width, height }}>
+    <div className={`relative  w-full h-full   ${className}`} style={{ width, height }}>
       <Image
         src={imageUrl}
         alt={props.altText ||image.altText  || 'blog card image'}
         title={props.title || image.title || 'blog card image'}
         width={width}
         height={height}
+        layout="responsive"
         className={`object-cover ${imageClassName}`}
       />
     </div>

@@ -26,8 +26,6 @@ interface DynamicProps {
 }
 
 const DynamicPages = ({
-	children,
-	props,
 	posts,
 	tags,
 	testimonials,
@@ -38,14 +36,14 @@ const DynamicPages = ({
 	latestPosts,
 	ebooks,
 	webinars,
-	...rest
+	// ...rest
 }: DynamicProps) => {
 
 	const featuredBlog = homeSettings?.FeaturedBlog || posts[0];
 
-	const popularBlogList = popularBlogs
-		? homeSettings?.popularBlogs
-		: posts.slice(1, 5);
+	const popularBlogList = popularBlogs.concat(posts.slice(1, 5 - popularBlogs.length));
+
+	// const latestContents = featuredContents?.concat(latestPosts?.slice(1, 5 - featuredContents.length));
 
 	const carouselItems = [...ebooks, ...webinars]
 

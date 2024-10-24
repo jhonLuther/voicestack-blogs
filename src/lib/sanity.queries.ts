@@ -137,7 +137,7 @@ export const homeSettingsQuery = groq`
        id,
       "desc": postFields.excerpt,
       title,
- ${imageFragment},
+     ${imageFragment},
       slug,
       author[]-> {
       _id,
@@ -174,11 +174,23 @@ export const homeSettingsQuery = groq`
     },
 
     popularBlogs[]->{
-      ...
+     ${imageFragment},
+     ${bodyFragment},
+     "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180),
+      author[]-> {
+      _id,
+      name,
+    },
     },
 
     FeaturedContents[]->{
-      ...
+      ${imageFragment},
+     ${bodyFragment},
+     "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180),
+      author[]-> {
+      _id,
+      name,
+    },
     },
 
     FeaturedBlog->{
@@ -475,6 +487,9 @@ export const ebooksQuery = groq`
   excerpt,
  ${imageFragment},
   ${bodyFragment},
+   "numberOfCharacters": length(pt::text(body)),
+   "estimatedWordCount": round(length(pt::text(body)) / 5),
+  "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180),
   "author": author[]-> {
     _id,
     name,
@@ -502,6 +517,9 @@ export const pressReleasesQuery = groq`
   excerpt,
  ${imageFragment},
   ${bodyFragment},
+  "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180),
+   "numberOfCharacters": length(pt::text(body)),
+  "estimatedWordCount": round(length(pt::text(body)) / 5),
   "author": author[]-> {
     _id,
     name,
@@ -709,7 +727,8 @@ export const ebookBySlugQuery = groq`
     duration,
     publishedAt,
     excerpt,
- ${imageFragment},
+   ${imageFragment},
+   ${bodyFragment},
     "region": region,
     "date": date,
     "numberOfCharacters": length(pt::text(body)),
@@ -720,7 +739,6 @@ export const ebookBySlugQuery = groq`
         url
       }
     },
-    ${bodyFragment},
     ${tocFragment},
     "author": author[]-> {
       _id,
