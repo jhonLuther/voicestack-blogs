@@ -70,7 +70,7 @@ const DownloadEbook = ({ ebook }) => {
             </Button>
           </div>
         </div>
-        <BannerSubscribeSection version={'compact'} />
+        {/* <BannerSubscribeSection isSmall={true}  /> */}
       </div>
     </div>
   );

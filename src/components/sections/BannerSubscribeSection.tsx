@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import Button from '../commonSections/Button';
 import Section from '../Section';
 import Wrapper from '~/layout/Wrapper';
+import H3XL from '../typography/H3XL';
 
 interface BannerSubscribeSectionProps {
-  version?: string
+  isSmall?: boolean
 }
-function BannerSubscribeSection({ version }: BannerSubscribeSectionProps) {
+function BannerSubscribeSection({ isSmall }: BannerSubscribeSectionProps) {
   const [email, setEmail] = useState('');
 
   const handleSubmit = (event) => {
@@ -21,7 +22,7 @@ function BannerSubscribeSection({ version }: BannerSubscribeSectionProps) {
           <div className='flex flex-col gap-6 flex-1'>
 
             <div className='flex gap-1 justify-between content-start align items-start md:flex-row flex-col'>
-              <h2 className={`text-zinc-900 md:text-5xl text-2xlfont-monrope tracking-[-0.96px] font-manrope font-extrabold`}>Subscribe to<br/> <span className=' bg-gradient-text2 bg-clip-text text-transparent '>Dentistry’s Inner Circle</span></h2>
+              <H3XL className={`text-zinc-900 md:text-5xl text-2xlfont-monrope tracking-[-0.96px] font-manrope font-extrabold`}>Subscribe to<br/> <span className=' bg-gradient-text2 bg-clip-text text-transparent '>Dentistry’s Inner Circle</span></H3XL>
               <p className="md:text-lg text-base font-medium max-w-[392px] self-end">Get the best, coolest, and latest in the dental industry delivered to your inbox each week.</p>
             </div>
 

@@ -29,10 +29,12 @@ export default function TagSelect({
   const router = useRouter();
 
   useEffect(() => {
-    const slug = router.query.slug as string || tags[0]?.slug?.current || '';
-    setSelectedTag(slug);
-    localStorage.setItem('selectedTag', slug); 
-  }, [router.query.slug, tags]);
+    const slug = router.query.slug as string;
+    if (slug) {
+      setSelectedTag(slug);
+      localStorage.setItem('selectedTag', slug);
+    }
+  }, [router.query.slug]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
