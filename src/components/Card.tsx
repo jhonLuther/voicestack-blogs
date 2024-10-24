@@ -281,16 +281,17 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
                   : (
 
                     // default card
-                    <div className={`flex flex-col w group relative `}>
-                      <Link href={linkUrl}>
+                    <div className={`flex flex-col group relative h-full`}>
+                      <Link href={linkUrl} className='flex flex-col h-full'>
                         {(post.mainImage || post.image) && (
-                          <div className={`overflow-hidden ${varyingIndex ? 'rounded-t-lg' : 'rounded-lg'} relative  w-full`}>
+                          <div className={`overflow-hidden ${varyingIndex ? 'rounded-t-lg  flex-1' : 'rounded-lg'} relative  w-full`}>
                             <ImageLoader
-                              className="object-cover group-hover:scale-110 transition-transform duration-300 "
+                              className="h-full"
+															imageClassName='group-hover:scale-105 transition-transform duration-300 w-full h-full inline'
                               image={post?.mainImage}
                               alt={post.title || 'Blog Image'}
-                              height={varyingIndex ? 553 : 173}
-                              width={411}
+                              // height={varyingIndex ? 553 : 173}
+                              // width={411}	
                             />
                             {
                               post.contentType === 'podcast' ? (
@@ -307,7 +308,7 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
                         )}
                         {
 
-                      <div className={`${varyingIndex ? 'p-8 bg-indigo-900 text-white rounded-b-lg mt-1' : 'mt-6'} flex flex-col gap-1 min-h-[154px]`}>
+                      <div className={`${varyingIndex ? 'p-8 bg-indigo-900 text-white rounded-b-lg mt-1' : 'mt-6 flex-1'} flex flex-col gap-1`}>
                         <div className='flex flex-col flex-grow'>
                           {post.contentType && (
                             <SubText className={varyingIndex ? 'text-white' : ''}>

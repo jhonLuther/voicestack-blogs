@@ -125,6 +125,7 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
                   cardType={cardType} 
                   cardColor='white' 
                   post={post} 
+                  className=''
                 />
               </div>
             ))
