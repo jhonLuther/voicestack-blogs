@@ -77,22 +77,6 @@ export default function ProjectSlugRoute(
 					currentPage={0}
 					enablePageSlug={true}
 				/>
-				<Wrapper>
-					<TagSelect
-						tags={tags}
-						tagLimit={5}
-						showTags={true}
-					/>
-					<AllcontentSection hideSearch={true} allContent={posts} />
-					<Pagination
-						totalPages={totalPages}
-						baseUrl="/browse"
-						onPageChange={handlePageChange}
-						currentPage={0}
-						enablePageSlug={true}
-						content={posts}
-					/>
-				</Wrapper>
 			</Layout>
 		</>
 	)
