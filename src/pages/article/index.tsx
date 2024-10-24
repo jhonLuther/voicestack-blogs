@@ -56,12 +56,6 @@ const ArticlesPage = ({ articles,latestArticles, totalPages }: { articles: Artic
             return <CustomHead props={e} type="caseStudy" key={i} />
           })
         : null}
-      <LatestBlogs
-        className={'pt-11 pr-9 pb-16 pl-9'}
-        reverse={true}
-        contents={latestArticles}
-      />
-      <Wrapper>
         <AllcontentSection
           baseUrl={baseUrl}
           className={'pb-9'}
@@ -78,7 +72,6 @@ const ArticlesPage = ({ articles,latestArticles, totalPages }: { articles: Artic
           enablePageSlug={true}
           content={articles}
         />
-        </Wrapper>
     </Layout>
   )
 };

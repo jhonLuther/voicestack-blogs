@@ -100,7 +100,7 @@ export function generateJSONLD(post: any) {
           '@type': 'NewsArticle',
           '@context': 'https://schema.org',
           headline: post.excerpt || '',
-          image: urlForImage(post?.mainImage).width(10).height(10).url(),
+          image: urlForImage(post?.mainImage),
           author: [
             {
               '@type': 'Person',

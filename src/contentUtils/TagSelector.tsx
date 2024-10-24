@@ -51,7 +51,7 @@ export default function TagSelect({
   };
 
   return (
-    <Section className='bg-zinc-900 justify-center !py-0'>
+    <Section className='bg-gray-900 justify-center !py-0'>
       <Wrapper>
       {showTags && (
         <div className="flex flex-row gap-6 pt-6 md:pt-6 pb-6">
@@ -72,6 +72,7 @@ export default function TagSelect({
             {tags &&
               tags.slice(0, visibleTagCount).map((tag, i) => (
                   <li
+                    key={tag._id || i}
                     onClick={() => onTagChanges(tag)}
                     className={`flex py-1 text-base text-[14px] font-medium leading-[1.5] text-center cursor-pointer 
                       ${ selectedTag === tag.slug.current

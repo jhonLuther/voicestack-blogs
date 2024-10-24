@@ -32,7 +32,7 @@ const MainImageSection = ({ post, isAuthor, enableDate = false, isAudio = false 
 	}
 
 	return (
-		<div className='w-full flex gap-1 items-center bg-zinc-900 relative overflow-hidden'>
+		<div className='w-full flex gap-1 items-center bg-gray-900 relative overflow-hidden'>
 			<Section className={`justify-center w-full `}>
 				<Wrapper className="z-10 flex h-auto">
 					<div className='flex flex-col items-start gap-32 text-white md:max-w-[46%] max-w-lg h-full justify-center py-8 md:py-24'>

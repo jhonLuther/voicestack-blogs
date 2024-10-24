@@ -41,7 +41,8 @@ const DynamicPages = ({
 
 	const featuredBlog = homeSettings?.FeaturedBlog || posts[0];
 
-	const popularBlogList = popularBlogs.concat(posts.slice(1, 5 - popularBlogs.length));
+	// const popularBlogList = popularBlogs ? popularBlogs.concat(posts.slice(1, 6 - popularBlogs.length)) : posts.slice(1, 5);
+	const popularBlogList =  posts.slice(1, 5);
 
 	// const latestContents = featuredContents?.concat(latestPosts?.slice(1, 5 - featuredContents.length));
 

@@ -74,7 +74,7 @@ export default function CustomHead({
       '@context': 'https://schema.org',
       '@type': 'NewsArticle',
       headline: props.title ?? '',
-      image: [urlForImage(props?.mainImage)?.width(300).height(300).url()],
+      image: [urlForImage(props?.mainImage)],
       author: [
         props?.author?.map((e) => {
           return {
@@ -115,7 +115,7 @@ export default function CustomHead({
         },
         bookFormat: 'http://schema.org/EBook',
         datePublished: props.publishedAt ?? null,
-        image: urlForImage(props.mainImage).width(300).height(300).url(),
+        image: urlForImage(props.mainImage),
         inLanguage: 'English',
         isbn: '00000000',
         numberOfPages: '1234',
@@ -145,7 +145,7 @@ export default function CustomHead({
       url: props?.videos?.map((video) => {
         return getIframeUrl(video?.platform, video?.videoId)
       }),
-      image: urlForImage(props.mainImage).width(300).height(300).url(),
+      image: urlForImage(props.mainImage),
       location: {
         '@type': 'VirtualLocation',
         url: props?.videos?.map((video) => {

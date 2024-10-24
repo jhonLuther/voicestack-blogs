@@ -2,7 +2,6 @@ import React from 'react';
 import dynamic from 'next/dynamic';
 
 const componentMap = {
-  imageBlock: dynamic(() => import('../components/sections/ImageBlock')),
   bannerBlock: dynamic(() => import('../components/sections/BannerBlock')),
   testimonialCard: dynamic(() => import('../components/sections/TestimonialCard')),
 };

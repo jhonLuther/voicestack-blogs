@@ -51,7 +51,6 @@ const PodcastsPage = ({ podcasts,latestPodcasts, totalPages }: { podcasts: Podca
     <Layout>
       <CustomHead props ={podcasts} type="podcast"/>
       <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'} reverse={true} contents={latestPodcasts} />
-      <Wrapper>
         <AllcontentSection
           baseUrl={baseUrl}
           className={'pb-9'}
@@ -67,7 +66,6 @@ const PodcastsPage = ({ podcasts,latestPodcasts, totalPages }: { podcasts: Podca
           onPageChange={handlePageChange}
           enablePageSlug={true}
         />
-        </Wrapper>
     </Layout>
   );
 };

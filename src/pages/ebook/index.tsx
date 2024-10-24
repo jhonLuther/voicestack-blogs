@@ -49,7 +49,6 @@ const EbooksPage = ({ ebooks,latestEbooks, totalPages }: { ebooks: Ebooks[];late
 
   return (
     <Layout>
-      <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'} reverse={true} contents={latestEbooks} />
       {ebooks?.map((e,i) => {
         return <CustomHead prpos ={e} type="eBook" key={i} />
       })}
@@ -59,7 +58,6 @@ const EbooksPage = ({ ebooks,latestEbooks, totalPages }: { ebooks: Ebooks[];late
         reverse={true}
         contents={latestEbooks}
       />
-      <Wrapper>
         <AllcontentSection
           baseUrl={baseUrl}
           className={'pb-9'}
@@ -75,7 +73,6 @@ const EbooksPage = ({ ebooks,latestEbooks, totalPages }: { ebooks: Ebooks[];late
           onPageChange={handlePageChange}
           enablePageSlug={true}
         />
-        </Wrapper>
     </Layout>
   );
 };
