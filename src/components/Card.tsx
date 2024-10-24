@@ -238,9 +238,9 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
                   </div>
                 </Link>
                 ) : cardType === 'ebook-card' ? (
-                  <div className={`flex flex-col w-full min-h-[250px] group`}>
-                    <Link href={linkUrl}>
-                      <div className='relative'>
+                  <div className={`flex flex-col w-full min-h-[250px] h-full group`}>
+                    <Link href={linkUrl} className='flex-1 flex'>
+                      <div className='relative flex flex-col'>
                         {(post.mainImage || post.image) && (
                           <div className="overflow-hidden absolute left-0 right-0 top-0 bottom-0 rounded-lg">
                             <ImageLoader
@@ -253,8 +253,8 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
                             />
                           </div>
                         )}
-                        <div className="mt-4 flex flex-col gap-1 relative p-8">
-                          <div className="bg-white rounded p-5">
+                        <div className="flex flex-col gap-1 relative p-8 flex-1">
+                          <div className="bg-white rounded p-5 h-full">
                             {post.contentType && (
                               <SubText >
                                 {post.contentType}

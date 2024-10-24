@@ -43,7 +43,12 @@ const TagsCarousel: React.FC<TagsCarouselProps> = ({ tags, selectedTag, onTagCha
             slidesPerView: 2,
           },
           768: {
+            slidesPerView: 3,
+            slidesPerGroup: 2,
+          },
+          1200: {
             slidesPerView: 6,
+            slidesPerGroup: 2,
           },
         }}
         
