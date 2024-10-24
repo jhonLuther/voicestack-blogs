@@ -22,10 +22,10 @@ const Header = () => {
     <ProgressBar/>
     <header className="w-full">
 
-      <div className="bg-cs-primary group hover:bg-[#49c782] transition-all duration-200">  
+      <div className="bg-cs-primary group hover:bg-[#42dd88] transition-all duration-200">  
         <Link href="https://carestack.com/demo" className="flex justify-center py-3">
           <div className="max-w-9xl px-4 flex justify-center gap-3 w-full items-center">
-            <div className="text-sm text-">
+            <div className="text-sm text-zinc-900">
               {` Book a Demo with us - It's free!`}
             </div>
               <div className="flex items-center gap-1 text-sm text-zinc-800 font-medium">
