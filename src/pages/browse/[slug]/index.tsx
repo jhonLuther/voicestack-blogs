@@ -76,7 +76,6 @@ export default function TagPage({
 
   return (
     <Layout>
-        {/* <h1 className='md:text-5xl text-xl font-extrabold font-manrope text-center'>{tag?.tagName}</h1> */}
         <TagSelect 
           tags={allTags} 
           tagLimit={5} 

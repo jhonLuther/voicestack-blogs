@@ -19,7 +19,6 @@ export const getStaticProps: GetStaticProps<
     currentPage: number;
   }
 > = async ({ params }) => {
-  console.log({ params });
   const client = getClient();
 
   const slug = params?.slug as string;

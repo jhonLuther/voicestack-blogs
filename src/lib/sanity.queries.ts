@@ -279,6 +279,7 @@ export async function getPostsByTagAndLimit(
   return client.fetch(
     groq`*[_type == "post" && references($tagId)] | order(publishedAt desc) [$start...$end] {
       title,
+      contentType,
       ${imageFragment},
       blogColor,
       excerpt,
@@ -1007,6 +1008,7 @@ export const getPostsByTag = (client:SanityClient, tagId) => {
     *[_type == "post" && references($tagId)] {
       title,
       slug,
+      contentType,
      ${imageFragment},
       _createdAt
     }

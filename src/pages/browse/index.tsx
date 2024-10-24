@@ -19,6 +19,7 @@ import AllcontentSection from '~/components/sections/AllcontentSection'
 import Pagination from '~/components/commonSections/Pagination'
 import siteConfig from 'config/siteConfig'
 import TagSelect from '~/contentUtils/TagSelector'
+import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection'
 
 interface Query {
 	[key: string]: string
@@ -77,6 +78,7 @@ export default function ProjectSlugRoute(
 					currentPage={0}
 					enablePageSlug={true}
 				/>
+				<BannerSubscribeSection />
 			</Layout>
 		</>
 	)

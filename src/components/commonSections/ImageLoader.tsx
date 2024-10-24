@@ -129,14 +129,14 @@ const ImageLoader: React.FC<ImageLoaderProps> = ({
   }
 
   return (
-    <div className={`relative  w-full h-full   ${className}`} style={{ width, height }}>
+    <div className={`relative  w-full h-auto   ${className}`} >
       <Image
         src={imageUrl}
         alt={props.altText ||image.altText  || 'blog card image'}
         title={props.title || image.title || 'blog card image'}
         width={width}
         height={height}
-        layout="responsive"
+        // layout="responsive"
         className={`object-cover ${imageClassName}`}
       />
     </div>

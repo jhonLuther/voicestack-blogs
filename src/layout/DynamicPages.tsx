@@ -8,6 +8,7 @@ import ShortBannerSection from "~/components/sections/ShortBannerSection";
 import BannerSubscribeSection from "~/components/sections/BannerSubscribeSection";
 import Wrapper from "~/layout/Wrapper";
 import SliderSection from "~/components/sections/SliderSection";
+import siteConfig from "config/siteConfig";
 
 interface DynamicProps {
 	children?: React.ReactNode;
@@ -58,7 +59,7 @@ const DynamicPages = ({
 			<BannerSubscribeSection />
 			<SliderSection items={carouselItems} />
 			<TestimonialSection testimonials={testimonialList} />
-			<AllcontentSection allContent={posts} hideSearch={true} redirect={true} />
+			<AllcontentSection allContent={posts} itemsPerPage={siteConfig.pagination.itemsPerPage} hideSearch={true} redirect={true} />
 			<ShortBannerSection />
 		</>
 	);
