@@ -37,6 +37,9 @@ const Carousel: React.FC<CarouselProps> = ({ items, swiperRef }) => {
             slidesPerView: 2,
           },
           768: {
+            slidesPerView: 2,
+          },
+          1200: {
             slidesPerView: 3,
           },
         }}

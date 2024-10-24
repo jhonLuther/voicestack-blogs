@@ -25,7 +25,7 @@ const TestimonialSection = ({ testimonials }: TestimonialSectionProps) => {
   const isMobile: any = useMediaQuery(767);
 
   return (
-    <Section className='md:!p-0 bg-zinc-100 justify-center'>
+    <Section className='bg-zinc-100 justify-center'>
       <Wrapper>
         <div className="w-full gap-0 py-16 relative" >
             {testimonials && testimonials.length && testimonials.map((testimonialItem, i) => (

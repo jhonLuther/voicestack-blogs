@@ -39,7 +39,7 @@ const SliderSection: React.FC<BannerBlockProps> = ({ items }) => {
 
   return (
     <div className={` flex w-full justify-center`} >
-      <section className="my-9 max-w-7xl">
+      <section className="my-9 max-w-7xl px-4 w-full">
         <div className="flex justify-between pb-9">
           <H3XL >
             {`Ebooks and Webinars`}
