@@ -2,7 +2,6 @@ import React from 'react';
 import { Post } from '~/interfaces/post';
 import Card from '../Card';
 import Wrapper from '../../layout/Wrapper';
-import { capitalizeFirstLetter } from '~/utils/common';
 import H2Large from '../typography/H2Large';
 import Section from '../Section';
 

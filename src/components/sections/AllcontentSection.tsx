@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { use, useEffect } from 'react';
 import Card from '../Card';
 import SearchBar from '../widgets/SearchBar';
 import Link from 'next/link';
@@ -6,6 +6,8 @@ import siteConfig from 'config/siteConfig';
 import Wrapper from '~/layout/Wrapper';
 import Section from '../Section';
 import { ArrowTopRightIcon } from '@sanity/icons'
+import H2Large from '../typography/H2Large';
+import { useRouter } from 'next/router';
 
 
 interface LatestBlogsProps {
@@ -28,15 +30,60 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
 }) => {
   const postsToShow = itemsPerPage || siteConfig.pagination.itemsPerPage;
 
+  const [selectedTag , setSelectedTag] = React.useState('')
+
+  const router = useRouter();
+
   if (!allContent) {
     return null;
   }
+
+  useEffect(() => {
+    const updateSelectedTag = () => {
+      const isBrowsePath = router.pathname.includes('/browse/');
+      if (isBrowsePath) {
+        const pathParts = router.asPath.split('/');
+        const isPageRoute = pathParts.includes('page');
+        
+        if (isPageRoute) {
+          const storedTag = window.localStorage.getItem("selectedTag");
+          if (storedTag && storedTag !== 'null' && storedTag !== 'undefined') {
+            const cleanTag = storedTag
+              .split('-')
+              .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+              .join(' ');
+            setSelectedTag(cleanTag);
+          } else {
+            setSelectedTag('');
+          }
+        } else {
+          const tagFromUrl = pathParts[pathParts.length - 1];
+          if (tagFromUrl && tagFromUrl !== 'browse') {
+            const cleanTag = tagFromUrl
+              .split('-')
+              .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+              .join(' ');
+            setSelectedTag(cleanTag);
+          } else {
+            setSelectedTag('');
+          }
+        }
+      } else {
+        setSelectedTag('');
+        window.localStorage.removeItem("selectedTag");
+      }
+    };
+
+    updateSelectedTag();
+  }, [router.pathname, router.asPath]);
 
   return (
     <Section className={` justify-center md:pb-0 md:pt-24`}>
       <Wrapper className={`flex-col`}>
         <div className="md:flex-row flex-col gap-8 flex items-center justify-between pb-12">
-          <h2 className="text-cs-black text-5xl font-manrope font-extrabold">{`Explore All`}</h2>
+          <H2Large className='tracking-tighterText'>
+          {`${selectedTag ? selectedTag : 'Explore All'} `}
+          </H2Large>
           {!hideSearch && (
             <div className="relative max-w-xl flex-1">
               <SearchBar />
