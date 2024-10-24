@@ -30,8 +30,6 @@ const DynamicPages = ({
 	tags,
 	testimonials,
 	homeSettings,
-	popularBlogs,
-	featuredContents,
 	podcastData,
 	latestPosts,
 	ebooks,
@@ -40,11 +38,9 @@ const DynamicPages = ({
 }: DynamicProps) => {
 
 	const featuredBlog = homeSettings?.FeaturedBlog || posts[0];
-
-	// const popularBlogList = popularBlogs ? popularBlogs.concat(posts.slice(1, 6 - popularBlogs.length)) : posts.slice(1, 5);
-	const popularBlogList =  posts.slice(1, 5);
-
-	// const latestContents = featuredContents?.concat(latestPosts?.slice(1, 5 - featuredContents.length));
+	const featuredBlogs = homeSettings?.popularBlogs || posts;
+	
+	const featuredContents = [...featuredBlogs,...posts].slice(0, 4);
 
 	const carouselItems = [...ebooks, ...webinars]
 
@@ -58,7 +54,7 @@ const DynamicPages = ({
 				showTags={true}
 			/>
 			<LatestBlogs contents={latestPosts} />
-			<FeaturedAndPopularBlogs featuredBlog={featuredBlog} popularBlogs={popularBlogList} />
+			<FeaturedAndPopularBlogs featuredBlog={featuredBlog} popularBlogs={featuredContents} />
 			<BannerSubscribeSection />
 			<SliderSection items={carouselItems} />
 			<TestimonialSection testimonials={testimonialList} />

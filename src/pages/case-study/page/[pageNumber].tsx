@@ -11,6 +11,7 @@ import { Articles, CaseStudies } from '~/interfaces/post';
 import siteConfig from '../../../../config/siteConfig';
 import React, { useRef } from 'react';
 import Pagination from '~/components/commonSections/Pagination';
+import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection';
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const client = getClient();
@@ -79,6 +80,7 @@ const PaginatedCaseStudyPage = ({ caseStudies, pageNumber, totalPages }: { caseS
           enablePageSlug={true}
           content={caseStudies}
         />
+        <BannerSubscribeSection />
     </Layout>
   );
 };

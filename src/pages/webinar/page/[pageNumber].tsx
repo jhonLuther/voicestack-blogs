@@ -11,6 +11,7 @@ import siteConfig from '../../../../config/siteConfig';
 import React, { useRef } from 'react';
 import Pagination from '~/components/commonSections/Pagination';
 import {getWebinars, getWebinarsCount} from '~/lib/sanity.queries';
+import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection';
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const client = getClient();
@@ -63,13 +64,12 @@ const PaginatedWebinarsPage = ({ webinars, pageNumber, totalPages }: { webinars:
 
   return (
     <Layout>
-      <Wrapper>
         <AllcontentSection
           baseUrl={baseUrl}
           className={'pb-9'}
           allContent={webinars}
           hideSearch={true}
-          cardType={'podcast-card'}
+          cardType="left-image-card"
           itemsPerPage={siteConfig.pagination.childItemsPerPage}
         />
         <Pagination
@@ -80,7 +80,7 @@ const PaginatedWebinarsPage = ({ webinars, pageNumber, totalPages }: { webinars:
           enablePageSlug={true}
           content={webinars}
         />
-      </Wrapper>
+        <BannerSubscribeSection />
     </Layout>
   );
 };

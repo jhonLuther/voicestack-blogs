@@ -33,9 +33,9 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
   }
 
   return (
-    <Section className={` justify-center py-24 ${className}`}>
+    <Section className={` justify-center md:pb-0 md:pt-24`}>
       <Wrapper className={`flex-col`}>
-        <div className="md:flex-row flex-col gap-8 flex items-center justify-between py-9">
+        <div className="md:flex-row flex-col gap-8 flex items-center justify-between pb-12">
           <h2 className="text-cs-black text-5xl font-manrope font-extrabold">{`Explore All`}</h2>
           {!hideSearch && (
             <div className="relative max-w-xl flex-1">
@@ -55,8 +55,13 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
 
         </div>
         <div className={`grid 
-        ${cardType === 'left-image-card' ? 'lg:grid-cols-2 md:grid-cols-1 gap-x-16 gap-y-12' : 'lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-x-9 gap-y-8'} 
-        pb-16`}>
+          ${cardType === 'left-image-card' 
+            ? 'lg:grid-cols-2 md:grid-cols-1 gap-x-16 gap-y-12' 
+            : cardType === 'podcast-card' 
+            ? 'lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-x-9 gap-y-8' 
+            : 'lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-x-9 gap-y-8'
+          }
+        `}>
           {allContent && allContent.length > 0 ? (
             allContent.slice(0, postsToShow).map((post, index) => (
               <div id={index.toString()} key={post._id || index} className={`${(index >= 3 && (index - 3) % 9 === 0) && cardType !== 'left-image-card' ? 'row-span-2' : ''}`} >

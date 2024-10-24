@@ -18,9 +18,6 @@ interface LatestBlogsProps {
 
 const LatestBlogs: React.FC<LatestBlogsProps> = ({ contents, reverse, className, showPlayIcon }) => {
 
-  // console.log(contents, 'contents');
-
-
   if (!contents) {
     return null
   }
@@ -40,7 +37,7 @@ const LatestBlogs: React.FC<LatestBlogsProps> = ({ contents, reverse, className,
 
   return (
     <React.Fragment>
-        <Section className='justify-center py-24 bg-gray-900 text-white' >
+        <Section className='justify-center md:pt-16 md:pb-24 bg-gray-900 text-white' >
           <Wrapper className={`md:flex-row flex-col ${reverse ? 'md:flex-row-reverse' : ''} md:gap-36 gap-12`}>
             <div className='flex flex-col gap-9 md:w-5/12 w-full'>
               <H2Large >
