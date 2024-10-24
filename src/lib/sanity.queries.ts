@@ -443,6 +443,7 @@ export const podcastsQuery = groq`
   "author": author[]-> {
     _id,
     name,
+    role,
     slug,
     bio,
     "picture": picture.asset->url,
@@ -465,6 +466,7 @@ export const webinarsQuery = groq`
   "author": author[]-> {
     _id,
     name,
+    role,
     slug,
     bio,
     "picture": picture.asset->url,
@@ -493,6 +495,7 @@ export const ebooksQuery = groq`
   "author": author[]-> {
     _id,
     name,
+    role,
     slug,
     bio,
     "picture": picture.asset->url,
@@ -523,6 +526,7 @@ export const pressReleasesQuery = groq`
   "author": author[]-> {
     _id,
     name,
+    role,
     slug,
     bio,
     "picture": picture.asset->url,
@@ -551,6 +555,7 @@ export const artilclesQuery = groq`
   "author": author[]-> {
     _id,
     name,
+    role,
     slug,
     bio,
     "picture": picture.asset->url,
@@ -579,6 +584,7 @@ export const caseStudiesQuery = groq`
   "author": author[]-> {
     _id,
     name,
+    role,
     slug,
     bio,
     "picture": picture.asset->url,
@@ -881,6 +887,7 @@ export const caseStudyBySlugQuery = groq`
     "author": author[]-> {
       _id,
       name,
+      role,
       slug,
       bio,
       "picture": picture.asset->url,

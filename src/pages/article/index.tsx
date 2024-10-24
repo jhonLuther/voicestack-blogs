@@ -36,7 +36,7 @@ export const getStaticProps: GetStaticProps<SharedPageProps & { articles: Articl
 };
 
 const ArticlesPage = ({ articles,latestArticles, totalPages }: { articles: Articles[];latestArticles: Articles[]; totalPages: number }) => {
-  console.log(articles,"articles")
+  console.log(latestArticles,"latestArticles")
   const router = useRouter();
   const baseUrl = useRef(`/${siteConfig.pageURLs.article}`).current;
 
