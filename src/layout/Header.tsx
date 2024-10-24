@@ -22,17 +22,17 @@ const Header = () => {
     <ProgressBar/>
     <header className="w-full">
 
-      <div className="flex justify-center bg-cs-primary py-3">
-        <div className="max-w-9xl px-4 flex justify-center gap-3 w-full items-center">
-          <div className="text-sm text-">
-            {` Book a Demo with us - It's free!`}
-          </div>
-          <Link href="https://carestack.com/demo">
-            <div className="flex items-center gap-1 group text-sm text-zinc-800 font-medium">
-              <span>{`Register Now`}</span><ArrowRightIcon className="w-5 h-5 text-zinc-800 group-hover:translate-x-[4px] transition-transform duration-300 ease-in-out"/>
+      <div className="bg-cs-primary group hover:bg-[#49c782] transition-all duration-200">  
+        <Link href="https://carestack.com/demo" className="flex justify-center py-3">
+          <div className="max-w-9xl px-4 flex justify-center gap-3 w-full items-center">
+            <div className="text-sm text-">
+              {` Book a Demo with us - It's free!`}
             </div>
-          </Link>
-        </div>
+              <div className="flex items-center gap-1 text-sm text-zinc-800 font-medium">
+                <span>{`Register Now`}</span><ArrowRightIcon className="w-5 h-5 text-zinc-800 group-hover:translate-x-[4px] transition-transform duration-300 ease-in-out"/>
+              </div>
+          </div>
+        </Link>
       </div>
 
       <div className="bg-gray-900 text-white border-b border-gray-800">
