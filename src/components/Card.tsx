@@ -54,14 +54,14 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
                 <div className="w-auto transform transition duration-500"
                 >
                   <ImageLoader
-                    className='transform md:h-[350px] h-[200px]  duration-300 group-hover:scale-105'
+                    className='transform   duration-300 group-hover:scale-105'
                     image={post?.mainImage}
                     useClientWidth={true}
                   />
                 </div>
               ) :
                 <ImageLoader
-                  className="min-h-[350px]"
+                  // className="min-h-[350px]"
                   image={siteConfig.placeHolder.podcastCover}
                   useClientWidth={true}
                 />
@@ -96,7 +96,7 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
                 <div className="w-auto rounded-lg transform transition duration-500 overflow-hidden"
                 >
                   <ImageLoader
-                    className='transform md:h-[350px] rounded-lg h-[200px]  duration-300 group-hover:scale-105'
+                    className='transform   duration-300 group-hover:scale-105'
                     image={post?.mainImage}
                     width={200}
                     height={154}
@@ -112,7 +112,12 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
                 <H4Large className={`group-hover: group-hover:underline underline-offset-4 line-clamp-3 text-ellipsis overflow-hidden`}>
                   {post.title}
                 </H4Large>
-                <span className="text-gray-500 text-sm mt-1">{post.author[0]?.name || ''} · {`${post?.estimatedReadingTime ? post.estimatedReadingTime : post.duration} ${post.contentType === 'article' || post.contentType === 'press-release' ? 'min read' : ''}   `}</span>
+                {
+                  post.contentType === 'ebook' ? (
+                    <span className='text-gray-500 text-sm mt-1'>{post.author[0]?.name || ''}</span>
+                  ):
+                  <span className="text-gray-500 text-sm mt-1">{post.author[0]?.name || ''} · {`${  post?.estimatedReadingTime ? post.estimatedReadingTime : post.duration} ${post.contentType === 'article' || post.contentType === 'press-release' ? 'min read' : ''}   `}</span>
+                } 
               </div>
 
               {
@@ -152,7 +157,7 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
                   <div className='overflow-hidden '>
                     {post.mainImage && (
                       <ImageLoader
-                        className="w-full  object-cover transform md:h-[350px] h-[200px]  duration-300 group-hover:scale-105"
+                        className="w-full  object-cover transform  duration-300 group-hover:scale-105"
                         image={post.mainImage}
                       />
                     )}
@@ -201,7 +206,7 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
                       <div className="w-auto rounded-t-lg transform transition duration-500 overflow-hidden"
                       >
                         <ImageLoader
-                          className='transform md:h-[350px] rounded-lg h-[200px]  duration-300 group-hover:scale-105'
+                          className='transform  rounded-lg  duration-300 group-hover:scale-105'
                           image={post?.mainImage}
                           width={290}
                           height={220}
