@@ -74,7 +74,7 @@ export default function CustomHead({
       '@context': 'https://schema.org',
       '@type': 'NewsArticle',
       headline: props.title ?? '',
-      image: [urlForImage(props?.mainImage).width(300).height(300).url()],
+      image: [urlForImage(props?.mainImage)?.width(300).height(300).url()],
       author: [
         props?.author?.map((e) => {
           return {
