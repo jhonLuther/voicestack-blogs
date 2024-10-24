@@ -16,6 +16,7 @@ import SEOHead from '~/layout/SeoHead';
 import { generateJSONLD } from '~/utils/generateJSONLD';
 import EbookCard from '~/components/uiBlocks/EbookCard';
 import Section from '~/components/Section';
+import CustomHead from '~/utils/customHead';
 
 interface Props {
   ebook: Ebooks;
@@ -62,15 +63,7 @@ const EbookPage = ({ ebook, draftMode, token }: Props) => {
 
   return (
     <>
-      <SEOHead
-        title={seoTitle}
-        description={seoDescription}
-        keywords={seoKeywords}
-        robots={seoRobots}
-        canonical={seoCanonical}
-        jsonLD={jsonLD}
-        ogImage={urlForImage(ebook?.mainImage)}
-        contentType={ebook?.contentType} />
+    <CustomHead props ={ebook} type='eBook'/>
       <Layout >
         <Section className='justify-center'>
           <div className="flex  md:flex-row flex-col justify-between gap-20">

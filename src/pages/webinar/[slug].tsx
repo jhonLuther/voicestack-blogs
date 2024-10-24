@@ -18,6 +18,7 @@ import SEOHead from '~/layout/SeoHead';
 import { VideoModal } from '~/components/commonSections/VideoModal';
 import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection';
 import Section from '~/components/Section';
+import CustomHead from '~/utils/customHead';
 
 interface Props {
   webinar: Podcasts;
@@ -66,21 +67,12 @@ const WebinarPage = ({ webinar, draftMode, token }: Props) => {
 
   return (
     <>
-      <SEOHead
-        title={seoTitle}
-        description={seoDescription}
-        keywords={seoKeywords}
-        robots={seoRobots}
-        canonical={seoCanonical}
-        jsonLD={jsonLD}
-        ogImage={urlForImage(webinar?.mainImage)}
-        contentType={webinar?.contentType} />
+      <CustomHead props ={webinar} type="webinar"/>
       <Layout >
       <MainImageSection isAuthor={true} post={webinar} />
 
         <Section className='justify-center'>
           <Wrapper className={'flex-col'}>
-
         <div className="flex  md:flex-row justify-between gap-20 flex-col">
             <div className="mt-12 flex md:flex-col flex-col-reverse md:w-2/3 w-full ">
               <VideoModal videoDetails={webinar?.videos} className={`pt-9   flex items-start`} />
@@ -92,7 +84,6 @@ const WebinarPage = ({ webinar, draftMode, token }: Props) => {
                 />
               </div>
               <BannerSubscribeSection version={'compact'} />
-
             </div>
             <div className='flex-1 flex flex-col gap-12 mt-12  bg-red relative md:w-1/3 w-full'>
               <div className='sticky top-12 flex flex-col gap-12'>

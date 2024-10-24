@@ -1,5 +1,6 @@
 import { Post } from '~/interfaces/post'
 import { fetchAuthor } from './common'
+import { urlForImage } from '~/lib/sanity.image'
 
 export function generateJSONLD(post: any) {
   // console.log({generatedPost:post});
@@ -99,9 +100,11 @@ export function generateJSONLD(post: any) {
           '@type': 'NewsArticle',
           '@context': 'https://schema.org',
           headline: post.excerpt || '',
+          image: urlForImage(post?.mainImage).width(10).height(10).url(),
           author: [
             {
-              name: post.author[0]?.name || '',
+              '@type': 'Person',
+              // name: 'Patrick Coombe',
             },
           ],
           startDate: new Date(),
@@ -201,33 +204,27 @@ export function indexPageJsonLd(params: any) {
   })
 }
 
-export function breadCrumbJsonLd(breadCrumbList: any[]) {
+export function breadCrumbJsonLd(
+  breadCrumbList: { breadcrumb: string; url?: string }[],
+) {
   const baseUrl = `https://carestack.com`
-  const itemListElement = breadCrumbList.map((item, index) => {
-    return index !== breadCrumbList.length - 1
-      ? {
+
+  const itemListElement = breadCrumbList.map((item: any) => {
+    return {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        {
           '@type': 'ListItem',
-          position: index + 2,
-          name: item.breadcrumb,
-          item: `${baseUrl}${item.href}/`,
-        }
-      : {
-          '@type': 'ListItem',
-          position: index + 2,
-          name: item.breadcrumb,
-        }
+          position: 1,
+          item: {
+            '@id': `${baseUrl}/${item?.href}`,
+            "name": item?.label ?? "",
+          },
+        },
+      ],
+    }
   })
-  return {
-    '@context': 'https://schema.org/',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      {
-        '@type': 'ListItem',
-        position: 1,
-        name: 'Home',
-        item: `${baseUrl}/`,
-      },
-      ...itemListElement,
-    ],
-  }
+  return itemListElement
 }
+

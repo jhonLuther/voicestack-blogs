@@ -15,6 +15,7 @@ import { generateJSONLD } from '~/utils/generateJSONLD';
 import { Toc } from '~/contentUtils/sanity-toc';
 import AuthorInfo from '~/components/commonSections/AuthorInfo';
 import ShareableLinks from '~/components/commonSections/ShareableLinks';
+import CustomHead from '~/utils/customHead';
 import Section from '~/components/Section';
 
 interface Props {
@@ -68,15 +69,7 @@ const ArticlePage = ({ articles, draftMode, token }: Props) => {
 
   return (
     <>
-      <SEOHead
-        title={seoTitle}
-        description={seoDescription}
-        keywords={seoKeywords}
-        robots={seoRobots}
-        canonical={seoCanonical}
-        jsonLD={jsonLD}
-        ogImage={urlForImage(articles?.mainImage)}
-        contentType={articles?.contentType} />
+    <CustomHead props={articles} type="articleExpanded"/>
       <Layout >
         <MainImageSection  enableDate={true}  post={articles} />
         <Section className='justify-center'>

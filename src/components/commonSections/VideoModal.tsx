@@ -40,7 +40,7 @@ export const VideoModal: React.FunctionComponent<VideoProps> = ({ videoDetails, 
   );
 };
 
-const getIframeUrl = (platform: string, link: string) => {
+export const getIframeUrl = (platform: string, link: string) => {
   switch (platform) {
     case "vimeo":
       return `https://player.vimeo.com/video/${link}?autoplay=1`;

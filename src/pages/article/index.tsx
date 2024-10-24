@@ -12,6 +12,7 @@ import { useRouter } from 'next/router';
 import siteConfig from '../../../config/siteConfig';
 import React, { useRef } from 'react';
 import Pagination from '~/components/commonSections/Pagination';
+import CustomHead from '~/utils/customHead';
 
 export const getStaticProps: GetStaticProps<SharedPageProps & { articles: Articles[]; totalPages: number }> = async (context) => {
   const draftMode = context.preview || false;
@@ -35,6 +36,7 @@ export const getStaticProps: GetStaticProps<SharedPageProps & { articles: Articl
 };
 
 const ArticlesPage = ({ articles,latestArticles, totalPages }: { articles: Articles[];latestArticles: Articles[]; totalPages: number }) => {
+  console.log(articles,"articles")
   const router = useRouter();
   const baseUrl = useRef(`/${siteConfig.pageURLs.article}`).current;
 
@@ -49,6 +51,17 @@ const ArticlesPage = ({ articles,latestArticles, totalPages }: { articles: Artic
   return (
     <Layout>
       <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'} reverse={true} contents={latestArticles} />
+      {articles?.length
+        ? articles.map((e, i) => {
+            return <CustomHead props={e} type="caseStudy" key={i} />
+          })
+        : null}
+      <LatestBlogs
+        className={'pt-11 pr-9 pb-16 pl-9'}
+        reverse={true}
+        contents={latestArticles}
+      />
+      <Wrapper>
         <AllcontentSection
           baseUrl={baseUrl}
           className={'pb-9'}
@@ -63,9 +76,11 @@ const ArticlesPage = ({ articles,latestArticles, totalPages }: { articles: Artic
           baseUrl={baseUrl}
           onPageChange={handlePageChange}
           enablePageSlug={true}
+          content={articles}
         />
+        </Wrapper>
     </Layout>
-  );
+  )
 };
 
 export default ArticlesPage;

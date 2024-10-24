@@ -84,6 +84,7 @@ export default function TagPagePaginated({
           onPageChange={handlePageChange}
           currentPage={currentPage}
           enablePageSlug={true}
+          content={posts}
         />
     </Layout>
   )

@@ -77,6 +77,7 @@ const PaginatedEbookPage = ({ ebooks, pageNumber, totalPages }: { ebooks: Ebooks
           baseUrl={baseUrl}
           onPageChange={handlePageChange}
           enablePageSlug={true}
+          content={ebooks}
         />
     </Layout>
   );

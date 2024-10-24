@@ -77,6 +77,7 @@ const PaginatedArticlesPage = ({ articles, pageNumber, totalPages }: { articles:
           baseUrl={baseUrl}
           onPageChange={handlePageChange}
           enablePageSlug={true}
+          content={articles}
         />
     </Layout>
   );

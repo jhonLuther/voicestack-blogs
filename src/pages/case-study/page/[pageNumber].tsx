@@ -77,6 +77,7 @@ const PaginatedCaseStudyPage = ({ caseStudies, pageNumber, totalPages }: { caseS
           baseUrl={baseUrl}
           onPageChange={handlePageChange}
           enablePageSlug={true}
+          content={caseStudies}
         />
     </Layout>
   );

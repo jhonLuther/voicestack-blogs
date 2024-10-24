@@ -78,6 +78,7 @@ const PaginatedWebinarsPage = ({ webinars, pageNumber, totalPages }: { webinars:
           baseUrl={baseUrl}
           onPageChange={handlePageChange}
           enablePageSlug={true}
+          content={webinars}
         />
       </Wrapper>
     </Layout>
