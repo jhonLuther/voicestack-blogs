@@ -85,6 +85,30 @@ body, #__next {
   color: #151515;
 }
 
+.slider-mask{
+  &::before{
+    content: "";
+    position: absolute;
+    left: 32px;
+    top: 0;
+    height: 100%;
+    width: 100px;
+    z-index: 2;
+    background: linear-gradient(90deg, #111827 0%, rgba(24, 24, 27, 0.00) 100%);
+  }
+
+  &::after{
+    content: "";
+    position: absolute;
+    right: 32px;
+    top: 0;
+    height: 100%;
+    width: 100px;
+    z-index: 2;
+    background: linear-gradient(90deg, rgba(24, 24, 27, 0.00) 0%, #111827 100%);
+  }
+}
+
 .post {
   // @apply ;
 }
