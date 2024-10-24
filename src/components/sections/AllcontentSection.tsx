@@ -1,14 +1,14 @@
-import React, { use, useEffect } from 'react';
-import Card from '../Card';
-import SearchBar from '../widgets/SearchBar';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { ArrowTopRightIcon } from '@sanity/icons';
+
 import siteConfig from 'config/siteConfig';
 import Wrapper from '~/layout/Wrapper';
+import Card from '../Card';
 import Section from '../Section';
-import { ArrowTopRightIcon } from '@sanity/icons'
 import H2Large from '../typography/H2Large';
-import { useRouter } from 'next/router';
-
+import SearchBar from '../widgets/SearchBar';
 
 interface LatestBlogsProps {
   allContent: any[];
@@ -29,22 +29,17 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
   redirect = false,
 }) => {
   const postsToShow = itemsPerPage || siteConfig.pagination.itemsPerPage;
-
-  const [selectedTag , setSelectedTag] = React.useState('')
-
+  const [selectedTag, setSelectedTag] = React.useState('');
   const router = useRouter();
-
-  if (!allContent) {
-    return null;
-  }
 
   useEffect(() => {
     const updateSelectedTag = () => {
       const isBrowsePath = router.pathname.includes('/browse/');
+      
       if (isBrowsePath) {
         const pathParts = router.asPath.split('/');
         const isPageRoute = pathParts.includes('page');
-        
+  
         if (isPageRoute) {
           const storedTag = window.localStorage.getItem("selectedTag");
           if (storedTag && storedTag !== 'null' && storedTag !== 'undefined') {
@@ -73,16 +68,20 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
         window.localStorage.removeItem("selectedTag");
       }
     };
-
+  
     updateSelectedTag();
   }, [router.pathname, router.asPath]);
 
+  if (!allContent) {
+    return null;
+  }
+
   return (
-    <Section className={` justify-center md:pb-0 md:pt-24`}>
+    <Section className={`justify-center md:pb-0 md:pt-24`}>
       <Wrapper className={`flex-col`}>
         <div className="md:flex-row flex-col gap-8 flex items-center justify-between pb-12">
           <H2Large className='tracking-tighterText'>
-          {`${selectedTag ? selectedTag : 'Explore All'} `}
+            {`${selectedTag ? selectedTag : 'Explore All'} `}
           </H2Large>
           {!hideSearch && (
             <div className="relative max-w-xl flex-1">
@@ -90,17 +89,22 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
             </div>
           )}
 
-          {redirect &&<Link href={siteConfig.paginationBaseUrls.base}>
-          <div className='flex items-center gap-3  transform duration-300 cursor-pointer'>
-
-            <span className='text-xs font-medium'>{`Browse All`}</span>
-            <span className="text-xl">
-            <ArrowTopRightIcon className='group-hover:translate-y-[-2px] transition-transform duration-300' height={20} width={20} />
-            </span>
-          </div>
-          </Link>}
-
+          {redirect && (
+            <Link href={siteConfig.paginationBaseUrls.base}>
+              <div className='flex items-center gap-3 transform duration-300 cursor-pointer'>
+                <span className='text-xs font-medium'>{`Browse All`}</span>
+                <span className="text-xl">
+                  <ArrowTopRightIcon 
+                    className='group-hover:translate-y-[-2px] transition-transform duration-300' 
+                    height={20} 
+                    width={20} 
+                  />
+                </span>
+              </div>
+            </Link>
+          )}
         </div>
+
         <div className={`grid 
           ${cardType === 'left-image-card' 
             ? 'lg:grid-cols-2 md:grid-cols-1 gap-x-16 gap-y-12' 
@@ -111,9 +115,17 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
         `}>
           {allContent && allContent.length > 0 ? (
             allContent.slice(0, postsToShow).map((post, index) => (
-              <div id={index.toString()} key={post._id || index} className={`${(index >= 3 && (index - 3) % 9 === 0) && cardType !== 'left-image-card' ? 'row-span-2' : ''}`} >
+              <div 
+                id={index.toString()} 
+                key={post._id || index} 
+                className={`${(index >= 3 && (index - 3) % 9 === 0) && cardType !== 'left-image-card' ? 'row-span-2' : ''}`}
+              >
                 <Card
-                  varyingIndex={(index >= 3 && (index - 3) % 9 === 0) ? true : false} cardType={cardType} cardColor='white' post={post} />
+                  varyingIndex={(index >= 3 && (index - 3) % 9 === 0)} 
+                  cardType={cardType} 
+                  cardColor='white' 
+                  post={post} 
+                />
               </div>
             ))
           ) : (
@@ -122,7 +134,6 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
             </div>
           )}
         </div>
-
       </Wrapper>
     </Section>
   );
