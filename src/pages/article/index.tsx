@@ -50,24 +50,18 @@ const ArticlesPage = ({ articles,latestArticles, totalPages }: { articles: Artic
 
   return (
     <Layout>
+      <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'} reverse={true} contents={latestArticles} />
       {articles?.length
         ? articles.map((e, i) => {
             return <CustomHead props={e} type="caseStudy" key={i} />
           })
         : null}
-
-      <LatestBlogs
-        className={'pt-11 pr-9 pb-16 pl-9'}
-        revamp={true}
-        contents={latestArticles}
-      />
-      <Wrapper>
         <AllcontentSection
           baseUrl={baseUrl}
           className={'pb-9'}
           allContent={articles}
           hideSearch={true}
-          cardType={'podcast-card'}
+          cardType="left-image-card"
           itemsPerPage={siteConfig.pagination.childItemsPerPage}
         />
         <Pagination
@@ -78,7 +72,6 @@ const ArticlesPage = ({ articles,latestArticles, totalPages }: { articles: Artic
           enablePageSlug={true}
           content={articles}
         />
-      </Wrapper>
     </Layout>
   )
 };

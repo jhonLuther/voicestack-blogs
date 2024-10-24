@@ -70,7 +70,6 @@ export default function TagPagePaginated({
 
   return (
     <Layout>
-      <Wrapper>
         {/* <h1 className='md:text-5xl text-xl font-extrabold font-manrope text-center'>{tag?.tagName}</h1> */}
         <TagSelect 
           tags={tags} 
@@ -87,7 +86,6 @@ export default function TagPagePaginated({
           enablePageSlug={true}
           content={posts}
         />
-      </Wrapper>
     </Layout>
   )
 }

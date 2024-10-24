@@ -50,14 +50,13 @@ const PodcastsPage = ({ podcasts,latestPodcasts, totalPages }: { podcasts: Podca
   return (
     <Layout>
       <CustomHead props ={podcasts} type="podcast"/>
-      <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'} revamp={true} contents={latestPodcasts} />
-      <Wrapper>
+      <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'} reverse={true} contents={latestPodcasts} />
         <AllcontentSection
           baseUrl={baseUrl}
           className={'pb-9'}
           allContent={podcasts}
           hideSearch={true}
-          cardType={'podcast-card'}
+          cardType="left-image-card"
           itemsPerPage={siteConfig.pagination.childItemsPerPage}
         />
         <Pagination
@@ -67,7 +66,6 @@ const PodcastsPage = ({ podcasts,latestPodcasts, totalPages }: { podcasts: Podca
           onPageChange={handlePageChange}
           enablePageSlug={true}
         />
-      </Wrapper>
     </Layout>
   );
 };

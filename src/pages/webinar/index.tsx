@@ -48,14 +48,13 @@ const WebinarsPage = ({ webinars,latestWebinars, totalPages }: { webinars: Webin
 
   return (
     <Layout>
-      <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'} revamp={true} contents={latestWebinars} />
-      <Wrapper>
+      <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'} reverse={true} contents={latestWebinars} />
         <AllcontentSection
           baseUrl={baseUrl}
           className={'pb-9'}
           allContent={webinars}
           hideSearch={true}
-          cardType={'podcast-card'}
+          cardType="left-image-card"
           itemsPerPage={siteConfig.pagination.childItemsPerPage}
         />
         <Pagination
@@ -65,7 +64,6 @@ const WebinarsPage = ({ webinars,latestWebinars, totalPages }: { webinars: Webin
           onPageChange={handlePageChange}
           enablePageSlug={true}
         />
-      </Wrapper>
     </Layout>
   );
 };

@@ -63,13 +63,12 @@ const PaginatedPressReleasePage = ({ pressReleases, pageNumber, totalPages }: { 
 
   return (
     <Layout>
-      <Wrapper>
         <AllcontentSection
           baseUrl={baseUrl}
           className={'pb-9'}
           allContent={pressReleases}
           hideSearch={true}
-          cardType={'podcast-card'}
+          cardType="left-image-card"
           itemsPerPage={siteConfig.pagination.childItemsPerPage}
         />
         <Pagination
@@ -80,7 +79,6 @@ const PaginatedPressReleasePage = ({ pressReleases, pageNumber, totalPages }: { 
           enablePageSlug={true}
           content={pressReleases}
         />
-      </Wrapper>
     </Layout>
   );
 };

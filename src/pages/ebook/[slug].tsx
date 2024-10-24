@@ -15,6 +15,7 @@ import DownloadEbook from '~/contentUtils/EbookDownloader';
 import SEOHead from '~/layout/SeoHead';
 import { generateJSONLD } from '~/utils/generateJSONLD';
 import EbookCard from '~/components/uiBlocks/EbookCard';
+import Section from '~/components/Section';
 import CustomHead from '~/utils/customHead';
 
 interface Props {
@@ -64,7 +65,7 @@ const EbookPage = ({ ebook, draftMode, token }: Props) => {
     <>
     <CustomHead props ={ebook} type='eBook'/>
       <Layout >
-        <Wrapper>
+        <Section className='justify-center'>
           <div className="flex  md:flex-row flex-col justify-between gap-20">
             <div className="mt-12 flex md:flex-col flex-col-reverse md:max-w-xl w-full ">
             <EbookCard ebook={ebook}/>
@@ -75,7 +76,7 @@ const EbookPage = ({ ebook, draftMode, token }: Props) => {
               </div>
             </div>
           </div>
-        </Wrapper>
+        </Section>
       </Layout>
     </>
   );

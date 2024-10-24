@@ -19,6 +19,7 @@ import { urlForImage } from '~/lib/sanity.image';
 import SanityPortableText from '~/components/blockEditor/sanityBlockEditor';
 import AuthorInfo from '~/components/commonSections/AuthorInfo';
 import { Toc } from '~/contentUtils/sanity-toc';
+import Section from '~/components/Section';
 
 interface Props {
   pressRelease: PressRelease;
@@ -84,7 +85,8 @@ const PressReleasePage = ({ pressRelease, draftMode, token }: Props) => {
         contentType={pressRelease?.contentType} />
       <Layout >
         <MainImageSection enableDate={true} post={pressRelease} />
-        <Wrapper>
+        <Section className='justify-center'>
+        <Wrapper className={'flex-col'}>
           <div className="flex  md:flex-row flex-col">
             <div className="mt-12 flex md:flex-col flex-col-reverse md:w-2/3 w-full ">
               <div className='post__content w-full '>
@@ -108,6 +110,7 @@ const PressReleasePage = ({ pressRelease, draftMode, token }: Props) => {
           </div>
           {pressRelease?.relatedPressReleases.length > 0 && <RelatedFeaturesSection title={pressRelease?.title} allPosts={pressRelease?.relatedPressReleases} />}
         </Wrapper>
+        </Section>
       </Layout>
     </>
   );

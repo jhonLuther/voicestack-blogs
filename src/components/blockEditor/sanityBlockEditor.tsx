@@ -29,26 +29,26 @@ const SanityPortableText: React.FC<SanityPortableTextProps> = ({
         )
       },
     },
-    list: {
-      bullet: ({children}) => <ul >{children}</ul>,
-      number: ({children}) => <ol >{children}</ol>,
-    },
-    listItem: {
-      bullet: ({children, index}) => (
-        <ListItem 
-          node={{ children }} 
-          index={index ?? 0} 
-          isOrdered={false} 
-        />
-      ),
-      number: ({children, index}) => (
-        <ListItem 
-          node={{ children }} 
-          index={index ?? 0} 
-          isOrdered={true} 
-        />
-      ),
-    },
+    // list: {
+    //   bullet: ({children}) => <ul >{children}</ul>,
+    //   number: ({children}) => <ol >{children}</ol>,
+    // },
+    // listItem: {
+    //   bullet: ({children, index}) => (
+    //     <ListItem 
+    //       node={{ children }} 
+    //       index={index ?? 0} 
+    //       isOrdered={false} 
+    //     />
+    //   ),
+    //   number: ({children, index}) => (
+    //     <ListItem 
+    //       node={{ children }} 
+    //       index={index ?? 0} 
+    //       isOrdered={true} 
+    //     />
+    //   ),
+    // },
     block: {
       h2: ({ children, value }) => {
         // `value` is the single Portable Text block for this header

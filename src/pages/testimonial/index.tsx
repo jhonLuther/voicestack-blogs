@@ -48,16 +48,16 @@ const TestimonialsPage = ({ testimonials,latestTestimonials, totalPages }: { tes
 
   return (
     <Layout>
-      <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'} revamp={true} contents={latestTestimonials} />
+      <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'} reverse={true} contents={latestTestimonials} />
       <Wrapper>
-        <AllcontentSection
+        {/* <AllcontentSection
           baseUrl={baseUrl}
           className={'pb-9'}
           allContent={testimonials}
           hideSearch={true}
-          cardType={'podcast-card'}
+          cardType={'left-image-card'}
           itemsPerPage={siteConfig.pagination.childItemsPerPage}
-        />
+        /> */}
         <Pagination
           totalPages={totalPages}
           currentPage={1}

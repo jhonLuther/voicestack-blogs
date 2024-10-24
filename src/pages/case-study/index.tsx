@@ -49,21 +49,17 @@ const CaseStudiesPage = ({ caseStudies,latestCaseStudies, totalPages }: { caseSt
 
   return (
     <Layout>
+      <CustomHead props={caseStudies} />
+      <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'} reverse={true} contents={latestCaseStudies} />
       {caseStudies?.map((e,i) => {
         return <CustomHead props={e} type="caseStudy"  key={i}/>
       })}
-      <LatestBlogs
-        className={'pt-11 pr-9 pb-16 pl-9'}
-        revamp={true}
-        contents={latestCaseStudies}
-      />
-      <Wrapper>
         <AllcontentSection
           baseUrl={baseUrl}
           className={'pb-9'}
           allContent={caseStudies}
           hideSearch={true}
-          cardType={'podcast-card'}
+          cardType="left-image-card"
           itemsPerPage={siteConfig.pagination.childItemsPerPage}
         />
         <Pagination
@@ -73,7 +69,6 @@ const CaseStudiesPage = ({ caseStudies,latestCaseStudies, totalPages }: { caseSt
           onPageChange={handlePageChange}
           enablePageSlug={true}
         />
-      </Wrapper>
     </Layout>
   )
 };

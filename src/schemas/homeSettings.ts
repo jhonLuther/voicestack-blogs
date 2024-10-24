@@ -29,26 +29,23 @@ export default {
 
     {
       name: 'FeaturedBlog',
+      description:'This content will be displayed in the Featured Blog',
       title: 'Featured Blog',
       type: 'reference',
       to: [{ type: 'post' }],
       group: 'popularBlogs',
     },
     {
-      name: 'blogColor',
-      title: 'Featured Blogs Color',
-      type: 'string',
-      group: 'popularBlogs',
-    },
-    {
       name: 'popularBlogs',
-      title: 'Popular Blogs',
+      description:'This content will be displayed in the Featured Blogs list',
+      title: 'Featured Blogs',
       type: 'array',
       of: [{ type: 'reference', to: [{ type: 'post' }] }],
       group: 'popularBlogs',
     },
     {
       name: 'FeaturedContents',
+      description:'This contents will appear in the Latest Blog section',
       title: 'Featured Contents',
       type: 'array',
       of: [{ type: 'reference', to: [{ type: 'post' }] }],

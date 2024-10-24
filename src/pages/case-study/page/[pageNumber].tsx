@@ -63,13 +63,12 @@ const PaginatedCaseStudyPage = ({ caseStudies, pageNumber, totalPages }: { caseS
 
   return (
     <Layout>
-      <Wrapper>
         <AllcontentSection
           baseUrl={baseUrl}
           className={'pb-9'}
           allContent={caseStudies}
           hideSearch={true}
-          cardType={'podcast-card'}
+          cardType="left-image-card"
           itemsPerPage={siteConfig.pagination.childItemsPerPage}
         />
         <Pagination
@@ -80,7 +79,6 @@ const PaginatedCaseStudyPage = ({ caseStudies, pageNumber, totalPages }: { caseS
           enablePageSlug={true}
           content={caseStudies}
         />
-      </Wrapper>
     </Layout>
   );
 };

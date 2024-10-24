@@ -64,17 +64,30 @@ const tocFragment = `
     }
 `
 
+const imageFragment = `
+ "mainImage": mainImage.asset-> {
+  _id,
+  metadata {
+    dimensions
+  },
+  altText,
+  title
+ }
+  `
+
 export const postsQuery = groq`
 *[_type == "post" && defined(slug.current)] | order(_createdAt desc) {
- mainImage,
+ ${imageFragment},
  title,
  slug,
  _id,
+  excerpt,
   contentType,
   author[]-> {
       _id,
       name,
       slug,
+      "picture": picture.asset->url
   },
   "date": date,
   ${bodyFragment},
@@ -99,7 +112,6 @@ export const testiMonialsQuery = groq`
     _id,
     testimonialName,
     slug,
-    image,
   "customer": customer-> {
     _id,
     name,
@@ -111,7 +123,7 @@ export const testiMonialsQuery = groq`
     layoutSwitcher,
     hasVideo,
     videoId,
-    image,
+ ${imageFragment},
     rating,
     date
   }
@@ -125,7 +137,7 @@ export const homeSettingsQuery = groq`
        id,
       "desc": postFields.excerpt,
       title,
-      mainImage,
+     ${imageFragment},
       slug,
       author[]-> {
       _id,
@@ -162,16 +174,28 @@ export const homeSettingsQuery = groq`
     },
 
     popularBlogs[]->{
-      ...
+     ${imageFragment},
+     ${bodyFragment},
+     "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180),
+      author[]-> {
+      _id,
+      name,
+    },
     },
 
     FeaturedContents[]->{
-      ...
+      ${imageFragment},
+     ${bodyFragment},
+     "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180),
+      author[]-> {
+      _id,
+      name,
+    },
     },
 
     FeaturedBlog->{
       title,
-      mainImage,
+     ${imageFragment},
       blogColor,
       excerpt,
       slug,
@@ -241,7 +265,7 @@ export async function getPostsByTagAndLimit(
   return client.fetch(
     groq`*[_type == "post" && references($tagId)] | order(publishedAt desc) [$start...$end] {
       title,
-      mainImage,
+      ${imageFragment},
       blogColor,
       excerpt,
       slug,
@@ -384,7 +408,7 @@ export async function getPostsBySlug(
       *[_type == "post" && defined(slug.current) && "${slug}" in tags[]->slug.current]  | order(_createdAt desc) {
       "desc":postFields.excerpt,
       title,
-      "mainImage":mainImage.asset->url,
+      ${imageFragment},
       "slug":slug.current,
       author[]-> {
         _id,
@@ -414,7 +438,7 @@ export const podcastsQuery = groq`
   duration,
   publishedAt,
   contentType,
-  mainImage,
+  ${imageFragment},
   excerpt,
   "author": author[]-> {
     _id,
@@ -436,8 +460,8 @@ export const webinarsQuery = groq`
   duration,
   publishedAt,
   excerpt,
-  mainImage,
-  body,
+ ${imageFragment},
+  ${bodyFragment},
   "author": author[]-> {
     _id,
     name,
@@ -461,8 +485,11 @@ export const ebooksQuery = groq`
   duration,
   publishedAt,
   excerpt,
-  mainImage,
-  body,
+ ${imageFragment},
+  ${bodyFragment},
+   "numberOfCharacters": length(pt::text(body)),
+   "estimatedWordCount": round(length(pt::text(body)) / 5),
+  "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180),
   "author": author[]-> {
     _id,
     name,
@@ -488,8 +515,11 @@ export const pressReleasesQuery = groq`
   duration,
   publishedAt,
   excerpt,
-  mainImage,
-  body,
+ ${imageFragment},
+  ${bodyFragment},
+  "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180),
+   "numberOfCharacters": length(pt::text(body)),
+  "estimatedWordCount": round(length(pt::text(body)) / 5),
   "author": author[]-> {
     _id,
     name,
@@ -515,8 +545,9 @@ export const artilclesQuery = groq`
   duration,
   publishedAt,
   excerpt,
-  mainImage,
-  body,
+ ${imageFragment},
+  ${bodyFragment},
+  "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180),
   "author": author[]-> {
     _id,
     name,
@@ -543,8 +574,8 @@ export const caseStudiesQuery = groq`
   duration,
   publishedAt,
   excerpt,
-  mainImage,
-  body,
+ ${imageFragment},
+  ${bodyFragment},
   "author": author[]-> {
     _id,
     name,
@@ -569,8 +600,8 @@ export const authorRelatedContentQuery = groq`
     duration,
     publishedAt,
     excerpt,
-    mainImage,
-    body,
+   ${imageFragment},
+    ${bodyFragment},
   }
 `
 
@@ -595,7 +626,7 @@ export const postBySlugQuery = groq`
     "numberOfCharacters": length(pt::text(body)),
     "estimatedWordCount": round(length(pt::text(body)) / 5),
     "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180),
-    mainImage,
+   ${imageFragment},
     _createdAt,
     seoTitle,
     seoDescription,
@@ -636,7 +667,7 @@ export const testiMonialBySlugQuery = groq`
     excerpt,
     layoutSwitcher,
     hasVideo,
-    image,
+   ${imageFragment},
     rating,
     "region": region,
     "date": date,
@@ -668,7 +699,7 @@ export const podcastBySlugQuery = groq`
   duration,
   publishedAt,
   excerpt,
-  mainImage,
+ ${imageFragment},
   "region": region,
   "date": date,
   ${bodyFragment},
@@ -696,7 +727,8 @@ export const ebookBySlugQuery = groq`
     duration,
     publishedAt,
     excerpt,
-    mainImage,
+   ${imageFragment},
+   ${bodyFragment},
     "region": region,
     "date": date,
     "numberOfCharacters": length(pt::text(body)),
@@ -707,7 +739,6 @@ export const ebookBySlugQuery = groq`
         url
       }
     },
-    ${bodyFragment},
     ${tocFragment},
     "author": author[]-> {
       _id,
@@ -739,7 +770,7 @@ export const webinarBySlugQuery = groq`
     duration,
     publishedAt,
     excerpt,
-    mainImage,
+   ${imageFragment},
     "region": region,
     "date": date,
     "numberOfCharacters": length(pt::text(body)),
@@ -777,7 +808,7 @@ export const pressReleaseBySlugQuery = groq`
     duration,
     publishedAt,
     excerpt,
-    mainImage,
+   ${imageFragment},
     "region": region,
     "date": date,
     ${bodyFragment},
@@ -806,7 +837,7 @@ export const articleBySlugQuery = groq`
     duration,
     publishedAt,
     excerpt,
-    mainImage,
+   ${imageFragment},
     ${bodyFragment},
     ${tocFragment},
     "numberOfCharacters": length(pt::text(body)),
@@ -841,7 +872,7 @@ export const caseStudyBySlugQuery = groq`
     duration,
     publishedAt,
     excerpt,
-    mainImage,
+    ${imageFragment},
     "numberOfCharacters": length(pt::text(body)),
     "estimatedWordCount": round(length(pt::text(body)) / 5),
     "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180),
@@ -933,8 +964,8 @@ export async function getauthorRelatedContents(
     duration,
     publishedAt,
     excerpt,
-    mainImage,
-    body,
+   ${imageFragment},
+    ${bodyFragment},
   }
       `
   }
@@ -955,7 +986,7 @@ export const getPostsByTag = (client:SanityClient, tagId) => {
     *[_type == "post" && references($tagId)] {
       title,
       slug,
-      mainImage,
+     ${imageFragment},
       _createdAt
     }
   `, { tagId })

@@ -17,6 +17,7 @@ import { generateJSONLD } from '~/utils/generateJSONLD';
 import SEOHead from '~/layout/SeoHead';
 import { VideoModal } from '~/components/commonSections/VideoModal';
 import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection';
+import Section from '~/components/Section';
 import CustomHead from '~/utils/customHead';
 
 interface Props {
@@ -68,9 +69,11 @@ const WebinarPage = ({ webinar, draftMode, token }: Props) => {
     <>
       <CustomHead props ={webinar} type="webinar"/>
       <Layout >
-        <MainImageSection isAuthor={true} post={webinar} />
-        <Wrapper>
-          <div className="flex  md:flex-row justify-between gap-20 flex-col">
+      <MainImageSection isAuthor={true} post={webinar} />
+
+        <Section className='justify-center'>
+          <Wrapper className={'flex-col'}>
+        <div className="flex  md:flex-row justify-between gap-20 flex-col">
             <div className="mt-12 flex md:flex-col flex-col-reverse md:w-2/3 w-full ">
               <VideoModal videoDetails={webinar?.videos} className={`pt-9   flex items-start`} />
               <div className='post__content w-full '>
@@ -81,15 +84,17 @@ const WebinarPage = ({ webinar, draftMode, token }: Props) => {
                 />
               </div>
               <BannerSubscribeSection version={'compact'} />
-
             </div>
             <div className='flex-1 flex flex-col gap-12 mt-12  bg-red relative md:w-1/3 w-full'>
               <div className='sticky top-12 flex flex-col gap-12'>
                 {webinar?.relatedWebinars.length > 0 && <RelatedFeaturesSection title={webinar?.title} allPosts={webinar?.relatedWebinars} />}
               </div>
             </div>
-          </div>
+        </div>
         </Wrapper>
+        </Section>
+
+          
       </Layout>
     </>
   );
