@@ -93,10 +93,8 @@ export default function IndexPage(props: IndexPageProps) {
         tags={props.tags}
         testimonials={props.testimonials}
         homeSettings={homeSettings}
-        popularBlogs={homeSettings?.popularBlogs}
         podcastData={props?.podcastData}
         latestPosts={latestPosts}
-        featuredContents={homeSettings?.FeaturedContents}
         ebooks={props?.ebooks}
         webinars={props?.webinars}
       />

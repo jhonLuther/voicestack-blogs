@@ -12,6 +12,7 @@ import { useRouter } from 'next/router';
 import siteConfig from '../../../config/siteConfig';
 import React, { useRef } from 'react';
 import Pagination from '~/components/commonSections/Pagination';
+import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection';
 
 export const getStaticProps: GetStaticProps<SharedPageProps & { pressReleases: PressRelease[]; totalPages: number }> = async (context) => {
   const draftMode = context.preview || false;
@@ -64,7 +65,8 @@ const PressReleasePage = ({ pressReleases,latestPressReleases, totalPages }: { p
           onPageChange={handlePageChange}
           enablePageSlug={true}
         />
-    </Layout>
+        <BannerSubscribeSection />
+      </Layout>
   );
 };
 
