@@ -244,9 +244,9 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
                     </div>
                   </Link>
                 ) : cardType === 'ebook-card' ? (
-                  <div className={`flex flex-col w-full min-h-[250px] group`}>
-                    <Link href={linkUrl}>
-                      <div className='relative'>
+                  <div className={`flex flex-col w-full min-h-[250px] h-full group`}>
+                    <Link href={linkUrl} className='flex-1 flex'>
+                      <div className='relative flex flex-col'>
                         {(post.mainImage || post.image) && (
                           <div className="overflow-hidden absolute left-0 right-0 top-0 bottom-0 rounded-lg">
                             <ImageLoader
@@ -259,8 +259,8 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
                             />
                           </div>
                         )}
-                        <div className="mt-4 flex flex-col gap-1 relative p-8">
-                          <div className="bg-white rounded p-5">
+                        <div className="flex flex-col gap-1 relative p-8 flex-1">
+                          <div className="bg-white rounded p-5 h-full">
                             {post.contentType && (
                               <SubText >
                                 {post.contentType}
@@ -282,16 +282,17 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
                   : (
 
                     // default card
-                    <div className={`flex flex-col w group relative `}>
-                      <Link href={linkUrl}>
+                    <div className={`flex flex-col group relative h-full`}>
+                      <Link href={linkUrl} className='flex flex-col h-full'>
                         {(post.mainImage || post.image) && (
-                          <div className={`overflow-hidden ${varyingIndex ? 'rounded-t-lg' : 'rounded-lg'} relative  w-full`}>
+                          <div className={`overflow-hidden ${varyingIndex ? 'rounded-t-lg  flex-1' : 'rounded-lg'} relative  w-full`}>
                             <ImageLoader
-                              className="object-cover group-hover:scale-110 transition-transform duration-300 "
+                              className="h-full"
+															imageClassName='group-hover:scale-105 transition-transform duration-300 w-full h-full inline'
                               image={post?.mainImage}
                               alt={post.title || 'Blog Image'}
-                              height={varyingIndex ? 553 : 173}
-                              width={411}
+                              // height={varyingIndex ? 553 : 173}
+                              // width={411}	
                             />
                             {
                               post.contentType === 'podcast' ? (
