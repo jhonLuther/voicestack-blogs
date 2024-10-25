@@ -99,7 +99,6 @@ const ImageLoader: React.FC<ImageLoaderProps> = ({
   }, [image, clientWidth, useClientWidth, width, height]);
 
   if (!imageUrl) {
-    console.warn('Failed to generate image URL');
     return null;
   }
 
@@ -108,7 +107,7 @@ const ImageLoader: React.FC<ImageLoaderProps> = ({
 
   if (useClientWidth) {
     return (
-      <div ref={containerRef} className={`relative w-full h-full    ${className}`}>
+      <div ref={containerRef} className={`relative w-full h-full     ${className}`}>
         <div
           className="relative w-full h-full flex"
           style={{

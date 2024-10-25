@@ -12,7 +12,7 @@ import siteConfig from 'config/siteConfig'
 import TagSelect from '~/contentUtils/TagSelector'
 import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection'
 import { useRef } from 'react'
-import { useRouter } from 'next/router'
+import router, { useRouter } from 'next/router'
 
 interface Query {
 	[key: string]: string
@@ -52,14 +52,17 @@ export default function ProjectSlugRoute(
 
 	const { posts, totalPages, tags } = props;
 
-	const baseUrl = useRef(`/${siteConfig.pageURLs.browse}`).current;
+
+	// const baseUrl = useRef(`/${siteConfig.pageURLs.article}`).current;
+
 	const handlePageChange = (page: number) => {
-	  if (page === 1) {
-		router.push(baseUrl);
-	  } else {
-		router.push(`${baseUrl}/page/${page}`);
-	  }
+	//   if (page === 1) {
+	// 	router.push(baseUrl);
+	//   } else {
+	// 	router.push(`${baseUrl}/page/${page}`);
+	//   }
 	};
+
 
 	return (
 		<>
@@ -72,7 +75,7 @@ export default function ProjectSlugRoute(
 				<AllcontentSection hideSearch={true} allContent={posts} />
 				<Pagination
 					totalPages={totalPages}
-					baseUrl={baseUrl}
+					baseUrl="/browse"
 					onPageChange={handlePageChange}
 					currentPage={0}
 					enablePageSlug={true}

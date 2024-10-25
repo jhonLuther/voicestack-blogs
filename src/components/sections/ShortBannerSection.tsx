@@ -4,6 +4,7 @@ import Link from 'next/link'
 import icLogo from '../../assets/inner-circle.svg'
 import Image from 'next/image'
 import {ArrowTopRightIcon} from '@sanity/icons'
+import eventBanner from '../../assets/event-banner.svg';
 
 function ShortBannerSection() {
     return (
@@ -21,7 +22,9 @@ function ShortBannerSection() {
                         </svg>
                     </div>
                     </div> */}
-                    <div className='flex flex-col md:flex-row items-center p-8 lg:p-16 gap-6 md:gap-20 rounded-lg bg-[#ADEDFE] justify-center my-8 md:my-12'>
+                    <div className={`flex flex-col md:flex-row items-center p-8 lg:p-16 gap-6 md:gap-20 rounded-lg 
+                        bg-[#ADEDFE] justify-center my-8 md:my-12 
+                        bg-[url('/assets/event-banner.svg')] bg-cover bg-center hover:bg-[#a2e9fd] transition-all duration-300 ease`}>
                         <Image alt='Inner Circle' title='Inner Circle' src={icLogo}/>
                         <div className='flex flex-1 md:gap-x-16 gap-x-6 items-center justify-center'>
                             <h2 className='text-zinc-900 text-xl md:text-4xl font-extrabold font-manrope'>{`Get your Early Bird tickets before they're gone!`}</h2>

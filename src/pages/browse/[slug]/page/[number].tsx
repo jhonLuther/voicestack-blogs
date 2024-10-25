@@ -98,7 +98,7 @@ export default function TagPagePaginated({
         <AllcontentSection  allContent={posts} hideSearch={true} />
         <Pagination
           totalPages={totalPages}
-          baseUrl={`/browse/${tag.slug.current}`}
+          baseUrl={`/${siteConfig.paginationBaseUrls.base}/${tag.slug.current}`}
           onPageChange={handlePageChange}
           currentPage={currentPage}
           enablePageSlug={true}
