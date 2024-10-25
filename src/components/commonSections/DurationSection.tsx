@@ -8,15 +8,17 @@ interface DurationProps {
     duration?: string
     date?: string
     isAudio?: boolean
+    className?: string
+    contentType?: string
 }
 
-const DurationSection = ({ duration, date, isAudio = false }: DurationProps) => {
+const DurationSection = ({className,contentType,duration, date, isAudio = false }: DurationProps) => {
 
     if (!duration) {
         return null
     }
     return (
-        <React.Fragment>
+        <div>
             {isAudio ?
                 <div className=' flex  items-center gap-2  mt-8'>
                     <ClockIcon color='white' width={24} height={24} />
@@ -25,17 +27,17 @@ const DurationSection = ({ duration, date, isAudio = false }: DurationProps) => 
                     </span>
                 </div>
                 :
-                <div className='flex relative gap-3 pt-3'>
-                    <div className='text-white'>
-                        {formatDateShort(date)}
+                <div className={`flex relative gap-3 pt-3}`}>
+                    <div className={`text-white ${className}`  }>
+                        {date ? formatDateShort(date) : 'Dec 30, 2020'}
                     </div>
                     .
-                    <div className='relative flex flex-col'>
-                        <span>{`${duration} min read `}
+                    <div className={`relative flex flex-col ${className} `}>
+                        <span>{`${duration} min read`}
                         </span>
                     </div>
                 </div>}
-        </React.Fragment>
+        </div>
     )
 
 

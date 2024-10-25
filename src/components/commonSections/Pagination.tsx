@@ -1,16 +1,17 @@
 import { useRouter } from 'next/router';
 import React from 'react';
+import Link from 'next/link';
 import Section from '../Section';
 import Wrapper from '~/layout/Wrapper';
 import { ArrowRightIcon } from '@sanity/icons';
 import { ArrowLeftIcon } from '@sanity/icons';
 
-const Pagination = ({ 
-  totalPages, 
-  currentPage, 
-  baseUrl, 
-  onPageChange, 
-  enablePageSlug = false 
+const Pagination = ({
+  totalPages,
+  currentPage,
+  baseUrl,
+  onPageChange,
+  enablePageSlug = false
 }: {
   totalPages: number,
   currentPage: number,
@@ -19,45 +20,45 @@ const Pagination = ({
   enablePageSlug?: boolean
   content?: any
 }) => {
-  const router = useRouter()
+
+  if(totalPages === 1) return null 
+  const getPageUrl = (page: number) => {
+    if (page === 1) return baseUrl;
+    return enablePageSlug
+      ? `${baseUrl}/page/${page}`
+      : `${baseUrl}/${page}`;
+  };
 
   const handlePageChange = (page: number) => {
     if (page !== currentPage) {
-      onPageChange(page)
-      if (page === 1) {
-        router.push(baseUrl)
-      } else if (enablePageSlug) {
-        router.push(`${baseUrl}/page/${page}`)
-      } else {
-        router.push(`${baseUrl}/${page}`)
-      }
+      onPageChange(page);
     }
-  }
-
+  };
 
   const renderPageNumbers = () => {
-    const visiblePages = Array.from({ length: totalPages }, (_, i) => i + 1)
+    const visiblePages = Array.from({ length: totalPages }, (_, i) => i + 1);
 
     return visiblePages.map((number) => (
-      <button
+      <Link
         key={number}
+        href={getPageUrl(number)}
         onClick={() => handlePageChange(number)}
         className={`
-          px-3 py-1 
+          px-3 py-1
           rounded-md
           transition-all duration-300 ease-in-out
-          ${currentPage === number 
-            ? ' text-gray-900 font-semibold' 
+          ${currentPage === number
+            ? 'text-gray-900 font-semibold'
             : 'text-gray-600 hover:bg-gray-100'
           }
         `}
       >
         {number}
-      </button>
+      </Link>
     ));
   };
 
-  const arrowButtonClass = `
+  const arrowLinkClass = `
     p-2
     rounded-md
     transition-all duration-300 ease-in-out
@@ -65,6 +66,18 @@ const Pagination = ({
     disabled:cursor-not-allowed
     hover:bg-gray-100
     group
+    ${currentPage === 1 ? 'pointer-events-none opacity-50' : ''}
+  `;
+
+  const nextArrowLinkClass = `
+    p-2
+    rounded-md
+    transition-all duration-300 ease-in-out
+    disabled:opacity-50
+    disabled:cursor-not-allowed
+    hover:bg-gray-100
+    group
+    ${currentPage === totalPages ? 'pointer-events-none opacity-50' : ''}
   `;
 
   const iconClass = `
@@ -76,33 +89,33 @@ const Pagination = ({
     <Section className="justify-center md:pb-12 md:pt-16">
       <Wrapper className="justify-center">
         <div className="flex items-center space-x-2">
-          <button
+          <Link
+            href={getPageUrl(currentPage - 1)}
             onClick={() => handlePageChange(currentPage - 1)}
-            disabled={currentPage === 1}
-            className={arrowButtonClass}
+            className={arrowLinkClass}
           >
             <ArrowLeftIcon 
               height={25}
               className={iconClass}
             />
-          </button>
-          
+          </Link>
+
           {renderPageNumbers()}
-          
-          <button
+
+          <Link
+            href={getPageUrl(currentPage + 1)}
             onClick={() => handlePageChange(currentPage + 1)}
-            disabled={currentPage === totalPages}
-            className={arrowButtonClass}
+            className={nextArrowLinkClass}
           >
             <ArrowRightIcon 
               height={25}
               className={iconClass}
             />
-          </button>
+          </Link>
         </div>
       </Wrapper>
     </Section>
   );
 };
 
-export default Pagination
+export default Pagination;

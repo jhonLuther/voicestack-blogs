@@ -1,6 +1,7 @@
 import { ImageAsset, PortableTextBlock, Slug } from "sanity"
 
 export interface Post {
+  date: any
   headings?: Headings
   relatedPosts: any[]
 	duration: string
@@ -53,6 +54,7 @@ export interface Post {
     bio:any,
   }
   export interface Tag{
+    name: string
     _id: string,
     tagName: string,
     slug: Slug,

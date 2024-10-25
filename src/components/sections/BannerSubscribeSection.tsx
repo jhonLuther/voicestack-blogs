@@ -36,7 +36,7 @@ function BannerSubscribeSection({ isSmall }: BannerSubscribeSectionProps) {
                  text-cs-gray-600 font-medium text-2x bg-transparent focus:ring-blue-500 focus:border-blue-500 dark:bg-transparent focus:outline-none dark:placeholder-gray-400 dark:text-cs-gray-600 dark:focus:border-blue-500"
                 required />
 
-              <Button className='bg-cs-gray-900' onClick={handleSubmit}>
+              <Button className='bg-zinc-900' onClick={handleSubmit}>
                 <span className='text-base font-medium'>Submit</span>
               </Button>
             </div>

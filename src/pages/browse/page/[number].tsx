@@ -9,6 +9,8 @@ import TagSelect from '~/contentUtils/TagSelector'
 import Wrapper from '~/layout/Wrapper'
 import Pagination from '~/components/commonSections/Pagination'
 import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection'
+import { useRef } from 'react'
+import { useRouter } from 'next/router'
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const client = getClient();
@@ -61,17 +63,22 @@ export const getStaticPaths = async () => {
 export default function TagPagePaginated({
   tags,
   posts,
-  allTags,
   totalPages,
   currentPage,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
+  const router = useRouter();
+
+  const baseUrl = useRef(`/${siteConfig.pageURLs.browse}`).current;
   const handlePageChange = (page: number) => {
-    console.log(`Navigating to page: ${page}`)
-  }
+    if (page === 1) {
+      router.push(baseUrl);
+    } else {
+      router.push(`${baseUrl}/page/${page}`);
+    }
+  };
 
   return (
     <Layout>
-        {/* <h1 className='md:text-5xl text-xl font-extrabold font-manrope text-center'>{tag?.tagName}</h1> */}
         <TagSelect 
           tags={tags} 
           tagLimit={5} 
@@ -81,7 +88,7 @@ export default function TagPagePaginated({
         <AllcontentSection allContent={posts} hideSearch={true} />
         <Pagination
           totalPages={totalPages}
-          baseUrl={`/browse`}
+          baseUrl={baseUrl}
           onPageChange={handlePageChange}
           currentPage={currentPage}
           enablePageSlug={true}

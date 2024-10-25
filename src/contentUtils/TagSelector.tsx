@@ -49,7 +49,7 @@ export default function TagSelect({
 
 
   return (
-    <Section className='bg-gray-900 justify-center !py-0'>
+    <Section className='bg-zinc-900 justify-center !py-0'>
       <Wrapper>
       {showTags && (
         <div className="flex flex-row gap-6 pt-6 md:pt-6 pb-6 w-full items-center">
