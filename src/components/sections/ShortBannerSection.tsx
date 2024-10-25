@@ -10,7 +10,7 @@ function ShortBannerSection() {
         <section className='flex justify-center'>
             <Wrapper>
                 <Link href={'https://carestack.com/company/events/inner-circle-2025'} target='_blank' className='group'>
-                {/* <div className='flex p-9 justify-between items-start rounded cursor-pointer my-9 bg-gray-900'>
+                {/* <div className='flex p-9 justify-between items-start rounded cursor-pointer my-9 bg-zinc-900'>
                     <div className='flex flex-col gap-[10px]'>
                         <h2 className='uppercase text-white text-base font-inter '>{'INNER CIRCLE 2025'}</h2>
                         <h2 className='uppercase text-white text-4xl font-extrabold font-manrope '>{'Get your Early Bird tickets before they’re gone!'}</h2>

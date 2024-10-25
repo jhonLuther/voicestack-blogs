@@ -48,7 +48,7 @@ const Pagination = ({
           rounded-md
           transition-all duration-300 ease-in-out
           ${currentPage === number
-            ? 'text-gray-900 font-semibold'
+            ? 'text-zinc-900 font-semibold'
             : 'text-gray-600 hover:bg-gray-100'
           }
         `}
