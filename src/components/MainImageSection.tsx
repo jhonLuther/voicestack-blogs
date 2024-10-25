@@ -41,7 +41,7 @@ const MainImageSection = ({ post, isAuthor, enableDate = false, isAudio = false 
 							<h1 className="text-white font-manrope leading-tight lg:text-5xl text-2xl font-bold  mb-[10px]">
 								{post.title ? post.title : 'Post Title'}
 							</h1>
-							<p className="text-gray-400 font-inter text-base font-normal leading-120 line-clamp-2 overflow-hidden">
+							<p className="text-zinc-400 font-inter text-base font-normal leading-120 line-clamp-2 overflow-hidden">
 								{post.excerpt ? post.excerpt : 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur except.'}
 							</p>
 							{isAuthor && <AuthorInfo className={"mt-8"} contentType={post.contentType} author={post?.author} />}

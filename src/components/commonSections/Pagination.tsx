@@ -49,7 +49,7 @@ const Pagination = ({
           transition-all duration-300 ease-in-out
           ${currentPage === number
             ? 'text-zinc-900 font-semibold'
-            : 'text-gray-600 hover:bg-gray-100'
+            : 'text-zinc-600 hover:bg-zinc-100'
           }
         `}
       >
@@ -64,7 +64,7 @@ const Pagination = ({
     transition-all duration-300 ease-in-out
     disabled:opacity-50
     disabled:cursor-not-allowed
-    hover:bg-gray-100
+    hover:bg-zinc-100
     group
     ${currentPage === 1 ? 'pointer-events-none opacity-50' : ''}
   `;
@@ -75,7 +75,7 @@ const Pagination = ({
     transition-all duration-300 ease-in-out
     disabled:opacity-50
     disabled:cursor-not-allowed
-    hover:bg-gray-100
+    hover:bg-zinc-100
     group
     ${currentPage === totalPages ? 'pointer-events-none opacity-50' : ''}
   `;

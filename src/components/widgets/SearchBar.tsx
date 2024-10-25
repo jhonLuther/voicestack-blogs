@@ -21,7 +21,7 @@ function SearchBar({header}:SearchBarProps) {
                 height="21"
                 viewBox="0 0 20 21"
                 fill="none"
-                className="text-gray-400"
+                className="text-zinc-400"
             >
                 <path
                     fillRule="evenodd"

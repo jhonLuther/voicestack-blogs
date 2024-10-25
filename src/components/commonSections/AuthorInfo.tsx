@@ -39,7 +39,7 @@ const  AuthorInfo = ({ author, contentType,className,showMultiple = false,showNa
               )}
               <div className='flex flex-col'>
                 <span className='!font-semibold text-lg leading-tight !no-underline'>{authors?.name}</span>
-                {!showNameOnly && <span className='text-base text-gray-600 !no-underline' >{authors?.role}</span>}
+                {!showNameOnly && <span className='text-base text-zinc-600 !no-underline' >{authors?.role}</span>}
               </div>
             </div>
           </Link>

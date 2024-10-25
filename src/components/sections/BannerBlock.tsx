@@ -22,7 +22,7 @@ const BannerBlock: React.FC<BannerBlockProps> = ({ bannerBlock }) => {
         <h2 className='!text-white !m-0 !text-3xl !font-semibold leading-[110%] block'>
           {bannerBlock?.title ? bannerBlock?.title : 'Book a demo with us!'}
         </h2>
-        <p className='!text-gray-100 !text-opacity-70 !text-lg !m-0'>{bannerBlock?.description ? bannerBlock?.description  : 'Learn how we can help you reduce claim rejections and denials.'}</p>
+        <p className='!text-zinc-100 !text-opacity-70 !text-lg !m-0'>{bannerBlock?.description ? bannerBlock?.description  : 'Learn how we can help you reduce claim rejections and denials.'}</p>
       </div>
       <div>
       <div
