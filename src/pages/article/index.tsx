@@ -61,7 +61,7 @@ const ArticlesPage = ({ articles,latestArticles, totalPages }: { articles: Artic
           baseUrl={baseUrl}
           className={'pb-9'}
           allContent={articles}
-          hideSearch={true}
+          hideHeader={true}
           cardType="left-image-card"
           itemsPerPage={siteConfig.pagination.childItemsPerPage}
         />

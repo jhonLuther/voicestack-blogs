@@ -12,7 +12,7 @@ import SearchBar from '../widgets/SearchBar';
 
 interface LatestBlogsProps {
   allContent: any[];
-  hideSearch?: boolean;
+  hideHeader?: boolean;
   className?: string;
   cardType?: 'podcast-card' | 'ebook-card' | 'featured' | 'top-image-smallCard' | "left-image-card";
   redirect?: boolean;
@@ -20,21 +20,26 @@ interface LatestBlogsProps {
   itemsPerPage?: number;
   customBrowseContent?: any;
   enableDateSort?: boolean
+  allItemCount?: any
 }
 
 const AllcontentSection: React.FC<LatestBlogsProps> = ({
   allContent,
   customBrowseContent,
-  hideSearch = false,
+  hideHeader = false,
   className,
   cardType,
   itemsPerPage,
   redirect = false,
-  enableDateSort
+  enableDateSort,
+  baseUrl,
+  allItemCount
 }) => {
   const postsToShow = itemsPerPage || siteConfig.pagination.itemsPerPage;
   const [selectedTag, setSelectedTag] = React.useState('');
   const router = useRouter();
+
+  const totalCount = allItemCount ? allItemCount : allContent.length;
 
   useEffect(() => {
     const updateSelectedTag = () => {
@@ -106,6 +111,7 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
             cardColor='white' 
             post={postContent} 
             className=''
+            baseUrl={baseUrl}
           />
         </div>
       );
@@ -117,17 +123,11 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
   return (
     <Section className={`justify-center md:pb-0 md:pt-24`}>
       <Wrapper className={`flex-col`}>
-        <div className="md:flex-row flex-col gap-8 flex items-end justify-between pb-12">
+        {!hideHeader && <div className="md:flex-row flex-col gap-8 flex items-end justify-between pb-12">
           <H2Large className='tracking-tighterText'>
             {`${selectedTag ? selectedTag : 'Explore All'} `}
           </H2Large>
-          {!hideSearch && (
-            <div className="relative max-w-xl flex-1">
-              <SearchBar />
-            </div>
-          )}
-
-          {redirect && (
+          {redirect ? (
             <Link href={siteConfig.paginationBaseUrls.base}>
               <div className='flex items-center gap-3 transform group duration-300 cursor-pointer'>
                 <span className='text-base font-medium'>{`Browse All`}</span>
@@ -140,8 +140,8 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
                 </span>
               </div>
             </Link>
-          )}
-        </div>
+          ):(<div className='text-zinc-700 font-normal text-base'>{`${totalCount} ${totalCount > 1 ? 'results' : 'result'}`}</div>)}
+        </div>}
 
         <div className={`grid 
           ${cardType === 'left-image-card' 

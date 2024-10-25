@@ -55,7 +55,7 @@ const TestimonialsPage = ({ testimonials,latestTestimonials, totalPages }: { tes
           baseUrl={baseUrl}
           className={'pb-9'}
           allContent={testimonials}
-          hideSearch={true}
+          hideHeader={true}
           cardType={'left-image-card'}
           itemsPerPage={siteConfig.pagination.childItemsPerPage}
         /> */}

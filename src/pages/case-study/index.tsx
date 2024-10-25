@@ -59,7 +59,7 @@ const CaseStudiesPage = ({ caseStudies,latestCaseStudies, totalPages }: { caseSt
           baseUrl={baseUrl}
           className={'pb-9'}
           allContent={caseStudies}
-          hideSearch={true}
+          hideHeader={true}
           cardType="left-image-card"
           itemsPerPage={siteConfig.pagination.childItemsPerPage}
         />

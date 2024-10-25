@@ -54,7 +54,7 @@ const PressReleasePage = ({ pressReleases,latestPressReleases, totalPages }: { p
           baseUrl={baseUrl}
           className={'pb-9'}
           allContent={pressReleases}
-          hideSearch={true}
+          hideHeader={true}
           cardType="left-image-card"
           itemsPerPage={siteConfig.pagination.childItemsPerPage}
         />

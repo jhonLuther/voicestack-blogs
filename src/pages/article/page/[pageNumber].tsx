@@ -68,7 +68,6 @@ const PaginatedArticlesPage = ({ articles, pageNumber, totalPages }: { articles:
           baseUrl={baseUrl}
           className={'pb-9'}
           allContent={articles}
-          hideSearch={true}
           cardType="left-image-card"
           itemsPerPage={siteConfig.pagination.childItemsPerPage}
         />
