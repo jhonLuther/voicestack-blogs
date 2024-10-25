@@ -73,25 +73,26 @@ const WebinarPage = ({ webinar, draftMode, token }: Props) => {
 
         <Section className='justify-center'>
           <Wrapper className={'flex-col'}>
-        <div className="flex  md:flex-row justify-between gap-20 flex-col">
-            <div className="mt-12 flex md:flex-col flex-col-reverse md:w-2/3 w-full ">
-              <VideoModal videoDetails={webinar?.videos} className={`pt-9   flex items-start`} />
-              <div className='post__content w-full '>
-                <SanityPortableText
-                  content={webinar?.body}
-                  draftMode={draftMode}
-                  token={token}
-                />
-              </div>
-              <BannerSubscribeSection />
+            <div className="flex  md:flex-row justify-between gap-20 flex-col">
+                <div className="mt-12 flex md:flex-col flex-col-reverse md:w-2/3 w-full ">
+                  <VideoModal videoDetails={webinar?.videos} className={`pt-9   flex items-start`} />
+                  <div className='post__content w-full '>
+                    <SanityPortableText
+                      content={webinar?.body}
+                      draftMode={draftMode}
+                      token={token}
+                    />
+                  </div>
+                  <BannerSubscribeSection />
+                </div>
             </div>
-            <div className='flex-1 flex flex-col gap-12 mt-12  bg-red relative md:w-1/3 w-full'>
-              <div className='sticky top-12 flex flex-col gap-12'>
-                {webinar?.relatedWebinars.length > 0 && <RelatedFeaturesSection title={webinar?.title} allPosts={webinar?.relatedWebinars} />}
-              </div>
-            </div>
-        </div>
-        </Wrapper>
+                {webinar?.relatedWebinars?.length > 0 && (
+              <RelatedFeaturesSection
+                title={webinar?.title}
+                allPosts={webinar?.relatedWebinars}
+              />
+            )}
+          </Wrapper>
         </Section>
 
           
