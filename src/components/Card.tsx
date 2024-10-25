@@ -83,7 +83,7 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
             <div className={`flex ${reverse ? 'rounded-t-lg' : 'rounded-b-lg'} p-9 ${cardColor ? cardColor : 'bg-orange-700'} flex-col items-start gap-10 flex-1`}>
               <div className="flex flex-col gap-3">
                 {post.contentType && (
-                  <SubText className='text-white'>
+                  <SubText className='!text-white'>
                     {post.contentType}
                   </SubText>
                 )}

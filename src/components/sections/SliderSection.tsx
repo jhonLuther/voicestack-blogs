@@ -10,34 +10,9 @@ interface BannerBlockProps {
 }
 
 const SliderSection: React.FC<BannerBlockProps> = ({ items }) => {
-  const swiperRef = useRef(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const totalSlides = items ? items.length : 0;
-  const isAtStart = currentIndex === 0;
-  const isAtEnd = currentIndex === totalSlides - 1;
-  console.log({items});
-  
-
-
-  const handleNextSlide = () => {
-    if (swiperRef.current && currentIndex < totalSlides - 1) {
-      swiperRef.current.slideNext();
-      setCurrentIndex((prev) => prev + 1);
-    }
-  };
-
-  const handlePrevSlide = () => {
-    if (swiperRef.current && currentIndex > 0) {
-      swiperRef.current.slidePrev();
-      setCurrentIndex((prev) => prev - 1);
-    }
-  };
-
   if (!items) {
     return null;
   }
-
-
   return (
     <div className={` flex w-full justify-center px-4 `} >
       <section className="my-9 max-w-7xl w-full">
@@ -46,13 +21,13 @@ const SliderSection: React.FC<BannerBlockProps> = ({ items }) => {
             {`Ebooks and Webinars`}
           </H3XL>
           <div className="flex gap-9">
-            <button className={` ${isAtStart ? 'text-zinc-300' : 'text-black'}`} disabled={isAtStart} onClick={handlePrevSlide}>
-              <ArrowLeftIcon height={48} width={48} /></button>
-            <button className={` ${isAtEnd ? 'text-zinc-300' : 'text-black'}`} disabled={isAtEnd} onClick={handleNextSlide}>
-              <ArrowRightIcon height={48} width={48} /></button>
+            <div className="flex gap-9">
+              <button className='text-zinc-900 ebook-prev disabled:opacity-30'><ArrowLeftIcon height={48} width={48} /></button>
+              <button className='text-zinc-900 ebook-next disabled:opacity-30'><ArrowRightIcon height={48} width={48} /></button>
+            </div>
           </div>
         </div>
-        <Carousel items={items} swiperRef={swiperRef}/>
+        <Carousel items={items}/>
       </section>
     </div>
 
