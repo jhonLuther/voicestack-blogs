@@ -125,8 +125,8 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
                 <H4Large className={`group-hover: group-hover:underline underline-offset-4 line-clamp-3 text-ellipsis overflow-hidden`}>
                   {post.title}
                 </H4Large>
-                <DurationSection className={'!text-zinc-500'} contentType={post.contentType} duration={post?.estimatedReadingTime ? post.estimatedReadingTime : post.duration} date={post?.date ? post?.date : ""}></DurationSection>
-              </div>
+                <DurationSection className={'!text-zinc-500'} contentType={post.contentType} duration={post.contentType === 'podcast'  || post.contentType === 'webinar' ? post?.duration :post?.estimatedReadingTime} date={post?.date ? post?.date : ""}></DurationSection>
+                </div>
 
               {
                 post.contentType === 'podcast' ? (
@@ -303,17 +303,16 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
                     // default card
                     <div className={`flex flex-col group relative h-full`}>
                       <Link href={linkUrl} className='flex flex-col h-full'>
-                        {(post.mainImage || post.image) && (
+                        {(post.mainImage || post.customImage) && (
                           <div className={`overflow-hidden ${varyingIndex ? 'rounded-t-lg  flex-1' : 'rounded-lg'} relative  w-full`}>
                             <ImageLoader
                               className="h-full"
 															imageClassName='group-hover:scale-105 transition-transform duration-300 w-full h-full inline'
-                              image={post?.mainImage}
+                              image={varyingIndex && post?.customImage ? post?.customImage : post?.mainImage}
                               alt={post.title || 'Blog Image'}
-                              // height={varyingIndex ? 553 : 173}
-                              // width={411}	
+                              useClientWidth={true}
                             />
-                            {
+                            { !varyingIndex &&
                               post.contentType === 'podcast' ? (
                                 <div className='absolute bottom-6 left-6 flex items-center gap-2'>
                                   <Image src={SoundIcon} alt="soundIcon" />
@@ -349,7 +348,7 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
                                 <ArrowTopRightIcon className='group-hover:translate-y-[-2px] transition-transform duration-300' height={20} width={20} />
                               </div>
                             ) : (
-                              <DurationSection className={'!text-zinc-500'} contentType={post.contentType} duration={post?.estimatedReadingTime ? post.estimatedReadingTime : post.duration} date={post?.date ? post?.date : ""}></DurationSection>
+                              <DurationSection className={'!text-zinc-500'} contentType={post.contentType} duration={post.contentType === 'podcast' || post.contentType === 'webinar' ? post?.duration :post?.estimatedReadingTime} date={post?.date ? post?.date : ""}></DurationSection>
                             )}
                           </div>
                         }

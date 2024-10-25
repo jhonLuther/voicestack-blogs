@@ -12,39 +12,39 @@ interface DurationProps {
     contentType?: string
 }
 
-const DurationSection = ({className,contentType,duration, date, isAudio = false }: DurationProps) => {
-
-    if (!duration) {
-        return null
+const DurationSection = ({ className, contentType, duration, date, isAudio = false }: DurationProps) => {
+    if (!duration && contentType !== 'ebook') {
+        return null;
     }
+
+    const durationText = contentType === 'podcast' || contentType === 'webinar'
+        ? duration
+        : `${duration} min read`;
+
     return (
         <div>
-            {isAudio ?
-                <div className=' flex  items-center gap-2  mt-8'>
+            {isAudio ? (
+                <div className='flex items-center gap-2 mt-8'>
                     <ClockIcon color='white' width={24} height={24} />
-                    <span>
-                        {duration}
-                    </span>
+                    <span>{duration}</span>
                 </div>
-                :
-                <div className={`flex relative gap-3 pt-3}`}>
-                    <div className={`text-white ${className}`  }>
+            ) : contentType === 'ebook' ? (
+                <div className={`text-white ${className}`}>
+                    {date ? formatDateShort(date) : 'Dec 30, 2020'}
+                </div>
+            ) : (
+                <div className={`flex relative gap-3 pt-3`}>
+                    <div className={`text-white ${className}`}>
                         {date ? formatDateShort(date) : 'Dec 30, 2020'}
                     </div>
                     .
-                    <div className={`relative flex flex-col ${className} `}>
-                        <span>{`${duration} min read`}
-                        </span>
+                    <div className={`relative flex flex-col ${className}`}>
+                        <span>{durationText}</span>
                     </div>
-                </div>}
+                </div>
+            )}
         </div>
-    )
+    );
+};
 
-
-
-
-
-
-}
-
-export default DurationSection
+export default DurationSection;

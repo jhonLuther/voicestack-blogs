@@ -72,6 +72,14 @@ const imageFragment = `
   },
   altText,
   title
+ },
+ "customImage": customImage.asset-> {
+  _id,
+  metadata {
+    dimensions
+  },
+  altText,
+  title
  }
   `
 

@@ -18,7 +18,8 @@ interface LatestBlogsProps {
   redirect?: boolean;
   baseUrl?: string;
   itemsPerPage?: number;
-  customBrowseContent?:any
+  customBrowseContent?: any;
+  enableDateSort?: boolean
 }
 
 const AllcontentSection: React.FC<LatestBlogsProps> = ({
@@ -29,6 +30,7 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
   cardType,
   itemsPerPage,
   redirect = false,
+  enableDateSort
 }) => {
   const postsToShow = itemsPerPage || siteConfig.pagination.itemsPerPage;
   const [selectedTag, setSelectedTag] = React.useState('');
@@ -78,10 +80,44 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
     return null;
   }
 
+  const renderPosts = () => {
+    const posts = [];
+    const slicedContent = allContent.slice(0, postsToShow);
+
+    slicedContent.forEach((post, index) => {
+      const isVaryingIndex = (index >= 3 && (index - 3) % 9 === 0) && cardType !== 'left-image-card';
+      const shouldUseCustomContent = isVaryingIndex && customBrowseContent;
+      
+      if (isVaryingIndex && !customBrowseContent) {
+        return;
+      }
+
+      const postContent = shouldUseCustomContent ? customBrowseContent : post;
+      
+      posts.push(
+        <div 
+          id={index.toString()} 
+          key={postContent._id || index} 
+          className={`${isVaryingIndex ? 'row-span-2' : ''}`}
+        >
+          <Card
+            varyingIndex={isVaryingIndex} 
+            cardType={cardType} 
+            cardColor='white' 
+            post={postContent} 
+            className=''
+          />
+        </div>
+      );
+    });
+
+    return posts;
+  };
+
   return (
     <Section className={`justify-center md:pb-0 md:pt-24`}>
       <Wrapper className={`flex-col`}>
-        <div className="md:flex-row flex-col gap-8 flex items-center justify-between pb-12">
+        <div className="md:flex-row flex-col gap-8 flex items-end justify-between pb-12">
           <H2Large className='tracking-tighterText'>
             {`${selectedTag ? selectedTag : 'Explore All'} `}
           </H2Large>
@@ -116,21 +152,7 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
           }
         `}>
           {allContent && allContent.length > 0 ? (
-            allContent.slice(0, postsToShow).map((post, index) => (
-              <div 
-                id={index.toString()} 
-                key={post._id || index} 
-                className={`${(index >= 3 && (index - 3) % 9 === 0) && cardType !== 'left-image-card' ? 'row-span-2' : ''}`}
-              >
-                <Card
-                  varyingIndex={(index >= 3 && (index - 3) % 9 === 0)} 
-                  cardType={cardType} 
-                  cardColor='white' 
-                  post={post} 
-                  className=''
-                />
-              </div>
-            ))
+            renderPosts()
           ) : (
             <div className="text-center py-10">
               <p>No matching posts found.</p>

@@ -60,7 +60,7 @@ const DynamicPages = ({
 			<BannerSubscribeSection />
 			<SliderSection items={carouselItems} />
 			<TestimonialSection testimonials={testimonialList} />
-			<AllcontentSection customBrowseContent={customBrowseContent} allContent={posts} itemsPerPage={siteConfig.pagination.itemsPerPage} hideSearch={true} redirect={true} />
+			<AllcontentSection  customBrowseContent={customBrowseContent} allContent={posts} itemsPerPage={siteConfig.pagination.itemsPerPage} hideSearch={true} redirect={true} />
 			<ShortBannerSection />
 		</>
 	);

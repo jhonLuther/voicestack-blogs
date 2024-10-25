@@ -1,6 +1,7 @@
 import { ImageAsset, PortableTextBlock, Slug } from "sanity"
 
 export interface Post {
+  customImage: ImageAsset
   date: any
   headings?: Headings
   relatedPosts: any[]

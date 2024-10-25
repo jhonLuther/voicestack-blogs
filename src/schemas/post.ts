@@ -269,6 +269,16 @@ export default defineType({
       ],
     }),
 
+    defineField({
+      name: 'customImage',
+      title: 'Custom Image',
+      description: 'Provide a custom image for the post',
+      type: 'image',
+      options: {
+        hotspot: true,
+      },
+    }),
+
     // Tags Field
     defineField({
       name: 'tags',
