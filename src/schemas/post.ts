@@ -114,9 +114,7 @@ export default defineType({
       type: 'date',
       options: {
         dateFormat: 'YYYY-MM-DD'
-      },
-      hidden: ({ parent }) =>
-        parent.contentType == 'podcast' ,
+      }
     }),
     defineField({
       name: 'excerpt',
@@ -225,7 +223,7 @@ export default defineType({
       title: 'Duration',
       type: 'string',
       hidden: ({ parent }) =>
-        parent.contentType !== 'webinar' && parent.contentType !== 'podcast' && parent.contentType !== 'case-study',
+        parent.contentType !== 'webinar' && parent.contentType !== 'ebook' && parent.contentType !== 'podcast' && parent.contentType !== 'case-study',
     }),
 
     // Ebook Specific Fields

@@ -39,6 +39,7 @@ const DynamicPages = ({
 }: DynamicProps) => {
 
 	const featuredBlog = homeSettings?.FeaturedBlog || posts[0];
+	const customBrowseContent = homeSettings?.customBrowseContent || posts[0];
 	const featuredBlogs = homeSettings?.popularBlogs || posts;
 	
 	const featuredContents = [...featuredBlogs,...posts].slice(0, 4);
@@ -59,7 +60,7 @@ const DynamicPages = ({
 			<BannerSubscribeSection />
 			<SliderSection items={carouselItems} />
 			<TestimonialSection testimonials={testimonialList} />
-			<AllcontentSection allContent={posts} itemsPerPage={siteConfig.pagination.itemsPerPage} hideSearch={true} redirect={true} />
+			<AllcontentSection customBrowseContent={customBrowseContent} allContent={posts} itemsPerPage={siteConfig.pagination.itemsPerPage} hideSearch={true} redirect={true} />
 			<ShortBannerSection />
 		</>
 	);

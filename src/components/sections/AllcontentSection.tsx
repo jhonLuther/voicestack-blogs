@@ -18,10 +18,12 @@ interface LatestBlogsProps {
   redirect?: boolean;
   baseUrl?: string;
   itemsPerPage?: number;
+  customBrowseContent?:any
 }
 
 const AllcontentSection: React.FC<LatestBlogsProps> = ({
   allContent,
+  customBrowseContent,
   hideSearch = false,
   className,
   cardType,
@@ -91,8 +93,8 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
 
           {redirect && (
             <Link href={siteConfig.paginationBaseUrls.base}>
-              <div className='flex items-center gap-3 transform duration-300 cursor-pointer'>
-                <span className='text-xs font-medium'>{`Browse All`}</span>
+              <div className='flex items-center gap-3 transform group duration-300 cursor-pointer'>
+                <span className='text-base font-medium'>{`Browse All`}</span>
                 <span className="text-xl">
                   <ArrowTopRightIcon 
                     className='group-hover:translate-y-[-2px] transition-transform duration-300' 

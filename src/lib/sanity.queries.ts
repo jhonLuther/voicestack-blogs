@@ -90,6 +90,7 @@ export const postsQuery = groq`
       "picture": picture.asset->url
   },
   "date": date,
+  duration,
   ${bodyFragment},
   "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180),
   tags[]->{
@@ -181,6 +182,8 @@ export const homeSettingsQuery = groq`
       "desc": postFields.excerpt,
       title,
       contentType,
+      date,
+      duration,
      ${imageFragment},
      ${bodyFragment},
      "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180),
@@ -196,19 +199,29 @@ export const homeSettingsQuery = groq`
       contentType,
       "desc": postFields.excerpt,
       title,
+      date,
+      duration,
       ${imageFragment},
      ${bodyFragment},
      "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180),
       author[]-> {
       _id,
       name,
+          },
     },
+    customBrowseContent->{
+      _id,
+      slug,
+      contentType,
+      title,
+      date,
+      duration,
+      ${imageFragment},
     },
 
     FeaturedBlog->{
       title,
-        contentType,
-
+      contentType,
      ${imageFragment},
       blogColor,
       excerpt,

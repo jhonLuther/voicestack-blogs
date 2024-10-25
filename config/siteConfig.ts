@@ -17,6 +17,7 @@ const siteConfig = {
       testimonial: "/testimonial",
       webinar: "/webinar",
       author: "/author",
+      browse:'/browse'
     },
     paginationBaseUrls:{
       base:"/browse"

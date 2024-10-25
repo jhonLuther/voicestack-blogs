@@ -89,14 +89,13 @@ export default function TagPagePaginated({
 
   return (
     <Layout>
-        <h1 className='md:text-5xl text-xl font-extrabold font-manrope text-center'>{tag?.tagName}</h1>
         <TagSelect 
           tags={allTags} 
           tagLimit={5} 
           showTags={true}
           className='mt-12' 
         />
-        <AllcontentSection allContent={posts} hideSearch={true} />
+        <AllcontentSection  allContent={posts} hideSearch={true} />
         <Pagination
           totalPages={totalPages}
           baseUrl={`/browse/${tag.slug.current}`}

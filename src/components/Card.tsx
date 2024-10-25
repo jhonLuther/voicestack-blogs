@@ -17,6 +17,8 @@ import SoundIcon from '../assets/speakerIcon.svg';
 import PlayIcon from '../assets/playButton.svg';
 
 import { ArrowTopRightIcon } from '@sanity/icons'
+import { formatDateShort } from '~/utils/formateDate';
+import DurationSection from './commonSections/DurationSection';
 interface CardProps {
   post: Post;
   cardType?: 'top-image-card' | 'text-only-card' | 'left-image-card' | 'ebook-card' | 'featured' | 'top-image-smallCard' | 'podcast-card' | 'top-image-contentType-card';
@@ -67,14 +69,14 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
                 />
               }
             </div>
-            <div className={`flex ${reverse ? 'rounded-t-lg' : 'rounded-b-lg'} p-9 bg-bg-green flex-col items-start gap-10 flex-1`}>
+            <div className={`flex ${reverse ? 'rounded-t-lg' : 'rounded-b-lg'} p-9 ${cardColor ? cardColor : 'bg-orange-700'} flex-col items-start gap-10 flex-1`}>
               <div className="flex flex-col gap-3">
                 {post.contentType && (
                   <SubText className='text-white' >
                     {post.contentType}
                   </SubText>
                 )}
-                <H3XL >
+                <H3XL className='group-hover:underline underline-offset-4'>
                   {post.title}
                 </H3XL>
                 <DescriptionText className='text-opacity-70 line-clamp-3 overflow-hidden text-ellipsis'>
@@ -112,22 +114,19 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
                 <H4Large className={`group-hover: group-hover:underline underline-offset-4 line-clamp-3 text-ellipsis overflow-hidden`}>
                   {post.title}
                 </H4Large>
-                {
-                  post.contentType === 'ebook' ? (
-                    <span className='text-gray-500 text-sm mt-1'>{post.author[0]?.name || ''}</span>
-                  ):
-                  <span className="text-gray-500 text-sm mt-1">{post.author[0]?.name || ''} · {`${  post?.estimatedReadingTime ? post.estimatedReadingTime : post.duration} ${post.contentType === 'article' || post.contentType === 'press-release' ? 'min read' : ''}   `}</span>
-                } 
+                <DurationSection className={'!text-zinc-500'} contentType={post.contentType} duration={post?.estimatedReadingTime ? post.estimatedReadingTime : post.duration} date={post?.date ? post?.date : ""}></DurationSection>
               </div>
 
               {
                 post.contentType === 'podcast' ? (
-                  <div className='absolute bottom-2 left-2'>
+                  <div className='absolute bottom-3 left-3 flex items-center gap-2'>
                     <Image src={SoundIcon} alt="soundIcon" />
+                    <span className='text-white text-sm font-medium'> {`Listen Now`}</span>
                   </div>) :
                   post.contentType === 'webinar' ? (
-                    <div className='absolute bottom-2 left-2'>
+                    <div className='absolute bottom-3 left-3 flex items-center gap-2'>
                       <Image src={PlayIcon} alt="playIcon" />
+                      <span className='text-white text-sm font-medium'>{`Watch`}</span>
                     </div>
                   ) : ""
               }
@@ -201,47 +200,49 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
 
                 cardType === 'podcast-card' ? (
                   <Link href={linkUrl}>
-                  <div className={`flex flex-col h-full flex-1  relative items-center group hover: transition duration-500 ${className}`}>
-                    {post.mainImage && (
-                      <div className="w-auto rounded-t-lg transform transition duration-500 overflow-hidden"
-                      >
-                        <ImageLoader
-                          className='transform  rounded-lg  duration-300 group-hover:scale-105'
-                          image={post?.mainImage}
-                          width={290}
-                          height={220}
-                        />
-                     {
-                      post.contentType === 'podcast' ? (
-                        <div className='absolute bottom-2 left-2'>
-                          <Image src={SoundIcon} alt="soundIcon" />
-                        </div>) :
-                        post.contentType === 'webinar' ? (
-                          <div className='absolute bottom-2 left-2'>
-                            <Image src={PlayIcon} alt="playIcon" />
-                          </div>
-                        ) : ""
-                    }
-                      </div>
-                    )}
-                    <div className='flex p-6 bg-gray-100 w-full justify-center'>
-                    <span className="text-gray-900, text-sm font-medium text-center">by {post.author[0]?.name || ''}</span>
-                    </div>
-                    <div className='flex gap-3 flex-col '>
-                    <div className="flex flex-col flex-1 gap-2 pt-6">
-                      {post.contentType && (
-                        <SubText >
-                          {post.contentType}
-                        </SubText>
+                    <div className={`flex flex-col h-full flex-1  relative items-center group hover: transition duration-500 ${className}`}>
+                      {post.mainImage && (
+                        <div className="w-auto rounded-t-lg transform transition duration-500 overflow-hidden"
+                        >
+                          <ImageLoader
+                            className='transform  rounded-lg  duration-300 group-hover:scale-105'
+                            image={post?.mainImage}
+                            width={290}
+                            height={220}
+                          />
+                          {
+                            post.contentType === 'podcast' ? (
+                              <div className='absolute bottom-6 left-6 flex items-center gap-2'>
+                                <Image src={SoundIcon} alt="soundIcon" />
+                                <span className='text-white text-sm font-medium'> {`Listen Now`}</span>
+                              </div>) :
+                              post.contentType === 'webinar' ? (
+                                <div className='absolute bottom-6 left-6 flex items-center gap-2'>
+                                  <Image src={PlayIcon} alt="playIcon" />
+                                  <span className='text-white text-sm font-medium'>{`Watch`}</span>
+                                </div>
+                              ) : ""
+                          }
+                        </div>
                       )}
-                      <H4Large className={`group-hover: group-hover:underline underline-offset-4 line-clamp-3 text-ellipsis overflow-hidden`}>
-                        {post.title}
-                      </H4Large>
+                      <div className='flex p-6 bg-gray-100 w-full justify-center'>
+                        <span className="text-gray-900, text-sm font-medium text-center">by {post.author[0]?.name || ''}</span>
+                      </div>
+                      <div className='flex gap-3 flex-col '>
+                        <div className="flex flex-col flex-1 gap-2 pt-6">
+                          {post.contentType && (
+                            <SubText >
+                              {post.contentType}
+                            </SubText>
+                          )}
+                          <H4Large className={`group-hover: group-hover:underline underline-offset-4 line-clamp-3 text-ellipsis overflow-hidden`}>
+                            {post.title}
+                          </H4Large>
+                        </div>
+                        <span className="text-gray-500 text-sm "> {`${post?.estimatedReadingTime ? post.estimatedReadingTime : post.duration} ${post.contentType === 'article' || post.contentType === 'press-release' ? 'min read' : ''}   `}</span>
+                      </div>
                     </div>
-                    <span className="text-gray-500 text-sm "> {`${post?.estimatedReadingTime ? post.estimatedReadingTime : post.duration} ${post.contentType === 'article' || post.contentType === 'press-release' ? 'min read' : ''}   `}</span>
-                    </div>
-                  </div>
-                </Link>
+                  </Link>
                 ) : cardType === 'ebook-card' ? (
                   <div className={`flex flex-col w-full min-h-[250px] group`}>
                     <Link href={linkUrl}>
@@ -294,12 +295,14 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
                             />
                             {
                               post.contentType === 'podcast' ? (
-                                <div className='absolute bottom-2 left-2'>
+                                <div className='absolute bottom-6 left-6 flex items-center gap-2'>
                                   <Image src={SoundIcon} alt="soundIcon" />
+                                  <span className='text-white text-sm font-medium'> {`Listen Now`}</span>
                                 </div>) :
                                 post.contentType === 'webinar' ? (
-                                  <div className='absolute bottom-2 left-2'>
+                                  <div className='absolute bottom-6 left-6 flex items-center gap-2'>
                                     <Image src={PlayIcon} alt="playIcon" />
+                                    <span className='text-white text-sm font-medium'>{`Watch`}</span>
                                   </div>
                                 ) : ""
                             }
@@ -307,33 +310,28 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
                         )}
                         {
 
-                      <div className={`${varyingIndex ? 'p-8 bg-indigo-900 text-white rounded-b-lg mt-1' : 'mt-6'} flex flex-col gap-1 min-h-[154px]`}>
-                        <div className='flex flex-col flex-grow'>
-                          {post.contentType && (
-                            <SubText className={varyingIndex ? 'text-white' : ''}>
-                              {post.contentType}
-                            </SubText>
-                          )}
-                          <H4Large className='group-hover:group-hover:underline underline-offset-4'>
-                            {post.title}
-                          </H4Large>
-                        </div>
-
-                        {varyingIndex ? (
-                          <div className='flex items-center gap-2 pt-8'>
-                            <span className='text-base font-medium'>{`Listen Now`}</span>
-                            <ArrowTopRightIcon className='group-hover:translate-y-[-2px] transition-transform duration-300' height={20} width={20} />
-                          </div>
-                        ) : (
-                          post.author && post.author.length > 0 && (
-                            <div className='mt-auto'>
-                              <span className='text-xs font-medium'>
-                                {`by ${post.author[0].name ? post.author[0].name : ''}`}
-                              </span>
+                          <div className={`${varyingIndex ? 'p-8 bg-indigo-900 text-white rounded-b-lg mt-1' : 'mt-6'} flex flex-col gap-1 min-h-[154px]`}>
+                            <div className='flex flex-col flex-grow'>
+                              {post.contentType && (
+                                <SubText className={varyingIndex ? 'text-white' : ''}>
+                                  {post.contentType}
+                                </SubText>
+                              )}
+                              <H4Large className='group-hover:group-hover:underline underline-offset-4'>
+                                {post.title}
+                              </H4Large>
                             </div>
-                          )
-                        )}
-                      </div>
+
+                            {varyingIndex ? (
+                              <div className='flex items-center gap-2 pt-8'>
+                                <span className='text-base font-medium'>{`${post.contentType === "podcast" ? "Listen Now" :
+                                  post.contentType === "webinar" ? "Watch" : "Read Now"}`}</span>
+                                <ArrowTopRightIcon className='group-hover:translate-y-[-2px] transition-transform duration-300' height={20} width={20} />
+                              </div>
+                            ) : (
+                              <DurationSection className={'!text-zinc-500'} contentType={post.contentType} duration={post?.estimatedReadingTime ? post.estimatedReadingTime : post.duration} date={post?.date ? post?.date : ""}></DurationSection>
+                            )}
+                          </div>
                         }
                       </Link>
                     </div>
