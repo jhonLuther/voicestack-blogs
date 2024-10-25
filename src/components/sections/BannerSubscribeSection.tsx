@@ -33,7 +33,7 @@ function BannerSubscribeSection({ isSmall }: BannerSubscribeSectionProps) {
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
                 className="block flex-1 md:max-w-2xl  w-full py-2 
-                 text-cs-zinc-600 font-medium text-2x bg-transparent focus:ring-blue-500 focus:border-blue-500 dark:bg-transparent focus:outline-none dark:placeholder-zinc-400 dark:text-cs-zinc-600 dark:focus:border-blue-500"
+                 text-zinc-600 font-medium text-2x bg-transparent focus:ring-blue-500 focus:border-blue-500 dark:bg-transparent focus:outline-none dark:placeholder-zinc-400 dark:text-zinc-600 dark:focus:border-blue-500"
                 required />
 
               <Button className='bg-zinc-900' onClick={handleSubmit}>
