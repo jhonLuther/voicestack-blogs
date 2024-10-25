@@ -313,7 +313,7 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
 															imageClassName='group-hover:scale-105 transition-transform duration-300 w-full h-full inline'
                               image={varyingIndex && post?.customImage ? post?.customImage : post?.mainImage}
                               alt={post.title || 'Blog Image'}
-                              useClientWidth={true}
+                              useClientWidth={varyingIndex ? true : false}
                             />
                             { !varyingIndex &&
                               post.contentType === 'podcast' ? (
@@ -335,7 +335,7 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
                           <div className={`${varyingIndex ? 'p-8 bg-indigo-900 text-white rounded-b-lg mt-1' : 'mt-6'} flex flex-col gap-1 min-h-[154px]`}>
                             <div className='flex flex-col flex-grow'>
                               {post.contentType && (
-                                <SubText className={varyingIndex ? 'text-white' : ''}>
+                                <SubText className={varyingIndex ? '!text-white' : ''}>
                                   {post.contentType}
                                 </SubText>
                               )}
