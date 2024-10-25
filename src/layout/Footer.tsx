@@ -1,147 +1,203 @@
-import React from 'react';
+import React from 'react'
+import Link from 'next/link';
+import Wrapper from './Wrapper';
+import Image from 'next/image';
+import CsLogo from '../assets/carestack-logo-white.svg'
 
 const Footer = ({ className }) => {
+
+  const terms = [
+    {title: 'Terms of use', url: '#'},
+    {title: 'Privacy policy', url: '#'},
+    {title: 'Do not sell my information', url: '#'},
+  ]
+
   const sections = [
     {
-      title: 'Who We Serve',
+      title: 'Help',
       links: [
-        { name: 'Single Site Dental Practices', url: '#' },
-        { name: 'Multi-Site Dental Practices', url: '#' },
-        { name: 'New Dental Practices', url: '#' }
-      ]
+        { name: 'Help Center', url: '#', external: false  },
+        { name: 'Help Forum', url: '#', external: false  },
+      ],
     },
+
     {
-      title: 'Dental Software',
+      title: 'Quick Links',
       links: [
-        { name: 'Features', url: '#' },
-        { name: 'Reviews', url: '#' },
-        { name: 'Onboarding', url: '#' },
-        { name: 'FAQs', url: '#' },
-        { name: 'Demo', url: '#' },
-        { name: 'Login', url: '#' }
-      ]
+        { name: 'Blogs', url: '/article', external: false },
+        { name: 'Case Studies', url: '/case-study', external: false },
+        { name: 'Podcasts', url: '/podcast', external: false },
+        { name: 'Ebooks', url: '/ebook', external: false },
+        { name: 'Webinars', url: '/webinar', external: false },
+        { name: 'Press Release', url: '/press-release', external: false },
+      ],
     },
+
     {
-      title: 'Growth Solutions',
+      title: 'CareStack',
+      link: '#',
       links: [
-        { name: 'CS Conversations™', url: '#' },
-        { name: 'VirtualAssistant™', url: '#' }
-      ]
+        { name: 'Book Demo', url: 'https://carestack.com/demo', external: true },
+        { name: 'Login', url: 'https://id.carestack.com/Account/Domain', external: true },
+        { name: 'Features', url: 'https://carestack.com/dental-software/features', external: true },
+        { name: 'Onboarding', url: 'https://carestack.com/support/onboarding', external: true },
+        { name: 'Support', url: 'https://carestack.com/support', external: true },
+      ],
     },
     {
       title: 'Company',
+      link: '#',
       links: [
-        { name: 'About', url: '#' },
-        { name: 'Leadership Team', url: '#' },
-        { name: 'Investors', url: '#' },
-        { name: 'Press', url: '#' },
-        { name: 'Careers', url: '#', special: "We're Hiring 🚀" },
-        { name: 'Contact', url: '#' }
-      ]
-    }
-  ];
+        { name: 'About', url: 'https://carestack.com/company', external: true },
+        { name: 'Leadership Team', url: 'https://carestack.com/company/leadership-team', external: true },
+        { name: 'Events', url: 'https://carestack.com/company/events', external: true },
+        { name: 'Press', url: 'https://carestack.com/company/press', external: true },
+        { name: 'Contact', url: 'https://carestack.com/company/contact', external: true },
+      ],
+    },
+  ]
 
-  const features = [
-    'Analytics & Reporting',
-    'Appointment Reminders',
-    'Backups',
-    'Charting',
-    'Clinical Notes',
-    'Membership Plans',
-    'UK GDPR-Compliance',
-    'Online Forms',
-    'Online Payments',
-    'Curbside Check-In',
-    'Patient Kiosk',
-    'Patient Notifications',
-    'Patient Portal',
-    'Payment Plans',
-    'Remote Access',
-    'Scheduling',
-    'Teledentistry',
-    'Treatment Planning',
-    'Payment Reminders'
-  ];
+  const currentYear = new Date().getFullYear();
+
+  // const features = [
+  //   'Analytics & Reporting',
+  //   'Appointment Reminders',
+  //   'Backups',
+  //   'Charting',
+  //   'Clinical Notes',
+  //   'Membership Plans',
+  //   'UK GDPR-Compliance',
+  //   'Online Forms',
+  //   'Online Payments',
+  //   'Curbside Check-In',
+  //   'Patient Kiosk',
+  //   'Patient Notifications',
+  //   'Patient Portal',
+  //   'Payment Plans',
+  //   'Remote Access',
+  //   'Scheduling',
+  //   'Teledentistry',
+  //   'Treatment Planning',
+  //   'Payment Reminders'
+  // ];
 
   return (
-    <footer className={`bg-gray-900 text-white pt-32 pb-12 ${className}`}>
-      <div className="container mx-auto px-4 max-w-7xl flex flex-col gap-24">
-        <div>
-        <div className="text-left mb-8 flex items-center justify-between md:flex-row flex-col">
+    <footer className={`bg-gray-900 text-white pt-24 pb-12 px-4 ${className}`}>
+      <Wrapper className="container mx-auto max-w-7xl flex flex-col gap-12">
+        <div className="flex md:flex-row gap-12 justify-between">
           <div>
-            <h2 className="text-3xl font-semibold mb-4">Start using the best in class software</h2>
-            <p className="text-gray-400 max-w-lg ">
-              CareStack’s intuitive, modern User Interface is designed for easy learning. Our comprehensive learning center also streamlines onboarding, making the process easier for your team.
-            </p>
-          </div>
-          <button className="mt-6 px-6 py-2 bg-green-500 text-white rounded hover:bg-green-600">
-            Book Free Demo
-          </button>
-        </div>
-        </div>
-
-
-        {/* Footer Links Section */}
-        <div className='flex flex-col gap-12'>
-
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-12 text-sm">
-          {sections.map((section, index) => (
-            <div key={index}>
-              <h3 className="text-lg font-semibold mb-4">{section.title}</h3>
-              <ul>
-                {section.links.map((link, linkIndex) => (
-                  <li key={linkIndex} className="mb-2">
-                    <a href={link.url} className="hover:text-gray-300">
-                      {link.name} {link.special && <span className="text-green-400">{link.special}</span>}
-                    </a>
-                  </li>
-                ))}
-              </ul>
+            <Link href="/" className="text-[30px] font-extrabold bg-gradient-text bg-clip-text text-transparent font-monrope tracking-tighterText max-w-[170px] leading-[1.16] block">
+              {`Dentistry's Inner Circle`}
+            </Link>
+            <div className="flex flex-col mt-12 md:mt-12 gap-2">
+              {terms.map((item:any, idx) => (
+                // <a href={item.url}  key={idx} className="hover:text-zinc-300 text-zinc-500 text-[15px] leading-[1.62]">
+                //   {item.title}
+                // </a>
+                <Link href={item.url} target={item.external ? "_blank" : "_self"} key={idx} className="hover:text-zinc-300 text-zinc-500 text-[15px] leading-[1.62]">
+                  {item.title}
+                </Link>
+              ))}
             </div>
-          ))}
-        </div>
-
-        {/* Features Section */}
-        <div className='flex flex-col gap-4'>
-        <h3 className="text-lg font-semibold mb-4 text-white">{`Features`}</h3>
-        <div className="grid grid-cols-2 gap-x-12 md:grid-cols-4  text-sm ">
-          {features.map((feature, index) => (
-            <div key={index} className={'pb-[11px]'}>
-              <ul>
-                <li className="">{feature}</li>
-              </ul>
-            </div>
-          ))}
-        </div>
-        </div>
-
-        {/* Footer Bottom */}
-        <div className="mt-10 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
-          <div>
-            <span>{`© 2017 - 2023 Good Methods Global Inc. All rights reserved`}.</span>
           </div>
-          <div className="flex space-x-6 mt-4 md:mt-0">
-            {['Terms of use', 'Privacy policy', 'Do not sell my information'].map((item, idx) => (
-              <a href="#" key={idx} className="hover:text-white">
-                {item}
-              </a>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-5 md:gap-0 text-sm flex-1 max-w-[816px]">
+            {sections.map((section, index) => (
+              <div key={index} className='max-w-[204px]'>
+                <h3 className="text-lg font-semibold mb-4">{section.title}</h3>
+                <ul>
+                  {section.links.map((link, linkIndex) => (
+                    <li key={linkIndex} className="mb-2">
+                      <Link  target={link.external ? "_blank" : "_self"} href={link.url} className="hover:text-zinc-300 text-zinc-500 text-[15px] leading-[1.62]">
+                        {link.name}{' '}
+                        {/* {link.special && (
+                          <span className="text-green-400">{link.special}</span>
+                        )} */}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             ))}
           </div>
         </div>
 
-        {/* Social Icons */}
-        <div className="mt-6 flex justify-center space-x-6 text-gray-500">
-          {['linkedin', 'xing', 'facebook', 'instagram', 'youtube', 'vimeo'].map((platform, idx) => (
-            <a key={idx} href="#" className="hover:text-white">
-              <i className={`fab fa-${platform}`}></i>
-            </a>
-          ))}
+        <div className='flex justify-between pt-8 border-t border-[#3F3F46]'>
+          <span className='hover:text-zinc-300 text-zinc-500 text-[15px] leading-[1.62]'>&copy; {`2017 - ${currentYear} Good Methods Global Inc. All rights reserved.`}</span>    
+          <Link href='https://www.carestack.com' target="_blank">
+            <Image src={CsLogo} alt='CareStack' title='CareStack'/>
+          </Link>
         </div>
-        </div>
-
-      </div>
+      </Wrapper>
     </footer>
-  );
-};
+  )
+}
 
-export default Footer;
+export default Footer
+
+{/* Social media   */}
+            {/* 
+            <div>
+              <ul>
+                <li>
+                  <a
+                    href="https://www.linkedin.com/company/carestack/"
+                    target="_blank"
+                    rel=" noreferrer"
+                    title="LinkedIn"
+                  >
+                    <span className="icon-linked"></span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://www.youtube.com/c/CareStack"
+                    target="_blank"
+                    title="YouTube"
+                    rel=" noreferrer"
+                  >
+                    <span className="icon-youtube"></span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://www.facebook.com/CareStackSystem/"
+                    target="_blank"
+                    title="Facebook"
+                    rel=" noreferrer"
+                  >
+                    <span className="icon-facebook"></span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://www.instagram.com/carestack_/"
+                    target="_blank"
+                    title="Instagram"
+                    rel=" noreferrer"
+                  >
+                    <span className="icon-instagram"></span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://twitter.com/CareStackSystem/"
+                    target="_blank"
+                    title="Twitter"
+                    rel=" noreferrer"
+                  >
+                    <span className="icon-twitter"></span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://vimeo.com/user14264510"
+                    target="_blank"
+                    rel=" noreferrer"
+                    title="Vimeo"
+                  >
+                    <span className="icon-vimeo"></span>
+                  </a>
+                </li>
+              </ul>
+            </div> 
+            */}
