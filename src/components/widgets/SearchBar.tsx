@@ -37,7 +37,7 @@ function SearchBar({header}:SearchBarProps) {
             <input
                 type="search"
                 id="default-search"
-                className="w-full p-4 pl-10 focus:outline-none text-sm text-gray-900 rounded-lg dark:border-gray-600 dark:placeholder-gray-400"
+                className="w-full p-4 pl-10 focus:outline-none text-sm text-zinc-900 rounded-lg dark:border-gray-600 dark:placeholder-gray-400"
                 placeholder="Search..."
                 required
             />

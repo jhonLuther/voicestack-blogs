@@ -62,10 +62,10 @@ const DownloadEbook = ({ ebook }) => {
           <h2 className="text-3xl font-bold mb-4">{ebook?.title}</h2>
           <p className="text-lg mb-6">{ebook?.excerpt}</p>
           <div className="flex space-x-4">
-            <Button link={pdfUrl} className='bg-cs-gray-900' >
+            <Button link={pdfUrl} className='bg-cs-zinc-900' >
               <span className='text-base font-medium'>{` Read eBook`}</span>
             </Button>
-            <Button className='bg-cs-gray-900' onClick={() => { download_file(pdfUrl, `${ebook?.title}.pdf`) }}>
+            <Button className='bg-cs-zinc-900' onClick={() => { download_file(pdfUrl, `${ebook?.title}.pdf`) }}>
               <span className='text-base font-medium'>{`Download`}</span>
             </Button>
           </div>

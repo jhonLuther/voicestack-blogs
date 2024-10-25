@@ -1,25 +1,18 @@
-import { PortableText } from '@portabletext/react'
 import type { GetStaticProps, InferGetStaticPropsType } from 'next'
-import Image from 'next/image'
-import { useLiveQuery } from 'next-sanity/preview'
 import Layout from '~/components/Layout'
-import { readToken } from '~/lib/sanity.api'
 import { getClient } from '~/lib/sanity.client'
-import { urlForImage } from '~/lib/sanity.image'
 import {
 	getPosts,
 	getPostsByLimit,
-	getTag,
 	getTags,
 } from '~/lib/sanity.queries'
-import type { SharedPageProps } from '~/pages/_app'
-import { Post } from '~/interfaces/post'
-import Wrapper from '~/layout/Wrapper'
 import AllcontentSection from '~/components/sections/AllcontentSection'
 import Pagination from '~/components/commonSections/Pagination'
 import siteConfig from 'config/siteConfig'
 import TagSelect from '~/contentUtils/TagSelector'
 import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection'
+import { useRef } from 'react'
+import { useRouter } from 'next/router'
 
 interface Query {
 	[key: string]: string
@@ -55,11 +48,17 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 export default function ProjectSlugRoute(
 	props: InferGetStaticPropsType<typeof getStaticProps> & { posts: any, totalPages: any, tags: any },
 ) {
+	const router = useRouter();
 
 	const { posts, totalPages, tags } = props;
 
+	const baseUrl = useRef(`/${siteConfig.pageURLs.browse}`).current;
 	const handlePageChange = (page: number) => {
-		console.log(`Navigating to page: ${page}`);
+	  if (page === 1) {
+		router.push(baseUrl);
+	  } else {
+		router.push(`${baseUrl}/page/${page}`);
+	  }
 	};
 
 	return (
@@ -73,7 +72,7 @@ export default function ProjectSlugRoute(
 				<AllcontentSection hideSearch={true} allContent={posts} />
 				<Pagination
 					totalPages={totalPages}
-					baseUrl="/browse"
+					baseUrl={baseUrl}
 					onPageChange={handlePageChange}
 					currentPage={0}
 					enablePageSlug={true}

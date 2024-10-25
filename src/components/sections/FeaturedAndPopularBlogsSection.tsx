@@ -19,7 +19,7 @@ const FeaturedAndPopularBlogs = ({ featuredBlog, popularBlogs }: FeaturedAndPopu
         <div className="flex flex-col gap-9 md:w-5/12 w-full flex-1">
           <div className="flex flex-col">
             <div className=" w-full  overflow-hidden flex-1">
-              <Card cardType="top-image-card" post={featuredBlog} />
+              <Card cardColor='bg-purple-800' cardType="top-image-card" post={featuredBlog} />
             </div>
           </div>
         </div>

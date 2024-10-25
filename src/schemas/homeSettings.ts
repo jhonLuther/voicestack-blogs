@@ -52,6 +52,14 @@ export default {
       group: 'EbooksAndWebinars',
       
     },
+    {
+      name: 'customBrowseContent',
+      description:'Selected content will be displayed in the Projected Browse section',
+      title: 'Custom Browse Content',
+      type: 'reference',
+      to: [{ type: 'post' }],
+      group: 'popularBlogs'
+    },
   ],
   preview: {
     prepare(selection) {
