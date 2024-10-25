@@ -226,7 +226,7 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
                         </div>
                       )}
                       <div className='flex p-6 bg-gray-100 w-full justify-center'>
-                        <span className="text-gray-900, text-sm font-medium text-center">by {post.author[0]?.name || ''}</span>
+                        <span className="text-zinc-900, text-sm font-medium text-center">by {post.author[0]?.name || ''}</span>
                       </div>
                       <div className='flex gap-3 flex-col '>
                         <div className="flex flex-col flex-1 gap-2 pt-6">

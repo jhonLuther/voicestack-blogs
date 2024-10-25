@@ -82,7 +82,7 @@ const Footer = ({ className }) => {
   // ];
 
   return (
-    <footer className={`bg-gray-900 text-white pt-24 pb-12 px-4 ${className}`}>
+    <footer className={`bg-zinc-900 text-white pt-24 pb-12 px-4 ${className}`}>
       <Wrapper className="container mx-auto max-w-7xl flex flex-col gap-12">
         <div className="flex md:flex-row gap-12 justify-between">
           <div>

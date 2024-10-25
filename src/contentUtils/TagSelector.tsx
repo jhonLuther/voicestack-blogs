@@ -54,7 +54,7 @@ export default function TagSelect({
       {showTags && (
         <div className="flex flex-row gap-6 pt-6 md:pt-6 pb-6 w-full items-center">
           {/* {showHeading && selectedTag && (
-            <h2 className="md:text-5xl text-xl text-center font-manrope font-extrabold text-cs-gray-900">
+            <h2 className="md:text-5xl text-xl text-center font-manrope font-extrabold text-cs-zinc-900">
               {`"${tags.find(tag => tag.slug.current === selectedTag)?.tagName || ''}"`}
             </h2>
           )} */}
