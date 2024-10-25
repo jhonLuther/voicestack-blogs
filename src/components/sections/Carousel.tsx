@@ -6,31 +6,35 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import Card from '../Card';
+import { ArrowRightIcon } from '@sanity/icons';
+import { ArrowLeftIcon } from '@sanity/icons';
 
 interface CarouselProps {
   items: Post[];
-  swiperRef: React.MutableRefObject<any>; 
+  swiperRef?: React.MutableRefObject<any>;
 }
 
-const Carousel: React.FC<CarouselProps> = ({ items, swiperRef }) => {
-  const prevRef = useRef<HTMLSpanElement>(null);
-  const nextRef = useRef<HTMLSpanElement>(null);
-
+const Carousel: React.FC<CarouselProps> = ({ items }) => {
+  const swiperRef = useRef(null);
+  
   useEffect(() => {
     if (swiperRef.current) {
-      swiperRef.current.params.navigation.prevEl = prevRef.current;
-      swiperRef.current.params.navigation.nextEl = nextRef.current;
       swiperRef.current.navigation.update();
     }
   }, [swiperRef]);
 
   return (
     <>
+    
       <Swiper
         modules={[Navigation, Pagination]}
         spaceBetween={30}
         slidesPerView={1}
         // pagination={{ clickable: true }}
+        navigation={{
+          nextEl: '.ebook-next',
+          prevEl: '.ebook-prev',
+        }}
         
         breakpoints={{
           640: {
@@ -48,20 +52,19 @@ const Carousel: React.FC<CarouselProps> = ({ items, swiperRef }) => {
           swiperRef.current = swiper; 
         }}
       >
-        {items.map((item) => (
+        {items.map((item, index) => (
           <SwiperSlide key={item._id}>
-            <Card cardType='ebook-card' post={item} />
-          </SwiperSlide>
-        ))}
-        {items.map((item) => (
-          <SwiperSlide key={item._id}>
-            <Card cardType='ebook-card' post={item} />
+            <Card cardType='ebook-card' post={item} index={index} />
           </SwiperSlide>
         ))}
 
+        {/* {items.map((item, index) => (
+          <SwiperSlide key={item._id}>
+            <Card cardType='ebook-card' post={item}  index={index}/>
+          </SwiperSlide>
+        ))} */}
         
       </Swiper>
-
     </>
   );
 };

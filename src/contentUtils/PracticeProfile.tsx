@@ -15,7 +15,7 @@ export default function PracticeProfile({
     return (
         <Fragment>
             {contents && <div className='grid md:grid-cols-2 grid-cols-1 py-3 gap-x-6 mb-9'>
-                <div className='flex gap-3 items-center border-b-2 py-3 border-cs-gray-400 '>
+                <div className='flex gap-3 items-center border-b-2 py-3 border-zinc-400 '>
                     <span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
                             <path d="M13.3489 2.75137C12.8803 2.28275 12.1205 2.28275 11.6519 2.75137L3.25186 11.1514C2.78323 11.62 2.78323 12.3798 3.25186 12.8484C3.72049 13.3171 4.48029 13.3171 4.94892 12.8484L5.30039 12.497V20.3999C5.30039 21.0626 5.83765 21.5999 6.50039 21.5999H8.90039C9.56313 21.5999 10.1004 21.0626 10.1004 20.3999V17.9999C10.1004 17.3372 10.6376 16.7999 11.3004 16.7999H13.7004C14.3631 16.7999 14.9004 17.3372 14.9004 17.9999V20.3999C14.9004 21.0626 15.4376 21.5999 16.1004 21.5999H18.5004C19.1631 21.5999 19.7004 21.0626 19.7004 20.3999V12.497L20.0519 12.8484C20.5205 13.3171 21.2803 13.3171 21.7489 12.8484C22.2175 12.3798 22.2175 11.62 21.7489 11.1514L13.3489 2.75137Z" fill="#111827" />
@@ -24,7 +24,7 @@ export default function PracticeProfile({
                     </span>
                     <span className='text-xl font-normal text-cs-dark-500 '> {contents.practiceName}</span>
                 </div>
-                <div className='flex gap-3 items-center border-b-2 py-3 border-cs-gray-400 '>
+                <div className='flex gap-3 items-center border-b-2 py-3 border-zinc-400 '>
                     <span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
                             <path fillRule="evenodd" clip-rule="evenodd" d="M6.55991 4.86069C9.84032 1.58029 15.1589 1.58029 18.4393 4.86069C21.7197 8.1411 21.7197 13.4597 18.4393 16.7401L12.4996 22.6798L6.55991 16.7401C3.27951 13.4597 3.27951 8.1411 6.55991 4.86069ZM12.4996 13.2004C13.8251 13.2004 14.8996 12.1259 14.8996 10.8004C14.8996 9.47491 13.8251 8.40039 12.4996 8.40039C11.1741 8.40039 10.0996 9.47491 10.0996 10.8004C10.0996 12.1259 11.1741 13.2004 12.4996 13.2004Z" fill="#111827" />
@@ -35,7 +35,7 @@ export default function PracticeProfile({
                 </div>
 
 
-                <div className='flex gap-3 items-center border-b-2 py-3 border-cs-gray-400 '>
+                <div className='flex gap-3 items-center border-b-2 py-3 border-zinc-400 '>
                     <span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
                             <path fillRule="evenodd" clip-rule="evenodd" d="M5.29961 4.7999C5.29961 3.47442 6.37413 2.3999 7.69961 2.3999H17.2996C18.6251 2.3999 19.6996 3.47442 19.6996 4.7999V19.1999C20.3623 19.1999 20.8996 19.7372 20.8996 20.3999C20.8996 21.0626 20.3623 21.5999 19.6996 21.5999H16.0996C15.4369 21.5999 14.8996 21.0626 14.8996 20.3999V17.9999C14.8996 17.3372 14.3624 16.7999 13.6996 16.7999H11.2996C10.6369 16.7999 10.0996 17.3372 10.0996 17.9999V20.3999C10.0996 21.0626 9.56235 21.5999 8.89961 21.5999H5.29961C4.63687 21.5999 4.09961 21.0626 4.09961 20.3999C4.09961 19.7372 4.63687 19.1999 5.29961 19.1999V4.7999ZM8.89961 5.9999H11.2996V8.3999H8.89961V5.9999ZM11.2996 10.7999H8.89961V13.1999H11.2996V10.7999ZM13.6996 5.9999H16.0996V8.3999H13.6996V5.9999ZM16.0996 10.7999H13.6996V13.1999H16.0996V10.7999Z" fill="#111827" />
@@ -45,7 +45,7 @@ export default function PracticeProfile({
                     <span className='text-xl font-normal text-cs-dark-500 ' >{contents.growingLocations}</span>
                 </div>
 
-                <div className='flex gap-3 items-center border-b-2 py-3 border-cs-gray-400 '>
+                <div className='flex gap-3 items-center border-b-2 py-3 border-zinc-400 '>
                     <span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
                             <path d="M16.0992 7.2001C16.0992 9.18832 14.4874 10.8001 12.4992 10.8001C10.511 10.8001 8.89922 9.18832 8.89922 7.2001C8.89922 5.21187 10.511 3.6001 12.4992 3.6001C14.4874 3.6001 16.0992 5.21187 16.0992 7.2001Z" fill="#111827" />

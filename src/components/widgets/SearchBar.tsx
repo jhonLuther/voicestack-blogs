@@ -11,7 +11,7 @@ function SearchBar({header}:SearchBarProps) {
             {/* <input
                 type="search"
                 id="default-search"
-                className="w-10 p-4 pl-10 focus:outline-none text-sm text-zinc-900 rounded-lg dark:border-gray-600 dark:placeholder-gray-400"
+                className="w-10 p-4 pl-10 focus:outline-none text-sm text-zinc-900 rounded-lg dark:border-zinc-600 dark:placeholder-zinc-400"
                 placeholder="Search..."
                 required
             /> */}
@@ -21,7 +21,7 @@ function SearchBar({header}:SearchBarProps) {
                 height="21"
                 viewBox="0 0 20 21"
                 fill="none"
-                className="text-gray-400"
+                className="text-zinc-400"
             >
                 <path
                     fillRule="evenodd"
@@ -37,7 +37,7 @@ function SearchBar({header}:SearchBarProps) {
             <input
                 type="search"
                 id="default-search"
-                className="w-full p-4 pl-10 focus:outline-none text-sm text-zinc-900 rounded-lg dark:border-gray-600 dark:placeholder-gray-400"
+                className="w-full p-4 pl-10 focus:outline-none text-sm text-zinc-900 rounded-lg dark:border-zinc-600 dark:placeholder-zinc-400"
                 placeholder="Search..."
                 required
             />
@@ -47,7 +47,7 @@ function SearchBar({header}:SearchBarProps) {
                 height="21"
                 viewBox="0 0 20 21"
                 fill="none"
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-zinc-400"
             >
                 <path
                     fillRule="evenodd"
