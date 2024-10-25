@@ -11,7 +11,7 @@ function ShareableLinks({ props }) {
             <div className='flex justify-between items-center align-center'>
                 <span className='uppercase text-base font-extrabold '>Share This </span>
                 <div className='flex gap-1'>
-                    <div className='cursor-pointer hover:bg-gray-200 rounded-md p-1 transition duration-200 ease-in-out'>
+                    <div className='cursor-pointer hover:bg-zinc-200 rounded-md p-1 transition duration-200 ease-in-out'>
                         <Link
                             href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`}
                             target="_blank"
@@ -24,7 +24,7 @@ function ShareableLinks({ props }) {
                             </svg>
                         </Link>
                     </div>
-                    <div className='cursor-pointer hover:bg-gray-200 rounded-md p-1 transition duration-200 ease-in-out'>
+                    <div className='cursor-pointer hover:bg-zinc-200 rounded-md p-1 transition duration-200 ease-in-out'>
                         <Link
                             href={`https://www.facebook.com/sharer.php?u=${encodedUrl}`}
                             target="_blank"
@@ -44,7 +44,7 @@ function ShareableLinks({ props }) {
                             </svg>
                         </Link>
                     </div>
-                    <div className='cursor-pointer hover:bg-gray-200 rounded-md p-1 transition duration-200 ease-in-out'>
+                    <div className='cursor-pointer hover:bg-zinc-200 rounded-md p-1 transition duration-200 ease-in-out'>
                         <Link
                             href={`https://twitter.com/share?text=${encodeURIComponent(props)}&url=${encodedUrl}`}
                             target="_blank"

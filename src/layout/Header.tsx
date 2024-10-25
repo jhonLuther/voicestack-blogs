@@ -35,7 +35,7 @@ const Header = () => {
         </Link>
       </div>
 
-      <div className="bg-zinc-900 text-white border-b border-gray-800">
+      <div className="bg-zinc-900 text-white border-b border-zinc-800">
         <div className="max-w-9xl px-4 mx-auto">
           <div className="flex flex-col gap-3 justify-between py-6">
             <div className='flex md:flex-row gap-2  flex-col justify-between'>

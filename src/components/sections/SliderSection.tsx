@@ -12,11 +12,12 @@ interface BannerBlockProps {
 const SliderSection: React.FC<BannerBlockProps> = ({ items }) => {
   const swiperRef = useRef(null);
   const [currentIndex, setCurrentIndex] = useState(0);
-
   const totalSlides = items ? items.length : 0;
-
   const isAtStart = currentIndex === 0;
   const isAtEnd = currentIndex === totalSlides - 1;
+  console.log({items});
+  
+
 
   const handleNextSlide = () => {
     if (swiperRef.current && currentIndex < totalSlides - 1) {
@@ -38,20 +39,20 @@ const SliderSection: React.FC<BannerBlockProps> = ({ items }) => {
 
 
   return (
-    <div className={` flex w-full justify-center`} >
-      <section className="my-9 max-w-7xl px-4 w-full">
+    <div className={` flex w-full justify-center px-4 `} >
+      <section className="my-9 max-w-7xl w-full">
         <div className="flex justify-between pb-9">
           <H3XL >
             {`Ebooks and Webinars`}
           </H3XL>
           <div className="flex gap-9">
-            <button className={` ${isAtStart ? 'text-gray-300' : 'text-black'}`} disabled={isAtStart} onClick={handlePrevSlide}>
+            <button className={` ${isAtStart ? 'text-zinc-300' : 'text-black'}`} disabled={isAtStart} onClick={handlePrevSlide}>
               <ArrowLeftIcon height={48} width={48} /></button>
-            <button className={` ${isAtEnd ? 'text-gray-300' : 'text-black'}`} disabled={isAtEnd} onClick={handleNextSlide}>
+            <button className={` ${isAtEnd ? 'text-zinc-300' : 'text-black'}`} disabled={isAtEnd} onClick={handleNextSlide}>
               <ArrowRightIcon height={48} width={48} /></button>
           </div>
         </div>
-        <Carousel items={items} swiperRef={swiperRef} />
+        <Carousel items={items} swiperRef={swiperRef}/>
       </section>
     </div>
 

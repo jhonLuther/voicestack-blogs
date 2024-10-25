@@ -15,7 +15,7 @@ const AsideBannerBlock: React.FC<AsidebannerBlockProps> = ({ contents }) => {
         return (
           <div className='flex flex-col gap-4' key={item._id || i}>
             <h4 className='text-white leading-tight  font-bold text-[48px] tracking-tight'>{item.number}</h4>
-            <p className={`text-gray-300 pb-4 text-sm font-normal leading-relaxed tracking-wide ${ !isLast &&` border-b-2`} border-gray-50 ${i === contents.asideBookFreeDemoBanner.length - 1 ? 'border-b-0' : ''}`}>{item.text}</p>
+            <p className={`text-zinc-300 pb-4 text-sm font-normal leading-relaxed tracking-wide ${ !isLast &&` border-b-2`} border-zinc-50 ${i === contents.asideBookFreeDemoBanner.length - 1 ? 'border-b-0' : ''}`}>{item.text}</p>
           </div>
         )
       })}

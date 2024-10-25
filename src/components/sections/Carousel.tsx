@@ -9,7 +9,7 @@ import Card from '../Card';
 
 interface CarouselProps {
   items: Post[];
-  swiperRef: React.MutableRefObject<any>; 
+  swiperRef: React.MutableRefObject<any>;
 }
 
 const Carousel: React.FC<CarouselProps> = ({ items, swiperRef }) => {
@@ -48,17 +48,17 @@ const Carousel: React.FC<CarouselProps> = ({ items, swiperRef }) => {
           swiperRef.current = swiper; 
         }}
       >
-        {items.map((item) => (
+        {items.map((item, index) => (
           <SwiperSlide key={item._id}>
-            <Card cardType='ebook-card' post={item} />
-          </SwiperSlide>
-        ))}
-        {items.map((item) => (
-          <SwiperSlide key={item._id}>
-            <Card cardType='ebook-card' post={item} />
+            <Card cardType='ebook-card' post={item} index={index} />
           </SwiperSlide>
         ))}
 
+        {items.map((item, index) => (
+          <SwiperSlide key={item._id}>
+            <Card cardType='ebook-card' post={item}  index={index}/>
+          </SwiperSlide>
+        ))}
         
       </Swiper>
 
