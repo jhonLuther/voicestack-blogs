@@ -29,9 +29,10 @@ interface CardProps {
   varyingIndex?: any;
   reverse?: boolean;
 	index?: number;
+  baseUrl?: string;
 }
 
-export default function Card({ post, isLast, cardType, reverse, className, cardColor, varyingIndex, showPlayIcon = false, index }: CardProps) {
+export default function Card({ post, isLast, cardType, reverse, className, cardColor, varyingIndex, showPlayIcon = false, index,baseUrl }: CardProps) {
 
   const [linkUrl, setLinkUrl] = useState<string | null>(null);
 
@@ -44,6 +45,10 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
   ]
 	const imageIndex = index % bgImages.length;
   // const image = bgImages[imageIndex];
+  const tag = useMemo(() => post?.tags?.find((tag) => tag) || null, [post?.tags]);
+  const normalizedBaseUrl = baseUrl?.replace(/^\/+/, '/'); 
+  const isPageUrl = Object.values(siteConfig.pageURLs).includes(normalizedBaseUrl);
+
 
   useEffect(() => {
     if (router.isReady && post?.slug) {
@@ -117,11 +122,9 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
                 </div>
               )}
               <div className="flex flex-col flex-1 gap-2">
-                {post.contentType && (
                   <SubText >
-                    {post.contentType}
+                    {isPageUrl ? tag?.tagName : post.contentType}
                   </SubText>
-                )}
                 <H4Large className={`group-hover: group-hover:underline underline-offset-4 line-clamp-3 text-ellipsis overflow-hidden`}>
                   {post.title}
                 </H4Large>
@@ -243,7 +246,7 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
                         <div className="flex flex-col flex-1 gap-2 pt-6">
                           {post.contentType && (
                             <SubText >
-                              {post.contentType}
+                              {isPageUrl ? tag?.tagName : post.contentType}
                             </SubText>
                           )}
                           <H4Large className={`group-hover: group-hover:underline underline-offset-4 line-clamp-3 text-ellipsis overflow-hidden`}>

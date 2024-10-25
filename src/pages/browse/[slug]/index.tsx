@@ -1,6 +1,6 @@
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import { getClient } from '~/lib/sanity.client'
-import { getTag, getPostsByTag, tagsSlugsQuery, getTags, getPostsByTagAndLimit } from '~/lib/sanity.queries'
+import { getTag, getPostsByTag, tagsSlugsQuery, getTags, getPostsByTagAndLimit, getArticlesCount, getEbooksCount, getPodcastsCount, getWebinarsCount } from '~/lib/sanity.queries'
 import Layout from '~/components/Layout'
 import Wrapper from '~/layout/Wrapper'
 import { Tag, Post } from '~/interfaces/post'
@@ -9,6 +9,7 @@ import TagSelect from '~/contentUtils/TagSelector'
 import AllcontentSection from '~/components/sections/AllcontentSection'
 import Pagination from '~/components/commonSections/Pagination'
 import siteConfig from 'config/siteConfig'
+import ContentHub from '~/contentUtils/ContentHub'
 
 interface Query {
   slug: string
@@ -20,6 +21,8 @@ export const getStaticProps: GetStaticProps<
     posts: Post[];
     allTags: Tag[];
     totalPages: number;
+    contentCount:any
+    totalPostCount: any[];
   }
 > = async ({ params }) => {
   const client = getClient();
@@ -38,6 +41,10 @@ export const getStaticProps: GetStaticProps<
   const posts = await getPostsByTagAndLimit(client, tag._id, 0, cardsPerPage);
   const allPostsForTag = await getPostsByTag(client, tag._id);
   const totalPages = Math.ceil(allPostsForTag.length / cardsPerPage);
+  const totalPodcasts = await getPodcastsCount(client);
+	const totalWebinars = await getWebinarsCount(client);
+	const totalArticles = await getArticlesCount(client);
+	const totalEbooks = await getEbooksCount(client);
 
   return {
     props: {
@@ -46,7 +53,14 @@ export const getStaticProps: GetStaticProps<
       totalPages,
       posts,
       draftMode: false,
-      token: null,      
+      token: null,
+      totalPostCount: allPostsForTag.length,
+      contentCount:{
+				podcasts: totalPodcasts,
+				webinars: totalWebinars,
+				articles: totalArticles,
+				ebooks: totalEbooks
+			}      
     },
   };
 };
@@ -68,6 +82,8 @@ export default function TagPage({
   posts,
   allTags,
   totalPages,
+  contentCount,
+  totalPostCount
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const handlePageChange = (page: number) => {
     console.log(`Navigating to page: ${page}`)
@@ -76,13 +92,14 @@ export default function TagPage({
 
   return (
     <Layout>
+        <ContentHub contentCount={contentCount}/>
         <TagSelect 
           tags={allTags} 
           tagLimit={5} 
           showTags={true}
           className='mt-12' 
         />
-        <AllcontentSection allContent={posts} hideSearch={true} />
+        <AllcontentSection allItemCount={totalPostCount} allContent={posts}  />
         <Pagination
           totalPages={totalPages}
           baseUrl={`/${siteConfig.paginationBaseUrls.base}/${tag?.slug?.current}`}

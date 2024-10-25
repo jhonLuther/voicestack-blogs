@@ -484,6 +484,11 @@ export const podcastsQuery = groq`
     bio,
     "picture": picture.asset->url,
   },
+  tags[]-> {
+    _id,
+    tagName,
+    slug
+  }
 }
 `
 export const webinarsQuery = groq`

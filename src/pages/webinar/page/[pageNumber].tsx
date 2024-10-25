@@ -68,7 +68,6 @@ const PaginatedWebinarsPage = ({ webinars, pageNumber, totalPages }: { webinars:
           baseUrl={baseUrl}
           className={'pb-9'}
           allContent={webinars}
-          hideSearch={true}
           cardType="left-image-card"
           itemsPerPage={siteConfig.pagination.childItemsPerPage}
         />

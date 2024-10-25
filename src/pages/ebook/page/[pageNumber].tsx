@@ -68,7 +68,6 @@ const PaginatedEbookPage = ({ ebooks, pageNumber, totalPages }: { ebooks: Ebooks
           baseUrl={baseUrl}
           className={'pb-9'}
           allContent={ebooks}
-          hideSearch={true}
           cardType="left-image-card"
           itemsPerPage={siteConfig.pagination.childItemsPerPage}
         />

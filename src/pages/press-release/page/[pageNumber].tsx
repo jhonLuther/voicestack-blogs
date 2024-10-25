@@ -68,7 +68,6 @@ const PaginatedPressReleasePage = ({ pressReleases, pageNumber, totalPages }: { 
           baseUrl={baseUrl}
           className={'pb-9'}
           allContent={pressReleases}
-          hideSearch={true}
           cardType="left-image-card"
           itemsPerPage={siteConfig.pagination.childItemsPerPage}
         />

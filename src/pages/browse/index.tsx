@@ -2,9 +2,13 @@ import type { GetStaticProps, InferGetStaticPropsType } from 'next'
 import Layout from '~/components/Layout'
 import { getClient } from '~/lib/sanity.client'
 import {
+	getArticlesCount,
+	getEbooksCount,
+	getPodcastsCount,
 	getPosts,
 	getPostsByLimit,
 	getTags,
+	getWebinarsCount,
 } from '~/lib/sanity.queries'
 import AllcontentSection from '~/components/sections/AllcontentSection'
 import Pagination from '~/components/commonSections/Pagination'
@@ -13,6 +17,7 @@ import TagSelect from '~/contentUtils/TagSelector'
 import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection'
 import { useRef } from 'react'
 import router, { useRouter } from 'next/router'
+import ContentHub from '~/contentUtils/ContentHub'
 
 interface Query {
 	[key: string]: string
@@ -34,12 +39,29 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
 	const totalPages = Math.ceil(totalPosts.length / cardsPerPage);
 
+
+	const totalPodcasts = await getPodcastsCount(client);
+	const totalWebinars = await getWebinarsCount(client);
+	const totalArticles = await getArticlesCount(client);
+	const totalEbooks = await getEbooksCount(client);
+
+
+
+
+
 	return {
 		props: {
 			posts,
 			tags,
 			totalPages,
+			totalPosts,
 			currentPage: pageNumber,
+			contentCount:{
+				podcasts: totalPodcasts,
+				webinars: totalWebinars,
+				articles: totalArticles,
+				ebooks: totalEbooks
+			}
 		},
 	};
 };
@@ -50,7 +72,8 @@ export default function ProjectSlugRoute(
 ) {
 	const router = useRouter();
 
-	const { posts, totalPages, tags } = props;
+	const { posts, totalPages, tags,contentCount,totalPosts } = props;
+	const totalCount:any = Object.values(contentCount).reduce((acc:any, count) => acc + count, 0);
 
 
 	// const baseUrl = useRef(`/${siteConfig.pageURLs.article}`).current;
@@ -67,12 +90,13 @@ export default function ProjectSlugRoute(
 	return (
 		<>
 			<Layout >
+				<ContentHub contentCount={contentCount}/>
 				<TagSelect
 					tags={tags}
 					tagLimit={5}
 					showTags={true}
 				/>
-				<AllcontentSection hideSearch={true} allContent={posts} />
+				<AllcontentSection allItemCount={totalCount}  allContent={posts} />
 				<Pagination
 					totalPages={totalPages}
 					baseUrl="/browse"
