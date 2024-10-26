@@ -154,7 +154,7 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
                       {post.contentType}
                     </SubText>
                   )}
-                  <H3Large className={`group-hover: group-hover:underline underline-offset-4`}>
+                  <H3Large className={`group-hover: group-hover:underline underline-offset-4 tracking-[-0.72px]`}>
                     {post.title}
                   </H3Large>
                 </div>
