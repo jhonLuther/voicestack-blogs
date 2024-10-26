@@ -10,6 +10,8 @@ import AllcontentSection from '~/components/sections/AllcontentSection'
 import Pagination from '~/components/commonSections/Pagination'
 import siteConfig from 'config/siteConfig'
 import ContentHub from '~/contentUtils/ContentHub'
+import { useRef } from 'react'
+import { BaseUrlProvider } from '~/components/Context/UrlContext'
 
 interface Query {
   slug: string
@@ -89,8 +91,10 @@ export default function TagPage({
     console.log(`Navigating to page: ${page}`)
   }
 
+  const baseUrl = useRef(`/${siteConfig.paginationBaseUrls.base}/${tag?.slug?.current}`).current
 
   return (
+    <BaseUrlProvider baseUrl={baseUrl}>
     <Layout>
         <ContentHub contentCount={contentCount}/>
         <TagSelect 
@@ -102,12 +106,14 @@ export default function TagPage({
         <AllcontentSection allItemCount={totalPostCount} allContent={posts}  />
         <Pagination
           totalPages={totalPages}
-          baseUrl={`/${siteConfig.paginationBaseUrls.base}/${tag?.slug?.current}`}
+          // baseUrl={`/${siteConfig.paginationBaseUrls.base}/${tag?.slug?.current}`}
           onPageChange={handlePageChange}
           currentPage={1}
           enablePageSlug={true}
           content={posts}
         />
     </Layout>
+    </BaseUrlProvider>
+
   )
 }

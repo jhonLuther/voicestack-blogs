@@ -4,6 +4,7 @@ import Card from '../Card';
 import Wrapper from '../../layout/Wrapper';
 import H2Large from '../typography/H2Large';
 import Section from '../Section';
+import { useBaseUrl } from '../Context/UrlContext';
 
 interface LatestBlogsProps {
   contents: any[];
@@ -16,6 +17,7 @@ interface LatestBlogsProps {
 
 
 const LatestBlogs: React.FC<LatestBlogsProps> = ({ contents, reverse, className, showPlayIcon }) => {
+  const baseUrl = useBaseUrl();
 
   if (!contents) {
     return null
@@ -44,13 +46,13 @@ const LatestBlogs: React.FC<LatestBlogsProps> = ({ contents, reverse, className,
               </H2Large>
               <div className='flex flex-col gap-8  '>
                 {otherBlogs.map((blog, i) => (
-                  <Card key={i + 1 || blog._id} cardType='text-only-card' isLast={i === otherBlogs.length - 1} post={blog} />
+                  <Card key={i + 1 || blog._id} cardType='text-only-card' baseUrl={baseUrl}  isLast={i === otherBlogs.length - 1} post={blog} />
                 ))}
               </div>
             </div>
             <div className=' md:w-6/12 w-full'>
               <div className="flex flex-col w-full overflow-hidden ">
-                <Card cardColor='bg-orange-700' reverse={reverse} cardType='top-image-card'  key={firstBlog?._id} post={firstBlog} />
+                <Card baseUrl={baseUrl} cardColor='bg-orange-700' reverse={reverse} cardType='top-image-card'  key={firstBlog?._id} post={firstBlog} />
               </div>
             </div>
           </Wrapper>

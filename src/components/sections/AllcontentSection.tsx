@@ -9,6 +9,7 @@ import Card from '../Card';
 import Section from '../Section';
 import H2Large from '../typography/H2Large';
 import SearchBar from '../widgets/SearchBar';
+import { useBaseUrl } from '../Context/UrlContext';
 
 interface LatestBlogsProps {
   allContent: any[];
@@ -16,7 +17,6 @@ interface LatestBlogsProps {
   className?: string;
   cardType?: 'podcast-card' | 'ebook-card' | 'featured' | 'top-image-smallCard' | "left-image-card";
   redirect?: boolean;
-  baseUrl?: string;
   itemsPerPage?: number;
   customBrowseContent?: any;
   enableDateSort?: boolean
@@ -32,12 +32,13 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
   itemsPerPage,
   redirect = false,
   enableDateSort,
-  baseUrl,
   allItemCount
 }) => {
   const postsToShow = itemsPerPage || siteConfig.pagination.itemsPerPage;
   const [selectedTag, setSelectedTag] = React.useState('');
   const router = useRouter();
+
+  const baseUrl = useBaseUrl();
 
   const totalCount = allItemCount ? allItemCount : allContent.length;
 

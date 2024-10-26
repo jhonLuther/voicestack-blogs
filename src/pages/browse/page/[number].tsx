@@ -12,6 +12,7 @@ import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection
 import { useRef } from 'react'
 import { useRouter } from 'next/router'
 import ContentHub from '~/contentUtils/ContentHub'
+import { BaseUrlProvider } from '~/components/Context/UrlContext'
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const client = getClient();
@@ -93,6 +94,7 @@ export default function TagPagePaginated({
   };
 
   return (
+    <BaseUrlProvider baseUrl={baseUrl}>
     <Layout>
       	<ContentHub contentCount={contentCount}/>
         <TagSelect 
@@ -104,7 +106,6 @@ export default function TagPagePaginated({
         <AllcontentSection allItemCount={totalCount} allContent={posts}  />
         <Pagination
           totalPages={totalPages}
-          baseUrl={baseUrl}
           onPageChange={handlePageChange}
           currentPage={currentPage}
           enablePageSlug={true}
@@ -112,5 +113,7 @@ export default function TagPagePaginated({
         />
         <BannerSubscribeSection />
     </Layout>
+    </BaseUrlProvider>
+
   )
 }

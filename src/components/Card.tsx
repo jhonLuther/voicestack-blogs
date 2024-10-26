@@ -46,9 +46,8 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
 	const imageIndex = index % bgImages.length;
   // const image = bgImages[imageIndex];
   const tag = useMemo(() => post?.tags?.find((tag) => tag) || null, [post?.tags]);
-  const normalizedBaseUrl = baseUrl?.replace(/^\/+/, '/'); 
+  const normalizedBaseUrl = baseUrl?.replace(/^\/+/, '');
   const isPageUrl = Object.values(siteConfig.pageURLs).includes(normalizedBaseUrl);
-
 
   useEffect(() => {
     if (router.isReady && post?.slug) {
@@ -79,7 +78,6 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
                 </div>
               ) :
                 <ImageLoader
-                  // className="min-h-[350px]"
                   image={siteConfig.placeHolder.podcastCover}
                   useClientWidth={true}
                 />
@@ -87,11 +85,9 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
             </div>
             <div className={`flex ${reverse ? 'rounded-t-lg' : 'rounded-b-lg'} p-9 ${cardColor ? cardColor : 'bg-orange-700'} flex-col items-start gap-10 flex-1`}>
               <div className="flex flex-col gap-3">
-                {post.contentType && (
                   <SubText className='!text-white'>
-                    {post.contentType}
+                    {isPageUrl ? tag?.tagName : post.contentType}
                   </SubText>
-                )}
                 <H3XL className='group-hover:underline underline-offset-4'>
                   {post.title}
                 </H3XL>
@@ -154,7 +150,7 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
                 <div className={`${!isLast && `border-b-2`} pb-6 flex flex-col gap-3  border-zinc-800`}>
                   {post.contentType && (
                     <SubText >
-                      {post.contentType}
+                    {isPageUrl ? tag?.tagName : post.contentType}
                     </SubText>
                   )}
                   <H3Large className={`group-hover: group-hover:underline underline-offset-4 tracking-[-0.72px]`}>

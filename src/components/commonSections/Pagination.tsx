@@ -5,22 +5,24 @@ import Section from '../Section';
 import Wrapper from '~/layout/Wrapper';
 import { ArrowRightIcon } from '@sanity/icons';
 import { ArrowLeftIcon } from '@sanity/icons';
+import { useBaseUrl } from '../Context/UrlContext';
 
 const Pagination = ({
   totalPages,
   currentPage,
-  baseUrl,
   onPageChange,
   enablePageSlug = false
 }: {
   totalPages: number,
   currentPage: number,
-  baseUrl: string,
   onPageChange: (page: number) => void,
   enablePageSlug?: boolean
   content?: any
 }) => {
 
+
+  const baseUrl = useBaseUrl();
+  
   if(totalPages === 1) return null 
   const getPageUrl = (page: number) => {
     if (page === 1) return baseUrl;

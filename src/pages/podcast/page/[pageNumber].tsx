@@ -11,6 +11,7 @@ import { Articles, CaseStudies, Ebooks, Podcasts } from '~/interfaces/post';
 import siteConfig from '../../../../config/siteConfig';
 import React, { useRef } from 'react';
 import Pagination from '~/components/commonSections/Pagination';
+import { BaseUrlProvider } from '~/components/Context/UrlContext';
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const client = getClient();
@@ -62,23 +63,24 @@ const PaginatedEbookPage = ({ podcasts, pageNumber, totalPages }: { podcasts: Po
   };
 
   return (
+    <BaseUrlProvider baseUrl={baseUrl}>
     <Layout>
         <AllcontentSection
-          baseUrl={baseUrl}
           className={'pb-9'}
           allContent={podcasts}
           cardType="left-image-card"
+          hideHeader={true}
           itemsPerPage={siteConfig.pagination.childItemsPerPage}
         />
         <Pagination
           totalPages={totalPages}
           currentPage={pageNumber}
-          baseUrl={baseUrl}
           onPageChange={handlePageChange}
           enablePageSlug={true}
           content={podcasts}
         />
     </Layout>
+    </BaseUrlProvider>
   );
 };
 

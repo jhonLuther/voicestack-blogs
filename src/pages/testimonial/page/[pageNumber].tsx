@@ -12,6 +12,7 @@ import React, { useRef } from 'react';
 import Pagination from '~/components/commonSections/Pagination';
 import { getTestiMonials, getTestiMonialsCount } from '~/lib/sanity.queries';
 import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection';
+import { BaseUrlProvider } from '~/components/Context/UrlContext';
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const client = getClient();
@@ -63,23 +64,25 @@ const PaginatedTestimonialsPage = ({ testimonials, pageNumber, totalPages }: { t
   };
 
   return (
+    <BaseUrlProvider baseUrl={baseUrl}>
     <Layout>
         <AllcontentSection
-          baseUrl={baseUrl}
           className={'pb-9'}
           allContent={testimonials}
           cardType="left-image-card"
+          hideHeader={true}
           itemsPerPage={siteConfig.pagination.childItemsPerPage}
         />
         <Pagination
           totalPages={totalPages}
           currentPage={pageNumber}
-          baseUrl={baseUrl}
           onPageChange={handlePageChange}
           enablePageSlug={true}
         />
         <BannerSubscribeSection />
     </Layout>
+    </BaseUrlProvider>
+
   );
 };
 
