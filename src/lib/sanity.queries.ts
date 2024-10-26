@@ -310,6 +310,10 @@ export async function getPostsByTagAndLimit(
       blogColor,
       excerpt,
       slug,
+      duration,
+      date,
+      ${bodyFragment},
+      "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180),
     }`,
     { tagId, start, end }
   )
@@ -599,7 +603,7 @@ export const artilclesQuery = groq`
   publishedAt,
   excerpt,
   date,
- ${imageFragment},
+  ${imageFragment},
   ${bodyFragment},
   "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180),
   "author": author[]-> {
@@ -1103,6 +1107,11 @@ export const relatedContentsQuery = groq`
     slug,
     contentType,
     publishedAt,
+    ${imageFragment},
+    ${bodyFragment},
+    "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180),
+    date,
+    duration,
     excerpt,
     "tags": tags[]-> {
       _id,

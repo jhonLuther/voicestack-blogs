@@ -106,7 +106,7 @@ const TestimonialPage = ({ testimonial, draftMode, token }: Props) => {
               </div>
             </div>
           </div>
-          {testimonial?.relatedTestimonials?.length > 0 && <RelatedFeaturesSection title={testimonial?.title} allPosts={testimonial?.relatedTestimonials} />}
+          {testimonial?.relatedTestimonials?.length > 0 && <RelatedFeaturesSection contentType={testimonial?.contentType} allPosts={testimonial?.relatedTestimonials} />}
         </Wrapper>
       </Layout>
     </>

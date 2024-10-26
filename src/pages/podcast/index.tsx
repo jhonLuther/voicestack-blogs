@@ -40,6 +40,7 @@ export const getStaticProps: GetStaticProps<SharedPageProps & { podcasts: Podcas
 const PodcastsPage = ({ podcasts,latestPodcasts, totalPages }: { podcasts: Podcasts[];latestPodcasts: Podcasts[]; totalPages: number }) => {
   const router = useRouter();
   const baseUrl = useRef(`/${siteConfig.pageURLs.podcast}`).current;
+  if(!podcasts) return null
 
   const handlePageChange = (page: number) => {
     if (page === 1) {

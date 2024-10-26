@@ -9,8 +9,5 @@ export const BaseUrlProvider = ({ baseUrl, children }: { baseUrl: string; childr
 
 export const useBaseUrl = () => {
   const context = useContext(BaseUrlContext);
-  if (context === undefined) {
-    throw new Error('useBaseUrl must be used within a BaseUrlProvider');
-  }
   return context;
 };

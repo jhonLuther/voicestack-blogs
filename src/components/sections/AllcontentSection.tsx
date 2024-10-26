@@ -21,6 +21,7 @@ interface LatestBlogsProps {
   customBrowseContent?: any;
   enableDateSort?: boolean
   allItemCount?: any
+  contentType?: string
 }
 
 const AllcontentSection: React.FC<LatestBlogsProps> = ({
@@ -32,6 +33,7 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
   itemsPerPage,
   redirect = false,
   enableDateSort,
+  contentType,
   allItemCount
 }) => {
   const postsToShow = itemsPerPage || siteConfig.pagination.itemsPerPage;
@@ -42,14 +44,23 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
 
   const totalCount = allItemCount ? allItemCount : allContent.length;
 
+  let contentHeading =
+    contentType === 'podcast'
+      ? 'Keep Listening'
+      : contentType === 'webinar'
+        ? 'Keep Watching'
+        : 'Keep Reading';
+
+  let browseHeading = contentType ? contentHeading : 'Explore All';
+
   useEffect(() => {
     const updateSelectedTag = () => {
       const isBrowsePath = router.pathname.includes('/browse/');
-      
+
       if (isBrowsePath) {
         const pathParts = router.asPath.split('/');
         const isPageRoute = pathParts.includes('page');
-  
+
         if (isPageRoute) {
           const storedTag = window.localStorage.getItem("selectedTag");
           if (storedTag && storedTag !== 'null' && storedTag !== 'undefined') {
@@ -78,7 +89,7 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
         window.localStorage.removeItem("selectedTag");
       }
     };
-  
+
     updateSelectedTag();
   }, [router.pathname, router.asPath]);
 
@@ -91,26 +102,29 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
     const slicedContent = allContent.slice(0, postsToShow);
 
     slicedContent.forEach((post, index) => {
-      const isVaryingIndex = (index >= 3 && (index - 3) % 9 === 0) && cardType !== 'left-image-card';
+      const isVaryingIndex = (index === 3) && cardType !== 'left-image-card';
       const shouldUseCustomContent = isVaryingIndex && customBrowseContent;
-      
+
       if (isVaryingIndex && !customBrowseContent) {
         return;
       }
 
       const postContent = shouldUseCustomContent ? customBrowseContent : post;
+
+      console.log(postContent);
       
+
       posts.push(
-        <div 
-          id={index.toString()} 
-          key={postContent._id || index} 
+        <div
+          id={index.toString()}
+          key={postContent._id || index}
           className={`${isVaryingIndex ? 'row-span-2' : ''}`}
         >
           <Card
-            varyingIndex={isVaryingIndex} 
-            cardType={cardType} 
-            cardColor='white' 
-            post={postContent} 
+            varyingIndex={isVaryingIndex}
+            cardType={cardType}
+            cardColor='white'
+            post={postContent}
             className=''
             baseUrl={baseUrl}
           />
@@ -126,30 +140,30 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
       <Wrapper className={`flex-col`}>
         {!hideHeader && <div className="md:flex-row flex-col gap-8 flex items-end justify-between pb-12">
           <H2Large className='tracking-tighterText select-none'>
-            {`${selectedTag ? selectedTag : 'Explore All'} `}
+            {`${selectedTag ? selectedTag : browseHeading} `}
           </H2Large>
           {redirect ? (
             <Link href={siteConfig.paginationBaseUrls.base}>
               <div className='flex items-center gap-3 transform group duration-300 cursor-pointer'>
                 <span className='text-base font-medium'>{`Browse All`}</span>
                 <span className="text-xl">
-                  <ArrowTopRightIcon 
-                    className='group-hover:translate-y-[-2px] transition-transform duration-300' 
-                    height={20} 
-                    width={20} 
+                  <ArrowTopRightIcon
+                    className='group-hover:translate-y-[-2px] transition-transform duration-300'
+                    height={20}
+                    width={20}
                   />
                 </span>
               </div>
             </Link>
-          ):(<div className='text-zinc-700 font-normal text-base'>{`${totalCount} ${totalCount > 1 ? 'results' : 'result'}`}</div>)}
+          ) : (<div className='text-zinc-700 font-normal text-base'>{`${totalCount} ${totalCount > 1 ? 'results' : 'result'}`}</div>)}
         </div>}
 
         <div className={`grid 
-          ${cardType === 'left-image-card' 
-            ? 'lg:grid-cols-2 md:grid-cols-1 gap-x-16 gap-y-12' 
-            : cardType === 'podcast-card' 
-            ? 'lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-x-8 gap-y-8' 
-            : 'lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-x-8 gap-y-8'
+          ${cardType === 'left-image-card'
+            ? 'lg:grid-cols-2 md:grid-cols-1 gap-x-16 gap-y-12'
+            : cardType === 'podcast-card'
+              ? 'lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-x-8 gap-y-8'
+              : 'lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-x-8 gap-y-8'
           }
         `}>
           {allContent && allContent.length > 0 ? (

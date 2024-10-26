@@ -2,7 +2,7 @@
 import { GetStaticProps, GetStaticPaths } from 'next';
 import { useRouter } from 'next/router';
 import { getClient } from '~/lib/sanity.client';
-import { pressReleaseSlugsQuery, getCaseStudy, getPressRelease, getRelatedContents } from '~/lib/sanity.queries';
+import { pressReleaseSlugsQuery, getCaseStudy, getPressRelease, getRelatedContents, getPressReleases } from '~/lib/sanity.queries';
 import { CaseStudies, PressRelease } from '~/interfaces/post';
 import Wrapper from '~/layout/Wrapper';
 import Image from 'next/image';
@@ -25,6 +25,7 @@ interface Props {
   pressRelease: PressRelease;
   draftMode: boolean;
   token: string;
+  limitedPressReleases?: any;
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -44,6 +45,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false, params = {} }) => {
   const client = getClient(draftMode ? { token: readToken } : undefined);
   const pressRelease = await getPressRelease(client, params.slug as string);
+  const limitedPressReleases: any = await getPressReleases(client, 0, 4);
+
 
   if (!pressRelease) {
     return {
@@ -58,11 +61,12 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
       draftMode,
       token: draftMode ? readToken : '',
       pressRelease,
+      limitedPressReleases
     },
   };
 }
 
-const PressReleasePage = ({ pressRelease, draftMode, token }: Props) => {
+const PressReleasePage = ({ pressRelease,limitedPressReleases, draftMode, token }: Props) => {
 
   const seoTitle = pressRelease.seoTitle || pressRelease.title;
   const seoDescription = pressRelease.seoDescription || pressRelease.excerpt;
@@ -108,9 +112,17 @@ const PressReleasePage = ({ pressRelease, draftMode, token }: Props) => {
               </div>
             </div>
           </div>
-          {pressRelease?.relatedPressReleases.length > 0 && <RelatedFeaturesSection title={pressRelease?.title} allPosts={pressRelease?.relatedPressReleases} />}
         </Wrapper>
         </Section>
+        {pressRelease?.relatedPressReleases.length > 0 && (
+          <RelatedFeaturesSection
+            contentType={pressRelease?.contentType}
+            allPosts={[
+              ...(Array.isArray(pressRelease?.relatedPressReleases) ? pressRelease?.relatedPressReleases : []),
+              ...(Array.isArray(limitedPressReleases) ? limitedPressReleases : [])
+            ].slice(0, 4)}
+          />
+        )}
       </Layout>
     </>
   );

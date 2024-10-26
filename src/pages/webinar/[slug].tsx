@@ -22,6 +22,7 @@ import CustomHead from '~/utils/customHead';
 
 interface Props {
   webinar: Podcasts;
+  limitedwebinars: any;
   allWebinars: any;
   draftMode: boolean;
   token: string;
@@ -45,6 +46,8 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
   const client = getClient(draftMode ? { token: readToken } : undefined);
   const webinar = await getWebinar(client, params.slug as string);
   const allWebinars = await getWebinars(client);
+  const limitedwebinars: any = await getWebinars(client, 0, 4);
+
 
   return {
     props: {
@@ -52,11 +55,12 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
       token: draftMode ? readToken : '',
       webinar,
       allWebinars,
+      limitedwebinars
     },
   };
 };
 
-const WebinarPage = ({ webinar, draftMode, token }: Props) => {
+const WebinarPage = ({ webinar,limitedwebinars, draftMode, token }: Props) => {
 
   const seoTitle = webinar.seoTitle || webinar.title;
   const seoDescription = webinar.seoDescription || webinar.excerpt;
@@ -85,18 +89,17 @@ const WebinarPage = ({ webinar, draftMode, token }: Props) => {
                   </div>
                 </div>
             </div>
-              {webinar?.relatedWebinars?.length > 0 && (
-              <RelatedFeaturesSection
-                title={webinar?.title}
-                allPosts={webinar?.relatedWebinars}
-              />
-            )}
           </Wrapper>
-          
         </Section>
-        <BannerSubscribeSection />
-
-          
+        {webinar?.relatedWebinars.length > 0 && (
+          <RelatedFeaturesSection
+            contentType={webinar?.contentType}
+            allPosts={[
+              ...(Array.isArray(webinar?.relatedWebinars) ? webinar?.relatedWebinars : []),
+              ...(Array.isArray(limitedwebinars) ? limitedwebinars : [])
+            ].slice(0, 4)}
+          />
+        )}
       </Layout>
     </>
   );

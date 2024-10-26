@@ -1,7 +1,7 @@
 // pages/testimonial/[slug].tsx
 import { GetStaticProps, GetStaticPaths } from 'next';
 import { getClient } from '~/lib/sanity.client';
-import { caseStudySlugsQuery, getCaseStudy } from '~/lib/sanity.queries';
+import { caseStudySlugsQuery, getCaseStudies, getCaseStudy } from '~/lib/sanity.queries';
 import { CaseStudies } from '~/interfaces/post';
 import Wrapper from '~/layout/Wrapper';
 import { readToken } from '~/lib/sanity.api';
@@ -21,6 +21,7 @@ import CustomHead from '~/utils/customHead';
 
 interface Props {
   caseStudy: CaseStudies;
+  limitCaseStudies?: any;
   draftMode: boolean;
   token: string;
 }
@@ -42,6 +43,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false, params = {} }) => {
   const client = getClient(draftMode ? { token: readToken } : undefined);
   const caseStudy = await getCaseStudy(client, params.slug as string);
+  const limitCaseStudies: any = await getCaseStudies(client, 0, 4);
+
 
   if (!caseStudy) {
     return {
@@ -55,17 +58,21 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
       draftMode,
       token: draftMode ? readToken : '',
       caseStudy,
+      limitCaseStudies
     },
   };
 };
 
-const CaseStudyPage = ({ caseStudy, draftMode, token }: Props) => {
+const CaseStudyPage = ({ caseStudy,limitCaseStudies, draftMode, token }: Props) => {
   const seoTitle = caseStudy.seoTitle || caseStudy.title;
   const seoDescription = caseStudy.seoDescription || caseStudy.excerpt;
   const seoKeywords = caseStudy.seoKeywords || '';
   const seoRobots = caseStudy.seoRobots || 'index,follow';
   const seoCanonical = caseStudy.seoCanonical || `https://carestack.com/caseStudy/${caseStudy.slug.current}`;
   const jsonLD: any = generateJSONLD(caseStudy);
+
+  console.log(limitCaseStudies);
+  
 
   return (
     <>
@@ -99,14 +106,18 @@ const CaseStudyPage = ({ caseStudy, draftMode, token }: Props) => {
                 </div>
               </div>
             </div>
-            {caseStudy?.relatedCaseStudies?.length > 0 && (
-              <RelatedFeaturesSection
-                title={caseStudy?.title}
-                allPosts={caseStudy?.relatedCaseStudies}
-              />
-            )}
+
           </Wrapper>
         </Section>
+        {caseStudy?.relatedCaseStudies?.length > 0 && (
+              <RelatedFeaturesSection
+                contentType={caseStudy?.contentType}
+                allPosts={[
+                  ...(Array.isArray(caseStudy?.relatedArticles) ? caseStudy.relatedArticles : []),
+                  ...(Array.isArray(limitCaseStudies) ? limitCaseStudies : [])
+                ].slice(0, 4)}
+              />
+            )}
       </Layout>
     </>
   );
