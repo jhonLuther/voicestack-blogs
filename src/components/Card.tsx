@@ -153,7 +153,7 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
                     {isPageUrl ? tag?.tagName : post.contentType}
                     </SubText>
                   )}
-                  <H3Large className={`group-hover: group-hover:underline underline-offset-4`}>
+                  <H3Large className={`group-hover: group-hover:underline underline-offset-4 tracking-[-0.72px]`}>
                     {post.title}
                   </H3Large>
                 </div>
@@ -277,7 +277,7 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
 															{post.contentType && (
 																<span className={`rounded mb-2 bg-zinc-500 text-sm text-white font-medium leading-[1.5] uppercase inline-flex px-2 py-1`}>{post.contentType}</span>
 															)}
-															<H4Large className={`group-hover: group-hover:underline underline-offset-4 !leading-[1.3] !tracking-[-0.24px]`}>
+															<H4Large className={`group-hover: group-hover:underline underline-offset-4`}>
 																{post.title}
 															</H4Large>
 														</div>
@@ -331,8 +331,8 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
                           <div className={`${varyingIndex ? 'p-8 bg-indigo-900 text-white rounded-b-lg mt-1' : 'mt-6'} flex flex-col gap-1 min-h-[154px]`}>
                             <div className='flex flex-col flex-grow'>
                               {post.contentType && (
-                                <SubText className={varyingIndex ? '!text-white' : ''}>
-                                  {isPageUrl ? tag?.tagName : post.contentType}
+                                <SubText className={`${varyingIndex ? '!text-white' : ''} mb-2`}>
+                                  {post.contentType}
                                 </SubText>
                               )}
                               <H4Large className='group-hover:group-hover:underline underline-offset-4'>

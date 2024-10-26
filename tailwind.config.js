@@ -36,7 +36,8 @@ module.exports = {
         },
 
         maxWidth:{
-          '9xl':"82rem"
+          '9xl':"82rem",
+          '7xl':"1240px"
         },
 
         fontFamily:{
