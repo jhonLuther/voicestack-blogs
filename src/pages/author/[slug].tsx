@@ -13,6 +13,8 @@ import Card from '~/components/Card'
 import AllcontentSection from '~/components/sections/AllcontentSection'
 import siteConfig from 'config/siteConfig'
 import Section from '~/components/Section'
+import { useRef } from 'react'
+import { BaseUrlProvider } from '~/components/Context/UrlContext'
 
 interface Query {
   [key: string]: string
@@ -66,8 +68,10 @@ export default function AuthorPage({
   relatedContents
 }: InferGetStaticPropsType<typeof getStaticProps>) {
 
+  const baseUrl = useRef(`/${siteConfig.pageURLs.author}`).current;
 
   return (
+    <BaseUrlProvider baseUrl={baseUrl}>
     <Layout >
       <Section className='justify-center'>
         <Wrapper className={`flex-col`}>
@@ -99,6 +103,6 @@ export default function AuthorPage({
         </Wrapper>
       </Section>
     </Layout >
-
+    </BaseUrlProvider>
   )
 }
