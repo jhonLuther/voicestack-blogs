@@ -26,7 +26,7 @@ const Button: React.FunctionComponent<ButtonProps> = ({
       return (
         <Link
           href={link}
-          className={`bg-zinc-500 hover:bg-zinc-600 text-white px-4 py-2 rounded-sm flex items-center ${className}`}
+          className={`bg-zinc-500 hover:bg-zinc-600 text-white px-6 py-3 text-base leading-[1.5] font-medium rounded-[5px] flex items-center ${className}`}
           {...rest}
         >
           {children}
@@ -36,7 +36,7 @@ const Button: React.FunctionComponent<ButtonProps> = ({
   
     return (
       <button
-        className={`bg-zinc-500 hover:bg-zinc-600 text-white px-4 py-2 rounded-sm flex items-center ${className}`}
+        className={`bg-zinc-500 hover:bg-zinc-600 text-white px-6 py-3 text-base leading-[1.5] font-medium rounded-[5px] flex items-center ${className}`}
         {...rest}
       >
         {children}
