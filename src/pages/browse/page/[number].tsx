@@ -95,7 +95,6 @@ export default function TagPagePaginated({
 
   return (
     <BaseUrlProvider baseUrl={baseUrl}>
-
     <Layout>
       	<ContentHub contentCount={contentCount}/>
         <TagSelect 
