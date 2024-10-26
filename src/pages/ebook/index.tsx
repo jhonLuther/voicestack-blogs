@@ -14,6 +14,7 @@ import React, { useRef } from 'react';
 import Pagination from '~/components/commonSections/Pagination';
 import CustomHead from '~/utils/customHead';
 import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection';
+import { BaseUrlProvider } from '~/components/Context/UrlContext';
 
 export const getStaticProps: GetStaticProps<SharedPageProps & { ebooks: Ebooks[]; totalPages: number }> = async (context) => {
   const draftMode = context.preview || false;
@@ -49,6 +50,7 @@ const EbooksPage = ({ ebooks,latestEbooks, totalPages }: { ebooks: Ebooks[];late
   };
 
   return (
+    <BaseUrlProvider baseUrl={baseUrl}>
     <Layout>
       {ebooks?.map((e,i) => {
         return <CustomHead prpos ={e} type="eBook" key={i} />
@@ -60,7 +62,6 @@ const EbooksPage = ({ ebooks,latestEbooks, totalPages }: { ebooks: Ebooks[];late
         contents={latestEbooks}
       />
         <AllcontentSection
-          baseUrl={baseUrl}
           className={'pb-9'}
           allContent={ebooks}
           hideHeader={true}
@@ -70,12 +71,12 @@ const EbooksPage = ({ ebooks,latestEbooks, totalPages }: { ebooks: Ebooks[];late
         <Pagination
           totalPages={totalPages}
           currentPage={1}
-          baseUrl={baseUrl}
           onPageChange={handlePageChange}
           enablePageSlug={true}
         />
        <BannerSubscribeSection   />
     </Layout>
+    </BaseUrlProvider>
   );
 };
 

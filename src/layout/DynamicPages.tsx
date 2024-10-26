@@ -9,6 +9,7 @@ import BannerSubscribeSection from "~/components/sections/BannerSubscribeSection
 import Wrapper from "~/layout/Wrapper";
 import SliderSection from "~/components/sections/SliderSection";
 import siteConfig from "config/siteConfig";
+import { BaseUrlProvider } from "~/components/Context/UrlContext";
 
 interface DynamicProps {
 	children?: React.ReactNode;
@@ -48,8 +49,11 @@ const DynamicPages = ({
 
 	const testimonialList = homeSettings?.testimonials ? homeSettings?.testimonials : testimonials.slice(0, 1);
 
+	const baseUrl = `/${siteConfig.pageURLs.home}`
+
 	return (
 		<>
+		 <BaseUrlProvider baseUrl={baseUrl}>
 			<TagSelect
 				tags={tags}
 				tagLimit={7}
@@ -62,6 +66,7 @@ const DynamicPages = ({
 			<TestimonialSection testimonials={testimonialList} />
 			<AllcontentSection  customBrowseContent={customBrowseContent} allContent={posts} itemsPerPage={siteConfig.pagination.itemsPerPage}  redirect={true} />
 			<ShortBannerSection />
+			</BaseUrlProvider>
 		</>
 	);
 };

@@ -12,6 +12,7 @@ import siteConfig from '../../../../config/siteConfig';
 import React, { useRef } from 'react';
 import Pagination from '~/components/commonSections/Pagination';
 import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection';
+import { BaseUrlProvider } from '~/components/Context/UrlContext';
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const client = getClient();
@@ -63,24 +64,25 @@ const PaginatedArticlesPage = ({ articles, pageNumber, totalPages }: { articles:
   };
 
   return (
+    <BaseUrlProvider baseUrl={baseUrl}>
     <Layout>
         <AllcontentSection
-          baseUrl={baseUrl}
           className={'pb-9'}
           allContent={articles}
+          hideHeader={true}
           cardType="left-image-card"
           itemsPerPage={siteConfig.pagination.childItemsPerPage}
         />
         <Pagination
           totalPages={totalPages}
           currentPage={pageNumber}
-          baseUrl={baseUrl}
           onPageChange={handlePageChange}
           enablePageSlug={true}
           content={articles}
         />
         <BannerSubscribeSection />
     </Layout>
+    </BaseUrlProvider>
   );
 };
 

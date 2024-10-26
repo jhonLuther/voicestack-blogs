@@ -24,7 +24,7 @@ export default {
         title: 'Description',
         type: 'text',
         description: 'A brief description or subtext',
-        initialValue: 'Learn how we can help you reduce claim rejections and denials.'
+        initialValue: 'Looking for the best cloud-based dental software?'
       },
       {
         name: 'buttonText',
