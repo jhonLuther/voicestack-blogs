@@ -21,6 +21,9 @@ const siteConfig = {
     paginationBaseUrls:{
       base:"browse"
     },
+    externalLinks: {
+      reviews:'https://carestack.com/dental-software/reviews'
+    },
     content: {
       defaultSort: "date",
       showFeatured: true
