@@ -20,6 +20,7 @@ import PlayIcon from '../assets/reactiveAssets/PlayIcon';
 import { VideoModal } from './commonSections/VideoModal';
 import H3Medium from './typography/H3Medium';
 import ChordIcon from '~/assets/reactiveAssets/ChordIcon';
+import CreaterInfo from './commonSections/CreaterInfo';
 
 interface CardProps {
   post: Post;
@@ -55,10 +56,15 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
 
   useEffect(() => {
     if (router.isReady && post?.slug) {
-      const contentTypePath = getBasePath(router, post.contentType);
-      setLinkUrl(`/${contentTypePath}/${post.slug.current}`);
+      const contentTypePath = getBasePath(router, post.contentType); 
+      const newLinkUrl = varyingIndex 
+        ? `/${contentTypePath}` 
+        : `/${contentTypePath}/${post.slug.current}`;
+  
+      setLinkUrl(newLinkUrl);
     }
-  }, [post?.contentType, post?.slug]);
+  }, [post?.contentType, post?.slug, varyingIndex]);
+  
 
   if (!post || !linkUrl) {
     return null;
@@ -116,7 +122,7 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
                   <ImageLoader
                     className='transform   duration-300 group-hover:scale-105'
                     image={post?.mainImage}
-                    width={200}
+                    width={264}
                     height={154}
                   />
                 </div>
@@ -164,6 +170,7 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
                   <H3Large className={`group-hover: group-hover:underline underline-offset-4 tracking-[-0.72px]`}>
                     {post.title}
                   </H3Large>
+                  {isPageUrl && post.contentType === 'podcast' && <CreaterInfo creater={post?.author}  duration={post?.duration}/>}
                 </div>
               </Link>
             </div>
@@ -189,7 +196,7 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
                       <H3Medium className='!text-zinc-900'>
                         {post.testimonialName}
                       </H3Medium>
-                      <DescriptionText className=' text-black text-opacity-70 line-clamp-3 overflow-hidden text-ellipsis'>
+                      <DescriptionText className='!zinc-600 text-opacity-70 line-clamp-3 overflow-hidden text-ellipsis'>
                         {post.desc ? post.desc : post.excerpt}
                       </DescriptionText>
                       {post.customer && (

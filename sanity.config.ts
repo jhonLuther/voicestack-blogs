@@ -125,6 +125,7 @@ export default defineConfig({
               S.documentTypeListItem('testimonial').title('Testimonial'),
               S.documentTypeListItem('videos').title('Video'),
               S.documentTypeListItem('siteSetting').title('Site Configuration'),
+              S.documentTypeListItem('customContent').title('Custom Content'),
               // S.documentTypeListItem('testimonial').title('Testimonial'),
             // ...S.documentTypeListItems().filter(
             //   (listItem) => !['homeSettings'].includes(listItem.getId()) && !['globalSettings'].includes(listItem.getId())&& !['post'].includes(listItem.getId()),
