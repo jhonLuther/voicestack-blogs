@@ -16,14 +16,14 @@ export const VideoModal: React.FunctionComponent<VideoProps> = ({ videoDetails, 
   
 
   return (
-    <div className={`w-full h-[400px] ${className} `}>
+    <div className={`w-full aspect-[16/9] relative ${className} `}>
       {Array.isArray(videoData) && videoData.length > 0 && videoData.map((item: any) => (
         <iframe
           src={getIframeUrl(item?.platform, item?.videoId)}
           title={item?.title}
           frameBorder="0"
           allowFullScreen
-          className="w-full h-full"
+          className="w-full h-full absolute left-0 top-0"
           key={item._id}
         />
       ))}
