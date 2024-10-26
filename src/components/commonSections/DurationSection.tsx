@@ -33,11 +33,11 @@ const DurationSection = ({ className, contentType, duration, date, isAudio = fal
                     {date ? formatDateShort(date) : 'Dec 30, 2020'}
                 </div>
             ) : (
-                <div className={`flex relative gap-3 pt-3`}>
+                <div className={`flex relative gap-3 pt-3 ${className}`}>
                     <div className={`text-white ${className}`}>
                         {date ? formatDateShort(date) : 'Dec 30, 2020'}
                     </div>
-                    .
+                    {`• `}
                     <div className={`relative flex flex-col ${className}`}>
                         <span>{durationText}</span>
                     </div>

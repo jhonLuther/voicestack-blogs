@@ -14,6 +14,7 @@ import React, { useRef } from 'react';
 import Pagination from '~/components/commonSections/Pagination';
 import CustomHead from '~/utils/customHead';
 import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection';
+import { BaseUrlProvider } from '~/components/Context/UrlContext';
 
 export const getStaticProps: GetStaticProps<SharedPageProps & { articles: Articles[]; totalPages: number }> = async (context) => {
   const draftMode = context.preview || false;
@@ -50,15 +51,15 @@ const ArticlesPage = ({ articles,latestArticles, totalPages }: { articles: Artic
   };
 
   return (
+    <BaseUrlProvider baseUrl={baseUrl}>
     <Layout>
-      <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'} reverse={true} contents={latestArticles} />
+      <LatestBlogs  className={'pt-11 pr-9 pb-16 pl-9'} reverse={true} contents={latestArticles} />
       {articles?.length
         ? articles.map((e, i) => {
             return <CustomHead props={e} type="caseStudy" key={i} />
           })
         : null}
         <AllcontentSection
-          baseUrl={baseUrl}
           className={'pb-9'}
           allContent={articles}
           hideHeader={true}
@@ -68,13 +69,13 @@ const ArticlesPage = ({ articles,latestArticles, totalPages }: { articles: Artic
         <Pagination
           totalPages={totalPages}
           currentPage={1}
-          baseUrl={baseUrl}
           onPageChange={handlePageChange}
           enablePageSlug={true}
           content={articles}
         />
         <BannerSubscribeSection />
     </Layout>
+    </BaseUrlProvider>
   )
 };
 

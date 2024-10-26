@@ -7,19 +7,19 @@ const siteConfig = {
     },
      pageURLs : {
       home: "/",
-      blog: "/blog",
-      article: "/article",
-      caseStudy: "/case-study",
-      ebook: "/ebook",
-      about: "/about",
-      podcast: "/podcast",
-      pressRelease: "/press-release",
-      testimonial: "/testimonial",
-      webinar: "/webinar",
-      author: "/author",
+      blog: "blog",
+      article: "article",
+      caseStudy: "case-study",
+      ebook: "ebook",
+      about: "about",
+      podcast: "podcast",
+      pressRelease: "press-release",
+      testimonial: "testimonial",
+      webinar: "webinar",
+      author: "author",
     },
     paginationBaseUrls:{
-      base:"/browse"
+      base:"browse"
     },
     content: {
       defaultSort: "date",

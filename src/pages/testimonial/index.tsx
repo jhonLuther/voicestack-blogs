@@ -13,6 +13,7 @@ import siteConfig from '../../../config/siteConfig';
 import React, { useRef } from 'react';
 import Pagination from '~/components/commonSections/Pagination';
 import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection';
+import { BaseUrlProvider } from '~/components/Context/UrlContext';
 
 export const getStaticProps: GetStaticProps<SharedPageProps & { testimonials: Testimonial[]; totalPages: number }> = async (context) => {
   const draftMode = context.preview || false;
@@ -48,6 +49,7 @@ const TestimonialsPage = ({ testimonials,latestTestimonials, totalPages }: { tes
   };
 
   return (
+    <BaseUrlProvider baseUrl={baseUrl}>
     <Layout>
       <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'} reverse={true} contents={latestTestimonials} />
       <Wrapper>
@@ -62,13 +64,14 @@ const TestimonialsPage = ({ testimonials,latestTestimonials, totalPages }: { tes
         <Pagination
           totalPages={totalPages}
           currentPage={1}
-          baseUrl={baseUrl}
           onPageChange={handlePageChange}
           enablePageSlug={true}
         />
         <BannerSubscribeSection />
       </Wrapper>
     </Layout>
+    </BaseUrlProvider>
+
   );
 };
 

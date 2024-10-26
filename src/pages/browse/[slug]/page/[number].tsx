@@ -10,6 +10,8 @@ import TagSelect from '~/contentUtils/TagSelector'
 import Wrapper from '~/layout/Wrapper'
 import Pagination from '~/components/commonSections/Pagination'
 import ContentHub from '~/contentUtils/ContentHub'
+import { useRef } from 'react'
+import { BaseUrlProvider } from '~/components/Context/UrlContext'
 
 export const getStaticProps: GetStaticProps<
   SharedPageProps & {
@@ -104,8 +106,11 @@ export default function TagPagePaginated({
     console.log(`Navigating to page: ${page}`)
   }
   
+  const baseUrl = useRef(`/${siteConfig.paginationBaseUrls.base}/${tag?.slug?.current}`).current
+
 
   return (
+    <BaseUrlProvider baseUrl={baseUrl}>
     <Layout>
         <ContentHub contentCount={contentCount}/>
         <TagSelect 
@@ -114,15 +119,15 @@ export default function TagPagePaginated({
           showTags={true}
           className='mt-12' 
         />
-        <AllcontentSection allItemCount={totalPostCount}  allContent={posts}  />
+        <AllcontentSection  allItemCount={totalPostCount}  allContent={posts}  />
         <Pagination
           totalPages={totalPages}
-          baseUrl={`/${siteConfig.paginationBaseUrls.base}/${tag.slug.current}`}
           onPageChange={handlePageChange}
           currentPage={currentPage}
           enablePageSlug={true}
           content={posts}
         />
     </Layout>
+    </BaseUrlProvider>
   )
 }

@@ -18,6 +18,7 @@ import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection
 import { useRef } from 'react'
 import router, { useRouter } from 'next/router'
 import ContentHub from '~/contentUtils/ContentHub'
+import { BaseUrlProvider } from '~/components/Context/UrlContext'
 
 interface Query {
 	[key: string]: string
@@ -76,7 +77,7 @@ export default function ProjectSlugRoute(
 	const totalCount:any = Object.values(contentCount).reduce((acc:any, count) => acc + count, 0);
 
 
-	// const baseUrl = useRef(`/${siteConfig.pageURLs.article}`).current;
+	const baseUrl = useRef(`/${siteConfig.paginationBaseUrls.base}`).current;
 
 	const handlePageChange = (page: number) => {
 	//   if (page === 1) {
@@ -89,6 +90,8 @@ export default function ProjectSlugRoute(
 
 	return (
 		<>
+		    <BaseUrlProvider baseUrl={baseUrl}>
+
 			<Layout >
 				<ContentHub contentCount={contentCount}/>
 				<TagSelect
@@ -99,13 +102,14 @@ export default function ProjectSlugRoute(
 				<AllcontentSection allItemCount={totalCount}  allContent={posts} />
 				<Pagination
 					totalPages={totalPages}
-					baseUrl="/browse"
 					onPageChange={handlePageChange}
 					currentPage={0}
 					enablePageSlug={true}
 				/>
 				<BannerSubscribeSection />
 			</Layout>
+			</BaseUrlProvider>
+
 		</>
 	)
 }

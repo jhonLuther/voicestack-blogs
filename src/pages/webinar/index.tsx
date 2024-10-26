@@ -13,6 +13,7 @@ import siteConfig from '../../../config/siteConfig';
 import React, { useRef } from 'react';
 import Pagination from '~/components/commonSections/Pagination';
 import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection';
+import { BaseUrlProvider } from '~/components/Context/UrlContext';
 
 export const getStaticProps: GetStaticProps<SharedPageProps & { webinars: Webinars[]; totalPages: number }> = async (context) => {
   const draftMode = context.preview || false;
@@ -48,25 +49,26 @@ const WebinarsPage = ({ webinars,latestWebinars, totalPages }: { webinars: Webin
   };
 
   return (
+    <BaseUrlProvider baseUrl={baseUrl}>
     <Layout>
       <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'} reverse={true} contents={latestWebinars} />
         <AllcontentSection
-          baseUrl={baseUrl}
           className={'pb-9'}
           allContent={webinars}
           hideHeader={true}
-          cardType="podcast-card"
+          // cardType="podcast-card"
           itemsPerPage={siteConfig.pagination.childItemsPerPage}
         />
         <Pagination
           totalPages={totalPages}
           currentPage={1}
-          baseUrl={baseUrl}
           onPageChange={handlePageChange}
           enablePageSlug={true}
         />
         <BannerSubscribeSection />
       </Layout>
+      </BaseUrlProvider>
+
   );
 };
 
