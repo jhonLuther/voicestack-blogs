@@ -1,6 +1,10 @@
 import { ImageAsset, PortableTextBlock, Slug } from "sanity"
 
 export interface Post {
+  hasVideo: any
+  videos: any[]
+  customer: boolean
+  testimonialName: any
   customImage: ImageAsset
   date: any
   headings?: Headings

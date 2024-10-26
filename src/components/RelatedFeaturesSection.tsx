@@ -18,10 +18,7 @@ const RelatedFeaturesSection: React.FC<RelatedFeaturesSectionProps> = ({ allPost
   if (!allPosts) {
     return null
   }
-
-  console.log(allPosts,'allPosts');
   
-
   return (
     <React.Fragment>
       <div className="flex flex-col gap-4 cursor-pointer pt-12">

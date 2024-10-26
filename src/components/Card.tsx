@@ -12,16 +12,18 @@ import H3XL from './typography/H3XL';
 import AuthorInfo from './commonSections/AuthorInfo';
 import DescriptionText from './typography/DescriptionText';
 import Image from 'next/image';
-
 import SoundIcon from '../assets/speakerIcon.svg';
-import PlayIcon from '../assets/playButton.svg';
-
 import { ArrowTopRightIcon } from '@sanity/icons'
 import { formatDateShort } from '~/utils/formateDate';
 import DurationSection from './commonSections/DurationSection';
+import PlayIcon from '../assets/reactiveAssets/PlayIcon';
+import { VideoModal } from './commonSections/VideoModal';
+import H3Medium from './typography/H3Medium';
+import ChordIcon from '~/assets/reactiveAssets/ChordIcon';
+
 interface CardProps {
   post: Post;
-  cardType?: 'top-image-card' | 'text-only-card' | 'left-image-card' | 'ebook-card' | 'featured' | 'top-image-smallCard' | 'podcast-card' | 'top-image-contentType-card';
+  cardType?: 'top-image-card' | 'text-only-card' | 'left-image-card' | 'ebook-card' | 'featured' | 'top-image-smallCard' | 'podcast-card' | 'top-image-contentType-card' | 'review-card';
   className?: string;
   cardColor?: string;
   showPlayIcon?: boolean;
@@ -30,11 +32,13 @@ interface CardProps {
   reverse?: boolean;
 	index?: number;
   baseUrl?: string;
+  contentType?: 'ebook' | 'article' | 'podcast' | 'webinar' | 'case-study' | 'press-release'; 
 }
 
 export default function Card({ post, isLast, cardType, reverse, className, cardColor, varyingIndex, showPlayIcon = false, index,baseUrl }: CardProps) {
 
   const [linkUrl, setLinkUrl] = useState<string | null>(null);
+  const [isOpen, setIsOpen] = useState(false);
 
 	const bgImages = [
     {url: 'https://cdn.sanity.io/images/bbmnn1wc/production/69f78e1d2126dda19c732337893448dc94969932-784x568.png'},
@@ -124,7 +128,11 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
                 <H4Large className={`group-hover: group-hover:underline underline-offset-4 line-clamp-3 text-ellipsis overflow-hidden`}>
                   {post.title}
                 </H4Large>
-                <DurationSection className={'!text-zinc-500'} contentType={post.contentType} duration={post.contentType === 'podcast'  || post.contentType === 'webinar' ? post?.duration :post?.estimatedReadingTime} date={post?.date ? post?.date : ""}></DurationSection>
+                <DurationSection
+                 className={'!text-zinc-500'} 
+                 contentType={post.contentType}
+                  duration={post.contentType === 'podcast'  || post.contentType === 'webinar' || post.contentType === 'ebook' ? post?.duration :post?.estimatedReadingTime}
+                   date={post?.date ? post?.date : ""}/>
                 </div>
 
               {
@@ -135,7 +143,7 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
                   </div>) :
                   post.contentType === 'webinar' ? (
                     <div className='absolute bottom-3 left-3 flex items-center gap-2'>
-                      <Image src={PlayIcon} alt="playIcon" />
+                      <PlayIcon/>
                       <span className='text-white text-sm font-medium'>{`Watch`}</span>
                     </div>
                   ) : ""
@@ -160,37 +168,45 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
               </Link>
             </div>
           ) :
-            cardType === 'top-image-smallCard' ? (
-              <Link href={linkUrl}>
-                <div className="flex flex-col gap-1 group hover: transition duration-500 overflow-hidden">
-                  <div className='overflow-hidden '>
-                    {post.mainImage && (
-                      <ImageLoader
-                        className="w-full  object-cover transform  duration-300 group-hover:scale-105"
-                        image={post.mainImage}
-                      />
-                    )}
-                  </div>
-                  <div className="flex  p-9  bg-cs-purple flex-col items-start gap-10 flex-1">
-                    <div className="flex flex-col gap-2 text-white">
-                      {post.contentType && (
-                        <SubText className='text-white' >
-                          {post.contentType}
-                        </SubText>
-                      )}
-                      <H3XL >
-                        {post.title}
-                      </H3XL>
-                      <DescriptionText className='text-opacity-70 line-clamp-3 overflow-hidden text-ellipsis'>
+            cardType === 'review-card' ? (
+              <React.Fragment>
+                <div className={`flex flex-col gap-1 group hover: transition duration-500 overflow-hidden ${post.hasVideo && 'cursor-pointer'}`} onClick={() => {
+                  if (post.videos && post.hasVideo) {
+                    setIsOpen(true);
+                  }
+                }}
+                >
+                  <div className="flex  p-8 rounded-lg  bg-white flex-col items-start gap-10 flex-1">
+                    <div className="flex flex-col gap-6 " >
+                      <div className='flex gap-3 justify-between'>  
+                      <ChordIcon/>
+                      {post.videos && post.hasVideo && <div className='flex gap-1 items-center' >
+                        
+                        <span>Play</span>
+                        <span><PlayIcon color='black'/></span>
+                      </div>}
+                      </div>
+                      <H3Medium className='!text-zinc-900'>
+                        {post.testimonialName}
+                      </H3Medium>
+                      <DescriptionText className=' text-black text-opacity-70 line-clamp-3 overflow-hidden text-ellipsis'>
                         {post.desc ? post.desc : post.excerpt}
                       </DescriptionText>
-                      {post.author && post.author.length > 0 && (
-                        <AuthorInfo author={post.author} />
+                      {post.customer && (
+                        <AuthorInfo className='pointer-events-none'  author={[post.customer]} />
                       )}
                     </div>
                   </div>
                 </div>
-              </Link>
+                <div>
+                {/* {isOpen && <VideoModal 
+                  isPopup={true} 
+                  videoDetails={post?.videos} 
+                  className={`pt-9  flex items-start`} 
+                  onClose={() => setIsOpen(false)}
+                />} */}
+                </div>
+                </React.Fragment>
             ) :
 
               cardType === 'featured' ? (
@@ -228,7 +244,7 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
                               </div>) :
                               post.contentType === 'webinar' ? (
                                 <div className='absolute bottom-6 left-6 flex items-center gap-2'>
-                                  <Image src={PlayIcon} alt="playIcon" />
+                                  <PlayIcon/>
                                   <span className='text-white text-sm font-medium'>{`Watch`}</span>
                                 </div>
                               ) : ""
@@ -319,7 +335,7 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
                                 </div>) :
                                 post.contentType === 'webinar' ? (
                                   <div className='absolute bottom-6 left-6 flex items-center gap-2'>
-                                    <Image src={PlayIcon} alt="playIcon" />
+                                    <PlayIcon/>
                                     <span className='text-white text-sm font-medium'>{`Watch`}</span>
                                   </div>
                                 ) : ""

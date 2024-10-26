@@ -51,7 +51,7 @@ const WebinarsPage = ({ webinars,latestWebinars, totalPages }: { webinars: Webin
   return (
     <BaseUrlProvider baseUrl={baseUrl}>
     <Layout>
-      <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'} reverse={true} contents={latestWebinars} />
+      <LatestBlogs contentType="webinar" className={'pt-11 pr-9 pb-16 pl-9'} reverse={true} contents={latestWebinars} />
         <AllcontentSection
           className={'pb-9'}
           allContent={webinars}

@@ -122,10 +122,10 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
   };
 
   return (
-    <Section className={`justify-center md:pb-0 md:pt-24`}>
+    <Section className={`justify-center md:pb-0 md:pt-24 ${className}`}>
       <Wrapper className={`flex-col`}>
         {!hideHeader && <div className="md:flex-row flex-col gap-8 flex items-end justify-between pb-12">
-          <H2Large className='tracking-tighterText'>
+          <H2Large className='tracking-tighterText select-none'>
             {`${selectedTag ? selectedTag : 'Explore All'} `}
           </H2Large>
           {redirect ? (

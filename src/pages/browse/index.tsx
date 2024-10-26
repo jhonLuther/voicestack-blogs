@@ -46,10 +46,6 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 	const totalArticles = await getArticlesCount(client);
 	const totalEbooks = await getEbooksCount(client);
 
-
-
-
-
 	return {
 		props: {
 			posts,
