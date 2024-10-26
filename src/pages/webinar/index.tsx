@@ -54,7 +54,7 @@ const WebinarsPage = ({ webinars,latestWebinars, totalPages }: { webinars: Webin
           baseUrl={baseUrl}
           className={'pb-9'}
           allContent={webinars}
-          hideSearch={true}
+          hideHeader={true}
           cardType="podcast-card"
           itemsPerPage={siteConfig.pagination.childItemsPerPage}
         />

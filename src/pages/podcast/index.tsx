@@ -56,7 +56,7 @@ const PodcastsPage = ({ podcasts,latestPodcasts, totalPages }: { podcasts: Podca
           baseUrl={baseUrl}
           className={'pb-9'}
           allContent={podcasts}
-          hideSearch={true}
+          hideHeader={true}
           cardType="podcast-card"
           itemsPerPage={siteConfig.pagination.childItemsPerPage}
         />

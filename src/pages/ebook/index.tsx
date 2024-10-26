@@ -63,7 +63,7 @@ const EbooksPage = ({ ebooks,latestEbooks, totalPages }: { ebooks: Ebooks[];late
           baseUrl={baseUrl}
           className={'pb-9'}
           allContent={ebooks}
-          hideSearch={true}
+          hideHeader={true}
           cardType="left-image-card"
           itemsPerPage={siteConfig.pagination.childItemsPerPage}
         />

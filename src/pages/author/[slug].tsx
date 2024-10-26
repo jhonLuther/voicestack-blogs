@@ -93,7 +93,6 @@ export default function AuthorPage({
             <AllcontentSection
               className={'pb-9'}
               allContent={relatedContents}
-              hideSearch={true}
               itemsPerPage={siteConfig.pagination.childItemsPerPage}
               redirect={true}
             />}

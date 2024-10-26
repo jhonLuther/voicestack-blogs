@@ -68,7 +68,6 @@ const PaginatedTestimonialsPage = ({ testimonials, pageNumber, totalPages }: { t
           baseUrl={baseUrl}
           className={'pb-9'}
           allContent={testimonials}
-          hideSearch={true}
           cardType="left-image-card"
           itemsPerPage={siteConfig.pagination.childItemsPerPage}
         />

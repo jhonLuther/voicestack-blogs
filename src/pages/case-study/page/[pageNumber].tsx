@@ -68,7 +68,6 @@ const PaginatedCaseStudyPage = ({ caseStudies, pageNumber, totalPages }: { caseS
           baseUrl={baseUrl}
           className={'pb-9'}
           allContent={caseStudies}
-          hideSearch={true}
           cardType="left-image-card"
           itemsPerPage={siteConfig.pagination.childItemsPerPage}
         />
