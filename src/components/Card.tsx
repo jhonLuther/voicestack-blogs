@@ -199,12 +199,12 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
                   </div>
                 </div>
                 <div>
-                {/* {isOpen && <VideoModal 
+                {isOpen && <VideoModal 
                   isPopup={true} 
                   videoDetails={post?.videos} 
                   className={`pt-9  flex items-start`} 
                   onClose={() => setIsOpen(false)}
-                />} */}
+                />}
                 </div>
                 </React.Fragment>
             ) :
