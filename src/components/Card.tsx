@@ -285,7 +285,7 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
                               <span className='text-[12px] font-medium'>{`by ${post.author[0].name ? post.author[0].name : ''}`}</span>
                             )} */}
                             {post.contentType && (
-                              <span className='text-[12px] font-medium inline-flex items-center gap-1'>
+                              <span className='text-[14px] md:text-[16px] font-medium inline-flex items-center gap-1'>
 																{`${post.contentType === "webinar" ? "Watch Now" : "Read Now"}`}
 																<ArrowTopRightIcon className='' height={20} width={20} />
 															</span>
