@@ -184,19 +184,18 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
                 }}
                 >
                   <div className="flex  p-8 rounded-lg  bg-white flex-col items-start gap-10 flex-1">
-                    <div className="flex flex-col gap-6 " >
+                    <div className="flex flex-col gap-6">
                       <div className='flex gap-3 justify-between'>  
                       <ChordIcon/>
-                      {post.videos && post.hasVideo && <div className='flex gap-1 items-center' >
-                        
-                        <span>Play</span>
+                      {post.videos && post.hasVideo && <div className='flex gap-3 items-center' >
+                        <span className='text-[14px] text-zinc-900 font-medium'>Play</span>
                         <span><PlayIcon color='black'/></span>
                       </div>}
                       </div>
                       <H3Medium className='!text-zinc-900'>
                         {post.testimonialName}
                       </H3Medium>
-                      <DescriptionText className='!zinc-600 text-opacity-70 line-clamp-3 overflow-hidden text-ellipsis'>
+                      <DescriptionText className='!text-zinc-600 !leading-[1.6]'>
                         {post.desc ? post.desc : post.excerpt}
                       </DescriptionText>
                       {post.customer && (
@@ -308,7 +307,7 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
                               <span className='text-[12px] font-medium'>{`by ${post.author[0].name ? post.author[0].name : ''}`}</span>
                             )} */}
                             {post.contentType && (
-                              <span className='text-[12px] font-medium inline-flex items-center gap-1'>
+                              <span className='text-[14px] md:text-[16px] font-medium inline-flex items-center gap-1'>
 																{`${post.contentType === "webinar" ? "Watch Now" : "Read Now"}`}
 																<ArrowTopRightIcon className='' height={20} width={20} />
 															</span>

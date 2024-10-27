@@ -18,6 +18,7 @@ interface TagsCarouselProps {
 
 const TagsCarousel: React.FC<TagsCarouselProps> = ({ tags, selectedTag, onTagChanges }) => {
   const swiperRef = useRef(null);
+  
   useEffect(() => {
     if (swiperRef.current) {
       swiperRef.current.navigation.update();
@@ -30,7 +31,7 @@ const TagsCarousel: React.FC<TagsCarouselProps> = ({ tags, selectedTag, onTagCha
       <Swiper
         modules={[Navigation, Pagination]}
         // spaceBetween={30} 
-        slidesPerView={2}
+        slidesPerView="auto"
         loop={true}
         navigation={{
           nextEl: '.swiper-next',
@@ -40,14 +41,13 @@ const TagsCarousel: React.FC<TagsCarouselProps> = ({ tags, selectedTag, onTagCha
         
         breakpoints={{
           640: {
-            slidesPerView: 2,
+            slidesPerView: "auto",
           },
           768: {
-            slidesPerView: 3,
-            slidesPerGroup: 2,
+            slidesPerView: "auto",
           },
           1200: {
-            slidesPerView: 6,
+            slidesPerView: "auto",
             slidesPerGroup: 2,
           },
         }}
