@@ -116,9 +116,9 @@ const PodcastPage = ({ podcast,limitedPodcasts, previous, next, currentNumber, t
               <div className='flex-1 flex flex-col gap-12 mt-12  bg-red relative md:w-1/3 w-full'>
                 <div className='sticky top-12 flex flex-col gap-12'>
                   {podcast.author && podcast.author?.length > 0 && 
-                    podcast.author.map((author: any) => {
+                    podcast.author.map((author: any,i) => {
                       return(
-                        <AuthorInfo contentType={'podcast'} author={[author]} />
+                        <AuthorInfo key={author._id || i} contentType={'podcast'} author={[author]} />
                       )
                     })
                   }
