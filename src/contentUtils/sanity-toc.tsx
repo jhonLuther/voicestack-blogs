@@ -118,30 +118,23 @@ export function RenderToc({
   level?: number;
 }) {
   return (
-    <ul
-      className={`space-y-2 text-sm font-semibold ${
-        level > 1 ? 'ml-4 list-disc space-y-1 font-normal' : 'space-y-3.5 border-l pl-4'
-      }`}
-    >
-      {elements.map((el) => (
-        <li
-          key={el.text}
-          className={`${level > 1 ? '[&:first-child]:mt-2' : ''}`}
-        >
+    <ol className={`list-decimal ml-2 flex flex-col gap-3 text-sm font-semibold text-zinc-600`}>
+      {elements.map((el, index) => (
+        <li key={el.text} className={`${level > 1 ? '[&:first-child]:mt-2' : ''}`}>
           <Link href={`#${el.slug}`} className="hover:underline hover:underline-offset-4">
-            {el.text}
+            {`${el.text}`}
           </Link>
           {el.children && <RenderToc elements={el.children} level={level + 1} />}
         </li>
       ))}
-    </ul>
+    </ol>
   );
 }
 
 export function Toc({ headings, title }: { headings: Headings; title?: string }) {
   return (
     <section className="flex max-w-sm flex-col">
-      <h2 className="z-0 mb-4 pb-1.5 font-bold md:sticky md:top-0">
+      <h2 className="z-0 mb-6 pb-3 font-semibold md:sticky md:top-0 text-base text-zinc-900">
         {title ?? 'Content'}
       </h2>
       <nav className="flex gap-4">

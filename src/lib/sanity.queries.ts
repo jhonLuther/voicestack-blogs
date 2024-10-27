@@ -1161,7 +1161,7 @@ export const siteMapQuery = groq`*[_type == "post" && defined(slug.current)]{
 
 export const tagQuery = groq`*[_type == "tag" && defined(slug.current)]{
   "url": slug.current,
-  "contentType": "tag",
+  "contentType": "browse",
   _updatedAt
 } `
 

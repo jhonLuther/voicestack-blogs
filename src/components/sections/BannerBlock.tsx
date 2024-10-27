@@ -1,9 +1,11 @@
 import Link from 'next/link';
 import React from 'react';
+import Button from '../commonSections/Button';
+import H3Medium from '../typography/H3Medium';
+import DescriptionText from '../typography/DescriptionText';
 
 interface BannerBlockProps {
   bannerBlock?: {
-    backgroundColor?: string;
     title?: string;
     buttonLink?: string;
     buttonText?: string;
@@ -15,28 +17,19 @@ const BannerBlock: React.FC<BannerBlockProps> = ({ bannerBlock }) => {
 
   return (
     <div
-      className="flex flex-1 md:flex-row flex-col md:items-center rounded-[10px] p-8 my-8 md:gap-20 gap-4 justify-between "
-      style={{ backgroundColor: bannerBlock?.backgroundColor ? bannerBlock?.backgroundColor : '#0f3936' }}
+      className="flex flex-1 bg-zinc-800 md:flex-row flex-col md:items-center rounded-lg p-8 my-8 md:gap-20 gap-4 justify-between "
+      
     >
       <div className='flex flex-col justify-center'>
-        <h2 className='!text-white !m-0 !text-3xl !font-semibold leading-[110%] block'>
+        <H3Medium className='!text-white !m-0 !text-3xl !font-semibold leading-[110%] block'>
           {bannerBlock?.title ? bannerBlock?.title : 'Book a demo with us!'}
-        </h2>
-        <p className='!text-zinc-100 !text-opacity-70 !text-lg !m-0'>{bannerBlock?.description ? bannerBlock?.description  : 'Learn how we can help you reduce claim rejections and denials.'}</p>
+        </H3Medium>
+        <DescriptionText className='!text-zinc-100 !text-opacity-70 !text-lg !m-0'>{bannerBlock?.description ? bannerBlock?.description  : 'Learn how we can help you reduce claim rejections and denials.'}</DescriptionText>
       </div>
       <div>
-      <div
-        className="bg-green-700 hover:bg-green-600 px-4 py-3 flex min-w-[200px] cursor-pointer rounded"
-      >
-        <Link
-          href={bannerBlock?.buttonLink ? bannerBlock?.buttonLink : 'https://carestack.com/demo'}
-          target="_blank"
-          rel="noreferrer"
-          className="text-center w-full wh !text-white font-inter text-lg font-medium leading-6 !no-underline"
-        >
-          {bannerBlock?.buttonText ? bannerBlock?.buttonText : 'Book Free Demo'}
-        </Link>
-      </div>
+      <Button className='!bg-white   hover:bg-zinc-800' link={bannerBlock?.buttonLink ? bannerBlock?.buttonLink : 'https://carestack.com/demo'}>
+        <span className='text-base font-medium !underline'>{bannerBlock.buttonText ? bannerBlock.buttonText : 'Book Free Demo'}</span>
+      </Button>
       </div>
     </div>
   );

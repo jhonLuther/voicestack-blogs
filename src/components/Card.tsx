@@ -106,7 +106,7 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
                 </DescriptionText>
               </div>
               {post.author && post.author.length > 0 && (
-                <AuthorInfo author={post.author} showNameOnly={true} />
+                <AuthorInfo className='!text-white' author={post.author} showNameOnly={true} />
               )}
             </div>
           </div>
