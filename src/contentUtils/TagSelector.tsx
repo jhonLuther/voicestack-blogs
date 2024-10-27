@@ -65,7 +65,7 @@ export default function TagSelect({
 
           <div className='flex-1 overflow-hidden'>
             {/* <div className={`flex gap-x-8 flex-wrap ${className}`}> */}
-            <div className={`flex gap-x-8 relative px-8 slider-mask`}>
+            <div className={`flex gap-x-8 relative px-8 slider-mask tags-slider`}>
               {tags &&
                 <TagsCarousel
                   tags={tags}

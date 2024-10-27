@@ -11,7 +11,11 @@
 //   }
 // }
 
-
+.tags-slider{
+  .swiper-slide{
+    width: fit-content !important;
+   }
+}
 
 :root {
   // --space-0: 0;
@@ -108,6 +112,7 @@ body, #__next {
     background: linear-gradient(90deg, rgba(24, 24, 27, 0.00) 0%, #18181B 100%);
   }
 }
+
 
 .post {
   // @apply ;
