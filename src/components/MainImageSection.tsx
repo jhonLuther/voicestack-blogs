@@ -12,6 +12,8 @@ import AuthorInfo from './commonSections/AuthorInfo'
 import DurationSection from './commonSections/DurationSection'
 import siteConfig from 'config/siteConfig'
 import Section from './Section'
+import { useMemo } from 'react'
+import SubText from './typography/SubText'
 
 interface Props {
 	post?: any
@@ -22,6 +24,10 @@ interface Props {
 
 const MainImageSection = ({ post, isAuthor, enableDate = false, isAudio = false }: Props) => {
 
+	const tag = useMemo(() => post?.tags?.find((tag) => tag) || null, [post?.tags]);
+
+	// console.log(tag,'tagxxx');
+	
 
 	const isMobile: any = useMediaQuery(767);
 	const client = getClient()
@@ -37,6 +43,9 @@ const MainImageSection = ({ post, isAuthor, enableDate = false, isAudio = false 
 					<div className='flex flex-col items-start gap-32 text-white md:max-w-[46%] max-w-lg h-full justify-center py-8 md:py-24'>
 						<div className='flex flex-col items-start '>
 							<Breadcrumb />
+							<SubText>
+                             {tag?.tagName ? tag?.tagName : ''}
+                            </SubText>
 							<h1 className="text-white font-manrope leading-tight lg:text-5xl text-2xl font-bold  mb-[10px]">
 								{post.title ? post.title : 'Post Title'}
 							</h1>

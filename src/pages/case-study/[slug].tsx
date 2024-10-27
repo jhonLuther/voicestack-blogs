@@ -71,7 +71,7 @@ const CaseStudyPage = ({ caseStudy,limitCaseStudies, draftMode, token }: Props) 
   const seoCanonical = caseStudy.seoCanonical || `https://carestack.com/caseStudy/${caseStudy.slug.current}`;
   const jsonLD: any = generateJSONLD(caseStudy);
 
-  console.log(limitCaseStudies);
+  // console.log(limitCaseStudies);
   
 
   return (
