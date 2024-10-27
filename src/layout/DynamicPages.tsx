@@ -39,7 +39,7 @@ const DynamicPages = ({
 	// ...rest
 }: DynamicProps) => {
 
-	console.log(homeSettings);
+	// console.log(homeSettings);
 	
 
 	const featuredBlog = homeSettings?.FeaturedBlog || posts[0];

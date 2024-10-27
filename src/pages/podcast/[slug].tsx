@@ -78,6 +78,7 @@ const PodcastPage = ({ podcast,limitedPodcasts, previous, next, currentNumber, t
   const seoCanonical = podcast.seoCanonical || `https://carestack.com/podcast/${podcast.slug.current}`;
   const jsonLD: any = generateJSONLD(podcast);
 
+  // console.log(podcast,'ALL PODCAST');
 
   return (
     <>
@@ -114,7 +115,13 @@ const PodcastPage = ({ podcast,limitedPodcasts, previous, next, currentNumber, t
               </div>
               <div className='flex-1 flex flex-col gap-12 mt-12  bg-red relative md:w-1/3 w-full'>
                 <div className='sticky top-12 flex flex-col gap-12'>
-                  <AuthorInfo contentType={'podcast'} author={podcast?.author} />
+                  {podcast.author && podcast.author?.length > 0 && 
+                    podcast.author.map((author: any) => {
+                      return(
+                        <AuthorInfo contentType={'podcast'} author={[author]} />
+                      )
+                    })
+                  }
                   <ShareableLinks props={podcast?.title} />
                 </div>
               </div>

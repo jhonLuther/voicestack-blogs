@@ -57,7 +57,7 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
 
 const EbookPage = ({ ebook,limitedEbooks, draftMode, token }: Props) => {
 
-  console.log(ebook, 'ebook');
+  // console.log(ebook, 'ebook');
   
 
   const seoTitle = ebook.seoTitle || ebook.title;
@@ -72,10 +72,18 @@ const EbookPage = ({ ebook,limitedEbooks, draftMode, token }: Props) => {
     <>
     <CustomHead props ={ebook} type='eBook'/>
       <Layout >
+      <MainImageSection  post={ebook} />
         <Section className='justify-center flex-col'>
           <div className="flex  md:flex-row flex-col justify-center gap-20">
             <div className="mt-12 flex md:flex-col flex-col-reverse md:max-w-xl w-full ">
-            <EbookCard ebook={ebook}/>
+            {/* <EbookCard ebook={ebook}/> */}
+            <div className='post__content w-full '>
+                  <SanityPortableText
+                    content={ebook?.body}
+                    draftMode={draftMode}
+                    token={token}
+                  />
+                </div>
             </div>
             <div className='flex-1 flex flex-col gap-12 mt-12  bg-red relative md:max-w-lg w-full'>
               <div className='flex flex-col gap-12'>
