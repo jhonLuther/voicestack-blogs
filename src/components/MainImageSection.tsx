@@ -52,7 +52,7 @@ const MainImageSection = ({ post, isAuthor, enableDate = false, isAudio = false 
 							<p className="text-zinc-400 font-inter text-base font-normal leading-120 line-clamp-2 overflow-hidden">
 								{post.excerpt ? post.excerpt : 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur except.'}
 							</p>
-							{isAuthor && <AuthorInfo className={"mt-8"} contentType={post.contentType} author={post?.author} />}
+							{isAuthor && <AuthorInfo className={"!text-white"} contentType={post.contentType} author={post?.author} />}
 							{
 								enableDate && <DurationSection isAudio={isAudio} duration={post?.estimatedReadingTime ? post.estimatedReadingTime : post.duration} date={post?.date ? post?.date : ""} />
 							}
