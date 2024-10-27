@@ -13,10 +13,7 @@ interface DurationProps {
     contentType?: string
 }
 
-const DurationSection = ({ className, contentType, duration, date, isAudio = false }: DurationProps) => {
-    if (!duration && contentType !== 'ebook') {
-        return null;
-    }
+const DurationSection = ({ className, contentType, duration, date, isAudio = false }: DurationProps) => {    
 
     const durationText = contentType === 'podcast' || contentType === 'webinar'
         ? duration

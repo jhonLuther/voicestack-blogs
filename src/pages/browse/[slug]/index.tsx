@@ -12,6 +12,7 @@ import siteConfig from 'config/siteConfig'
 import ContentHub from '~/contentUtils/ContentHub'
 import { useRef } from 'react'
 import { BaseUrlProvider } from '~/components/Context/UrlContext'
+import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection'
 
 interface Query {
   slug: string
@@ -112,6 +113,7 @@ export default function TagPage({
           enablePageSlug={true}
           content={posts}
         />
+        <BannerSubscribeSection />
     </Layout>
     </BaseUrlProvider>
 

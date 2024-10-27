@@ -3,7 +3,6 @@ import ImageLoader from '../commonSections/ImageLoader';
 
 
 const EbookCard = ({ ebook }) => {
-	console.log(ebook, 'ebook');
 
 	return (
 		<div className="max-w-2xl bg-white rounded-l-lg rounded-r-3xl overflow-hidden shadow-lg">

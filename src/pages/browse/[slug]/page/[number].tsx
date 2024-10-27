@@ -12,6 +12,7 @@ import Pagination from '~/components/commonSections/Pagination'
 import ContentHub from '~/contentUtils/ContentHub'
 import { useRef } from 'react'
 import { BaseUrlProvider } from '~/components/Context/UrlContext'
+import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection'
 
 export const getStaticProps: GetStaticProps<
   SharedPageProps & {
@@ -127,6 +128,7 @@ export default function TagPagePaginated({
           enablePageSlug={true}
           content={posts}
         />
+        <BannerSubscribeSection />
     </Layout>
     </BaseUrlProvider>
   )

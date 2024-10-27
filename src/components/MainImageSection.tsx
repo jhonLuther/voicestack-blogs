@@ -21,7 +21,6 @@ interface Props {
 }
 
 const MainImageSection = ({ post, isAuthor, enableDate = false, isAudio = false }: Props) => {
-	console.log(post);
 
 
 	const isMobile: any = useMediaQuery(767);

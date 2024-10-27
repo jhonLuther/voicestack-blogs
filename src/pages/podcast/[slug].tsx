@@ -12,10 +12,8 @@ import RelatedFeaturesSection from '~/components/RelatedFeaturesSection';
 import { generateJSONLD } from '~/utils/generateJSONLD';
 import SEOHead from '~/layout/SeoHead';
 import { urlForImage } from '~/lib/sanity.image';
-import { Toc } from '~/contentUtils/sanity-toc';
 import AuthorInfo from '~/components/commonSections/AuthorInfo';
 import ShareableLinks from '~/components/commonSections/ShareableLinks';
-import Link from 'next/link';
 import PodcastNavigator from '~/contentUtils/PodcastNavigator';
 import Section from '~/components/Section';
 
@@ -24,10 +22,11 @@ interface Props {
   draftMode: boolean;
   token: string;
   allSlugs?: any;
-  previous?:any;
-  next?:any;
-  totalPodcasts?:any;
-  currentNumber?:any;
+  previous?: any;
+  next?: any;
+  totalPodcasts?: any;
+  currentNumber?: any;
+  limitedPodcasts?: any
 }
 
 
@@ -47,26 +46,28 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false, params = {} }) => {
   const client = getClient(draftMode ? { token: readToken } : undefined);
   const podcast = await getPodcast(client, params.slug as string);
-  const currentSlug:any = params?.slug;
-  const { current,totalPodcasts, previous, next } = await getAllPodcastSlugs(client, currentSlug);
+  const limitedPodcasts: any = await getPodcasts(client, 0, 4);
+  const currentSlug: any = params?.slug;
+  const { current, totalPodcasts, previous, next } = await getAllPodcastSlugs(client, currentSlug);
 
-  
+
   return {
     props: {
       draftMode,
       token: draftMode ? readToken : '',
       podcast,
-      previous ,
+      previous,
       next,
       currentNumber: current.number,
       totalPodcasts,
+      limitedPodcasts
     },
   };
 };
 
-const PodcastPage = ({ podcast,previous,next,currentNumber,totalPodcasts, draftMode, token }: Props) => {
+const PodcastPage = ({ podcast,limitedPodcasts, previous, next, currentNumber, totalPodcasts, draftMode, token }: Props) => {
 
-  if(!podcast) {
+  if (!podcast) {
     return <div>Podcast not found</div>
   }
 
@@ -92,35 +93,43 @@ const PodcastPage = ({ podcast,previous,next,currentNumber,totalPodcasts, draftM
       <Layout >
         <MainImageSection isAudio={true} enableDate={true} post={podcast} />
         <Section className='justify-center'>
-        <Wrapper className={'flex-col'}>
-        <PodcastNavigator className={`mt-16`} currentNumber={currentNumber}  totalPodcasts={totalPodcasts}   nextSlug={next ? next  :'/'} prevSlug={previous? previous : '/'} />
-          {
-            podcast.htmlCode &&
-            (
-              <div className='pt-9' dangerouslySetInnerHTML={{ __html: podcast.htmlCode }}>
+          <Wrapper className={'flex-col'}>
+            <PodcastNavigator className={`mt-16`} currentNumber={currentNumber} totalPodcasts={totalPodcasts} nextSlug={next ? next : '/'} prevSlug={previous ? previous : '/'} />
+            {
+              podcast.htmlCode &&
+              (
+                <div className='pt-9' dangerouslySetInnerHTML={{ __html: podcast.htmlCode }}>
+                </div>
+              )
+            }
+            <div className="flex  md:flex-row flex-col">
+              <div className="mt-12 flex md:flex-col flex-col-reverse md:w-2/3 w-full ">
+                <div className='post__content w-full '>
+                  <SanityPortableText
+                    content={podcast?.body}
+                    draftMode={draftMode}
+                    token={token}
+                  />
+                </div>
               </div>
-            )
-          }
-          <div className="flex  md:flex-row flex-col">
-            <div className="mt-12 flex md:flex-col flex-col-reverse md:w-2/3 w-full ">
-              <div className='post__content w-full '>
-                <SanityPortableText
-                  content={podcast?.body}
-                  draftMode={draftMode}
-                  token={token}
-                />
+              <div className='flex-1 flex flex-col gap-12 mt-12  bg-red relative md:w-1/3 w-full'>
+                <div className='sticky top-12 flex flex-col gap-12'>
+                  <AuthorInfo contentType={'podcast'} author={podcast?.author} />
+                  <ShareableLinks props={podcast?.title} />
+                </div>
               </div>
             </div>
-            <div className='flex-1 flex flex-col gap-12 mt-12  bg-red relative md:w-1/3 w-full'>
-              <div className='sticky top-12 flex flex-col gap-12'>
-              <AuthorInfo contentType={'podcast'} author={podcast?.author} />
-              <ShareableLinks props={podcast?.title} />
-              </div>
-            </div>
-          </div>
-          {podcast?.relatedPodcasts.length > 0 && <RelatedFeaturesSection title={podcast?.title} allPosts={podcast?.relatedPodcasts} />}
-        </Wrapper>
+          </Wrapper>
         </Section>
+        {podcast?.relatedPodcasts?.length > 0 && (
+          <RelatedFeaturesSection
+            contentType={podcast?.contentType}
+            allPosts={[
+              ...(Array.isArray(podcast?.relatedPodcasts) ? podcast?.relatedPodcasts : []),
+              ...(Array.isArray(limitedPodcasts) ? limitedPodcasts : [])
+            ].slice(0, 4)}
+          />
+        )}
       </Layout>
     </>
   );

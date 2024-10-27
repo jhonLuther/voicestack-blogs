@@ -39,6 +39,9 @@ const DynamicPages = ({
 	// ...rest
 }: DynamicProps) => {
 
+	console.log(homeSettings);
+	
+
 	const featuredBlog = homeSettings?.FeaturedBlog || posts[0];
 	const customBrowseContent = homeSettings?.customBrowseContent || posts[0];
 	const featuredBlogs = homeSettings?.popularBlogs || posts;
