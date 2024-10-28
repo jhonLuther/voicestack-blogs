@@ -88,25 +88,24 @@ const CaseStudyPage = ({ caseStudy,limitCaseStudies, draftMode, token }: Props) 
       />
       <Layout>
         <MainImageSection isAuthor={true} post={caseStudy} />
+        <AsideBannerBlock contents={caseStudy} />
         <Section className="justify-center">
           <Wrapper className="flex-col">
             <CustomHead props={caseStudy} type="caseStudy" />
             <div className="flex md:flex-row flex-col">
               <div className="mt-12 flex md:flex-col flex-col-reverse md:w-2/3 w-full">
                 <div className="post__content w-full">
-                  <PracticeProfile contents={caseStudy} />
-                  <SanityPortableText content={caseStudy.body} draftMode={draftMode} token={token} />
+                <SanityPortableText content={caseStudy.body} draftMode={draftMode} token={token} />
                 </div>
               </div>
               <div className="flex-1 flex flex-col gap-12 mt-12 relative md:w-1/3 w-full">
                 <div className="sticky top-12 flex flex-col gap-12">
                   <Toc headings={caseStudy?.headings} title="Contents" />
                   <ShareableLinks props={caseStudy?.title} />
-                  <AsideBannerBlock contents={caseStudy} />
+                  <PracticeProfile contents={caseStudy} />
                 </div>
               </div>
             </div>
-
           </Wrapper>
         </Section>
         {caseStudy?.relatedCaseStudies?.length > 0 && (
