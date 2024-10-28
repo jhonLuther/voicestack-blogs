@@ -14,7 +14,6 @@ interface DurationProps {
 }
 
 const DurationSection = ({ className, contentType, duration, date, isAudio = false }: DurationProps) => {    
-    console.log(contentType === 'webinar');
     // let durationText = duration;
 
     // useEffect( () => {
