@@ -1,5 +1,7 @@
 import { Post } from "~/interfaces/post";
 import post from "~/schemas/post";
+import { average,prominent } from '~/utils/color';
+
 
 export const fetchAuthor = (post) => {
     let authorData:any = [];
@@ -41,3 +43,20 @@ export const fetchAuthor = (post) => {
     if (!string) return '';
     return string.charAt(0).toUpperCase() + string.slice(1) + 's';
   };
+
+
+export async function extractColorFromImage(imageUrl: any): Promise<string> {
+  try {
+    const colors: any = await average(imageUrl, { amount: 1, format: 'hex' });
+    if (colors) {
+      return colors;
+    }
+    return 'white';
+  } catch (error) {
+    console.error('Error extracting color:', error);
+    return 'white';
+  }
+}
+
+export { average };
+

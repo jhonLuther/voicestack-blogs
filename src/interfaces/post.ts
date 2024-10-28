@@ -239,6 +239,7 @@ export interface  PressRelease {
   excerpt?: string; 
   summary?: string; 
   image?: string;
+  pressReleaseUrl?: string;
 }
 
 type Headings = any

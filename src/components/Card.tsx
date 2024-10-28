@@ -21,6 +21,7 @@ import { VideoModal } from './commonSections/VideoModal';
 import H3Medium from './typography/H3Medium';
 import ChordIcon from '~/assets/reactiveAssets/ChordIcon';
 import CreaterInfo from './commonSections/CreaterInfo';
+import { extractColorFromImage } from '~/utils/common';
 
 interface CardProps {
   post: Post;
@@ -40,6 +41,7 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
 
   const [linkUrl, setLinkUrl] = useState<string | null>(null);
   const [isOpen, setIsOpen] = useState(false);
+  const [color, setColor] = useState<string | null>(null);
 
 	const bgImages = [
     {url: 'https://cdn.sanity.io/images/bbmnn1wc/production/69f78e1d2126dda19c732337893448dc94969932-784x568.png'},
@@ -71,6 +73,10 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
   }
 
 
+  const handleColorExtracted = (extractedColor: string) => {
+    setColor(extractedColor);
+  };
+  
   return (
     <React.Fragment>
       {cardType === 'top-image-card' ? (
@@ -83,6 +89,7 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
                   <ImageLoader
                     className='transform   duration-300 group-hover:scale-105'
                     image={post?.mainImage}
+                    onColorExtracted={handleColorExtracted}
                     useClientWidth={true}
                   />
                 </div>
@@ -93,7 +100,7 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
                 />
               }
             </div>
-            <div className={`flex ${reverse ? 'rounded-t-lg' : 'rounded-b-lg'} p-9 ${cardColor ? cardColor : 'bg-orange-700'} flex-col items-start gap-10 flex-1`}>
+            <div style={{ backgroundColor: `${color && color ? color : '#18181B'}` }} className={`flex ${reverse ? 'rounded-t-lg' : 'rounded-b-lg'} p-9  flex-col items-start gap-10 flex-1`}>
               <div className="flex flex-col gap-3">
                   <SubText className='!text-white'>
                     {isPageUrl ? tag?.tagName : post.contentType}
@@ -129,7 +136,7 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
               )}
               <div className="flex flex-col flex-1 gap-2">
                   <SubText >
-                    {isPageUrl ? tag?.tagName : post.contentType}
+                    {isPageUrl ? tag?.tagName : post.contentType === "press-release" ? "press release" : post.contentType}
                   </SubText>
                 <H4Large className={`group-hover: group-hover:underline underline-offset-4 line-clamp-3 text-ellipsis overflow-hidden`}>
                   {post.title}
@@ -354,7 +361,7 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
                             <div className='flex flex-col flex-grow'>
                               {post.contentType && (
                                 <SubText className={`${varyingIndex ? '!text-white' : ''} mb-2`}>
-                                  {post.contentType}
+                                  {post.contentType === "press-release" ? "press release" : post.contentType}
                                 </SubText>
                               )}
                               <H4Large className='group-hover:group-hover:underline underline-offset-4'>
