@@ -254,11 +254,11 @@ export default defineType({
         parent.contentType !== 'ebook',
     },),
     defineField(    {
-      name: 'ebookUrl',
-      title: 'Ebook URL',
+      name: 'pressReleaseUrl',
+      title: 'Read More Link',
       type: 'url',
       hidden: ({ parent }) =>
-        parent.contentType !== 'ebook',
+        parent.contentType !== 'press-release',
     },),
 
 
@@ -314,12 +314,13 @@ export default defineType({
       author: 'author.name',
       media: 'mainImage',
       tag: 'tag',
+      date:'date',
     },
     prepare(selection) {
-      const { title, contentType, author, tag } = selection
+      const { title, contentType, author, tag,date } = selection
       return {
         title,
-        subtitle: author && `${contentType && contentType.toUpperCase()}`,
+        subtitle: `${selection.contentType.toUpperCase()} . ${date} `,
         media: selection.media,
       }
     },
