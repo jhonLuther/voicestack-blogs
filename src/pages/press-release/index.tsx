@@ -21,7 +21,7 @@ export const getStaticProps: GetStaticProps<SharedPageProps & { pressReleases: P
   const itemsPerPage = siteConfig.pagination.childItemsPerPage;
 
   const pressReleases: any = await getPressReleases(client, 0, itemsPerPage);
-  const latestPressReleases: any = await getPressReleases(client, 0, 3);
+  const latestPressReleases: any = await getPressReleases(client, 0, 4);
   const totalPressReleases = await getPressReleasesCount(client);
   const totalPages = Math.ceil(totalPressReleases / itemsPerPage);
 

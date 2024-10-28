@@ -84,7 +84,7 @@ const imageFragment = `
   `
 
 export const postsQuery = groq`
-*[_type == "post" && defined(slug.current)] | order(_createdAt desc) {
+*[_type == "post" && defined(slug.current)] | order(date desc)  {
  ${imageFragment},
  title,
  slug,
@@ -97,7 +97,7 @@ export const postsQuery = groq`
       slug,
       "picture": picture.asset->url
   },
-  "date": date,
+  date,
   duration,
   ${bodyFragment},
   "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180),
@@ -109,15 +109,15 @@ export const postsQuery = groq`
 }
 `
 
-export const iframesQuery = groq`*[_type == "iframes" && defined(slug.current)] | order(_createdAt desc)`
+export const iframesQuery = groq`*[_type == "iframes" && defined(slug.current)] | order(date desc)`
 
-export const authorsQuery = groq`*[_type == "author" && defined(slug.current)] | order(_createdAt desc)`
+export const authorsQuery = groq`*[_type == "author" && defined(slug.current)] | order(date desc)`
 
 export const tagsQuery = groq`*[_type == "tag"]`
 
 // combined query testimonials with associated customer names
 export const testiMonialsQuery = groq`
-  *[_type == "testimonial" && defined(slug.current)] | order(_createdAt desc) {
+  *[_type == "testimonial" && defined(slug.current)] | order(date desc) {
     _id,
     testimonialName,
     slug,
@@ -144,10 +144,10 @@ export const testiMonialsQuery = groq`
 `
 
 export const homeSettingsQuery = groq`
-  *[_type == "homeSettings"] | order(_createdAt desc) {
+  *[_type == "homeSettings"] | order(date desc) {
     _id,
     _createdAt,
-    "latestBlogs": *[_type == "post" && contentType == "article" && defined(slug.current)] | order(_createdAt desc) {
+    "latestBlogs": *[_type == "post" && contentType == "article" && defined(slug.current)] | order(date desc) {
        id,
       "desc": postFields.excerpt,
       title,
@@ -257,7 +257,7 @@ export const homeSettingsQuery = groq`
   }
 `
 
-const siteSettingsQuery = groq`*[_type == "siteSetting"] | order(_createdAt desc) {
+const siteSettingsQuery = groq`*[_type == "siteSetting"] | order(date desc) {
 ...,
 
 }`;
@@ -450,9 +450,10 @@ export async function getPostsBySlug(
 
   if (slug.length > 0) {
     newPostsQuery = groq`
-      *[_type == "post" && defined(slug.current) && "${slug}" in tags[]->slug.current]  | order(_createdAt desc) {
+      *[_type == "post" && defined(slug.current) && "${slug}" in tags[]->slug.current]  | order(date desc) {
       "desc":postFields.excerpt,
       title,
+      date,
       ${imageFragment},
       "slug":slug.current,
       author[]-> {
@@ -1101,7 +1102,7 @@ export async function getTestimonial(
 
 export const relatedContentsQuery = groq`
   *[_type == "post" && contentType == $type && slug.current != $currentSlug && count(tags[]->_id[ _id in $tagIds ]) > 0] 
-  | order(_createdAt desc) [0...$limit] {
+  | order(date desc) [0...$limit] {
     _id,
     title,
     slug,
@@ -1122,10 +1123,11 @@ export const relatedContentsQuery = groq`
 `
 export const relatedTestimonialComponents = groq`
   *[_type == 'testimonial' && slug.current != $currentSlug && count(tags[]->_id[ _id in $tagIds ]) > 0] 
-  | order(_createdAt desc) [0...$limit] {
+  | order(date desc) [0...$limit] {
     _id,
     title,
     slug,
+    date,
     contentType,
     publishedAt,
     excerpt,
@@ -1138,9 +1140,10 @@ export const relatedTestimonialComponents = groq`
 `
 export const relatedPostComponents = groq`
   *[_type == 'post' && slug.current != $currentSlug && count(tags[]->_id[ _id in $tagIds ]) > 0] 
-  | order(_createdAt desc) [0...$limit] {
+  | order(date desc) [0...$limit] {
     _id,
     title,
+    date
     slug,
     contentType,
     publishedAt,

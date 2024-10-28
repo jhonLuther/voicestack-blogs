@@ -20,8 +20,6 @@ const  AuthorInfo = ({ author, contentType,className,showMultiple = false,showNa
   if(showMultiple === false){
     author = [author[0]]
   }
- 
-
 
     return (
       <div className='flex flex-col gap-4'>
