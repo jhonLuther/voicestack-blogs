@@ -45,6 +45,21 @@ export default defineType({
     }),
 
     defineField({
+      name: 'title',
+      title: 'Title',
+      type: 'string',
+      validation: (Rule) => Rule.required(),
+    }),
+
+//  meta fields
+    defineField({
+      name: 'seoTitle',
+      title: 'Meta Title',
+      description:'Overrides main page title',
+      type: 'string',
+      fieldset: 'seo',
+    }),
+    defineField({
       name: 'seoDescription',
       title: 'Meta Description',
       type: 'string',
@@ -79,12 +94,7 @@ export default defineType({
     }),
 
     // Common Fields
-    defineField({
-      name: 'title',
-      title: 'Title',
-      type: 'string',
-      validation: (Rule) => Rule.required(),
-    }),
+
     defineField({
       name: 'slug',
       title: 'Page Path',
@@ -185,6 +195,15 @@ export default defineType({
     defineField({
       name: 'growingLocations',
       title: 'Growing Locations',
+      type: 'string',
+      fieldset: 'practiceProfile',
+      hidden: ({ parent }) =>
+        parent.contentType !== 'case-study',
+    }),
+
+    defineField({
+      name: 'facilities',
+      title: 'Facilities',
       type: 'string',
       fieldset: 'practiceProfile',
       hidden: ({ parent }) =>
