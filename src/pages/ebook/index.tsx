@@ -22,7 +22,7 @@ export const getStaticProps: GetStaticProps<SharedPageProps & { ebooks: Ebooks[]
   const itemsPerPage = siteConfig.pagination.childItemsPerPage;
 
   const ebooks: any = await getEbooks(client, 0, itemsPerPage);
-  const latestEbooks: any = await getEbooks(client, 0, 3);
+  const latestEbooks: any = await getEbooks(client, 0, 4);
   const totalEbooks = await getEbooksCount(client);
   const totalPages = Math.ceil(totalEbooks / itemsPerPage);
 

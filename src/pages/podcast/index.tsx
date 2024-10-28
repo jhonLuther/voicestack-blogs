@@ -22,7 +22,7 @@ export const getStaticProps: GetStaticProps<SharedPageProps & { podcasts: Podcas
   const itemsPerPage = siteConfig.pagination.childItemsPerPage;
 
   const podcasts: any = await getPodcasts(client, 0, itemsPerPage);
-  const latestPodcasts: any = await getPodcasts(client, 0, 3);
+  const latestPodcasts: any = await getPodcasts(client, 0, 4);
   const totalPodcasts = await getPodcastsCount(client);
   const totalPages = Math.ceil(totalPodcasts / itemsPerPage);
 

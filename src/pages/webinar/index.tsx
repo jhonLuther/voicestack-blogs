@@ -21,7 +21,7 @@ export const getStaticProps: GetStaticProps<SharedPageProps & { webinars: Webina
   const itemsPerPage = siteConfig.pagination.childItemsPerPage;
 
   const webinars: any = await getWebinars(client, 0, itemsPerPage);
-  const latestWebinars: any = await getWebinars(client, 0, 3);
+  const latestWebinars: any = await getWebinars(client, 0, 4);
   const totalWebinars = await getWebinarsCount(client);
   const totalPages = Math.ceil(totalWebinars / itemsPerPage);
 

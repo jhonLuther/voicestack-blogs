@@ -74,7 +74,6 @@ const WebinarPage = ({ webinar,limitedwebinars, draftMode, token }: Props) => {
       <CustomHead props ={webinar} type="webinar"/>
       <Layout >
       <MainImageSection isAuthor={true} post={webinar} />
-
         <Section className='justify-center'>
           <Wrapper className={'flex-col'}>
             <div className="flex  md:flex-row justify-between gap-20 flex-col">

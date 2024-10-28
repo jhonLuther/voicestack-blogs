@@ -23,7 +23,7 @@ export const getStaticProps: GetStaticProps<SharedPageProps & { caseStudies: Cas
   const itemsPerPage = siteConfig.pagination.childItemsPerPage;
 
   const caseStudies: any = await getCaseStudies(client, 0, itemsPerPage);
-  const latestCaseStudies: any = await getCaseStudies(client, 0, 3);
+  const latestCaseStudies: any = await getCaseStudies(client, 0, 4);
   const totalCaseStudies = await getCaseStudiesCount(client);
   const totalPages = Math.ceil(totalCaseStudies / itemsPerPage);
 

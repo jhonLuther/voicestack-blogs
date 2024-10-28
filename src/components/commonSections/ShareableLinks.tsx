@@ -1,16 +1,16 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react'
+import XSMedium from '../typography/XSMedium';
 
 function ShareableLinks({ props }) {
   const { asPath: route } = useRouter();
   const encodedUrl = encodeURIComponent(`https://carestack.com${route}`);
 
   return (
-    <div>
-      <div className='flex justify-between items-center align-center'>
-        <span className='uppercase text-base font-extrabold '>Share This </span>
-        <div className='flex gap-1'>
+      <div className='flex flex-col gap-3'>
+        <XSMedium className='uppercase  !text-zinc-600'>Share this post </XSMedium>
+        <div className='flex gap-6'>
           <div className='cursor-pointer hover:bg-zinc-200 rounded-md p-1 transition duration-200 ease-in-out'>
             <Link
               href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`}
@@ -63,7 +63,6 @@ function ShareableLinks({ props }) {
           </div>
         </div>
       </div>
-    </div>
   )
 }
 
