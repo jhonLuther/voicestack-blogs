@@ -18,6 +18,7 @@ import { Toc } from '~/contentUtils/sanity-toc';
 import ShareableLinks from '~/components/commonSections/ShareableLinks';
 import Section from '~/components/Section';
 import CustomHead from '~/utils/customHead';
+import AuthorInfo from '~/components/commonSections/AuthorInfo';
 
 interface Props {
   caseStudy: CaseStudies;
@@ -63,14 +64,14 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
   };
 };
 
-const CaseStudyPage = ({ caseStudy,limitCaseStudies, draftMode, token }: Props) => {
+const CaseStudyPage = ({ caseStudy, limitCaseStudies, draftMode, token }: Props) => {
   const seoTitle = caseStudy.seoTitle || caseStudy.title;
   const seoDescription = caseStudy.seoDescription || caseStudy.excerpt;
   const seoKeywords = caseStudy.seoKeywords || '';
   const seoRobots = caseStudy.seoRobots || 'index,follow';
   const seoCanonical = caseStudy.seoCanonical || `https://carestack.com/caseStudy/${caseStudy.slug.current}`;
   const jsonLD: any = generateJSONLD(caseStudy);
-  
+
 
   return (
     <>
@@ -93,29 +94,38 @@ const CaseStudyPage = ({ caseStudy,limitCaseStudies, draftMode, token }: Props) 
             <div className="flex md:flex-row flex-col">
               <div className="mt-12 flex md:flex-col flex-col-reverse md:w-2/3 w-full">
                 <div className="post__content w-full">
-                <SanityPortableText content={caseStudy.body} draftMode={draftMode} token={token} />
+                  <SanityPortableText content={caseStudy.body} draftMode={draftMode} token={token} />
                 </div>
               </div>
               <div className="flex-1 flex flex-col gap-12 mt-12 relative md:w-1/3 w-full">
                 <div className="sticky top-12 flex flex-col gap-12">
-                  <Toc headings={caseStudy?.headings} title="Contents" />
                   {(caseStudy.practiceName || caseStudy.location || caseStudy?.providers || caseStudy?.headCount || caseStudy?.growingLocations) ? <PracticeProfile contents={caseStudy} />
-                  :
-                  <ShareableLinks props={caseStudy?.title} />}
+                    :
+
+                    <Toc headings={caseStudy?.headings} title="Contents" />
+                  }
+                  <div className='flex flex-col gap-8'>
+                  {caseStudy?.author &&
+                    <div className=''>
+                      <AuthorInfo contentType={caseStudy?.contentType} author={caseStudy?.author} />
+                    </div>
+                  }
+                  <ShareableLinks props={caseStudy?.title} />
+                  </div>
                 </div>
               </div>
             </div>
           </Wrapper>
         </Section>
         {caseStudy?.relatedCaseStudies?.length > 0 && (
-              <RelatedFeaturesSection
-                contentType={caseStudy?.contentType}
-                allPosts={[
-                  ...(Array.isArray(caseStudy?.relatedArticles) ? caseStudy.relatedArticles : []),
-                  ...(Array.isArray(limitCaseStudies) ? limitCaseStudies : [])
-                ].slice(0, 4)}
-              />
-            )}
+          <RelatedFeaturesSection
+            contentType={caseStudy?.contentType}
+            allPosts={[
+              ...(Array.isArray(caseStudy?.relatedArticles) ? caseStudy.relatedArticles : []),
+              ...(Array.isArray(limitCaseStudies) ? limitCaseStudies : [])
+            ].slice(0, 4)}
+          />
+        )}
       </Layout>
     </>
   );
