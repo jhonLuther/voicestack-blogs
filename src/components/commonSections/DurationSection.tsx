@@ -30,7 +30,7 @@ const DurationSection = ({ className, contentType, duration, date, isAudio = fal
         setDurationText((contentType === 'podcast' || contentType === 'webinar')
             ? duration
             : `${duration} min read`);
-    }, []);
+    }, [contentType,duration]);
     
 
     return (
