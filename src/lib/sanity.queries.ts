@@ -795,6 +795,7 @@ export const ebookBySlugQuery = groq`
    ${bodyFragment},
     "region": region,
     "date": date,
+    ebookUrl,
     "numberOfCharacters": length(pt::text(body)),
     "estimatedWordCount": round(length(pt::text(body)) / 5),
     "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180),
@@ -1033,6 +1034,8 @@ export async function getauthorRelatedContents(
     excerpt,
    ${imageFragment},
     ${bodyFragment},
+    "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180),
+
   }
       `
   }
