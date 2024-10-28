@@ -3,7 +3,7 @@ import type { GetStaticProps, InferGetStaticPropsType } from 'next';
 import Layout from '~/components/Layout';
 import Section from '~/components/Section';
 import { readToken } from '~/lib/sanity.api';
-import { getHomeSettings, getPosts, getSiteSettings, getTags, getTestiMonials } from '~/lib/sanity.queries';
+import { getEbooks, getHomeSettings, getPosts, getSiteSettings, getTags, getTestiMonials, getWebinars } from '~/lib/sanity.queries';
 import type { SharedPageProps } from '~/pages/_app';
 import { Post } from '~/interfaces/post';
 import { getClient } from '~/lib/sanity.client';
@@ -12,6 +12,8 @@ import { indexPageJsonLd } from '~/utils/generateJSONLD'
 import Head from 'next/head'
 
 interface IndexPageProps {
+  webinars: any;
+  ebooks: any;
   siteSettings: any;
   contentType: string;
   latestPosts: any;
@@ -34,6 +36,10 @@ export const getStaticProps: GetStaticProps<SharedPageProps & { posts: Post[] }>
     const testimonials = await getTestiMonials(client);
     const homeSettings = await getHomeSettings(client);
     const siteSettings = await getSiteSettings(client);
+    const ebooks: any = await getEbooks(client);
+    const webinars: any = await getWebinars(client);
+
+
 
     return {
       props: {
@@ -44,7 +50,9 @@ export const getStaticProps: GetStaticProps<SharedPageProps & { posts: Post[] }>
         tags,
         testimonials,
         homeSettings,
-        siteSettings
+        siteSettings,
+        ebooks,
+        webinars
       },
     };
   } catch (error) {
@@ -57,6 +65,8 @@ export const getStaticProps: GetStaticProps<SharedPageProps & { posts: Post[] }>
         tags: [],
         testimonials: [],
         homeSettings: [],
+        ebooks: [],
+        webinars: [],
         error: true,
       },
     };
@@ -64,13 +74,13 @@ export const getStaticProps: GetStaticProps<SharedPageProps & { posts: Post[] }>
 };
 
 export default function IndexPage(props: IndexPageProps) {
+  
   const homeSettings = props?.homeSettings[0];
   const latestPosts = props?.latestPosts;
   const siteSettings = props?.siteSettings;
 
   console.log(siteSettings,'siteSettings');
   
-
   return (
     <Layout>
       <Head>
@@ -81,10 +91,10 @@ export default function IndexPage(props: IndexPageProps) {
         tags={props.tags}
         testimonials={props.testimonials}
         homeSettings={homeSettings}
-        popularBlogs={homeSettings?.popularBlogs}
         podcastData={props?.podcastData}
         latestPosts={latestPosts}
-        featuredContents={homeSettings?.FeaturedContents}
+        ebooks={props?.ebooks}
+        webinars={props?.webinars}
       />
     </Layout>
   )

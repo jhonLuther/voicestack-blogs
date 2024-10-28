@@ -3,76 +3,68 @@ import { useRouter } from 'next/router';
 import React from 'react'
 
 function ShareableLinks({ props }) {
-    const { asPath: route } = useRouter();
-    const encodedUrl = encodeURIComponent(`https://carestack.com${route}`);
+  const { asPath: route } = useRouter();
+  const encodedUrl = encodeURIComponent(`https://carestack.com${route}`);
 
-    return (
-        <div>
-            <div className='flex justify-between items-center align-center'>
-                <span className='uppercase text-base font-extrabold '>Share This </span>
-                <div className='flex gap-1'>
-                    <div className='cursor-pointer hover:bg-gray-200 rounded-md p-1 transition duration-200 ease-in-out'>
-                        <Link
-                            href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`}
-                            target="_blank"
-                            rel=" noreferrer"
-                            title="linkedin"
-                        >
-                            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 25 24" fill="none">
-                                <rect x="0.666992" width="24" height="24" rx="3.33333" fill="#C1C1C1" />
-                                <path d="M17.3333 15.9996V12.6471C17.3333 10.851 16.3465 10.0152 15.0301 10.0152C13.9679 10.0152 13.4921 10.5827 13.2273 10.981V10.1523H11.2266C11.253 10.7013 11.2266 15.9996 11.2266 15.9996H13.2273V12.734C13.2273 12.5597 13.2402 12.3849 13.2931 12.2604C13.4376 11.9113 13.7666 11.5497 14.3193 11.5497C15.0436 11.5497 15.3332 12.0855 15.3332 12.8716V16.0002L17.3333 15.9996ZM9.11845 9.35417C9.81572 9.35417 10.2504 8.90459 10.2504 8.34356C10.2375 7.76997 9.81572 7.3335 9.13138 7.3335C8.44704 7.3335 8 7.76997 8 8.34356C8 8.90513 8.43411 9.35417 9.10608 9.35417H9.11845ZM10.1188 15.9996V10.1523H8.11865V15.9996H10.1188Z" fill="white" />
-                            </svg>
-                        </Link>
-                    </div>
-                    <div className='cursor-pointer hover:bg-gray-200 rounded-md p-1 transition duration-200 ease-in-out'>
-                        <Link
-                            href={`https://www.facebook.com/sharer.php?u=${encodedUrl}`}
-                            target="_blank"
-                            rel=" noreferrer"
-                            title="facebook"
-                        >
-                            <svg xmlns="http://www.w3.org/2000/svg"  width="36" height="36" viewBox="0 0 25 24" fill="none">
-                                <g clipPath="url(#clip0_7518_2445)">
-                                    <rect x="0.333984" width="24" height="24" rx="3.33333" fill="#C1C1C1" />
-                                    <path d="M11.2192 17.3335H12.9931V12.3329H14.1763L14.333 10.6099H12.9931L12.995 9.74729C12.995 9.298 13.0317 9.05707 13.5852 9.05707H14.3248V7.3335H13.1411C11.7192 7.3335 11.2192 8.16973 11.2192 9.57544V10.6099H10.333V12.3335H11.2192V17.3335Z" fill="white" />
-                                </g>
-                                <defs>
-                                    <clipPath id="clip0_7518_2445">
-                                        <rect x="0.333984" width="24" height="24" rx="3.33333" fill="white" />
-                                    </clipPath>
-                                </defs>
-                            </svg>
-                        </Link>
-                    </div>
-                    <div className='cursor-pointer hover:bg-gray-200 rounded-md p-1 transition duration-200 ease-in-out'>
-                        <Link
-                            href={`https://twitter.com/share?text=${encodeURIComponent(props)}&url=${encodedUrl}`}
-                            target="_blank"
-                            rel="noreferrer"
-                            title="twitter"
-                        >
-                            <svg  width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <g clipPath="url(#clip0_7518_2448)">
-                                    <rect width="24" height="24" rx="3.33333" fill="#C1C1C1" />
-                                    <g clipPath="url(#clip1_7518_2448)">
-                                        <path d="M14.4587 8.07373H15.7706L12.9045 11.3495L16.2763 15.8072H13.6362L11.5684 13.1036L9.20235 15.8072H7.88965L10.9553 12.3033L7.7207 8.07373H10.4278L12.2969 10.5449L14.4587 8.07373ZM13.9983 15.0219H14.7252L10.0328 8.81773H9.25272L13.9983 15.0219Z" fill="white" />
-                                    </g>
-                                </g>
-                                <defs>
-                                    <clipPath id="clip0_7518_2448">
-                                        <rect width="24" height="24" rx="3.33333" fill="white" />
-                                    </clipPath>
-                                    <clipPath id="clip1_7518_2448">
-                                        <rect width="9.33333" height="9.33333" fill="white" transform="translate(7.33203 7.3335)" />
-                                    </clipPath>
-                                </defs>
-                            </svg>
-                        </Link>
-                    </div>
-                </div>
-            </div>
+  return (
+    <div>
+      <div className='flex justify-between items-center align-center'>
+        <span className='uppercase text-base font-extrabold '>Share This </span>
+        <div className='flex gap-1'>
+          <div className='cursor-pointer hover:bg-zinc-200 rounded-md p-1 transition duration-200 ease-in-out'>
+            <Link
+              href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`}
+              target="_blank"
+              rel=" noreferrer"
+              title="linkedin"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <g clip-path="url(#clip0_8427_911)">
+                  <path d="M18.5195 0H1.47656C0.660156 0 0 0.644531 0 1.44141V18.5547C0 19.3516 0.660156 20 1.47656 20H18.5195C19.3359 20 20 19.3516 20 18.5586V1.44141C20 0.644531 19.3359 0 18.5195 0ZM5.93359 17.043H2.96484V7.49609H5.93359V17.043ZM4.44922 6.19531C3.49609 6.19531 2.72656 5.42578 2.72656 4.47656C2.72656 3.52734 3.49609 2.75781 4.44922 2.75781C5.39844 2.75781 6.16797 3.52734 6.16797 4.47656C6.16797 5.42188 5.39844 6.19531 4.44922 6.19531ZM17.043 17.043H14.0781V12.4023C14.0781 11.2969 14.0586 9.87109 12.5352 9.87109C10.9922 9.87109 10.7578 11.0781 10.7578 12.3242V17.043H7.79688V7.49609H10.6406V8.80078H10.6797C11.0742 8.05078 12.043 7.25781 13.4844 7.25781C16.4883 7.25781 17.043 9.23438 17.043 11.8047V17.043Z" fill="#27272A" />
+                </g>
+                <defs>
+                  <clipPath id="clip0_8427_911">
+                    <rect width="20" height="20" fill="white" />
+                  </clipPath>
+                </defs>
+              </svg>
+            </Link>
+          </div>
+          <div className='cursor-pointer hover:bg-zinc-200 rounded-md p-1 transition duration-200 ease-in-out'>
+            <Link
+              href={`https://www.facebook.com/sharer.php?u=${encodedUrl}`}
+              target="_blank"
+              rel=" noreferrer"
+              title="facebook"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <g clip-path="url(#clip0_8427_912)">
+                  <path d="M10 0C4.4772 0 0 4.4772 0 10C0 14.6896 3.2288 18.6248 7.5844 19.7056V13.056H5.5224V10H7.5844V8.6832C7.5844 5.2796 9.1248 3.702 12.4664 3.702C13.1 3.702 14.1932 3.8264 14.6404 3.9504V6.7204C14.4044 6.6956 13.9944 6.6832 13.4852 6.6832C11.8456 6.6832 11.212 7.3044 11.212 8.9192V10H14.4784L13.9172 13.056H11.212V19.9268C16.1636 19.3288 20.0004 15.1128 20.0004 10C20 4.4772 15.5228 0 10 0Z" fill="#71717A" />
+                </g>
+                <defs>
+                  <clipPath id="clip0_8427_912">
+                    <rect width="20" height="20" fill="white" />
+                  </clipPath>
+                </defs>
+              </svg>
+            </Link>
+          </div>
+          <div className='cursor-pointer hover:bg-zinc-200 rounded-md p-1 transition duration-200 ease-in-out'>
+            <Link
+              href={`https://twitter.com/share?text=${encodeURIComponent(props)}&url=${encodedUrl}`}
+              target="_blank"
+              rel="noreferrer"
+              title="twitter"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M15.2718 1.58659H18.0831L11.9414 8.60617L19.1666 18.1582H13.5093L9.07828 12.365L4.00821 18.1582H1.19528L7.76445 10.65L0.833252 1.58659H6.63418L10.6394 6.88187L15.2718 1.58659ZM14.2852 16.4756H15.8429L5.78775 3.18087H4.11614L14.2852 16.4756Z" fill="#71717A" />
+              </svg>
+            </Link>
+          </div>
         </div>
-    )
+      </div>
+    </div>
+  )
 }
 
 export default ShareableLinks

@@ -7,60 +7,48 @@ interface AuthorProps {
   author?: any
   contentType?: string
   className?: string
+  showMultiple?: boolean
+  showNameOnly?: boolean
 }
 
-const  AuthorInfo = ({ author, contentType,className }:AuthorProps) => {
+const  AuthorInfo = ({ author, contentType,className,showMultiple = false,showNameOnly = false }:AuthorProps) => {
 
   if (!author) {
     return null
   }
 
-  if (contentType === 'article') {
-    const singleAuthor = author[0] || author; 
+  if(showMultiple === false){
+    author = [author[0]]
+  }
+ 
+
+
     return (
-      <Link className={`${className} !no-underline `} href={`/author/${singleAuthor.slug && singleAuthor.slug.current && singleAuthor.slug.current}`}>
-        <div className="author-info flex gap-4 cursor-pointer items-center">
-          {singleAuthor.picture && (
-            <Image
-              alt={singleAuthor.name}
-              className=" rounded-full !m-0"
-              src={singleAuthor.picture}
-              height={56}
-              width={56}
-            />
-          )}
-          <div className='flex flex-col'>
-            <span className='!font-semibold text-lg leading-tight '>{singleAuthor.name}</span>
-            <span className='text-base text-gray-600'>{singleAuthor.role || singleAuthor.bio}</span>
-          </div>
-        </div>
-      </Link>
-    )
-  } else {
-    return (
-      <>
-        {Array.isArray(author)  && author.map((authors, index) => (
-          <Link className={`${className} !no-underline`}  key={authors._id || index} href={`/author/${authors.slug && authors.slug.current && authors.slug.current}`}>
+      <div className='flex flex-col gap-4'>
+        {Array.isArray(author)  &&  author && author.map((authors, index) => (
+          <Link className={`${className} !no-underline`}  key={authors?._id || index} href={`/author/${authors?.slug && authors?.slug.current && authors?.slug.current}`}>
             <div className="author-info flex gap-4 cursor-pointer items-center">
-              {authors.picture && (
+              {authors?.picture && (
                 <Image
                   alt={authors.name}
-                  className=" rounded-full !m-0"
+                  className="rounded-full !m-0"
                   src={authors.picture}
-                  height={56}
-                  width={56}
+                  height={48}
+                  width={48}
                 />
               )}
-              <div className='flex flex-col'>
-                <span className='!font-semibold text-lg leading-tight !no-underline'>{authors.name}</span>
-                <span className='text-base text-gray-600 !no-underline' >{authors.role}</span>
+              <div className='flex flex-col gap-[2px]'>
+              <span className={`!font-medium text-base leading-[1.5] !no-underline text-zinc-900 ${className}`}>
+                {authors?.name}
+              </span>
+                {!showNameOnly && <span className={`text-base text-zinc-600 !no-underline leading-[1.3] ${className}`} >{authors?.role}</span>}
               </div>
             </div>
           </Link>
         ))}
-      </>
+      </div>
     )
-  }
+  
 }
 
 export default AuthorInfo

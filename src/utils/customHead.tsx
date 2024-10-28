@@ -125,12 +125,25 @@ export default function CustomHead({
       '@context': 'https://schema.org',
       '@type': 'Event',
       name: props?.map((e)=>{return(e?.name)}),
+      // props.excerpt,
       description:props?.map((e:any)=>{return(e?.excerpt)}),
       eventStatus: 'https://schema.org/EventScheduled',
       eventAttendanceMode: 'https://schema.org/OnlineEventAttendanceMode',
       startDate: '2024-11-10T14:00:00+00:00',
       endDate: '2024-11-10T15:30:00+00:00',
-      image: props?.map((e:any)=>{return(urlForImage(e.mainImage)?.width(300)?.height(300).url())}),
+      // url: props?.videos?.map((video) => {
+      //   return getIframeUrl(video?.platform, video?.videoId)
+      // }),
+      url: props?.map((ele:any)=>{
+        return(getIframeUrl(ele?.video.platform ,ele.video?.videoId))
+      }),
+      // image: props?.map((e:any)=>{return(urlForImage(e.mainImage)?.width(300)?.height(300).url())}),
+      location: {
+        '@type': 'VirtualLocation',
+        url: props?.videos?.map((video) => {
+          return getIframeUrl(video?.platform, video?.videoId)
+        }),
+      },
       organizer: {
         '@type': 'Organization',
         name: 'CareStack',
@@ -144,7 +157,7 @@ export default function CustomHead({
       },
       offers: {
         '@type': 'Offer',
-        // url: props?.map((e:any)=>{return(getIframeUrl(e?.video?.platform, e?.video?.videoId))}),
+        url: props?.map((e:any)=>{return(getIframeUrl(e?.video?.platform, e?.video?.videoId))}),
         availability: 'https://schema.org/InStock',
       },
     }

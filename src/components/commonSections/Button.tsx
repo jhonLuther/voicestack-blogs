@@ -1,6 +1,5 @@
-
 import Link from "next/link";
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 
 interface ButtonProps {
   type?: "ghost" | "primary" | "primaryWhite" | "outlineArrow" | "learnMore" | "secondary" | "secondaryLg" | "secondaryWhite" | "secondaryWhiteChevron" | "secondaryWhiteChevronLg" | "secondary-md" | "secondary-bg" | "primaryArrow" | "login" | "primary-v1" | "primaryBlackChevron" | "primaryBlackChevronLg" | "secondaryBlack" | "secondaryBlackChevron" | "secondaryBlackChevronLg" | "secondaryBlackChevronMd" | "primaryChevron" | "learnMoreChevron" | "primaryBlack" | "videoButton" | "primaryLg";
@@ -13,34 +12,36 @@ interface ButtonProps {
 }
 
 const Button: React.FunctionComponent<ButtonProps> = ({
-    type,
-    alter,
-    children,
-    link,
-    isDemo,
-    className,
-    ...rest
-  }) => {
+  type,
+  alter,
+  children,
+  link,
+  isDemo,
+  className,
+  ...rest
+}) => {
+  const baseClasses = `bg-zinc-500 hover:bg-zinc-600 text-white px-6 py-3 text-base leading-[1.5] font-medium rounded-[5px] flex items-center whitespace-nowrap  ${className}`;
 
-    if (link) {
-      return (
-        <Link
-          href={link}
-          className={`bg-cs-gray-500 hover:bg-cs-gray-600 text-white px-4 py-2 rounded-sm flex items-center ${className}`}
-          {...rest}
-        >
-          {children}
-        </Link>
-      );
-    }
-  
+  if (link) {
     return (
-      <button
-        className={`bg-cs-gray-500 hover:bg-cs-gray-600 text-white px-4 py-2 rounded-sm flex items-center ${className}`}
+      <Link
+        href={link}
+        className={baseClasses}
         {...rest}
       >
         {children}
-      </button>
+      </Link>
     );
-  };
+  }
+
+  return (
+    <button
+      className={baseClasses}
+      {...rest}
+    >
+      {children}
+    </button>
+  );
+};
+
 export default Button;

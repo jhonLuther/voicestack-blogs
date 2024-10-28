@@ -11,6 +11,8 @@ import siteConfig from '../../../../config/siteConfig';
 import React, { useRef } from 'react';
 import Pagination from '~/components/commonSections/Pagination';
 import { getPressReleases, getPressReleasesCount } from '~/lib/sanity.queries';
+import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection';
+import { BaseUrlProvider } from '~/components/Context/UrlContext';
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const client = getClient();
@@ -62,26 +64,26 @@ const PaginatedPressReleasePage = ({ pressReleases, pageNumber, totalPages }: { 
   };
 
   return (
+    <BaseUrlProvider baseUrl={baseUrl}>
     <Layout>
-      <Wrapper>
         <AllcontentSection
-          baseUrl={baseUrl}
           className={'pb-9'}
           allContent={pressReleases}
-          hideSearch={true}
-          cardType={'podcast-card'}
+          cardType="left-image-card"
+          hideHeader={true}
           itemsPerPage={siteConfig.pagination.childItemsPerPage}
         />
         <Pagination
           totalPages={totalPages}
           currentPage={pageNumber}
-          baseUrl={baseUrl}
           onPageChange={handlePageChange}
           enablePageSlug={true}
           content={pressReleases}
         />
-      </Wrapper>
+        <BannerSubscribeSection />
     </Layout>
+    </BaseUrlProvider>
+
   );
 };
 

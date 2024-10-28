@@ -1,16 +1,19 @@
-import React from 'react'
-import Image from 'next/image'
-import { urlForImage } from '~/lib/sanity.image'
+import React from 'react';
+import Image from 'next/image';
+import { urlForImage } from '~/lib/sanity.image';
+import ImageLoader from '../commonSections/ImageLoader';
 
-const ImageBlock = ({ image }) => {
+const ImageBlock = ({ image }: any) => {
   return (
-    image && <Image
-      src={urlForImage(image).url()}
-      alt={image.alt || ''}
-      width={500}
-      height={300}
-    />
-  )
-}
+    image && (
+      <ImageLoader
+        image={image|| ''}  
+        alt={image.alt || ''}
+        width={500}
+        height={300}
+      />
+    )
+  );
+};
 
-export default ImageBlock
+export default ImageBlock;

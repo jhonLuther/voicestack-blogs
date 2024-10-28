@@ -1,6 +1,10 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
+import Section from '~/components/Section';
+import TagsCarousel from '~/components/sections/TagsCarousel';
+import Wrapper from '~/layout/Wrapper';
+import {UlistIcon} from '@sanity/icons'
 
 interface TagSelectProps {
   tags: any[];
@@ -24,10 +28,12 @@ export default function TagSelect({
   const router = useRouter();
 
   useEffect(() => {
-    const slug = router.query.slug as string || tags[0]?.slug?.current || '';
-    setSelectedTag(slug);
-    localStorage.setItem('selectedTag', slug); 
-  }, [router.query.slug, tags]);
+    const slug = router.query.slug as string;
+    if (slug) {
+      setSelectedTag(slug);
+      localStorage.setItem('selectedTag', slug);
+    }
+  }, [router.query.slug]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -40,54 +46,48 @@ export default function TagSelect({
     }
   };
 
-  const handleShowMore = () => {
-    setVisibleTagCount(tags.length);
-  };
-
-  const handleShowLess = () => {
-    setVisibleTagCount(tagLimit);
-  };
 
   return (
-    <Fragment>
+    <Section className='bg-zinc-900 justify-center !py-0'>
+      <Wrapper>
       {showTags && (
-        <div className="flex flex-col gap-9">
-          {showHeading && selectedTag && (
-            <h2 className="md:text-5xl text-xl text-center font-manrope font-extrabold text-cs-gray-900">
+        <div className="flex flex-row gap-6 pt-6 md:pt-6 pb-6 w-full items-center">
+          {/* {showHeading && selectedTag && (
+            <h2 className="md:text-5xl text-xl text-center font-manrope font-extrabold text-cs-zinc-900">
               {`"${tags.find(tag => tag.slug.current === selectedTag)?.tagName || ''}"`}
             </h2>
-          )}
-          <ul className={`flex gap-2 pb-8 flex-wrap border-b-2 border-gray-900 ${className}`}>
-            {tags &&
-              tags.slice(0, visibleTagCount).map((tag, i) => (
-                <Link key={i} href={`/browse/${tag.slug.current}`} scroll={false}>
-                  <li
-                    onClick={() => onTagChanges(tag)}
-                    className={`flex group hover:transition duration-500 content-center items-center gap-4 text px-2 py-3 text-lg font-medium 
-                      border rounded text-center cursor-pointer hover:underline underline-offset-4
-                      ${
-                        selectedTag === tag.slug.current
-                          ? 'bg-gray-900 text-white'
-                          : 'bg-gray-300 text-black'
-                      }`}
-                  >
-                    <span className="text-lg font-medium">{tag.tagName}</span>
-                  </li>
-                </Link>
-              ))}
-            {tags.length > tagLimit && (
-              <li
-                onClick={visibleTagCount < tags.length ? handleShowMore : handleShowLess}
-                className={`bg-black flex content-center items-center gap-4 px-2 py-3 text-xs p-1 border rounded text-center cursor-pointer bg-gray-300`}
-              >
-                <span className="text-lg font-medium">
-                  {visibleTagCount < tags.length ? 'More...' : 'Less...'}
-                </span>
-              </li>
-            )}
-          </ul>
+          )} */}
+
+          <Link href={`/browse`} className='text-[14px] font-medium leading-[1.5] text-zinc-500 flex items-center gap-x-1 hover:text-zinc-300 group'>
+            <UlistIcon width={25} height={25}/>
+            All Topics
+          </Link>
+
+          <div className='flex-1 overflow-hidden'>
+            {/* <div className={`flex gap-x-8 flex-wrap ${className}`}> */}
+            <div className={`flex gap-x-8 relative px-8 slider-mask tags-slider`}>
+              {tags &&
+                <TagsCarousel
+                  tags={tags}
+                  selectedTag={selectedTag}
+                  onTagChanges={onTagChanges}
+                />
+              }
+              {/* {tags.length > tagLimit && (
+                <li
+                  onClick={visibleTagCount < tags.length ? handleShowMore : handleShowLess}
+                  className={` text-zinc-300  hover:text-zinc-400 flex content-center items-center gap-4 py-1 text-[14px] text-center cursor-pointer`}
+                >
+                  <span>
+                    {visibleTagCount < tags.length ? 'See More Topics...' : 'See Less...'}
+                  </span>
+                </li>
+              )} */}
+            </div>
+          </div>
         </div>
       )}
-    </Fragment>
+      </Wrapper>
+    </Section>
   );
 }

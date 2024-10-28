@@ -12,6 +12,8 @@ import { useRouter } from 'next/router';
 import siteConfig from '../../../config/siteConfig';
 import React, { useRef } from 'react';
 import Pagination from '~/components/commonSections/Pagination';
+import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection';
+import { BaseUrlProvider } from '~/components/Context/UrlContext';
 
 export const getStaticProps: GetStaticProps<SharedPageProps & { pressReleases: PressRelease[]; totalPages: number }> = async (context) => {
   const draftMode = context.preview || false;
@@ -47,26 +49,26 @@ const PressReleasePage = ({ pressReleases,latestPressReleases, totalPages }: { p
   };
 
   return (
+    <BaseUrlProvider baseUrl={baseUrl}>
     <Layout>
-      <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'} revamp={true} contents={latestPressReleases} />
-      <Wrapper>
+      <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'} reverse={true} contents={latestPressReleases} />
         <AllcontentSection
-          baseUrl={baseUrl}
           className={'pb-9'}
           allContent={pressReleases}
-          hideSearch={true}
-          cardType={'podcast-card'}
+          hideHeader={true}
+          cardType="left-image-card"
           itemsPerPage={siteConfig.pagination.childItemsPerPage}
         />
         <Pagination
           totalPages={totalPages}
           currentPage={1}
-          baseUrl={baseUrl}
           onPageChange={handlePageChange}
           enablePageSlug={true}
         />
-      </Wrapper>
-    </Layout>
+        <BannerSubscribeSection />
+      </Layout>
+      </BaseUrlProvider>
+
   );
 };
 

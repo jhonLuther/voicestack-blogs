@@ -6,13 +6,6 @@ export default {
     type: 'object',
     fields: [
       {
-        name: 'backgroundColor',
-        title: 'Background Color',
-        type: 'string',
-        description: 'Select the background color for the CTA block',
-        initialValue: '#0f3936'
-      },
-      {
         name: 'title',
         title: 'Title',
         type: 'string',
@@ -24,7 +17,7 @@ export default {
         title: 'Description',
         type: 'text',
         description: 'A brief description or subtext',
-        initialValue: 'Learn how we can help you reduce claim rejections and denials.'
+        initialValue: 'Looking for the best cloud-based dental software?'
       },
       {
         name: 'buttonText',
@@ -39,7 +32,6 @@ export default {
         type: 'url',
         description: 'The URL the button should link to',
         initialValue: 'https://carestack.com/demo'
-
       }
     ],
     preview: {

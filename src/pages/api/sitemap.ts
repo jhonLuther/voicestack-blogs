@@ -17,7 +17,7 @@ function generateSiteMap(posts: any[]) {
     `${BASE_URL}/press-releases`,
   ];
 
-  const dynamicPages = posts.map((post) => {
+  const dynamicPages = posts.map((post) => {    
     return `
       <url>
         <loc>${BASE_URL}/${post?.contentType}/${post?.url}</loc>

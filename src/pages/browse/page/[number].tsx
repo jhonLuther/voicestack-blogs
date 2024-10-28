@@ -1,5 +1,5 @@
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
-import { getTag, getPostsByTag, tagsSlugsQuery, getTags, getPostsByTagAndLimit, getPostsByLimit, getPosts, postSlugsQuery } from '~/lib/sanity.queries'
+import { getTag, getPostsByTag, tagsSlugsQuery, getTags, getPostsByTagAndLimit, getPostsByLimit, getPosts, postSlugsQuery, getArticlesCount, getEbooksCount, getPodcastsCount, getWebinarsCount } from '~/lib/sanity.queries'
 import { getClient } from '~/lib/sanity.client'
 import siteConfig from 'config/siteConfig'
 import { Post, Tag } from '~/interfaces/post'
@@ -8,6 +8,11 @@ import AllcontentSection from '~/components/sections/AllcontentSection'
 import TagSelect from '~/contentUtils/TagSelector'
 import Wrapper from '~/layout/Wrapper'
 import Pagination from '~/components/commonSections/Pagination'
+import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection'
+import { useRef } from 'react'
+import { useRouter } from 'next/router'
+import ContentHub from '~/contentUtils/ContentHub'
+import { BaseUrlProvider } from '~/components/Context/UrlContext'
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const client = getClient();
@@ -25,6 +30,11 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   const tags = await getTags(client)
 
+  const totalPodcasts = await getPodcastsCount(client);
+	const totalWebinars = await getWebinarsCount(client);
+	const totalArticles = await getArticlesCount(client);
+	const totalEbooks = await getEbooksCount(client);
+
 
 
 
@@ -34,6 +44,12 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       tags,
       totalPages,
       currentPage: pageNumber,
+      contentCount:{
+				podcasts: totalPodcasts,
+				webinars: totalWebinars,
+				articles: totalArticles,
+				ebooks: totalEbooks
+			}
     },
   };
 };
@@ -60,34 +76,44 @@ export const getStaticPaths = async () => {
 export default function TagPagePaginated({
   tags,
   posts,
-  allTags,
   totalPages,
   currentPage,
+  contentCount,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
+  const router = useRouter();
+  const totalCount:any = Object.values(contentCount).reduce((acc:any, count) => acc + count, 0);
+
+
+  const baseUrl = useRef(`/${siteConfig.paginationBaseUrls.base}`).current;
   const handlePageChange = (page: number) => {
-    console.log(`Navigating to page: ${page}`)
-  }
+    if (page === 1) {
+      router.push(baseUrl);
+    } else {
+      router.push(`${baseUrl}/page/${page}`);
+    }
+  };
 
   return (
+    <BaseUrlProvider baseUrl={baseUrl}>
     <Layout>
-      <Wrapper>
-        {/* <h1 className='md:text-5xl text-xl font-extrabold font-manrope text-center'>{tag?.tagName}</h1> */}
+      	<ContentHub contentCount={contentCount}/>
         <TagSelect 
           tags={tags} 
           tagLimit={5} 
           showTags={true}
           className='mt-12' 
         />
-        <AllcontentSection allContent={posts} hideSearch={true} />
+        <AllcontentSection allItemCount={totalCount} allContent={posts}  />
         <Pagination
           totalPages={totalPages}
-          baseUrl={`/browse`}
           onPageChange={handlePageChange}
           currentPage={currentPage}
           enablePageSlug={true}
           content={posts}
         />
-      </Wrapper>
+        <BannerSubscribeSection />
     </Layout>
+    </BaseUrlProvider>
+
   )
 }

@@ -1,5 +1,5 @@
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
-import { getTag, getPostsByTag, tagsSlugsQuery, getTags, getPostsByTagAndLimit } from '~/lib/sanity.queries'
+import { getTag, getPostsByTag, tagsSlugsQuery, getTags, getPostsByTagAndLimit, getWebinarsCount, getArticlesCount, getEbooksCount, getPodcastsCount } from '~/lib/sanity.queries'
 import { getClient } from '~/lib/sanity.client'
 import { SharedPageProps } from '../../../_app'
 import siteConfig from 'config/siteConfig'
@@ -9,6 +9,10 @@ import AllcontentSection from '~/components/sections/AllcontentSection'
 import TagSelect from '~/contentUtils/TagSelector'
 import Wrapper from '~/layout/Wrapper'
 import Pagination from '~/components/commonSections/Pagination'
+import ContentHub from '~/contentUtils/ContentHub'
+import { useRef } from 'react'
+import { BaseUrlProvider } from '~/components/Context/UrlContext'
+import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection'
 
 export const getStaticProps: GetStaticProps<
   SharedPageProps & {
@@ -17,9 +21,10 @@ export const getStaticProps: GetStaticProps<
     allTags: Tag[];
     totalPages: number;
     currentPage: number;
+    contentCount:any
+    totalPostCount: any[];
   }
 > = async ({ params }) => {
-  console.log({ params });
   const client = getClient();
 
   const slug = params?.slug as string;
@@ -42,15 +47,27 @@ export const getStaticProps: GetStaticProps<
   const allPostsForTag = await getPostsByTag(client, tag._id);
   const totalPages = Math.ceil(allPostsForTag.length / cardsPerPage);
 
+  const totalPodcasts = await getPodcastsCount(client);
+	const totalWebinars = await getWebinarsCount(client);
+	const totalArticles = await getArticlesCount(client);
+	const totalEbooks = await getEbooksCount(client);
+
   return {
     props: {
       tag,
       allTags,
       totalPages,
+      totalPostCount: allPostsForTag.length,
       posts,
       currentPage: pageNumber,
       draftMode: false, 
-      token: null,      
+      token: null,  
+      contentCount:{
+				podcasts: totalPodcasts,
+				webinars: totalWebinars,
+				articles: totalArticles,
+				ebooks: totalEbooks
+			}    
     },
   };
 };
@@ -83,31 +100,36 @@ export default function TagPagePaginated({
   allTags,
   totalPages,
   currentPage,
+  contentCount,
+  totalPostCount
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const handlePageChange = (page: number) => {
     console.log(`Navigating to page: ${page}`)
   }
+  
+  const baseUrl = useRef(`/${siteConfig.paginationBaseUrls.base}/${tag?.slug?.current}`).current
+
 
   return (
+    <BaseUrlProvider baseUrl={baseUrl}>
     <Layout>
-      <Wrapper>
-        <h1 className='md:text-5xl text-xl font-extrabold font-manrope text-center'>{tag?.tagName}</h1>
+        <ContentHub contentCount={contentCount}/>
         <TagSelect 
           tags={allTags} 
           tagLimit={5} 
           showTags={true}
           className='mt-12' 
         />
-        <AllcontentSection allContent={posts} hideSearch={true} />
+        <AllcontentSection  allItemCount={totalPostCount}  allContent={posts}  />
         <Pagination
           totalPages={totalPages}
-          baseUrl={`/browse/${tag.slug.current}`}
           onPageChange={handlePageChange}
           currentPage={currentPage}
           enablePageSlug={true}
           content={posts}
         />
-      </Wrapper>
+        <BannerSubscribeSection />
     </Layout>
+    </BaseUrlProvider>
   )
 }

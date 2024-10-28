@@ -1,6 +1,13 @@
 import { ImageAsset, PortableTextBlock, Slug } from "sanity"
 
 export interface Post {
+  relatedArticles: any
+  hasVideo: any
+  videos: any[]
+  customer: boolean
+  testimonialName: any
+  customImage: ImageAsset
+  date: any
   headings?: Headings
   relatedPosts: any[]
 	duration: string
@@ -53,6 +60,7 @@ export interface Post {
     bio:any,
   }
   export interface Tag{
+    name: string
     _id: string,
     tagName: string,
     slug: Slug,
@@ -143,6 +151,7 @@ export interface Articles {
   }>
 }
 export interface CaseStudies {
+  relatedArticles: any
   headings: Headings
   seoTitle: string
   seoDescription: string

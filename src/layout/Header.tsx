@@ -6,7 +6,7 @@ import {ArrowRightIcon} from '@sanity/icons'
 import { useRouter } from 'next/router';
 
 const navigationLinks = [
-  { href: "/case-study", label: "Case Study" },
+  { href: "/case-study", label: "Case Studies" },
   { href: "/article", label: "Articles" },
   { href: "/podcast", label: "Podcasts" },
   { href: "/ebook", label: "Ebooks" },
@@ -22,21 +22,21 @@ const Header = () => {
     <ProgressBar/>
     <header className="w-full">
 
-      <div className="flex justify-center bg-cs-primary py-3">
-        <div className="max-w-9xl px-4 flex justify-center gap-3 w-full items-center">
-          <div className="text-sm text-">
-            {` Book a Demo with us - It's free!`}
-          </div>
-          <Link href="https://carestack.com/demo">
-            <div className="flex items-center gap-1 group text-sm text-zinc-800 font-medium">
-              <span>{`Register Now`}</span><ArrowRightIcon className="w-5 h-5 text-zinc-800 group-hover:translate-x-[4px] transition-transform duration-300 ease-in-out"/>
+      <div className="bg-cs-primary group hover:bg-[#42dd88] transition-all duration-200 px-4">  
+        <Link href="https://carestack.com/demo" className="flex justify-center py-3">
+          <div className="max-w-7xl flex justify-center gap-3 w-full items-center">
+            <div className="text-sm text-zinc-900">
+              {` Book a Demo with us - It's free!`}
             </div>
-          </Link>
-        </div>
+              <div className="flex items-center gap-1 text-sm text-zinc-800 font-medium">
+                <span>{`Register Now`}</span><ArrowRightIcon className="w-5 h-5 text-zinc-800 group-hover:translate-x-[4px] transition-transform duration-300 ease-in-out"/>
+              </div>
+          </div>
+        </Link>
       </div>
 
-      <div className="bg-cs-gray-900 text-white">
-        <div className="max-w-9xl px-4 mx-auto">
+      <div className="bg-zinc-900 text-white border-b border-zinc-800 px-4">
+        <div className="max-w-7xl mx-auto">
           <div className="flex flex-col gap-3 justify-between py-6">
             <div className='flex md:flex-row gap-2  flex-col justify-between'>
               <Link href="/" className="text-2xl font-extrabold bg-gradient-text bg-clip-text text-transparent font-monrope tracking-tighterText">

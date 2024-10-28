@@ -1,22 +1,28 @@
 const siteConfig = {
     pagination: {
-      itemsPerPage: 6, // in main page
-      childItemsPerPage:1, // decides Content per page in child pages
+      itemsPerPage: 14, // in main page
+      childItemsPerPage:8, // decides Content per page in child pages
       currentPage: 1,
       totalItems: 100
     },
      pageURLs : {
       home: "/",
-      blog: "/blog",
-      article: "/article",
-      caseStudy: "/case-study",
-      ebook: "/ebook",
-      about: "/about",
-      podcast: "/podcast",
-      pressRelease: "/press-release",
-      testimonial: "/testimonial",
-      webinar: "/webinar",
-      author: "/author",
+      blog: "blog",
+      article: "article",
+      caseStudy: "case-study",
+      ebook: "ebook",
+      about: "about",
+      podcast: "podcast",
+      pressRelease: "press-release",
+      testimonial: "testimonial",
+      webinar: "webinar",
+      author: "author",
+    },
+    paginationBaseUrls:{
+      base:"/browse"
+    },
+    externalLinks: {
+      reviews:'https://carestack.com/dental-software/reviews'
     },
     content: {
       defaultSort: "date",

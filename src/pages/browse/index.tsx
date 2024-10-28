@@ -1,86 +1,111 @@
-import { PortableText } from '@portabletext/react'
 import type { GetStaticProps, InferGetStaticPropsType } from 'next'
-import Image from 'next/image'
-import { useLiveQuery } from 'next-sanity/preview'
 import Layout from '~/components/Layout'
-import { readToken } from '~/lib/sanity.api'
 import { getClient } from '~/lib/sanity.client'
-import { urlForImage } from '~/lib/sanity.image'
 import {
+	getArticlesCount,
+	getEbooksCount,
+	getPodcastsCount,
 	getPosts,
 	getPostsByLimit,
-	getTag,
 	getTags,
+	getWebinarsCount,
 } from '~/lib/sanity.queries'
-import type { SharedPageProps } from '~/pages/_app'
-import { Post } from '~/interfaces/post'
-import Wrapper from '~/layout/Wrapper'
 import AllcontentSection from '~/components/sections/AllcontentSection'
 import Pagination from '~/components/commonSections/Pagination'
 import siteConfig from 'config/siteConfig'
 import TagSelect from '~/contentUtils/TagSelector'
+import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection'
+import { useRef } from 'react'
+import router, { useRouter } from 'next/router'
+import ContentHub from '~/contentUtils/ContentHub'
+import { BaseUrlProvider } from '~/components/Context/UrlContext'
 
 interface Query {
 	[key: string]: string
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const client = getClient();
-    const pageNumber = params?.pageNumber ? parseInt(params.pageNumber as string, 10) : 1;
-  
-  const cardsPerPage = siteConfig.pagination.itemsPerPage || 5;
-  const startLimit = (pageNumber - 1) * cardsPerPage;
+	const client = getClient();
+	const pageNumber = params?.pageNumber ? parseInt(params.pageNumber as string, 10) : 1;
 
-  const tags = await getTags(client);
+	const cardsPerPage = siteConfig.pagination.itemsPerPage || 5;
+	const startLimit = (pageNumber - 1) * cardsPerPage;
 
-  const endLimit = startLimit + cardsPerPage;
+	const tags = await getTags(client);
 
-  const posts = await getPostsByLimit(client, startLimit, cardsPerPage);
-  const totalPosts = await getPosts(client);
-  
-  const totalPages = Math.ceil(totalPosts.length / cardsPerPage);
+	const endLimit = startLimit + cardsPerPage;
 
-  return {
-    props: {
-      posts,
+	const posts = await getPostsByLimit(client, startLimit, cardsPerPage);
+	const totalPosts = await getPosts(client);
+
+	const totalPages = Math.ceil(totalPosts.length / cardsPerPage);
+
+
+	const totalPodcasts = await getPodcastsCount(client);
+	const totalWebinars = await getWebinarsCount(client);
+	const totalArticles = await getArticlesCount(client);
+	const totalEbooks = await getEbooksCount(client);
+
+	return {
+		props: {
+			posts,
 			tags,
-      totalPages,
-      currentPage: pageNumber,
-    },
-  };
+			totalPages,
+			totalPosts,
+			currentPage: pageNumber,
+			contentCount:{
+				podcasts: totalPodcasts,
+				webinars: totalWebinars,
+				articles: totalArticles,
+				ebooks: totalEbooks
+			}
+		},
+	};
 };
 
 
 export default function ProjectSlugRoute(
 	props: InferGetStaticPropsType<typeof getStaticProps> & { posts: any, totalPages: any, tags: any },
 ) {
+	const router = useRouter();
 
-	const { posts, totalPages, tags } = props;
+	const { posts, totalPages, tags,contentCount,totalPosts } = props;
+	const totalCount:any = Object.values(contentCount).reduce((acc:any, count) => acc + count, 0);
+
+
+	const baseUrl = useRef(`/${siteConfig.paginationBaseUrls.base}`).current;
 
 	const handlePageChange = (page: number) => {
-		console.log(`Navigating to page: ${page}`);
+	//   if (page === 1) {
+	// 	router.push(baseUrl);
+	//   } else {
+	// 	router.push(`${baseUrl}/page/${page}`);
+	//   }
 	};
+
 
 	return (
 		<>
+		    <BaseUrlProvider baseUrl={baseUrl}>
+
 			<Layout >
-				<Wrapper>
-					<TagSelect
-						tags={tags}
-						tagLimit={5}
-						showTags={true}
-					/>
-					<AllcontentSection hideSearch={true} allContent={posts} />
-					<Pagination
-						totalPages={totalPages}
-						baseUrl="/browse"
-						onPageChange={handlePageChange}
-						currentPage={0}
-						enablePageSlug={true}
-						content={posts}
-					/>
-				</Wrapper>
+				<ContentHub contentCount={contentCount}/>
+				<TagSelect
+					tags={tags}
+					tagLimit={5}
+					showTags={true}
+				/>
+				<AllcontentSection allItemCount={totalCount}  allContent={posts} />
+				<Pagination
+					totalPages={totalPages}
+					onPageChange={handlePageChange}
+					currentPage={0}
+					enablePageSlug={true}
+				/>
+				<BannerSubscribeSection />
 			</Layout>
+			</BaseUrlProvider>
+
 		</>
 	)
 }

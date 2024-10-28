@@ -13,6 +13,8 @@ import siteConfig from '../../../config/siteConfig';
 import React, { useRef } from 'react';
 import Pagination from '~/components/commonSections/Pagination';
 import CustomHead from '~/utils/customHead';
+import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection';
+import { BaseUrlProvider } from '~/components/Context/UrlContext';
 
 export const getStaticProps: GetStaticProps<SharedPageProps & { podcasts: Podcasts[]; totalPages: number }> = async (context) => {
   const draftMode = context.preview || false;
@@ -38,6 +40,7 @@ export const getStaticProps: GetStaticProps<SharedPageProps & { podcasts: Podcas
 const PodcastsPage = ({ podcasts,latestPodcasts, totalPages }: { podcasts: Podcasts[];latestPodcasts: Podcasts[]; totalPages: number }) => {
   const router = useRouter();
   const baseUrl = useRef(`/${siteConfig.pageURLs.podcast}`).current;
+  if(!podcasts) return null
 
   const handlePageChange = (page: number) => {
     if (page === 1) {
@@ -48,27 +51,27 @@ const PodcastsPage = ({ podcasts,latestPodcasts, totalPages }: { podcasts: Podca
   };
 
   return (
+    <BaseUrlProvider baseUrl={baseUrl}>
     <Layout>
       <CustomHead props ={podcasts} type="podcast"/>
-      <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'} revamp={true} contents={latestPodcasts} />
-      <Wrapper>
+      <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'} reverse={true} contents={latestPodcasts} />
         <AllcontentSection
-          baseUrl={baseUrl}
           className={'pb-9'}
           allContent={podcasts}
-          hideSearch={true}
-          cardType={'podcast-card'}
+          hideHeader={true}
+          cardType="podcast-card"
           itemsPerPage={siteConfig.pagination.childItemsPerPage}
         />
         <Pagination
           totalPages={totalPages}
           currentPage={1}
-          baseUrl={baseUrl}
           onPageChange={handlePageChange}
           enablePageSlug={true}
         />
-      </Wrapper>
+        <BannerSubscribeSection />
     </Layout>
+    </BaseUrlProvider>
+
   );
 };
 

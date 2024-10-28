@@ -36,7 +36,8 @@ module.exports = {
         },
 
         maxWidth:{
-          '9xl':"82rem"
+          '9xl':"82rem",
+          '7xl':"1240px"
         },
 
         fontFamily:{
@@ -46,6 +47,7 @@ module.exports = {
 
         backgroundImage: {
           'gradient-text': 'linear-gradient(90deg, #FEF08A 0%, #60A5FA 100%)',  
+          'gradient-text2': 'linear-gradient(90deg, #854D0E 0%, #3730A3 100%)', 
         },
 
         letterSpacing: {

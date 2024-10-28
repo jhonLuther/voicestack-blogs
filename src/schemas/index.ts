@@ -18,8 +18,9 @@ import asideBannerBlock from './sections/asideBannerBlock'
 import testimonialCard from './sections/testimonialCard'
 import videos from './videos'
 import siteSetting from './siteSetting'
+import customContent from './customContent'
 
-export const schemaTypes = [post, iframe, blockContent, newContent, tag,dynamicComponent,demoBannerBlock,author,homeSettings,testiMonial,customer,link,globalSettings,table,htmlCode,asideBannerBlock,testimonialCard,videos,siteSetting]
+export const schemaTypes = [post, iframe, blockContent, newContent, tag,dynamicComponent,demoBannerBlock,author,homeSettings,testiMonial,customer,link,globalSettings,table,htmlCode,asideBannerBlock,testimonialCard,videos,siteSetting,customContent]
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [post, iframe, blockContent, newContent, tag,dynamicComponent,demoBannerBlock,author,homeSettings,testiMonial,customer,link,globalSettings,table,htmlCode,asideBannerBlock,testimonialCard,videos,siteSetting],
+  types: [post, iframe, blockContent, newContent, tag,dynamicComponent,demoBannerBlock,author,homeSettings,testiMonial,customer,link,globalSettings,table,htmlCode,asideBannerBlock,testimonialCard,videos,siteSetting,customContent],
 }

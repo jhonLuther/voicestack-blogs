@@ -11,6 +11,8 @@ import { Articles, CaseStudies, Ebooks } from '~/interfaces/post';
 import siteConfig from '../../../../config/siteConfig';
 import React, { useRef } from 'react';
 import Pagination from '~/components/commonSections/Pagination';
+import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection';
+import { BaseUrlProvider } from '~/components/Context/UrlContext';
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const client = getClient();
@@ -62,26 +64,26 @@ const PaginatedEbookPage = ({ ebooks, pageNumber, totalPages }: { ebooks: Ebooks
   };
 
   return (
+    <BaseUrlProvider baseUrl={baseUrl}>
     <Layout>
-      <Wrapper>
         <AllcontentSection
-          baseUrl={baseUrl}
           className={'pb-9'}
           allContent={ebooks}
-          hideSearch={true}
-          cardType={'podcast-card'}
+          cardType="left-image-card"
+          hideHeader={true}
           itemsPerPage={siteConfig.pagination.childItemsPerPage}
         />
         <Pagination
           totalPages={totalPages}
           currentPage={pageNumber}
-          baseUrl={baseUrl}
           onPageChange={handlePageChange}
           enablePageSlug={true}
           content={ebooks}
         />
-      </Wrapper>
+        <BannerSubscribeSection />
     </Layout>
+    </BaseUrlProvider>
+
   );
 };
 
