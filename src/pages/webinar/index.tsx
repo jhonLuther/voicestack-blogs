@@ -12,6 +12,7 @@ import { useRouter } from 'next/router';
 import siteConfig from '../../../config/siteConfig';
 import React, { useRef } from 'react';
 import Pagination from '~/components/commonSections/Pagination';
+import CustomHead from '~/utils/customHead';
 
 export const getStaticProps: GetStaticProps<SharedPageProps & { webinars: Webinars[]; totalPages: number }> = async (context) => {
   const draftMode = context.preview || false;
@@ -48,6 +49,7 @@ const WebinarsPage = ({ webinars,latestWebinars, totalPages }: { webinars: Webin
 
   return (
     <Layout>
+      <CustomHead props={webinars} type="webinar"/>
       <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'} revamp={true} contents={latestWebinars} />
       <Wrapper>
         <AllcontentSection

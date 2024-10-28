@@ -86,20 +86,8 @@ export default function CustomHead({
       ],
     }
     return head(metaData, randomId)
-  } else if (props && type === 'podcast') {
-    const metaData = {
-      '@context': 'https://schema.org',
-      '@type': 'PodcastEpisode',
-      name: 'post.title',
-      description: 'post.excerpt',
-      datePublished: 'post._createdAt',
-      author: {
-        '@type': 'Person',
-        name: 'Unknown Author',
-      },
-    }
-    return head(metaData, randomId)
-  } else if (props && type === 'eBook') {
+  } 
+   else if (props && type === 'eBook') {
     const metaData = {
       '@context': 'https://schema.org',
       '@type': 'WebPage',
@@ -136,22 +124,13 @@ export default function CustomHead({
     const metaData = {
       '@context': 'https://schema.org',
       '@type': 'Event',
-      name: props.title,
-      description: props.excerpt,
+      name: props?.map((e)=>{return(e?.name)}),
+      description:props?.map((e:any)=>{return(e?.excerpt)}),
       eventStatus: 'https://schema.org/EventScheduled',
       eventAttendanceMode: 'https://schema.org/OnlineEventAttendanceMode',
       startDate: '2024-11-10T14:00:00+00:00',
       endDate: '2024-11-10T15:30:00+00:00',
-      url: props?.videos?.map((video) => {
-        return getIframeUrl(video?.platform, video?.videoId)
-      }),
-      image: urlForImage(props.mainImage).width(300).height(300).url(),
-      location: {
-        '@type': 'VirtualLocation',
-        url: props?.videos?.map((video) => {
-          return getIframeUrl(video?.platform, video?.videoId)
-        }),
-      },
+      image: props?.map((e:any)=>{return(urlForImage(e.mainImage)?.width(300)?.height(300).url())}),
       organizer: {
         '@type': 'Organization',
         name: 'CareStack',
@@ -159,15 +138,13 @@ export default function CustomHead({
       },
       performer: {
         '@type': 'Person',
-        name: props.author.map((e: any) => {
-          return e.name
-        }),
+        name:props?.map((e:any)=>{
+          return(e?.name)
+        })
       },
       offers: {
         '@type': 'Offer',
-        url: props?.videos?.map((video) => {
-          return getIframeUrl(video?.platform, video?.videoId)
-        }),
+        // url: props?.map((e:any)=>{return(getIframeUrl(e?.video?.platform, e?.video?.videoId))}),
         availability: 'https://schema.org/InStock',
       },
     }
@@ -200,6 +177,62 @@ export default function CustomHead({
       name: paginationType,
     }
     return head(metaData, randomId)
+  } else if(props && type =="podcast"){
+    const metaData = {
+      '@context': 'https://schema.org',
+      '@type': 'Event',
+      name: props.map((e: any) => {
+        return e?.title
+      }),
+      description: props?.map((e: any) => {
+        return e?.excerpt
+      }),
+      startDate: new Date(),
+      endDate: new Date(),
+      image: props?.map((el: any) => {
+        return el?.author?.map((e: any) => {
+          return e?.picture
+        })
+      }),
+      eventStatus: 'https://schema.org/EventScheduled',
+      eventAttendanceMode: 'https://schema.org/OnlineEventAttendanceMode',
+      location: {
+        '@type': 'VirtualLocation',
+        url: 'https://example.com/podcast-episode',
+      },
+      performer: {
+        '@type': 'Person',
+        name: props?.map((el: any) => {
+          return el?.author?.map((e: any) => {
+            return e?.name
+          })
+        }),
+      },
+      organizer: {
+        '@type': 'Organization',
+        name: props?.title,
+        url: 'https://example.com',
+
+      },
+      subEvent: {
+        '@type': 'PodcastEpisode',
+        name: 'Episode 12: The Future of AI',
+        description: props?.map((e: any) => {
+          return e?.excerpt
+        }),
+        url: 'https://carestack.com',
+        episodeNumber: 1,
+        partOfSeries: {
+          '@type': 'PodcastSeries',
+          name: 'Dentistry revolution talks ',
+        },
+        duration: props?.map((e: any) => {
+          return e?.duration
+        }),
+      },
+    }
+    return head(metaData,randomId);
+    
   }
 }
 

@@ -50,7 +50,7 @@ const EbooksPage = ({ ebooks,latestEbooks, totalPages }: { ebooks: Ebooks[];late
   return (
     <Layout>
       {ebooks?.map((e,i) => {
-        return <CustomHead prpos ={e} type="eBook" key={i} />
+        return <CustomHead props ={e} type="eBook" key={i} />
       })}
 
       <LatestBlogs
