@@ -664,8 +664,10 @@ export const authorRelatedContentQuery = groq`
     duration,
     publishedAt,
     excerpt,
+    date,
    ${imageFragment},
     ${bodyFragment},
+  "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180),
   }
 `
 
@@ -1032,6 +1034,7 @@ export async function getauthorRelatedContents(
     duration,
     publishedAt,
     excerpt,
+    date,
    ${imageFragment},
     ${bodyFragment},
     "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180),
