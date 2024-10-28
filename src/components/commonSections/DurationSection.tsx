@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { formatDateShort } from '~/utils/formateDate'
 import { ClockIcon } from '@sanity/icons'
 import {DotIcon} from '@sanity/icons'
@@ -14,10 +14,24 @@ interface DurationProps {
 }
 
 const DurationSection = ({ className, contentType, duration, date, isAudio = false }: DurationProps) => {    
+    console.log(contentType === 'webinar');
+    // let durationText = duration;
 
-    const durationText = contentType === 'podcast' || contentType === 'webinar'
-        ? duration
-        : `${duration} min read`;
+    // useEffect( () => {
+    //     durationText = contentType === 'podcast' || contentType === 'webinar'
+    //         ? `${duration} min read`
+    //         : `${duration} min read`;
+    //         // : `${duration}`;
+    // },[contentType])
+
+    const [durationText, setDurationText] = useState(duration);
+
+    useEffect(() => {
+        setDurationText((contentType === 'podcast' || contentType === 'webinar')
+            ? duration
+            : `${duration} min read`);
+    }, []);
+    
 
     return (
         <div className='font-medium text-[14px]'>
@@ -35,10 +49,14 @@ const DurationSection = ({ className, contentType, duration, date, isAudio = fal
                     <div className={`text-white ${className}`}>
                         {date ? formatDateShort(date) : 'Dec 30, 2020'}
                     </div>
-                    <DotIcon className='w-[18px] h-[18px] text-zinc-500'/>
-                    <div className={`relative flex flex-col ${className}`}>
-                        <span>{durationText}</span>
-                    </div>
+                    {durationText && (
+                        <>
+                            <DotIcon className='w-[18px] h-[18px] text-zinc-500'/>
+                            <div className={`relative flex flex-col ${className}`}>
+                                <span>{durationText}</span>
+                            </div>
+                        </>
+                    )}
                 </div>
             )}
         </div>
