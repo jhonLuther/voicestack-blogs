@@ -1,6 +1,5 @@
 import slugify from "slugify";
 import Link from 'next/link';
-import { usePathname } from 'next/navigation'
 
 // Define the type for the Table of Contents (ToC)
 type Headings = Array<{
@@ -54,10 +53,6 @@ type TreeNode = {
  * @returns - A nested list of tree nodes representing the hierarchical structure.
  */
 export function nestHeadings(blocks: Headings): TreeNode[] {
-  const pathname = usePathname()
-
-  console.log({pathname});
-  
   // Array to hold the top-level nodes of the tree
   const treeNodes: TreeNode[] = [];
 
