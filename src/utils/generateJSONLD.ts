@@ -108,7 +108,7 @@ export function generateJSONLD(post: any) {
             },
           ],
           startDate: new Date(),
-          description: post.author[0]?.bio || '',
+          description: post.author ?? post?.author?.map((e)=>{return e.bio}),
           creator: 'CareStack',
           inLanguage: ['en_us', 'en-GB'],
           sameAs: 'https://carestack.com/',
