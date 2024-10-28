@@ -20,6 +20,10 @@ import SanityPortableText from '~/components/blockEditor/sanityBlockEditor';
 import AuthorInfo from '~/components/commonSections/AuthorInfo';
 import { Toc } from '~/contentUtils/sanity-toc';
 import Section from '~/components/Section';
+import SidebarTitle from '~/components/typography/SidebarTitle';
+import ShareableLinks from '~/components/commonSections/ShareableLinks';
+import Button from '~/components/commonSections/Button';
+import {DocumentTextIcon} from '@sanity/icons'
 
 interface Props {
   pressRelease: PressRelease;
@@ -89,30 +93,47 @@ const PressReleasePage = ({ pressRelease,limitedPressReleases, draftMode, token 
         contentType={pressRelease?.contentType} />
       <Layout >
         <MainImageSection enableDate={true} post={pressRelease} />
-        <Section className='justify-center'>
-        <Wrapper className={'flex-col'}>
-          <div className="flex  md:flex-row flex-col">
-            <div className="mt-12 flex md:flex-col flex-col-reverse md:w-2/3 w-full ">
-              <div className='post__content w-full '>
-                <SanityPortableText
-                  content={pressRelease.body}
-                  draftMode={draftMode}
-                  token={token}
-                />
+        <Section className='justify-center !pt-24 !pb-12'>
+          <Wrapper className={'flex-col'}>
+            <div className="flex md:flex-row flex-col justify-between gap-20">
+              <div className="flex md:flex-col flex-col-reverse max-w-[710px] w-full ">
+                <div className='post__content w-full '>
+                  <SanityPortableText
+                    content={pressRelease.body}
+                    draftMode={draftMode}
+                    token={token}
+                  />
+                </div>
+              </div>
+              {/* <div className='flex-1 flex flex-col gap-12 mt-12  bg-red relative md:w-1/3 w-full'>
+                <div className='sticky top-12 flex flex-col gap-12'>
+                  <Toc headings={pressRelease?.headings} title="Contents" />
+                  {pressRelease?.author &&
+                    <div className=''>
+                      <AuthorInfo contentType={pressRelease.contentType} author={pressRelease?.author} />
+                    </div>
+                  }
+                </div>
+              </div> */}
+              <div className='flex-1 flex flex-col gap-12 bg-red relative max-w-[410px] w-full'>
+                <div className='sticky top-12 flex flex-col gap-8'>
+                  <>
+                    <SidebarTitle className='border-b border-zinc-200 pb-3'>{`To Know More About`}</SidebarTitle>
+                    <Button link={'#'} className='bg-zinc-900 gap-6 py-[14px] px-7 hover:bg-zinc-800 self-start'>
+                      <DocumentTextIcon width={24} height={24} className='text-white'/>
+                      <span className='text-base font-medium'>{`Read Original Article`}</span>
+                    </Button>
+                    {pressRelease?.author &&
+                    <div className=''>
+                      <AuthorInfo contentType={pressRelease.contentType} author={pressRelease?.author} />
+                    </div>
+                  }
+                  </>
+                  <ShareableLinks props={pressRelease?.title} />
+                </div>
               </div>
             </div>
-            <div className='flex-1 flex flex-col gap-12 mt-12  bg-red relative md:w-1/3 w-full'>
-              <div className='sticky top-12 flex flex-col gap-12'>
-                <Toc headings={pressRelease?.headings} title="Contents" />
-                {pressRelease?.author &&
-                  <div className=''>
-                    <AuthorInfo contentType={pressRelease.contentType} author={pressRelease?.author} />
-                  </div>
-                }
-              </div>
-            </div>
-          </div>
-        </Wrapper>
+          </Wrapper>
         </Section>
         {pressRelease?.relatedPressReleases.length > 0 && (
           <RelatedFeaturesSection
