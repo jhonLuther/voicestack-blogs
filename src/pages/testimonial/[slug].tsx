@@ -32,6 +32,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const client = getClient();
   const slugs = await client.fetch(testimonialSlugsQuery);
 
+  console.log(slugs,'slugs');
+  
+
   const paths = slugs?.map((slug: string) => {
     return { params: { slug } };
   }) || [];
@@ -64,6 +67,7 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
 }
 
 const TestimonialPage = ({ testimonial, draftMode, token }: Props) => {
+  if(!testimonial) return null
   const seoTitle = testimonial.seoTitle || testimonial.title;
   const seoDescription = testimonial.seoDescription || testimonial.excerpt;
   const seoKeywords = testimonial.seoKeywords || '';
