@@ -13,35 +13,49 @@ interface ImageDimensions {
 }
 
 export const urlForImage = (source: any, dimensions?: ImageDimensions) => {
+  if (typeof source === 'string' && source.startsWith('http')) {
+    return source; 
+  }
 
-  if (typeof source === 'string') {
-    source = {
+  if (typeof source === 'object' && source?.asset?._ref) {
+    let urlBuilder = imageBuilder.image(source).auto('format');
+
+    if (dimensions) {
+      if (dimensions.width) {
+        urlBuilder = urlBuilder.width(Math.round(dimensions.width));
+      }
+      if (dimensions.height) {
+        urlBuilder = urlBuilder.height(Math.round(dimensions.height));
+      }
+      urlBuilder = urlBuilder.quality(dimensions.quality || 90);
+    }
+
+    return urlBuilder.url();
+  }
+
+  if (typeof source === 'string' && source.startsWith('image-')) {
+    const imageRef = {
       asset: {
         _ref: source,
         _type: 'reference',
       },
       _type: 'image',
     };
-  }
-
-  if (!source?.asset?._ref) {
-    return undefined;
-  }
-
-  let urlBuilder = imageBuilder.image(source).auto('format');
-
-  if (dimensions) {
     
-    if (dimensions.width) {
-      urlBuilder = urlBuilder.width(Math.round(dimensions.width));
+    let urlBuilder = imageBuilder.image(imageRef).auto('format');
+
+    if (dimensions) {
+      if (dimensions.width) {
+        urlBuilder = urlBuilder.width(Math.round(dimensions.width));
+      }
+      if (dimensions.height) {
+        urlBuilder = urlBuilder.height(Math.round(dimensions.height));
+      }
+      urlBuilder = urlBuilder.quality(dimensions.quality || 90);
     }
-    if (dimensions.height) {
-      urlBuilder = urlBuilder.height(Math.round(dimensions.height));
-    }
-    urlBuilder = urlBuilder.quality(dimensions.quality || 90);
+
+    return urlBuilder.url();
   }
 
-  
-
-  return urlBuilder.url();
+  return undefined;
 };
