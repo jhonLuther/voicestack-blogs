@@ -111,9 +111,6 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
 
       const postContent = shouldUseCustomContent ? customBrowseContent : post;
 
-      // console.log(postContent);
-      
-
       posts.push(
         <div
           id={index.toString()}

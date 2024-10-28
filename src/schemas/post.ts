@@ -253,6 +253,13 @@ export default defineType({
       hidden: ({ parent }) =>
         parent.contentType !== 'ebook',
     },),
+    defineField(    {
+      name: 'ebookUrl',
+      title: 'Ebook URL',
+      type: 'url',
+      hidden: ({ parent }) =>
+        parent.contentType !== 'ebook',
+    },),
 
 
     // Common Components
