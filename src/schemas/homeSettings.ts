@@ -20,10 +20,10 @@ export default {
   ],
   fields: [
     {
-      name: 'testimonials',  
+      name: 'testimonial',  
       title: 'Testimonials',
-      type: 'reference',
-      to: [{ type: 'testimonial' }],
+      type: 'array',
+      of: [{ type: 'reference', to: [{ type: 'testimonial' }] }],
       group: 'testimonials',
     },
 

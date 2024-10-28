@@ -168,7 +168,7 @@ export const homeSettingsQuery = groq`
         slug
       }
     }[0...4],
-    "testimonials": testimonials[]-> {
+    "testimonial": testimonial[]-> {
       _id,
       testimonialName,
       slug,
