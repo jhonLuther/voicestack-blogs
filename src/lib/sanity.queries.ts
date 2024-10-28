@@ -664,8 +664,10 @@ export const authorRelatedContentQuery = groq`
     duration,
     publishedAt,
     excerpt,
+    date,
    ${imageFragment},
     ${bodyFragment},
+  "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180),
   }
 `
 
@@ -795,7 +797,6 @@ export const ebookBySlugQuery = groq`
    ${bodyFragment},
     "region": region,
     "date": date,
-    ebookUrl,
     "numberOfCharacters": length(pt::text(body)),
     "estimatedWordCount": round(length(pt::text(body)) / 5),
     "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180),
@@ -873,6 +874,7 @@ export const pressReleaseBySlugQuery = groq`
     duration,
     publishedAt,
     excerpt,
+    pressReleaseUrl,
    ${imageFragment},
     "region": region,
     "date": date,
@@ -1032,6 +1034,7 @@ export async function getauthorRelatedContents(
     duration,
     publishedAt,
     excerpt,
+    date,
    ${imageFragment},
     ${bodyFragment},
     "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180),

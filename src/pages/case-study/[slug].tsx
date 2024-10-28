@@ -65,6 +65,10 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
 };
 
 const CaseStudyPage = ({ caseStudy, limitCaseStudies, draftMode, token }: Props) => {
+  if(!caseStudy) {
+    return null;
+  }
+
   const seoTitle = caseStudy.seoTitle || caseStudy.title;
   const seoDescription = caseStudy.seoDescription || caseStudy.excerpt;
   const seoKeywords = caseStudy.seoKeywords || '';
@@ -86,7 +90,7 @@ const CaseStudyPage = ({ caseStudy, limitCaseStudies, draftMode, token }: Props)
       />
       <Layout>
         <MainImageSection isAuthor={true} post={caseStudy} />
-        {caseStudy.asideBookFreeDemoBanner && <AsideBannerBlock contents={caseStudy} />}
+        {caseStudy?.asideBookFreeDemoBanner && <AsideBannerBlock contents={caseStudy} />}
         <Section className="justify-center">
           <Wrapper className="flex-col">
             <CustomHead props={caseStudy} type="caseStudy" />
@@ -98,7 +102,7 @@ const CaseStudyPage = ({ caseStudy, limitCaseStudies, draftMode, token }: Props)
               </div>
               <div className="flex-1 flex flex-col gap-12 mt-12 relative md:w-1/3 w-full">
                 <div className="sticky top-12 flex flex-col gap-12">
-                  {(caseStudy.practiceName || caseStudy.location || caseStudy?.providers || caseStudy?.headCount || caseStudy?.growingLocations || caseStudy?.facilities) ? <PracticeProfile contents={caseStudy} />
+                  {(caseStudy?.practiceName || caseStudy?.location || caseStudy?.providers || caseStudy?.headCount || caseStudy?.growingLocations || caseStudy?.facilities) ? <PracticeProfile contents={caseStudy} />
                     :
 
                     <Toc headings={caseStudy?.headings} title="Contents" />
