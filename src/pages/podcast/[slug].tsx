@@ -117,17 +117,16 @@ const PodcastPage = ({ podcast,limitedPodcasts, previous, next, currentNumber, t
               <div className='flex-1 flex flex-col gap-12 mt-12  bg-red relative md:w-1/3 w-full'>
                 <div className='sticky top-12 flex flex-col gap-8'>
                   {podcast.author  && podcast.author?.length > 0 &&  
-                  <div className='flex flex-col gap-8'>
-                  <SidebarTitle className='border-b border-zinc-200 pb-3'>{`Speakers`}</SidebarTitle>
-                  <div className='flex flex-col gap-6'>
-                  {podcast.author && podcast.author?.length > 0 && 
-                    podcast.author.map((author: any,i) => {
-                      return(
-                        <AuthorInfo key={author._id || i} contentType={'podcast'} author={[author]} />
-                      )
-                    })
-                  }
-                  </div>
+                    <div className='flex flex-col gap-8'>
+                      <div className='flex flex-col gap-6'>
+                      {podcast.author && podcast.author?.length > 0 && 
+                        podcast.author.map((author: any,i) => {
+                          return(
+                            <AuthorInfo key={author._id || i} contentType={'podcast'} author={[author]} />
+                          )
+                        })
+                      }
+                      </div>
       
                   </div>}
                   <ShareableLinks props={podcast?.title} />

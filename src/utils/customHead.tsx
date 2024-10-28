@@ -159,7 +159,7 @@ export default function CustomHead({
       },
       performer: {
         '@type': 'Person',
-        name: props.author.map((e: any) => {
+        name: props?.author?.map((e: any) => {
           return e.name
         }),
       },
