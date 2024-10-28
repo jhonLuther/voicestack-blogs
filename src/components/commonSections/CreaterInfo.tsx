@@ -20,9 +20,9 @@ const CreaterInfo = ({ creater, duration }: CreaterInfoProps) => {
       {creater.map((item, index) => (
         <div key={index}>{`by ${item.name}`}</div>
       ))}
-      <div className='flex gap-2 '>
-      <SpeakerIcon />
-      <span>{duration}</span>
+      <div className='flex gap-2 items-center'>
+        <SpeakerIcon />
+        <span>{duration}</span>
       </div>
 
     </div>
