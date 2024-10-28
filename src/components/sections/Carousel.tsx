@@ -53,7 +53,7 @@ const Carousel: React.FC<CarouselProps> = ({ items }) => {
         }}
       >
         {items.map((item, index) => (
-          <SwiperSlide key={item._id}>
+          <SwiperSlide key={item._id} className='!h-auto'>
             <Card cardType='ebook-card' post={item} index={index} />
           </SwiperSlide>
         ))}
