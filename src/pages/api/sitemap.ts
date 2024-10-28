@@ -1,9 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { sanityClient } from '../../lib/sanity';
-import groq from 'groq';
 import { getClient } from '~/lib/sanity.client';
 import { readToken } from '~/lib/sanity.api';
-import { getPosts, getSitemapData } from '~/lib/sanity.queries';
+import {getSitemapData } from '~/lib/sanity.queries';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -17,7 +15,7 @@ function generateSiteMap(posts: any[]) {
     `${BASE_URL}/press-releases`,
   ];
 
-  const dynamicPages = posts.map((post) => {
+  const dynamicPages = posts.map((post) => {    
     return `
       <url>
         <loc>${BASE_URL}/${post?.contentType}/${post?.url}</loc>

@@ -1,7 +1,7 @@
 import { GetStaticProps, GetStaticPaths } from 'next';
 import { useRouter } from 'next/router';
 import { getClient } from '~/lib/sanity.client';
-import { articleSlugsQuery, getArticle} from '~/lib/sanity.queries';
+import { articleSlugsQuery, getArticle, getArticles } from '~/lib/sanity.queries';
 import { Articles } from '~/interfaces/post';
 import Wrapper from '~/layout/Wrapper';
 import { readToken } from '~/lib/sanity.api';
@@ -17,11 +17,13 @@ import AuthorInfo from '~/components/commonSections/AuthorInfo';
 import ShareableLinks from '~/components/commonSections/ShareableLinks';
 import CustomHead from '~/utils/customHead';
 import Section from '~/components/Section';
+import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection';
 
 interface Props {
   articles: Articles;
   draftMode: boolean;
   token: string;
+  limitedArticles: any;
 }
 
 
@@ -42,6 +44,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false, params = {} }) => {
   const client = getClient(draftMode ? { token: readToken } : undefined);
   const articles = await getArticle(client, params.slug as string);
+  const limitedArticles: any = await getArticles(client, 0, 4);
 
 
   return {
@@ -49,14 +52,15 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
       draftMode,
       token: draftMode ? readToken : '',
       articles,
+      limitedArticles
     },
   };
 };
 
-const ArticlePage = ({ articles, draftMode, token }: Props) => {
-  
-  if(!articles){
-    return 
+const ArticlePage = ({ articles, limitedArticles, draftMode, token }: Props) => {
+
+  if (!articles) {
+    return
   }
 
   const seoTitle = articles?.seoTitle || articles?.title;
@@ -69,36 +73,45 @@ const ArticlePage = ({ articles, draftMode, token }: Props) => {
 
   return (
     <>
-    <CustomHead props={articles} type="articleExpanded"/>
+      <CustomHead props={articles} type="articleExpanded" />
       <Layout >
-        <MainImageSection  enableDate={true}  post={articles} />
+        <MainImageSection enableDate={true} post={articles} />
         <Section className='justify-center'>
           <Wrapper className={`flex-col`} >
-          <div className="flex  md:flex-row flex-col">
-            <div className="mt-12 flex md:flex-col flex-col-reverse md:w-2/3 w-full ">
-              <div className='post__content w-full '>
-                <SanityPortableText
-                  content={articles?.body}
-                  draftMode={draftMode}
-                  token={token}
-                />
+            <div className="flex  md:flex-row flex-col">
+              <div className="mt-12 flex md:flex-col flex-col-reverse md:w-2/3 w-full ">
+                <div className='post__content w-full '>
+                  <SanityPortableText
+                    content={articles?.body}
+                    draftMode={draftMode}
+                    token={token}
+                  />
+                </div>
+              </div>
+              <div className='flex-1 flex flex-col gap-12 mt-12  bg-red relative md:w-1/3 w-full'>
+                <div className='sticky top-12 flex flex-col gap-12'>
+                  <Toc headings={articles?.headings} title="Contents" />
+                  {articles?.author &&
+                    <div className=''>
+                      <AuthorInfo contentType={articles?.contentType} author={articles?.author} />
+                    </div>
+                  }
+                  <ShareableLinks props={articles?.title} />
+                </div>
               </div>
             </div>
-            <div className='flex-1 flex flex-col gap-12 mt-12  bg-red relative md:w-1/3 w-full'>
-              <div className='sticky top-12 flex flex-col gap-12'>
-                <Toc headings={articles?.headings} title="Contents" />
-                {articles?.author &&
-                  <div className=''>
-                    <AuthorInfo contentType={articles?.contentType} author={articles?.author} />
-                  </div>
-                }
-                <ShareableLinks props={articles?.title} />
-              </div>
-            </div>
-          </div>
-          {articles?.relatedArticles?.length > 0 && <RelatedFeaturesSection title={articles?.title} allPosts={articles?.relatedArticles} />}
           </Wrapper>
-          </Section>
+        </Section>
+        {articles?.relatedArticles.length > 0 && (
+          <RelatedFeaturesSection
+            contentType={articles?.contentType}
+            allPosts={[
+              ...(Array.isArray(articles?.relatedArticles) ? articles?.relatedArticles : []),
+              ...(Array.isArray(limitedArticles) ? limitedArticles : [])
+            ].slice(0, 4)}
+          />
+        )}
+        <BannerSubscribeSection />
       </Layout>
     </>
   );

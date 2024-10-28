@@ -45,6 +45,21 @@ export default defineType({
     }),
 
     defineField({
+      name: 'title',
+      title: 'Title',
+      type: 'string',
+      validation: (Rule) => Rule.required(),
+    }),
+
+//  meta fields
+    defineField({
+      name: 'seoTitle',
+      title: 'Meta Title',
+      description:'Overrides main page title',
+      type: 'string',
+      fieldset: 'seo',
+    }),
+    defineField({
       name: 'seoDescription',
       title: 'Meta Description',
       type: 'string',
@@ -79,12 +94,7 @@ export default defineType({
     }),
 
     // Common Fields
-    defineField({
-      name: 'title',
-      title: 'Title',
-      type: 'string',
-      validation: (Rule) => Rule.required(),
-    }),
+
     defineField({
       name: 'slug',
       title: 'Page Path',
@@ -192,6 +202,15 @@ export default defineType({
     }),
 
     defineField({
+      name: 'facilities',
+      title: 'Facilities',
+      type: 'string',
+      fieldset: 'practiceProfile',
+      hidden: ({ parent }) =>
+        parent.contentType !== 'case-study',
+    }),
+
+    defineField({
       name: 'asideBookFreeDemoBanner',
       title: 'Aside Book Free Demo Banner',
       type: 'array',
@@ -234,6 +253,13 @@ export default defineType({
       hidden: ({ parent }) =>
         parent.contentType !== 'ebook',
     },),
+    defineField(    {
+      name: 'ebookUrl',
+      title: 'Ebook URL',
+      type: 'url',
+      hidden: ({ parent }) =>
+        parent.contentType !== 'ebook',
+    },),
 
 
     // Common Components
@@ -268,17 +294,6 @@ export default defineType({
           .error('At least one author is required'),
       ],
     }),
-
-    defineField({
-      name: 'customImage',
-      title: 'Custom Image',
-      description: 'Provide a custom image for the post',
-      type: 'image',
-      options: {
-        hotspot: true,
-      },
-    }),
-
     // Tags Field
     defineField({
       name: 'tags',

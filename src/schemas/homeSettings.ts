@@ -20,10 +20,10 @@ export default {
   ],
   fields: [
     {
-      name: 'testimonials',  
+      name: 'testimonial',  
       title: 'Testimonials',
-      type: 'reference',
-      to: [{ type: 'testimonial' }],
+      type: 'array',
+      of: [{ type: 'reference', to: [{ type: 'testimonial' }] }],
       group: 'testimonials',
     },
 
@@ -52,12 +52,20 @@ export default {
       group: 'EbooksAndWebinars',
       
     },
+    // {
+    //   name: 'customBrowseContent',
+    //   description:'Selected content will be displayed in the Projected Browse section',
+    //   title: 'Custom Browse Content',
+    //   type: 'reference',
+    //   to: [{ type: 'post' }],
+    //   group: 'popularBlogs'
+    // },
     {
       name: 'customBrowseContent',
       description:'Selected content will be displayed in the Projected Browse section',
       title: 'Custom Browse Content',
       type: 'reference',
-      to: [{ type: 'post' }],
+      to: [{ type: 'customContent' }],
       group: 'popularBlogs'
     },
   ],

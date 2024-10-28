@@ -20,8 +20,6 @@ const  AuthorInfo = ({ author, contentType,className,showMultiple = false,showNa
   if(showMultiple === false){
     author = [author[0]]
   }
- 
-
 
     return (
       <div className='flex flex-col gap-4'>
@@ -31,15 +29,17 @@ const  AuthorInfo = ({ author, contentType,className,showMultiple = false,showNa
               {authors?.picture && (
                 <Image
                   alt={authors.name}
-                  className=" rounded-full !m-0"
+                  className="rounded-full !m-0"
                   src={authors.picture}
-                  height={56}
-                  width={56}
+                  height={48}
+                  width={48}
                 />
               )}
-              <div className='flex flex-col'>
-                <span className='!font-semibold text-lg leading-tight !no-underline'>{authors?.name}</span>
-                {!showNameOnly && <span className='text-base text-zinc-600 !no-underline' >{authors?.role}</span>}
+              <div className='flex flex-col gap-[2px]'>
+              <span className={`!font-medium text-base leading-[1.5] !no-underline text-zinc-900 ${className}`}>
+                {authors?.name}
+              </span>
+                {!showNameOnly && <span className={`text-base text-zinc-600 !no-underline leading-[1.3] ${className}`} >{authors?.role}</span>}
               </div>
             </div>
           </Link>

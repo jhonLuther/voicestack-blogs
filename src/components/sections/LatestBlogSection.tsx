@@ -10,9 +10,9 @@ interface LatestBlogsProps {
   contents: any[];
   reverse?: boolean;
   className?: string;
-  cardLayout?: 'ebook'
   showPlayIcon?: boolean
   page?: string
+  contentType?: 'ebook' | 'article' | 'podcast' | 'webinar' | 'case-study' | 'press-release'
 }
 
 
@@ -40,8 +40,8 @@ const LatestBlogs: React.FC<LatestBlogsProps> = ({ contents, reverse, className,
     <React.Fragment>
         <Section className='justify-center md:pt-16 md:pb-24 bg-zinc-900 text-white' >
           <Wrapper className={`md:flex-row flex-col ${reverse ? 'md:flex-row-reverse' : ''} md:gap-36 gap-12`}>
-            <div className='flex flex-col gap-9 md:w-5/12 w-full'>
-              <H2Large >
+             <div className='flex flex-col gap-9 md:w-5/12 w-full'>
+              <H2Large className='select-none' >
                 {reverse ? displayName :`Latest`}
               </H2Large>
               <div className='flex flex-col gap-8  '>
@@ -52,7 +52,7 @@ const LatestBlogs: React.FC<LatestBlogsProps> = ({ contents, reverse, className,
             </div>
             <div className=' md:w-6/12 w-full'>
               <div className="flex flex-col w-full overflow-hidden ">
-                <Card baseUrl={baseUrl} cardColor='bg-orange-700' reverse={reverse} cardType='top-image-card'  key={firstBlog?._id} post={firstBlog} />
+                <Card contentType={contentType} baseUrl={baseUrl} cardColor='bg-orange-700' reverse={reverse} cardType='top-image-card'  key={firstBlog?._id} post={firstBlog} />
               </div>
             </div>
           </Wrapper>

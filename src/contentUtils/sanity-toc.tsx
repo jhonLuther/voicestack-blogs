@@ -1,5 +1,6 @@
 import slugify from "slugify";
 import Link from 'next/link';
+import { usePathname } from 'next/navigation'
 
 // Define the type for the Table of Contents (ToC)
 type Headings = Array<{
@@ -118,30 +119,25 @@ export function RenderToc({
   level?: number;
 }) {
   return (
-    <ul
-      className={`space-y-2 text-sm font-semibold ${
-        level > 1 ? 'ml-4 list-disc space-y-1 font-normal' : 'space-y-3.5 border-l pl-4'
-      }`}
-    >
-      {elements.map((el) => (
-        <li
-          key={el.text}
-          className={`${level > 1 ? '[&:first-child]:mt-2' : ''}`}
-        >
+    <ol className={` list-decimal list-inside flex flex-col gap-3 text-sm font-semibold text-zinc-600`}>
+      {elements.map((el, index) => (
+        <li key={el.text} className={` ${level > 1 ? '[&:first-child]:mt-2' : ''}`}>
           <Link href={`#${el.slug}`} className="hover:underline hover:underline-offset-4">
-            {el.text}
+            {`${el.text}`}
           </Link>
           {el.children && <RenderToc elements={el.children} level={level + 1} />}
         </li>
       ))}
-    </ul>
+    </ol>
   );
 }
 
 export function Toc({ headings, title }: { headings: Headings; title?: string }) {
+  if(!headings) return null
   return (
-    <section className="flex max-w-sm flex-col">
-      <h2 className="z-0 mb-4 pb-1.5 font-bold md:sticky md:top-0">
+    headings && headings.length > 0 &&
+    <section className="flex w-full flex-col p-6 bg-zinc-50 gap-6">
+      <h2 className="z-0 pb-3 font-semibold md:sticky md:top-0 text-base border-b  border-zinc-200 text-zinc-900">
         {title ?? 'Content'}
       </h2>
       <nav className="flex gap-4">

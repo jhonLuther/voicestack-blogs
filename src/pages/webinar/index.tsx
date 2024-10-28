@@ -21,7 +21,7 @@ export const getStaticProps: GetStaticProps<SharedPageProps & { webinars: Webina
   const itemsPerPage = siteConfig.pagination.childItemsPerPage;
 
   const webinars: any = await getWebinars(client, 0, itemsPerPage);
-  const latestWebinars: any = await getWebinars(client, 0, 3);
+  const latestWebinars: any = await getWebinars(client, 0, 4);
   const totalWebinars = await getWebinarsCount(client);
   const totalPages = Math.ceil(totalWebinars / itemsPerPage);
 
@@ -51,12 +51,12 @@ const WebinarsPage = ({ webinars,latestWebinars, totalPages }: { webinars: Webin
   return (
     <BaseUrlProvider baseUrl={baseUrl}>
     <Layout>
-      <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'} reverse={true} contents={latestWebinars} />
+      <LatestBlogs contentType="webinar" className={'pt-11 pr-9 pb-16 pl-9'} reverse={true} contents={latestWebinars} />
         <AllcontentSection
           className={'pb-9'}
           allContent={webinars}
           hideHeader={true}
-          // cardType="podcast-card"
+          cardType="left-image-card"
           itemsPerPage={siteConfig.pagination.childItemsPerPage}
         />
         <Pagination

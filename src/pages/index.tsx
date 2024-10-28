@@ -74,12 +74,13 @@ export const getStaticProps: GetStaticProps<SharedPageProps & { posts: Post[] }>
 };
 
 export default function IndexPage(props: IndexPageProps) {
-  console.log(props);
   
   const homeSettings = props?.homeSettings[0];
   const latestPosts = props?.latestPosts;
   const siteSettings = props?.siteSettings;
 
+  console.log(siteSettings,'siteSettings');
+  
   return (
     <Layout>
       <Head>

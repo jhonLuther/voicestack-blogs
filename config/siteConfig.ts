@@ -1,7 +1,7 @@
 const siteConfig = {
     pagination: {
-      itemsPerPage: 8, // in main page
-      childItemsPerPage:8, // decides Content per page in child pages
+      itemsPerPage: 14,
+      childItemsPerPage:8, 
       currentPage: 1,
       totalItems: 100
     },
@@ -20,6 +20,9 @@ const siteConfig = {
     },
     paginationBaseUrls:{
       base:"browse"
+    },
+    externalLinks: {
+      reviews:'https://carestack.com/dental-software/reviews'
     },
     content: {
       defaultSort: "date",

@@ -121,7 +121,7 @@ export default function ProjectSlugRoute(
                   </div>
                 </div>
               </div>
-              {post?.relatedPosts && <RelatedFeaturesSection  title={post?.title} allPosts={post?.relatedPosts} />}
+              {post?.relatedPosts && <RelatedFeaturesSection  contentType={post.contentType} allPosts={post?.relatedPosts} />}
             </Wrapper>
           </div>
         </section>

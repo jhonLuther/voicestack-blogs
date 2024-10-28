@@ -70,6 +70,9 @@ export default function AuthorPage({
 
   const baseUrl = useRef(`/${siteConfig.pageURLs.author}`).current;
 
+  console.log(relatedContents,'relatedContents');
+  
+
   return (
     <BaseUrlProvider baseUrl={baseUrl}>
     <Layout >

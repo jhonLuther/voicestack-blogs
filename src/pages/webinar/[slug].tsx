@@ -19,9 +19,13 @@ import { VideoModal } from '~/components/commonSections/VideoModal';
 import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection';
 import Section from '~/components/Section';
 import CustomHead from '~/utils/customHead';
+import AuthorInfo from '~/components/commonSections/AuthorInfo';
+import ShareableLinks from '~/components/commonSections/ShareableLinks';
+import SidebarTitle from '~/components/typography/SidebarTitle';
 
 interface Props {
   webinar: Podcasts;
+  limitedwebinars: any;
   allWebinars: any;
   draftMode: boolean;
   token: string;
@@ -45,6 +49,8 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
   const client = getClient(draftMode ? { token: readToken } : undefined);
   const webinar = await getWebinar(client, params.slug as string);
   const allWebinars = await getWebinars(client);
+  const limitedwebinars: any = await getWebinars(client, 0, 4);
+
 
   return {
     props: {
@@ -52,11 +58,12 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
       token: draftMode ? readToken : '',
       webinar,
       allWebinars,
+      limitedwebinars
     },
   };
 };
 
-const WebinarPage = ({ webinar, draftMode, token }: Props) => {
+const WebinarPage = ({ webinar,limitedwebinars, draftMode, token }: Props) => {
 
   const seoTitle = webinar.seoTitle || webinar.title;
   const seoDescription = webinar.seoDescription || webinar.excerpt;
@@ -69,33 +76,51 @@ const WebinarPage = ({ webinar, draftMode, token }: Props) => {
     <>
       <CustomHead props ={webinar} type="webinar"/>
       <Layout >
-      <MainImageSection isAuthor={true} post={webinar} />
+      <MainImageSection isAuthor={true} post={webinar} contentType={webinar?.contentType} enableDate={true}/>
 
         <Section className='justify-center'>
           <Wrapper className={'flex-col'}>
-            <div className="flex  md:flex-row justify-between gap-20 flex-col">
-                <div className="mt-12 flex md:flex-col flex-col-reverse md:w-2/3 w-full ">
-                  <VideoModal videoDetails={webinar?.videos} className={`pt-9   flex items-start`} />
-                  <div className='post__content w-full '>
-                    <SanityPortableText
-                      content={webinar?.body}
-                      draftMode={draftMode}
-                      token={token}
-                    />
-                  </div>
-                  <BannerSubscribeSection />
+            <div className="flex md:flex-row justify-between gap-20 flex-col">
+              <div className="flex md:flex-col flex-col-reverse w-full max-w-[710px]">
+                <VideoModal videoDetails={webinar?.videos} className={`max-w-[100%] flex items-start`} />
+                <div className='post__content w-full  max-w-[800px]'>
+                  <SanityPortableText
+                    content={webinar?.body}
+                    draftMode={draftMode}
+                    token={token}
+                  />
                 </div>
+              </div>
+              <div className='flex-1 flex flex-col gap-12 bg-red relative max-w-[410px] w-full'>
+                <div className='sticky top-12 flex flex-col gap-8'>
+                    {webinar.author && webinar.author?.length > 0 && 
+                      <>
+                        <SidebarTitle className='border-b border-zinc-200 pb-3'>{`Speakers`}</SidebarTitle>
+                        <div className='flex flex-col gap-6'>
+                            {webinar.author.map((author: any,i) => {
+                              return(
+                                <AuthorInfo key={author._id || i} contentType={'webinar'} author={[author]} />
+                              )
+                          })}
+                        </div>
+                      </>
+                    }
+                  <ShareableLinks props={webinar?.title} />
+                </div>
+              </div>
+                
             </div>
-                {webinar?.relatedWebinars?.length > 0 && (
-              <RelatedFeaturesSection
-                title={webinar?.title}
-                allPosts={webinar?.relatedWebinars}
-              />
-            )}
           </Wrapper>
         </Section>
-
-          
+        {webinar?.relatedWebinars.length > 0 && (
+          <RelatedFeaturesSection
+            contentType={webinar?.contentType}
+            allPosts={[
+              ...(Array.isArray(webinar?.relatedWebinars) ? webinar?.relatedWebinars : []),
+              ...(Array.isArray(limitedwebinars) ? limitedwebinars : [])
+            ].slice(0, 4)}
+          />
+        )}
       </Layout>
     </>
   );
