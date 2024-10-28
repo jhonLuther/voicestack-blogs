@@ -151,6 +151,8 @@ export interface Articles {
   }>
 }
 export interface CaseStudies {
+  facilities: any
+  asideBookFreeDemoBanner: any
   growingLocations: any
   headCount: any
   providers: any

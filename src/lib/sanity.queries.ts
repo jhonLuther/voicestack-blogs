@@ -960,6 +960,7 @@ export const caseStudyBySlugQuery = groq`
     location,
     providers,
     growingLocations,
+    facilities,
     "asideBookFreeDemoBanner": asideBookFreeDemoBanner[] {
       number,
       text

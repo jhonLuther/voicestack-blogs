@@ -5,7 +5,9 @@ import XSMedium from '../typography/XSMedium';
 
 function ShareableLinks({ props }) {
   const { asPath: route } = useRouter();
-  const encodedUrl = encodeURIComponent(`https://carestack.com${route}`);
+  console.log({route})
+  
+  const encodedUrl = encodeURIComponent(`https://blog.carestack.com${route}`);
 
   return (
       <div className='flex flex-col gap-3'>
