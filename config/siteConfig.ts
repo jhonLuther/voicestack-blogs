@@ -19,7 +19,7 @@ const siteConfig = {
       author: "author",
     },
     paginationBaseUrls:{
-      base:"/browse"
+      base:"browse"
     },
     externalLinks: {
       reviews:'https://carestack.com/dental-software/reviews'

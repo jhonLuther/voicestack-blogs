@@ -6,7 +6,7 @@ interface H2LargeProps {
 }
 function H2Large({className,children}:H2LargeProps) {
   return (
-    <h2 className={`md:text-6xl text-4xl font-manrope font-extrabold ${className}`}>{children}</h2>
+    <h2 className={`md:text-h1 text-4xl font-manrope font-extrabold ${className}`}>{children}</h2>
   )
 }
 
