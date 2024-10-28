@@ -54,10 +54,6 @@ type TreeNode = {
  * @returns - A nested list of tree nodes representing the hierarchical structure.
  */
 export function nestHeadings(blocks: Headings): TreeNode[] {
-  const pathname = usePathname()
-
-  console.log({pathname});
-  
   // Array to hold the top-level nodes of the tree
   const treeNodes: TreeNode[] = [];
 

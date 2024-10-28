@@ -151,6 +151,10 @@ export interface Articles {
   }>
 }
 export interface CaseStudies {
+  growingLocations: any
+  headCount: any
+  providers: any
+  location: any
   relatedArticles: any
   headings: Headings
   seoTitle: string
