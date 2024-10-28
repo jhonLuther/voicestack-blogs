@@ -70,8 +70,6 @@ const CaseStudyPage = ({ caseStudy,limitCaseStudies, draftMode, token }: Props) 
   const seoRobots = caseStudy.seoRobots || 'index,follow';
   const seoCanonical = caseStudy.seoCanonical || `https://carestack.com/caseStudy/${caseStudy.slug.current}`;
   const jsonLD: any = generateJSONLD(caseStudy);
-
-  // console.log(limitCaseStudies);
   
 
   return (
@@ -101,8 +99,9 @@ const CaseStudyPage = ({ caseStudy,limitCaseStudies, draftMode, token }: Props) 
               <div className="flex-1 flex flex-col gap-12 mt-12 relative md:w-1/3 w-full">
                 <div className="sticky top-12 flex flex-col gap-12">
                   <Toc headings={caseStudy?.headings} title="Contents" />
-                  <ShareableLinks props={caseStudy?.title} />
-                  <PracticeProfile contents={caseStudy} />
+                  {(caseStudy.practiceName || caseStudy.location || caseStudy?.providers || caseStudy?.headCount || caseStudy?.growingLocations) ? <PracticeProfile contents={caseStudy} />
+                  :
+                  <ShareableLinks props={caseStudy?.title} />}
                 </div>
               </div>
             </div>
