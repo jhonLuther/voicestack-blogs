@@ -63,7 +63,7 @@ const MainImageSection = ({ post, isAuthor, enableDate = false, isAudio = false,
 			<Section className={`justify-center w-full !py-0`}>
 				<Wrapper className="z-10 flex h-auto">
 					<div className='flex flex-col items-start gap-32 text-white md:max-w-[46%] max-w-lg h-full justify-center py-8 md:py-12 md:min-h-[450px]'>
-						<div className='flex flex-col items-start justify-between h-full'>
+						<div className='flex flex-col items-start justify-between h-full gap-12 md:gap-24'>
 							<Breadcrumb />
 							<div>
 								<SubText className='!text-sky-500 mb-3 block'>

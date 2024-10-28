@@ -79,7 +79,8 @@ const PressReleasePage = ({ pressRelease,limitedPressReleases, draftMode, token 
   const seoCanonical = pressRelease.seoCanonical || `https://carestack.com/pressRelease/${pressRelease.slug.current}`;
   const jsonLD: any = generateJSONLD(pressRelease);
 
-
+  console.log({pressRelease});
+  
   return (
     <>
       <SEOHead
@@ -118,11 +119,15 @@ const PressReleasePage = ({ pressRelease,limitedPressReleases, draftMode, token 
               <div className='flex-1 flex flex-col gap-12 bg-red relative max-w-[410px] w-full'>
                 <div className='sticky top-12 flex flex-col gap-8'>
                   <>
-                    <SidebarTitle className='border-b border-zinc-200 pb-3'>{`To Know More About`}</SidebarTitle>
-                    <Button link={'#'} className='bg-zinc-900 gap-6 py-[14px] px-7 hover:bg-zinc-800 self-start'>
-                      <DocumentTextIcon width={24} height={24} className='text-white'/>
-                      <span className='text-base font-medium'>{`Read Original Article`}</span>
-                    </Button>
+                    {pressRelease.pressReleaseUrl && (
+                      <>
+                        <SidebarTitle className='border-b border-zinc-200 pb-3'>{`To Know More About`}</SidebarTitle>
+                        <Button target="_blank" link={pressRelease.pressReleaseUrl} className='bg-zinc-900 gap-6 py-[14px] px-7 hover:bg-zinc-800 self-start'>
+                          <DocumentTextIcon width={24} height={24} className='text-white'/>
+                          <span className='text-base font-medium'>{`Read Original Article`}</span>
+                        </Button>
+                      </>
+                    )}
                     {pressRelease?.author &&
                     <div className=''>
                       <AuthorInfo contentType={pressRelease.contentType} author={pressRelease?.author} />
