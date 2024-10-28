@@ -93,16 +93,18 @@ const WebinarPage = ({ webinar,limitedwebinars, draftMode, token }: Props) => {
               </div>
               <div className='flex-1 flex flex-col gap-12 bg-red relative max-w-[410px] w-full'>
                 <div className='sticky top-12 flex flex-col gap-8'>
-                  <SidebarTitle className='border-b border-zinc-200 pb-3'>{`Speakers`}</SidebarTitle>
-                  <div className='flex flex-col gap-6'>
                     {webinar.author && webinar.author?.length > 0 && 
-                      webinar.author.map((author: any,i) => {
-                        return(
-                          <AuthorInfo key={author._id || i} contentType={'webinar'} author={[author]} />
-                        )
-                      })
+                      <>
+                        <SidebarTitle className='border-b border-zinc-200 pb-3'>{`Speakers`}</SidebarTitle>
+                        <div className='flex flex-col gap-6'>
+                            {webinar.author.map((author: any,i) => {
+                              return(
+                                <AuthorInfo key={author._id || i} contentType={'webinar'} author={[author]} />
+                              )
+                          })}
+                        </div>
+                      </>
                     }
-                  </div>
                   <ShareableLinks props={webinar?.title} />
                 </div>
               </div>

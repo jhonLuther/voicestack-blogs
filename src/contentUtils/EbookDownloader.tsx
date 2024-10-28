@@ -2,6 +2,7 @@ import React from 'react';
 import Breadcrumb from '~/components/commonSections/BreadCrumb';
 import Button from '~/components/commonSections/Button';
 import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection';
+import {DownloadIcon} from '@sanity/icons'
 
 const DownloadEbook = ({ ebook }) => {
   if (!ebook) {
@@ -55,18 +56,18 @@ const DownloadEbook = ({ ebook }) => {
   }
 
   return (
-    <div className="p-6 rounded-lg mx-auto">
-      <Breadcrumb />
+    <div className="rounded-lg">
+      {/* <Breadcrumb /> */}
       <div className='flex flex-col gap-12'>
         <div>
-          <h2 className="text-3xl font-bold mb-4">{ebook?.title}</h2>
-          <p className="text-lg mb-6">{ebook?.excerpt}</p>
-          <div className="flex space-x-4">
-            <Button link={pdfUrl} className='bg-cs-zinc-900' >
+          
+          <div className="flex">
+            {/* <Button link={pdfUrl} className='bg-cs-zinc-900' >
               <span className='text-base font-medium'>{` Read eBook`}</span>
-            </Button>
-            <Button className='bg-cs-zinc-900' onClick={() => { download_file(pdfUrl, `${ebook?.title}.pdf`) }}>
-              <span className='text-base font-medium'>{`Download`}</span>
+            </Button> */}
+            <Button className='bg-zinc-900 gap-6 py-[14px] px-7 hover:bg-zinc-800' onClick={() => { download_file(pdfUrl, `${ebook?.title}.pdf`) }}>
+              <DownloadIcon width={24} height={24} className='text-white'/>
+              <span className='text-base font-medium'>{`Download eBook`}</span>
             </Button>
           </div>
         </div>
