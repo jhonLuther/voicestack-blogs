@@ -135,7 +135,8 @@ export function RenderToc({
 export function Toc({ headings, title }: { headings: Headings; title?: string }) {
   if(!headings) return null
   return (
-    <section className="flex max-w-sm flex-col p-6 bg-zinc-50 gap-6">
+    headings && headings.length > 0 &&
+    <section className="flex w-full flex-col p-6 bg-zinc-50 gap-6">
       <h2 className="z-0 pb-3 font-semibold md:sticky md:top-0 text-base border-b  border-zinc-200 text-zinc-900">
         {title ?? 'Content'}
       </h2>
