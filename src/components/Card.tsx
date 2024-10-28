@@ -129,7 +129,7 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
               )}
               <div className="flex flex-col flex-1 gap-2">
                   <SubText >
-                    {isPageUrl ? tag?.tagName : post.contentType}
+                    {isPageUrl ? tag?.tagName : post.contentType === "press-release" ? "press release" : post.contentType}
                   </SubText>
                 <H4Large className={`group-hover: group-hover:underline underline-offset-4 line-clamp-3 text-ellipsis overflow-hidden`}>
                   {post.title}
@@ -354,7 +354,7 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
                             <div className='flex flex-col flex-grow'>
                               {post.contentType && (
                                 <SubText className={`${varyingIndex ? '!text-white' : ''} mb-2`}>
-                                  {post.contentType}
+                                  {post.contentType === "press-release" ? "press release" : post.contentType}
                                 </SubText>
                               )}
                               <H4Large className='group-hover:group-hover:underline underline-offset-4'>
