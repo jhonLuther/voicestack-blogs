@@ -29,28 +29,6 @@ const MainImageSection = ({ post, isAuthor, enableDate = false, isAudio = false,
 
 	const tag = useMemo(() => post?.tags?.find((tag) => tag) || null, [post?.tags]);
 
-	// const [dominantColor, setDominantColor] = React.useState<any>('white')
-	// const extractColor = async (imageUrl) => {
-
-  //   console.log(imageUrl,'imageurl');
-    
-	// 	try {
-	// 		const colors = await average(imageUrl, {
-	// 			amount: 1,
-	// 			format: 'hex'
-	// 		});
-
-	// 		if (colors && colors[0]) {
-	// 			setDominantColor(colors[0]);
-	// 		}
-	// 	} catch (error) {
-	// 		console.error('Error extracting color:', error);
-	// 	}
-	// };
-
-  // console.log(dominantColor);
-  
-
 	const isMobile: any = useMediaQuery(767);
 	const client = getClient()
 
