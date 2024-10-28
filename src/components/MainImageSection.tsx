@@ -45,7 +45,7 @@ const MainImageSection = ({ post, isAuthor, enableDate = false, isAudio = false,
 						<div className='flex flex-col items-start justify-between h-full'>
 							<Breadcrumb />
 							<div>
-								<SubText className='text-sky-500 mb-3 block'>
+								<SubText className='!text-sky-500 mb-3 block'>
 									{tag?.tagName ? tag?.tagName : ''}
 								</SubText>
 								<h1 className="text-white font-manrope leading-tight lg:text-5xl text-2xl font-bold  mb-[10px]">
