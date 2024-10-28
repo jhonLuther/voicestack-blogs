@@ -19,6 +19,8 @@ import { VideoModal } from '~/components/commonSections/VideoModal';
 import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection';
 import Section from '~/components/Section';
 import CustomHead from '~/utils/customHead';
+import AuthorInfo from '~/components/commonSections/AuthorInfo';
+import ShareableLinks from '~/components/commonSections/ShareableLinks';
 
 interface Props {
   webinar: Podcasts;
@@ -73,21 +75,34 @@ const WebinarPage = ({ webinar,limitedwebinars, draftMode, token }: Props) => {
     <>
       <CustomHead props ={webinar} type="webinar"/>
       <Layout >
-      <MainImageSection isAuthor={true} post={webinar} />
+      <MainImageSection isAuthor={true} post={webinar} contentType={webinar?.contentType} enableDate={true}/>
 
         <Section className='justify-center'>
           <Wrapper className={'flex-col'}>
-            <div className="flex  md:flex-row justify-between gap-20 flex-col">
-                <div className="mt-12 flex md:flex-col flex-col-reverse w-full ">
-                  <VideoModal videoDetails={webinar?.videos} className={`pt-9 max-w-[800px] flex items-start`} />
-                  <div className='post__content w-full  max-w-[800px]'>
-                    <SanityPortableText
-                      content={webinar?.body}
-                      draftMode={draftMode}
-                      token={token}
-                    />
-                  </div>
+            <div className="flex md:flex-row justify-between gap-20 flex-col">
+              <div className="flex md:flex-col flex-col-reverse w-full max-w-[710px]">
+                <VideoModal videoDetails={webinar?.videos} className={`max-w-[100%] flex items-start`} />
+                <div className='post__content w-full  max-w-[800px]'>
+                  <SanityPortableText
+                    content={webinar?.body}
+                    draftMode={draftMode}
+                    token={token}
+                  />
                 </div>
+              </div>
+              <div className='flex-1 flex flex-col gap-12 mt-12 bg-red relative max-w-[410px] w-full'>
+                <div className='sticky top-12 flex flex-col gap-12'>
+                  {webinar.author && webinar.author?.length > 0 && 
+                    webinar.author.map((author: any,i) => {
+                      return(
+                        <AuthorInfo key={author._id || i} contentType={'webinar'} author={[author]} />
+                      )
+                    })
+                  }
+                  <ShareableLinks props={webinar?.title} />
+                </div>
+              </div>
+                
             </div>
           </Wrapper>
         </Section>
