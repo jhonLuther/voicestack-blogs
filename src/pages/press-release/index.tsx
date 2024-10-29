@@ -14,7 +14,7 @@ import React, { useRef } from 'react';
 import Pagination from '~/components/commonSections/Pagination';
 import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection';
 import { BaseUrlProvider } from '~/components/Context/UrlContext';
-import {CustomHead} from '~/utils/customHead';
+import {commonMetaData, CustomHead} from '~/utils/customHead';
 import TagSelect from '~/contentUtils/TagSelector';
 
 export const getStaticProps: GetStaticProps<SharedPageProps & { pressReleases: PressRelease[]; totalPages: number }> = async (context) => {
@@ -64,6 +64,7 @@ const PressReleasePage = ({ pressReleases,latestPressReleases, totalPages,tags }
 				tagLimit={7}
 				showTags={true}
 			/>
+      {commonMetaData('pressRelease')}
       <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'} reverse={true} contents={latestPressReleases} />
         <AllcontentSection
           className={'pb-9'}

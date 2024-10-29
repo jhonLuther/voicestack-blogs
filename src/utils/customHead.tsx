@@ -63,8 +63,7 @@ const ogMetaData = {
 
 export const commonMetaData = (type: string) => {
   if (type) {
-    const metaData = ogMetaData[type]
-    console.log({ metaData })
+    const metaData = ogMetaData[type];
     if (metaData) {
       return Object.keys(metaData).map((key) => (
         <Head>

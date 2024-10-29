@@ -12,7 +12,7 @@ import { useRouter } from 'next/router';
 import siteConfig from '../../../config/siteConfig';
 import React, { useRef } from 'react';
 import Pagination from '~/components/commonSections/Pagination';
-import {CustomHead} from '~/utils/customHead';
+import {commonMetaData, CustomHead} from '~/utils/customHead';
 import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection';
 import { BaseUrlProvider } from '~/components/Context/UrlContext';
 import TagSelect from '~/contentUtils/TagSelector';
@@ -62,6 +62,7 @@ const WebinarsPage = ({ webinars,latestWebinars, totalPages,tags }: { webinars: 
 				tagLimit={7}
 				showTags={true}
 			/>
+      {commonMetaData('webinar')}
       <LatestBlogs contentType="webinar" className={'pt-11 pr-9 pb-16 pl-9'} reverse={true} contents={latestWebinars} />
         <AllcontentSection
           className={'pb-9'}
