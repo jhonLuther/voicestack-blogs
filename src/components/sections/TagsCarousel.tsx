@@ -58,7 +58,7 @@ const TagsCarousel: React.FC<TagsCarouselProps> = ({ tags, selectedTag, onTagCha
       ><>
       </>
         {tags.map((tag) => (
-          <SwiperSlide key={tag._id} className='!flex items-center justify-center px-3'>
+          <SwiperSlide key={tag._id} className='!flex items-center justify-center px-2 md:px-3'>
             <span
               onClick={() => onTagChanges(tag)}
               className={`flex py-1 text-[14px] font-medium leading-[1.5] text-center cursor-pointer justify-center

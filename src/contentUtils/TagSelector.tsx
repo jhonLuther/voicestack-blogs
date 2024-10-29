@@ -51,7 +51,7 @@ export default function TagSelect({
     <Section className='bg-zinc-900 justify-center !py-0'>
       <Wrapper>
       {showTags && (
-        <div className="flex flex-row gap-6 pt-6 md:pt-6 pb-6 w-full items-center">
+        <div className="flex flex-col md:flex-row gap-2 md:gap-6 pt-6 md:pt-6 pb-6 w-full md:items-center">
           {/* {showHeading && selectedTag && (
             <h2 className="md:text-5xl text-xl text-center font-manrope font-extrabold text-cs-zinc-900">
               {`"${tags.find(tag => tag.slug.current === selectedTag)?.tagName || ''}"`}
@@ -63,8 +63,7 @@ export default function TagSelect({
             All Topics
           </Link>
 
-          <div className='flex-1 overflow-hidden'>
-            {/* <div className={`flex gap-x-8 flex-wrap ${className}`}> */}
+          <div className='flex-1 overflow-hidden max-w-full'>
             <div className={`flex gap-x-8 relative px-8 slider-mask tags-slider`}>
               {tags &&
                 <TagsCarousel
@@ -73,16 +72,7 @@ export default function TagSelect({
                   onTagChanges={onTagChanges}
                 />
               }
-              {/* {tags.length > tagLimit && (
-                <li
-                  onClick={visibleTagCount < tags.length ? handleShowMore : handleShowLess}
-                  className={` text-zinc-300  hover:text-zinc-400 flex content-center items-center gap-4 py-1 text-[14px] text-center cursor-pointer`}
-                >
-                  <span>
-                    {visibleTagCount < tags.length ? 'See More Topics...' : 'See Less...'}
-                  </span>
-                </li>
-              )} */}
+             
             </div>
           </div>
         </div>

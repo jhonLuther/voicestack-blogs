@@ -41,9 +41,13 @@ body, #__next {
     left: 32px;
     top: 0;
     height: 100%;
-    width: 100px;
+    width: 40px;
     z-index: 2;
     background: linear-gradient(90deg, #18181B 0%, rgba(24, 24, 27, 0.00) 100%);
+
+    @media (min-width: 768px){
+      width: 100px;
+    }
   }
 
   &::after{
@@ -52,9 +56,13 @@ body, #__next {
     right: 32px;
     top: 0;
     height: 100%;
-    width: 100px;
+    width: 40px;
     z-index: 2;
     background: linear-gradient(90deg, rgba(24, 24, 27, 0.00) 0%, #18181B 100%);
+
+    @media (min-width: 768px){
+      width: 100px;
+    }
   }
 }
 

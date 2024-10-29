@@ -121,7 +121,7 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
 
         cardType === 'left-image-card' ? (
           <Link href={linkUrl}>
-            <div className={`flex flex-row gap-3 xl:gap-6 relative group hover:transition duration-500 ${className}`}>
+            <div className={`flex flex-col md:flex-row gap-3 xl:gap-6 relative group hover:transition duration-500 ${className}`}>
               {post.mainImage && (
                 <div className="w-auto md:max-w-[266px] rounded-lg transform transition duration-500 overflow-hidden flex-1"
                 >
@@ -134,7 +134,7 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
                   />
                 </div>
               )}
-              <div className="flex flex-col flex-1 gap-2 self-center">
+              <div className="flex flex-col flex-1 gap-2 self-center w-full">
                   <SubText >
                     {isPageUrl ? tag?.tagName : post.contentType === "press-release" ? "press release" : post.contentType}
                   </SubText>
@@ -356,7 +356,7 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
                         )}
                         {
 
-                          <div className={`${varyingIndex ? 'p-8 bg-indigo-900 text-white rounded-b-lg mt-1' : 'mt-6'} flex flex-col gap-1 min-h-[154px]`}>
+                          <div className={`${varyingIndex ? 'p-8 bg-indigo-900 text-white rounded-b-lg mt-1' : 'mt-6'} flex flex-col gap-1 justify-between flex-1`}>
                             <div className='flex flex-col flex-grow'>
                               {post.contentType && (
                                 <SubText className={`${varyingIndex ? '!text-white' : ''} mb-2`}>

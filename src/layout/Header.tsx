@@ -38,19 +38,19 @@ const Header = () => {
       <div className="bg-zinc-900 text-white border-b border-zinc-800 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col gap-3 justify-between py-6">
-            <div className='flex md:flex-row gap-2  flex-col justify-between'>
+            <div className='flex md:flex-row gap-2 flex-col justify-between'>
               <Link href="/" className="text-2xl font-extrabold bg-gradient-text bg-clip-text text-transparent font-monrope tracking-tighterText">
                 {`Dentistry's Inner Circle`}
               </Link>
               
               <div className='flex md:flex-row flex-col gap-2 justify-between items-center'>
-                <nav className="flex gap-10 flex-wrap">
+                <nav className="flex gap-y-2 gap-x-6 md:gap-x-10 flex-wrap">
                   {navigationLinks?.map((link) => (
                     
                     <Link 
                       key={link.href} 
                       href={link.href} 
-                      className={`hover:text-zinc-300 text-base ${router.pathname === link.href ? 'text-zinc-300' : 'text-zinc-500'}`}
+                      className={`hover:text-zinc-300 text-sm md:text-base ${router.pathname === link.href ? 'text-zinc-300' : 'text-zinc-500'}`}
                     >
                       {link.label}
                     </Link>

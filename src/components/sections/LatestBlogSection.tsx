@@ -44,7 +44,7 @@ const LatestBlogs: React.FC<LatestBlogsProps> = ({ contents, reverse, className,
               <H2Large className='select-none' >
                 {reverse ? displayName :`Latest`}
               </H2Large>
-              <div className='flex flex-col gap-8  '>
+              <div className='flex flex-col gap-8 '>
                 {otherBlogs.map((blog, i) => (
                   <Card key={i + 1 || blog._id} cardType='text-only-card' baseUrl={baseUrl}  isLast={i === otherBlogs.length - 1} post={blog} />
                 ))}
