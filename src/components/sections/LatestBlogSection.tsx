@@ -44,14 +44,14 @@ const LatestBlogs: React.FC<LatestBlogsProps> = ({ contents, reverse, className,
               <H2Large className='select-none' >
                 {reverse ? displayName :`Latest`}
               </H2Large>
-              <div className='flex flex-col gap-8  '>
+              <div className='flex flex-col gap-8 '>
                 {otherBlogs.map((blog, i) => (
                   <Card key={i + 1 || blog._id} cardType='text-only-card' baseUrl={baseUrl}  isLast={i === otherBlogs.length - 1} post={blog} />
                 ))}
               </div>
             </div>
             <div className='xl:w-6/12 w-full flex-1'>
-              <div className="flex flex-col w-full overflow-hidden ">
+              <div className="flex flex-col h-full w-full overflow-hidden ">
                 <Card contentType={contentType} baseUrl={baseUrl} cardColor='bg-orange-700' reverse={reverse} cardType='top-image-card'  key={firstBlog?._id} post={firstBlog} />
               </div>
             </div>

@@ -82,9 +82,9 @@ const Footer = ({ className }) => {
   // ];
 
   return (
-    <footer className={`bg-zinc-900 text-white pt-24 pb-12 px-4 ${className}`}>
+    <footer className={`bg-zinc-900 text-white pt-12 md:pt-24 pb-12 px-4 ${className}`}>
       <Wrapper className="container mx-auto max-w-7xl flex flex-col gap-12">
-        <div className="flex md:flex-row gap-12 justify-between">
+        <div className="flex flex-col md:flex-row gap-6 md:gap-12 justify-between">
           <div>
             <Link href="/" className="text-[30px] font-extrabold bg-gradient-text bg-clip-text text-transparent font-monrope tracking-tighterText max-w-[170px] leading-[1.16] block">
               {`Dentistry's Inner Circle`}
@@ -167,7 +167,7 @@ const Footer = ({ className }) => {
               </ul>
             </div> 
             
-            <div className="flex flex-col mt-12 md:mt-12 gap-2">
+            <div className="flex flex-col mt-6 md:mt-12 gap-2">
               {terms.map((item:any, idx) => (
                 // <a href={item.url}  key={idx} className="hover:text-zinc-300 text-zinc-500 text-[15px] leading-[1.62]">
                 //   {item.title}
@@ -199,8 +199,8 @@ const Footer = ({ className }) => {
           </div>
         </div>
 
-        <div className='flex justify-between pt-8 border-t border-[#3F3F46]'>
-          <span className='hover:text-zinc-300 text-zinc-500 text-[15px] leading-[1.62]'>&copy; {`2017 - ${currentYear} Good Methods Global Inc. All rights reserved.`}</span>    
+        <div className='flex justify-between items-center pt-8 gap-6 border-t border-[#3F3F46]'>
+          <span className='hover:text-zinc-300 text-zinc-500 text-xs md:text-[15px] leading-[1.62]'>&copy; {`2017 - ${currentYear} Good Methods Global Inc. All rights reserved.`}</span>    
           <Link href='https://www.carestack.com' target="_blank">
             <Image src={CsLogo} alt='CareStack' title='CareStack'/>
           </Link>
