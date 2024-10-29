@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { formatDateShort } from '~/utils/formateDate'
 import { ClockIcon } from '@sanity/icons'
 import {DotIcon} from '@sanity/icons'
@@ -14,10 +14,23 @@ interface DurationProps {
 }
 
 const DurationSection = ({ className, contentType, duration, date, isAudio = false }: DurationProps) => {    
+    // let durationText = duration;
 
-    const durationText = contentType === 'podcast' || contentType === 'webinar'
-        ? duration
-        : `${duration} min read`;
+    // useEffect( () => {
+    //     durationText = contentType === 'podcast' || contentType === 'webinar'
+    //         ? `${duration} min read`
+    //         : `${duration} min read`;
+    //         // : `${duration}`;
+    // },[contentType])
+
+    const [durationText, setDurationText] = useState(duration);
+
+    useEffect(() => {
+        setDurationText((contentType === 'podcast' || contentType === 'webinar')
+            ? duration
+            : `${duration} min read`);
+    }, [contentType,duration]);
+    
 
     return (
         <div className='font-medium text-[14px]'>
@@ -27,18 +40,22 @@ const DurationSection = ({ className, contentType, duration, date, isAudio = fal
                     <span>{duration}</span>
                 </div>
             ) : contentType === 'ebook' ? (
-                <div className={`text-white ${className}`}>
-                    {date ? formatDateShort(date) : 'Dec 30, 2020'}
+                date && <div className={`text-white ${className}`}>
+                    {formatDateShort(date) }
                 </div>
             ) : (
                 <div className={`flex relative gap-[6px] pt-3 items-center`}>
-                    <div className={`text-white ${className}`}>
-                        {date ? formatDateShort(date) : 'Dec 30, 2020'}
-                    </div>
-                    <DotIcon className='w-[18px] h-[18px] text-zinc-500'/>
-                    <div className={`relative flex flex-col ${className}`}>
-                        <span>{durationText}</span>
-                    </div>
+                   { date && <div className={`text-white ${className}`}>
+                        { formatDateShort(date) }
+                    </div>}
+                    {durationText && (
+                        <>
+                            <DotIcon className='w-[18px] h-[18px] text-zinc-500'/>
+                            <div className={`relative flex flex-col ${className}`}>
+                                <span>{durationText}</span>
+                            </div>
+                        </>
+                    )}
                 </div>
             )}
         </div>

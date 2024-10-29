@@ -147,62 +147,43 @@ export function CustomHead({
     }
     return head(metaData, randomId)
   } else if (props && type === 'webinar') {
-    if (props?.videos) {
-      const metaData = {
-        name: props?.author ?? 'CareStack',
-        '@context': 'https://schema.org',
-        '@type': 'Event',
-        description: props?.excerpt,
-        eventStatus: 'https://schema.org/EventScheduled',
-        eventAttendanceMode: 'https://schema.org/OnlineEventAttendanceMode',
-        startDate: props?.date ?? new Date(),
-        endDate: props?.date ?? new Date(),
-        image: urlForImage(props?.image?._id),
-        location: {
-          '@type': 'VirtualLocation',
-        },
-        organizer: {
-          '@type': 'Organization',
-
-          url: 'https://carestack.com',
-        },
-
-        offers: {
-          '@type': 'Offer',
-          url: props?.videos?.map((e) => {
-            return getIframeUrl(e?.platform, e?.videoId)
-          }),
-          availability: 'https://schema.org/InStock',
-        },
-      }
-      return head(metaData, randomId)
-    } else {
-      const metaData = {
-        '@context': 'https://schema.org',
-        '@type': 'Event',
-        name: props?.title ?? 'CareStack Event',
-        description: props?.excerpt,
-        eventStatus: 'https://schema.org/EventScheduled',
-        eventAttendanceMode: 'https://schema.org/OnlineEventAttendanceMode',
-        startDate: props?.date ?? new Date().toISOString(),
-        endDate: props?.date ?? new Date().toISOString(),
-        image: urlForImage(props?.image?._id),
-        location: {
-          '@type': 'VirtualLocation',
-        },
-        organizer: {
-          '@type': 'Organization',
-          name: 'CareStack',
-          url: 'https://carestack.com',
-        },
-        offers: props?.videos?.map((e) => ({
-          '@type': 'Offer',
-          url: getIframeUrl(e?.platform, e?.videoId),
-          availability: 'https://schema.org/InStock',
-        })),
-      }
-
-      return head(metaData, randomId)
+    const metaData = {
+      '@context': 'https://schema.org',
+      '@type': 'Event',
+      name: props.title,
+      description: props.excerpt,
+      eventStatus: 'https://schema.org/EventScheduled',
+      eventAttendanceMode: 'https://schema.org/OnlineEventAttendanceMode',
+      startDate: '2024-11-10T14:00:00+00:00',
+      endDate: '2024-11-10T15:30:00+00:00',
+      url: props?.videos?.map((video) => {
+        return getIframeUrl(video?.platform, video?.videoId)
+      }),
+      image: urlForImage(props.mainImage),
+      location: {
+        '@type': 'VirtualLocation',
+        url: props?.videos?.map((video) => {
+          return getIframeUrl(video?.platform, video?.videoId)
+        }),
+      },
+      organizer: {
+        '@type': 'Organization',
+        name: 'CareStack',
+        url: 'https://carestack.com',
+      },
+      performer: {
+        '@type': 'Person',
+        name: props?.author?.map((e: any) => {
+          return e.name
+        }),
+      },
+      offers: {
+        '@type': 'Offer',
+        url: props?.videos?.map((video) => {
+          return getIframeUrl(video?.platform, video?.videoId)
+        }),
+        availability: 'https://schema.org/InStock',
+      },
     }
   } else if (props && type === 'breadCrumbs') {
     return breadCrumbJson(props)

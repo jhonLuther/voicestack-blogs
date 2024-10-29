@@ -39,7 +39,6 @@ const DynamicPages = ({
 	// ...rest
 }: DynamicProps) => {
 
-	// console.log(homeSettings);
 	
 
 	const featuredBlog = homeSettings?.FeaturedBlog || posts[0];
@@ -50,7 +49,7 @@ const DynamicPages = ({
 
 	const carouselItems = [...ebooks, ...webinars]
 
-	const testimonialList = homeSettings?.testimonials ? homeSettings?.testimonials : testimonials.slice(0, 1);
+	const testimonialList = homeSettings?.testimonial ? homeSettings?.testimonial : testimonials.slice(0, 1);
 
 	const baseUrl = `/${siteConfig.pageURLs.home}`
 
@@ -67,7 +66,7 @@ const DynamicPages = ({
 			<BannerSubscribeSection />
 			<SliderSection items={carouselItems} />
 			<TestimonialSection testimonials={testimonialList} />
-			<AllcontentSection  customBrowseContent={customBrowseContent} allContent={posts} itemsPerPage={siteConfig.pagination.itemsPerPage}  redirect={true} />
+			<AllcontentSection  customBrowseContent={customBrowseContent} allContent={posts} itemsPerPage={siteConfig.pagination.itemsHomePage}  redirect={true} />
 			<ShortBannerSection />
 			</BaseUrlProvider>
 		</>

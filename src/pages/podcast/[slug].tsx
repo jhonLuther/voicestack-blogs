@@ -17,6 +17,7 @@ import ShareableLinks from '~/components/commonSections/ShareableLinks';
 import PodcastNavigator from '~/contentUtils/PodcastNavigator';
 import Section from '~/components/Section';
 import {CustomHead, generateMetaData} from '~/utils/customHead';
+import SidebarTitle from '~/components/typography/SidebarTitle';
 
 interface Props {
   podcast: Podcasts;
@@ -95,19 +96,19 @@ const PodcastPage = ({ podcast,limitedPodcasts, previous, next, currentNumber, t
         {generateMetaData(podcast)}
       <Layout >
         <MainImageSection isAudio={true} enableDate={true} post={podcast} />
+        <PodcastNavigator currentNumber={currentNumber} totalPodcasts={totalPodcasts} nextSlug={next ? next : '/'} prevSlug={previous ? previous : '/'} />
         <Section className='justify-center'>
           <Wrapper className={'flex-col'}>
-            <PodcastNavigator className={`mt-16`} currentNumber={currentNumber} totalPodcasts={totalPodcasts} nextSlug={next ? next : '/'} prevSlug={previous ? previous : '/'} />
-            {
-              podcast.htmlCode &&
-              (
-                <div className='pt-9' dangerouslySetInnerHTML={{ __html: podcast.htmlCode }}>
-                </div>
-              )
-            }
             <div className="flex  md:flex-row flex-col">
               <div className="mt-12 flex md:flex-col flex-col-reverse md:w-2/3 w-full ">
                 <div className='post__content w-full '>
+                {
+                  podcast.htmlCode &&
+                  (
+                    <div dangerouslySetInnerHTML={{ __html: podcast.htmlCode }}>
+                    </div>
+                  )
+                }
                   <SanityPortableText
                     content={podcast?.body}
                     draftMode={draftMode}
@@ -116,14 +117,20 @@ const PodcastPage = ({ podcast,limitedPodcasts, previous, next, currentNumber, t
                 </div>
               </div>
               <div className='flex-1 flex flex-col gap-12 mt-12  bg-red relative md:w-1/3 w-full'>
-                <div className='sticky top-12 flex flex-col gap-12'>
-                  {podcast.author && podcast.author?.length > 0 && 
-                    podcast.author.map((author: any,i) => {
-                      return(
-                        <AuthorInfo key={author._id || i} contentType={'podcast'} author={[author]} />
-                      )
-                    })
-                  }
+                <div className='sticky top-12 flex flex-col gap-8'>
+                  {podcast.author  && podcast.author?.length > 0 &&  
+                    <div className='flex flex-col gap-8'>
+                      <div className='flex flex-col gap-6'>
+                      {podcast.author && podcast.author?.length > 0 && 
+                        podcast.author.map((author: any,i) => {
+                          return(
+                            <AuthorInfo key={author._id || i} contentType={'podcast'} author={[author]} />
+                          )
+                        })
+                      }
+                      </div>
+      
+                  </div>}
                   <ShareableLinks props={podcast?.title} />
                 </div>
               </div>

@@ -1,6 +1,8 @@
 import Image from 'next/image';
 import React, { useEffect, useState, useRef } from 'react';
 import { urlForImage } from '~/lib/sanity.image';
+import { average } from '~/utils/color';
+import { rgbToHsl } from '~/utils/common';
 
 interface SanityImageAsset {
   _ref: string;
@@ -27,8 +29,9 @@ interface ImageLoaderProps {
   alt?: string;
   title?: string;
   className?: string;
-  imageClassName? : string;
+  imageClassName?: string;
   useClientWidth?: boolean;
+  onColorExtracted?: (color: string) => void; 
   [x: string]: any;
 }
 
@@ -41,6 +44,7 @@ const ImageLoader: React.FC<ImageLoaderProps> = ({
   className = '',
   imageClassName = "",
   useClientWidth = false,
+  onColorExtracted,
   ...props
 }) => {
   const [imageUrl, setImageUrl] = useState<string | null>(null);
@@ -58,7 +62,6 @@ const ImageLoader: React.FC<ImageLoaderProps> = ({
       const resizeObserver = new ResizeObserver((entries) => {
         for (let entry of entries) {
           handleResize(entry.contentRect.width, entry.contentRect.height);
-
         }
       });
 
@@ -72,11 +75,6 @@ const ImageLoader: React.FC<ImageLoaderProps> = ({
   useEffect(() => {
     if (!image) return;
 
-    if (typeof image === 'string') {
-      setImageUrl(image);
-      return;
-    }
-
     let url;
     if (useClientWidth) {
       const aspectRatio = image?.metadata?.dimensions?.aspectRatio || 1.5;
@@ -85,42 +83,50 @@ const ImageLoader: React.FC<ImageLoaderProps> = ({
       url = urlForImage(image._id || image, {
         width: clientWidth,
         height: calculatedHeight,
-        quality: 90
+        quality: 90,
       });
     } else {
       url = urlForImage(image._id || image, {
         width: width,
         height: height,
-        quality: 90
+        quality: 90,
       });
     }
+    setImageUrl(url);    
 
-    setImageUrl(url);
-  }, [image, clientWidth, useClientWidth, width, height]);
+    const extractColor = async () => {
+      if (url && onColorExtracted) {
+        const color:any = await average(url, { amount: 1, format: 'array' });
+       onColorExtracted(rgbToHsl(color[0], color[1], color[2]));
+      }
+    };
+
+    extractColor();
+
+  }, [image, clientWidth, useClientWidth, width, height, onColorExtracted]);
 
   if (!imageUrl) {
     return null;
   }
 
-  // const aspectRatio = image?.metadata?.dimensions?.aspectRatio 
-  const aspectRatio = clientWidth /clientHeight 
+  const aspectRatio = clientWidth / clientHeight;
 
   if (useClientWidth) {
     return (
-      <div ref={containerRef} className={`relative w-full h-full     ${className}`}>
+      <div ref={containerRef} className={`relative w-full h-auto ${className}`}>
         <div
           className="relative w-full h-full flex"
           style={{
-            paddingTop: `${(1 / aspectRatio) * 100}%`
+            paddingTop: `${(1 / aspectRatio) * 100}%`,
+            boxShadow: 'inset 0 0 0 2000px rgba(0, 0, 0, 0.3)',
           }}
         >
-     
           <Image
             src={imageUrl}
-            alt={props.altText || image.altText || 'image'}
-            title={props.title ||  image.title || ''}
+            alt={props.altText || image.altText || 'blog card image'}
+            title={props.title || image.title || 'blog card image'}
             fill
-            className=" top-0 left-0 object-cover"
+            className="top-0 left-0 object-cover !m-0"
           />
         </div>
       </div>
@@ -128,15 +134,17 @@ const ImageLoader: React.FC<ImageLoaderProps> = ({
   }
 
   return (
-    <div className={`relative  w-full h-auto   ${className}`} >
+    <div   className={`relative w-full h-auto ${className}`}>
       <Image
         src={imageUrl}
-        alt={props.altText ||image.altText  || 'blog card image'}
+        alt={props.altText || image.altText || 'blog card image'}
         title={props.title || image.title || 'blog card image'}
         width={width}
         height={height}
-        // layout="responsive"
-        className={`object-cover ${imageClassName}`}
+        className={`object-cover ${imageClassName} `}
+        style={{
+          border: '1px solid rgba(0, 0, 0, 0.1)',
+        }}  
       />
     </div>
   );

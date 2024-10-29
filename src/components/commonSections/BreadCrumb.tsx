@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { breadCrumbJsonLd } from '~/utils/generateJSONLD';
 import Head from 'next/head';
 import {CustomHead} from '~/utils/customHead';
+import {ArrowRightIcon} from '@sanity/icons'
 
 interface BreadCrumbProps {
   className?: string
@@ -41,24 +42,25 @@ const Breadcrumb = ({className}:BreadCrumbProps) => {
         className={`cursor-pointer mb-4 ${className}`}
         aria-label="Breadcrumb"
       >
-        <p className="line-clamp-1 uppercase overflow-hidden text-ellipsis">
-          <span>
-            <Link href="/">{`Home`}</Link>
+        <div className="line-clamdiv-1 uppercase overflow-hidden text-ellipsis flex items-center flex-wrap">
+          <span className='flex items-center'> 
+            <Link href="/" className='zinc-300 text-xs font-500'>{`Home`}</Link>
+            <span className="mx-3 text-zinc-500 uppercase"><ArrowRightIcon width={24} height={24}/></span>
           </span>
           {breadcrumbs.map((breadcrumb, index) => {
             const isLast = index === breadcrumbs.length - 1
             return (
-              <span key={breadcrumb.href}>
-                <span className="mx-1">/</span>
+              <span key={breadcrumb.href} className={`flex items-center ${isLast && 'w-full cursor-default'}`}>
                 {isLast ? (
-                  <span aria-current="page">{breadcrumb.label}</span>
+                  <span aria-current="page" className='zinc-400 text-xs font-500 uppercase opacity-50 mt-2'>{breadcrumb.label}</span>
                 ) : (
-                  <Link href={breadcrumb.href}>{breadcrumb.label}</Link>
+                  <Link href={breadcrumb.href} className='zinc-300 text-xs font-500 uppercase'>{breadcrumb.label}</Link>
                 )}
+                {!isLast && <span className="mx-3 text-zinc-500"><ArrowRightIcon width={24} height={24}/></span>}
               </span>
             )
           })}
-        </p>
+        </div>
       </nav>
     </Fragment>
   )

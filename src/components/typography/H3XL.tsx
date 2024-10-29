@@ -7,7 +7,7 @@ interface H3XLProps {
 
 function H3XL({className,children}:H3XLProps) {
   return (
-    <h3 className={`md:text-5xl text-4xl font-bold font-manrope md:leading-tighter w-full tracking-[-0.48px] md:tracking-[-0.96px] ${className}`}>
+    <h3 className={`md:text-5xl text-4xl font-extrabold font-manrope md:leading-tighter w-full tracking-[-0.48px] md:tracking-[-0.96px] ${className}`}>
     {children}
   </h3>  )
 }

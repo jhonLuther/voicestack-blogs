@@ -45,6 +45,21 @@ export default defineType({
     }),
 
     defineField({
+      name: 'title',
+      title: 'Title',
+      type: 'string',
+      validation: (Rule) => Rule.required(),
+    }),
+
+//  meta fields
+    defineField({
+      name: 'seoTitle',
+      title: 'Meta Title',
+      description:'Overrides main page title',
+      type: 'string',
+      fieldset: 'seo',
+    }),
+    defineField({
       name: 'seoDescription',
       title: 'Meta Description',
       type: 'string',
@@ -79,12 +94,7 @@ export default defineType({
     }),
 
     // Common Fields
-    defineField({
-      name: 'title',
-      title: 'Title',
-      type: 'string',
-      validation: (Rule) => Rule.required(),
-    }),
+
     defineField({
       name: 'slug',
       title: 'Page Path',
@@ -192,6 +202,15 @@ export default defineType({
     }),
 
     defineField({
+      name: 'facilities',
+      title: 'Facilities',
+      type: 'string',
+      fieldset: 'practiceProfile',
+      hidden: ({ parent }) =>
+        parent.contentType !== 'case-study',
+    }),
+
+    defineField({
       name: 'asideBookFreeDemoBanner',
       title: 'Aside Book Free Demo Banner',
       type: 'array',
@@ -233,6 +252,13 @@ export default defineType({
       type: 'file',
       hidden: ({ parent }) =>
         parent.contentType !== 'ebook',
+    },),
+    defineField(    {
+      name: 'pressReleaseUrl',
+      title: 'Read More Link',
+      type: 'url',
+      hidden: ({ parent }) =>
+        parent.contentType !== 'press-release',
     },),
 
 
@@ -288,12 +314,13 @@ export default defineType({
       author: 'author.name',
       media: 'mainImage',
       tag: 'tag',
+      date:'date',
     },
     prepare(selection) {
-      const { title, contentType, author, tag } = selection
+      const { title, contentType, author, tag,date } = selection
       return {
         title,
-        subtitle: author && `${contentType && contentType.toUpperCase()}`,
+        subtitle: `${selection.contentType.toUpperCase()} . ${date} `,
         media: selection.media,
       }
     },

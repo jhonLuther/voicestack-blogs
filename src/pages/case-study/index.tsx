@@ -2,7 +2,7 @@ import { GetStaticProps } from 'next';
 import { CaseStudies } from '~/interfaces/post';
 import { readToken } from '~/lib/sanity.api';
 import { getClient } from '~/lib/sanity.client';
-import {getCaseStudies, getCaseStudiesCount, getTestiMonials } from '~/lib/sanity.queries';
+import {getCaseStudies, getCaseStudiesCount, getTags, getTestiMonials } from '~/lib/sanity.queries';
 import { SharedPageProps } from '../_app';
 import Layout from '~/components/Layout';
 import Wrapper from '~/layout/Wrapper';
@@ -16,6 +16,7 @@ import {CustomHead} from '~/utils/customHead'
 import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection';
 import { BaseUrlProvider } from '~/components/Context/UrlContext';
 import ReviewsGrid from '~/components/sections/ReviewCards';
+import TagSelect from '~/contentUtils/TagSelector';
 
 export const getStaticProps: GetStaticProps<SharedPageProps & { caseStudies: CaseStudies[]; totalPages: number }> = async (context) => {
   const draftMode = context.preview || false;
@@ -23,12 +24,11 @@ export const getStaticProps: GetStaticProps<SharedPageProps & { caseStudies: Cas
   const itemsPerPage = siteConfig.pagination.childItemsPerPage;
 
   const caseStudies: any = await getCaseStudies(client, 0, itemsPerPage);
-  const latestCaseStudies: any = await getCaseStudies(client, 0, 3);
+  const latestCaseStudies: any = await getCaseStudies(client, 0, 4);
   const totalCaseStudies = await getCaseStudiesCount(client);
   const totalPages = Math.ceil(totalCaseStudies / itemsPerPage);
-
-
   const testimonials = await getTestiMonials(client);
+  const tags = await getTags(client);
 
 
   return {
@@ -38,12 +38,13 @@ export const getStaticProps: GetStaticProps<SharedPageProps & { caseStudies: Cas
       caseStudies,
       latestCaseStudies,
       totalPages,
-      testimonials
+      testimonials,
+      tags
     },
   };
 };
 
-const CaseStudiesPage = ({ caseStudies,latestCaseStudies, totalPages,testimonials }: { caseStudies: CaseStudies[];latestCaseStudies: CaseStudies[]; totalPages: number;testimonials:any }) => {
+const CaseStudiesPage = ({ caseStudies,latestCaseStudies, totalPages,testimonials,tags }: { caseStudies: CaseStudies[];latestCaseStudies: CaseStudies[]; totalPages: number;testimonials:any,tags: any }) => {
   const router = useRouter();
   const baseUrl = useRef(`/${siteConfig.pageURLs.caseStudy}`).current;
 
@@ -59,6 +60,11 @@ const CaseStudiesPage = ({ caseStudies,latestCaseStudies, totalPages,testimonial
   return (
     <BaseUrlProvider baseUrl={baseUrl}>
     <Layout>
+    <TagSelect
+				tags={tags}
+				tagLimit={7}
+				showTags={true}
+			/>
       <CustomHead props={caseStudies} />
       <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'} reverse={true} contents={latestCaseStudies} />
       {caseStudies?.map((e,i) => {

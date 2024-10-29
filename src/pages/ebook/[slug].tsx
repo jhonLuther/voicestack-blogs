@@ -18,6 +18,9 @@ import EbookCard from '~/components/uiBlocks/EbookCard';
 import Section from '~/components/Section';
 import {CustomHead, generateMetaData} from '~/utils/customHead';
 import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection';
+import AuthorInfo from '~/components/commonSections/AuthorInfo';
+import SidebarTitle from '~/components/typography/SidebarTitle';
+import ShareableLinks from '~/components/commonSections/ShareableLinks';
 
 interface Props {
   ebook: Ebooks;
@@ -73,22 +76,31 @@ const EbookPage = ({ ebook,limitedEbooks, draftMode, token }: Props) => {
     <CustomHead props ={ebook} type='eBook'/>
     {generateMetaData(ebook)}
       <Layout >
-      <MainImageSection  post={ebook} />
+        <MainImageSection  post={ebook} />
         <Section className='justify-center flex-col'>
-          <div className="flex  md:flex-row flex-col justify-center gap-20">
-            <div className="mt-12 flex md:flex-col flex-col-reverse md:max-w-xl w-full ">
+          <div className="flex md:flex-row flex-col justify-center gap-20">
+            <div className="flex md:flex-col flex-col-reverse max-w-[710px] w-full ">
             {/* <EbookCard ebook={ebook}/> */}
-            <div className='post__content w-full '>
-                  <SanityPortableText
-                    content={ebook?.body}
-                    draftMode={draftMode}
-                    token={token}
-                  />
-                </div>
+              <div className='post__content w-full '>
+                
+                {/* <h2 className="text-3xl font-bold mb-4">{ebook?.title}</h2>
+                <p className="text-lg mb-6">{ebook?.excerpt}</p> */}
+                <SanityPortableText
+                  content={ebook?.body}
+                  draftMode={draftMode}
+                  token={token}
+                />
+              </div>
             </div>
-            <div className='flex-1 flex flex-col gap-12 mt-12  bg-red relative md:max-w-lg w-full'>
-              <div className='flex flex-col gap-12'>
-              <DownloadEbook ebook={ebook} />
+            <div className='flex-1 flex flex-col gap-12 bg-red relative max-w-[410px] w-full'>
+              <div className='sticky top-12 flex flex-col gap-8'>
+                <>
+                  <SidebarTitle className='border-b border-zinc-200 pb-3'>{`To Know More About`}</SidebarTitle>
+                  <div className='flex flex-col gap-6'>
+                    <DownloadEbook ebook={ebook} />
+                  </div>
+                </>
+                <ShareableLinks props={ebook?.title} />
               </div>
             </div>
           </div>

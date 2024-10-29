@@ -151,6 +151,12 @@ export interface Articles {
   }>
 }
 export interface CaseStudies {
+  facilities: any
+  asideBookFreeDemoBanner: any
+  growingLocations: any
+  headCount: any
+  providers: any
+  location: any
   relatedArticles: any
   headings: Headings
   seoTitle: string
@@ -233,6 +239,7 @@ export interface  PressRelease {
   excerpt?: string; 
   summary?: string; 
   image?: string;
+  pressReleaseUrl?: string;
 }
 
 type Headings = any

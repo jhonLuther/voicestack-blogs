@@ -9,7 +9,7 @@ export default defineType({
       name: 'testimonialName',
       title: 'Testimonial Name',
       type: 'string',
-      description: 'The name of the person providing the testimonial',
+      description: 'Highlight testimonial',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -59,30 +59,7 @@ export default defineType({
         },
       ],
     }),
-    defineField({
-      name: 'image',
-      title: 'Image',
-      type: 'image',
-      description: 'An image to accompany this testimonial',
-    }),
-    defineField({
-      name: 'body',
-      title: 'Body',
-      type: 'newContent',
-    }),
-    defineField({
-      name: 'rating',
-      title: 'Rating',
-      type: 'number',
-      description: 'The rating for this testimonial (1-5)',
-      validation: (Rule) => Rule.required().min(1).max(5),
-    }),
-    defineField({
-      name: 'date',
-      title: 'Date',
-      type: 'date',
-      description: 'The date this testimonial was created or published',
-    }),
+
         // Tags Field
     defineField({
       name: 'tags',

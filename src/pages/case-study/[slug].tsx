@@ -17,7 +17,8 @@ import SanityPortableText from '~/components/blockEditor/sanityBlockEditor';
 import { Toc } from '~/contentUtils/sanity-toc';
 import ShareableLinks from '~/components/commonSections/ShareableLinks';
 import Section from '~/components/Section';
-import {CustomHead,generateMetaData} from '~/utils/customHead';
+import {CustomHead, generateMetaData} from '~/utils/customHead';
+import AuthorInfo from '~/components/commonSections/AuthorInfo';
 
 interface Props {
   caseStudy: CaseStudies;
@@ -63,15 +64,17 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
   };
 };
 
-const CaseStudyPage = ({ caseStudy,limitCaseStudies, draftMode, token }: Props) => {
+const CaseStudyPage = ({ caseStudy, limitCaseStudies, draftMode, token }: Props) => {
+  if(!caseStudy) {
+    return null;
+  }
+
   const seoTitle = caseStudy.seoTitle || caseStudy.title;
   const seoDescription = caseStudy.seoDescription || caseStudy.excerpt;
   const seoKeywords = caseStudy.seoKeywords || '';
   const seoRobots = caseStudy.seoRobots || 'index,follow';
   const seoCanonical = caseStudy.seoCanonical || `https://carestack.com/caseStudy/${caseStudy.slug.current}`;
   const jsonLD: any = generateJSONLD(caseStudy);
-
-  
 
   return (
     <>
@@ -88,25 +91,31 @@ const CaseStudyPage = ({ caseStudy,limitCaseStudies, draftMode, token }: Props) 
       {generateMetaData(caseStudy)}
       <Layout>
         <MainImageSection isAuthor={true} post={caseStudy} />
+        {caseStudy?.asideBookFreeDemoBanner && <AsideBannerBlock contents={caseStudy} />}
         <Section className="justify-center">
           <Wrapper className="flex-col">
             <CustomHead props={caseStudy} type="caseStudy" />
             <div className="flex md:flex-row flex-col">
               <div className="mt-12 flex md:flex-col flex-col-reverse md:w-2/3 w-full">
                 <div className="post__content w-full">
-                  <PracticeProfile contents={caseStudy} />
-                  <SanityPortableText
-                    content={caseStudy.body}
-                    draftMode={draftMode}
-                    token={token}
-                  />
+                  <SanityPortableText content={caseStudy.body} draftMode={draftMode} token={token} />
                 </div>
               </div>
               <div className="flex-1 flex flex-col gap-12 mt-12 relative md:w-1/3 w-full">
                 <div className="sticky top-12 flex flex-col gap-12">
-                  <Toc headings={caseStudy?.headings} title="Contents" />
+                  {(caseStudy?.practiceName || caseStudy?.location || caseStudy?.providers || caseStudy?.headCount || caseStudy?.growingLocations || caseStudy?.facilities) ? <PracticeProfile contents={caseStudy} />
+                    :
+
+                    <Toc headings={caseStudy?.headings} title="Contents" />
+                  }
+                  <div className='flex flex-col gap-8'>
+                  {caseStudy?.author &&
+                    <div className=''>
+                      <AuthorInfo contentType={caseStudy?.contentType} author={caseStudy?.author} />
+                    </div>
+                  }
                   <ShareableLinks props={caseStudy?.title} />
-                  <AsideBannerBlock contents={caseStudy} />
+                  </div>
                 </div>
               </div>
             </div>
@@ -116,10 +125,8 @@ const CaseStudyPage = ({ caseStudy,limitCaseStudies, draftMode, token }: Props) 
           <RelatedFeaturesSection
             contentType={caseStudy?.contentType}
             allPosts={[
-              ...(Array.isArray(caseStudy?.relatedArticles)
-                ? caseStudy.relatedArticles
-                : []),
-              ...(Array.isArray(limitCaseStudies) ? limitCaseStudies : []),
+              ...(Array.isArray(caseStudy?.relatedArticles) ? caseStudy.relatedArticles : []),
+              ...(Array.isArray(limitCaseStudies) ? limitCaseStudies : [])
             ].slice(0, 4)}
           />
         )}
