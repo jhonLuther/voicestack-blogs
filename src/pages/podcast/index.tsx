@@ -12,7 +12,7 @@ import { useRouter } from 'next/router';
 import siteConfig from '../../../config/siteConfig';
 import React, { useRef } from 'react';
 import Pagination from '~/components/commonSections/Pagination';
-import {commonMetaData, CustomHead} from '~/utils/customHead';
+import {customMetaTag, CustomHead} from '~/utils/customHead';
 import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection';
 import { BaseUrlProvider } from '~/components/Context/UrlContext';
 import TagSelect from '~/contentUtils/TagSelector';
@@ -63,7 +63,7 @@ const PodcastsPage = ({ podcasts,latestPodcasts, totalPages,tags }: { podcasts: 
 				tagLimit={7}
 				showTags={true}
 			/>
-      {commonMetaData('podcast')}
+      {customMetaTag('podcast')}
       <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'} reverse={true} contents={latestPodcasts} />
         <AllcontentSection
           className={'pb-9'}

@@ -61,7 +61,7 @@ const ogMetaData = {
   },
 }
 
-export const commonMetaData = (type: string) => {
+export const customMetaTag = (type: string) => {
   if (type) {
     const metaData = ogMetaData[type];
     if (metaData) {
@@ -82,7 +82,7 @@ export const commonMetaData = (type: string) => {
 
 export const generateMetaData = (params: any, type?: string) => {
   if (type) {
-    commonMetaData(type)
+    customMetaTag(type)
   }
   if (params) {
     return (
