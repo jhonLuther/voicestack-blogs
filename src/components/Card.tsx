@@ -21,7 +21,6 @@ import { VideoModal } from './commonSections/VideoModal';
 import H3Medium from './typography/H3Medium';
 import ChordIcon from '~/assets/reactiveAssets/ChordIcon';
 import CreaterInfo from './commonSections/CreaterInfo';
-import { extractColorFromImage } from '~/utils/common';
 
 interface CardProps {
   post: Post;
@@ -285,7 +284,7 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
 
 									//ebook card
                 ) : cardType === 'ebook-card' ? (
-                  <div className={`flex flex-col w-full min-h-[250px] h-full group`}>
+                  <div className={`flex flex-col w-full h-full group`}>
                     <Link href={linkUrl} className='flex-1 flex'>
                       <div className='relative flex flex-col'>
                         {(post.mainImage || post.image) && (
@@ -294,8 +293,6 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
                               className="object-center object-cover group-hover:scale-110 transition-transform duration-300"
                               image={bgImages[imageIndex].url}
                               alt={post.title || 'Blog Image'}
-                              height={varyingIndex ? 553 : 173}
-                              width={411}
                               useClientWidth={true}
                             />
                           </div>

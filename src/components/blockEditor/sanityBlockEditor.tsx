@@ -7,6 +7,7 @@ import DynamicComponent from '~/layout/DynamicComponent'
 import ListItem from '~/components/typography/ListItem'
 import { VideoModal } from '../commonSections/VideoModal'
 import slugify from 'slugify'
+import ImageLoader from '../commonSections/ImageLoader'
 
 interface SanityPortableTextProps {
   content: any
@@ -59,8 +60,13 @@ const SanityPortableText: React.FC<SanityPortableTextProps> = ({
     types: {
       image: ({value}) => {
         return (
-          <SanityImage 
-            {...value} 
+          <ImageLoader 
+            image={value.asset.url}
+            priority={true}
+            useClientWidth={true}
+            altText={value.asset.altText || "Post image"}
+            title={value.asset.title || "Post image"}
+            imageClassName='w-full'
             client={getClient(draftMode ? { token } : undefined)} 
           />
         )
