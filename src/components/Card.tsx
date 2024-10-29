@@ -99,7 +99,7 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
                 />
               }
             </div>
-            <div style={{ backgroundColor: `${color && color ? color : '#18181B'}` }} className={`flex ${reverse ? 'rounded-t-lg' : 'rounded-b-lg'} p-9  flex-col items-start gap-10 flex-1`}>
+            <div style={{ backgroundColor: `${color && color ? color : '#18181B'}` }} className={`flex ${reverse ? 'rounded-t-lg' : 'rounded-b-lg'} p-6 md:p-9  flex-col items-start gap-10 flex-1`}>
               <div className="flex flex-col gap-3">
                   <SubText className='!text-white'>
                     {isPageUrl ? tag?.tagName : post.contentType}
@@ -121,19 +121,20 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
 
         cardType === 'left-image-card' ? (
           <Link href={linkUrl}>
-            <div className={`flex flex-row gap-6 relative items-center group hover: transition duration-500 ${className}`}>
+            <div className={`flex flex-row gap-3 xl:gap-6 relative group hover:transition duration-500 ${className}`}>
               {post.mainImage && (
-                <div className="w-auto rounded-lg transform transition duration-500 overflow-hidden"
+                <div className="w-auto md:max-w-[266px] rounded-lg transform transition duration-500 overflow-hidden flex-1"
                 >
                   <ImageLoader
-                    className='transform   duration-300 group-hover:scale-105'
+                    className='transform h-full duration-300 group-hover:scale-105'
                     image={post?.mainImage}
                     width={264}
                     height={154}
+                    imageClassName='w-full h-full'
                   />
                 </div>
               )}
-              <div className="flex flex-col flex-1 gap-2">
+              <div className="flex flex-col flex-1 gap-2 self-center">
                   <SubText >
                     {isPageUrl ? tag?.tagName : post.contentType === "press-release" ? "press release" : post.contentType}
                   </SubText>
@@ -141,7 +142,7 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
                   {post.title}
                 </H4Large>
                 <DurationSection
-                 className={'!text-zinc-500'} 
+                 className={'!text-zinc-500 text-[12px] lg:text-[14px]'} 
                  contentType={post.contentType}
                   duration={post.contentType === 'podcast'  || post.contentType === 'webinar' || post.contentType === 'ebook' ? post?.duration :post?.estimatedReadingTime}
                    date={post?.date ? post?.date : ""}/>
@@ -290,10 +291,11 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
                         {(post.mainImage || post.image) && (
                           <div className="overflow-hidden absolute left-0 right-0 top-0 bottom-0 rounded-lg">
                             <ImageLoader
-                              className="object-center object-cover group-hover:scale-110 transition-transform duration-300"
+                              className="h-full overflow-hidden"
                               image={bgImages[imageIndex].url}
                               alt={post.title || 'Blog Image'}
-                              useClientWidth={true}
+                              // useClientWidth={true}
+                              imageClassName='h-full w-full group-hover:scale-105 transition-transform duration-300'
                             />
                           </div>
                         )}

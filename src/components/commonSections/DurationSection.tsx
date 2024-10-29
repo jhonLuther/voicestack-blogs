@@ -40,11 +40,11 @@ const DurationSection = ({ className, contentType, duration, date, isAudio = fal
                     <span>{duration}</span>
                 </div>
             ) : contentType === 'ebook' ? (
-                date && <div className={`text-white ${className}`}>
+                date && <div className={`text-white pt-2 ${className}`}>
                     {formatDateShort(date) }
                 </div>
             ) : (
-                <div className={`flex relative gap-[6px] pt-3 items-center`}>
+                <div className={`flex relative gap-[6px] pt-2 items-center`}>
                    { date && <div className={`text-white ${className}`}>
                         { formatDateShort(date) }
                     </div>}
