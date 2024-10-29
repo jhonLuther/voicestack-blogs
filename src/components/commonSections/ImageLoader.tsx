@@ -111,7 +111,7 @@ const ImageLoader: React.FC<ImageLoaderProps> = ({
     extractColor();
 
     setRenderImage(url);
-  }, [deviceObtained, imageWidthFromCdn, imageRatio, maxWidth,renderImageWidth]);
+  }, [deviceObtained, imageWidthFromCdn, imageRatio, maxWidth,renderImageWidth,onColorExtracted,image]);
 
   useEffect(() => {
     if (autoContainerRef.current) {

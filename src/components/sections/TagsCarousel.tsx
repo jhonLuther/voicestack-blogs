@@ -16,14 +16,15 @@ interface TagsCarouselProps {
 }
 
 const TagsCarousel: React.FC<TagsCarouselProps> = ({ tags, selectedTag, onTagChanges }) => {
-  if(!tags) return null
   const swiperRef = useRef(null);
-  
   useEffect(() => {
     if (swiperRef.current) {
       swiperRef.current.navigation.update();
     }
   }, [swiperRef]);
+
+  if(!tags) return null
+
 
   return (
     <>
