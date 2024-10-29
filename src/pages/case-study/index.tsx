@@ -65,7 +65,7 @@ const CaseStudiesPage = ({ caseStudies,latestCaseStudies, totalPages,testimonial
 				tagLimit={7}
 				showTags={true}
 			/>
-    8
+      {commonMetaData('caseStudy')}
       <CustomHead props={caseStudies} />
       <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'} reverse={true} contents={latestCaseStudies} />
       {caseStudies?.map((e,i) => {
