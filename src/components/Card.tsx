@@ -82,7 +82,7 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
       {cardType === 'top-image-card' ? (
         <Link href={linkUrl} className='h-full'>
           <div className={`flex flex-col w-full h-full gap-1 overflow-hidden ${reverse ? 'flex-col-reverse ' : ''}  group rounded-lg text-white`}>
-            <div className={`flex  w-full ${minHeight ? "min-h-["+minHeight+"px]" :'h-full' } `}>
+            <div className={`flex  w-full h-full `} style={{minHeight: `${minHeight}px`}}>
               {(post.mainImage) ? (
                   <ImageLoader
                     className='transform duration-300 group-hover:scale-105'
@@ -149,7 +149,7 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
                     }
                 </div>
               )}
-              <div className="flex flex-col flex-1 gap-2 self-center">
+              <div className="flex flex-col flex-1 gap-2 self-center w-full">
                   <SubText >
                     {isPageUrl ? tag?.tagName : post.contentType === "press-release" ? "press release" : post.contentType}
                   </SubText>
@@ -357,8 +357,8 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
                         )}
                         {
 
-                          <div className={`${varyingIndex ? 'p-8 bg-indigo-900 text-white rounded-b-lg mt-1' : 'mt-6'} flex flex-col gap-1 min-h-[154px]`}>
-                            <div className='flex flex-col flex-grow'>
+                          <div className={`${varyingIndex ? 'p-8 bg-indigo-900 text-white rounded-b-lg mt-1' : 'mt-6'} flex flex-col gap-1 `}>
+                            <div className='flex flex-col '>
                               {post.contentType && (
                                 <SubText className={`${varyingIndex ? '!text-white' : ''} mb-2`}>
                                   {post.contentType === "press-release" ? "press release" : post.contentType}
