@@ -79,7 +79,7 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
   return (
     <React.Fragment>
       {cardType === 'top-image-card' ? (
-        <Link href={linkUrl}>
+        <Link href={linkUrl} className='flex h-full'>
           <div className={`flex flex-col gap-1 ${reverse ? 'flex-col-reverse' : ''} group overflow-hidden text-white`}>
             <div className={`overflow-hidden ${reverse ? 'rounded-b-lg' : 'rounded-t-lg'}`}>
               {(post.mainImage) ? (
