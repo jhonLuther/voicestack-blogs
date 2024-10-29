@@ -2,7 +2,7 @@ import { GetStaticProps } from 'next';
 import { Podcasts, PressRelease } from '~/interfaces/post';
 import { readToken } from '~/lib/sanity.api';
 import { getClient } from '~/lib/sanity.client';
-import { getPressReleases, getPressReleasesCount } from '~/lib/sanity.queries';
+import { getPressReleases, getPressReleasesCount, getTags } from '~/lib/sanity.queries';
 import { SharedPageProps } from '../_app';
 import Layout from '~/components/Layout';
 import Wrapper from '~/layout/Wrapper';
@@ -14,6 +14,7 @@ import React, { useRef } from 'react';
 import Pagination from '~/components/commonSections/Pagination';
 import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection';
 import { BaseUrlProvider } from '~/components/Context/UrlContext';
+import TagSelect from '~/contentUtils/TagSelector';
 
 export const getStaticProps: GetStaticProps<SharedPageProps & { pressReleases: PressRelease[]; totalPages: number }> = async (context) => {
   const draftMode = context.preview || false;
@@ -24,6 +25,8 @@ export const getStaticProps: GetStaticProps<SharedPageProps & { pressReleases: P
   const latestPressReleases: any = await getPressReleases(client, 0, 4);
   const totalPressReleases = await getPressReleasesCount(client);
   const totalPages = Math.ceil(totalPressReleases / itemsPerPage);
+  const tags = await getTags(client);
+
 
   return {
     props: {
@@ -32,11 +35,12 @@ export const getStaticProps: GetStaticProps<SharedPageProps & { pressReleases: P
       pressReleases,
       latestPressReleases,
       totalPages,
+      tags
     },
   };
 };
 
-const PressReleasePage = ({ pressReleases,latestPressReleases, totalPages }: { pressReleases: Podcasts[];latestPressReleases: Podcasts[]; totalPages: number }) => {
+const PressReleasePage = ({ pressReleases,latestPressReleases, totalPages,tags }: { pressReleases: Podcasts[];latestPressReleases: Podcasts[]; totalPages: number,tags : any }) => {
   const router = useRouter();
   const baseUrl = useRef(`/${siteConfig.pageURLs.pressRelease}`).current;
 
@@ -51,6 +55,11 @@ const PressReleasePage = ({ pressReleases,latestPressReleases, totalPages }: { p
   return (
     <BaseUrlProvider baseUrl={baseUrl}>
     <Layout>
+    <TagSelect
+				tags={tags}
+				tagLimit={7}
+				showTags={true}
+			/>
       <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'} reverse={true} contents={latestPressReleases} />
         <AllcontentSection
           className={'pb-9'}

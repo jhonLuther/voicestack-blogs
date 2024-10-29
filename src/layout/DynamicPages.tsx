@@ -66,7 +66,7 @@ const DynamicPages = ({
 			<BannerSubscribeSection />
 			<SliderSection items={carouselItems} />
 			<TestimonialSection testimonials={testimonialList} />
-			<AllcontentSection  customBrowseContent={customBrowseContent} allContent={posts} itemsPerPage={siteConfig.pagination.itemsPerPage}  redirect={true} />
+			<AllcontentSection  customBrowseContent={customBrowseContent} allContent={posts} itemsPerPage={siteConfig.pagination.itemsHomePage}  redirect={true} />
 			<ShortBannerSection />
 			</BaseUrlProvider>
 		</>
