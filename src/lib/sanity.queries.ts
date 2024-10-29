@@ -15,7 +15,7 @@ const bodyFragment = `
       title,
       platform,
       videoId,
-      }
+    }
     },
     _type == "image" => {
       ...,
@@ -84,7 +84,7 @@ const imageFragment = `
   `
 
 export const postsQuery = groq`
-*[_type == "post" && defined(slug.current)] | order(date desc)  {
+*[_type == "post" && defined(slug.current) && defined(date)] | order(date desc) {
  ${imageFragment},
  title,
  slug,
@@ -303,7 +303,7 @@ export async function getPostsByTagAndLimit(
   end: number
 ) {
   return client.fetch(
-    groq`*[_type == "post" && references($tagId)] | order(publishedAt desc) [$start...$end] {
+    groq`*[_type == "post" && references($tagId)] | order(date desc) [$start...$end] {
       title,
       contentType,
       ${imageFragment},
@@ -477,7 +477,7 @@ export async function getPostsBySlug(
 
 
 export const podcastsQuery = groq`
-*[_type == "post" && contentType == "podcast" && defined(slug.current)] |  order(_updatedAt desc){
+*[_type == "post" && contentType == "podcast" && defined(slug.current) && defined(date)] |  order(date desc){
   _id,
   title,
   slug,
@@ -502,7 +502,7 @@ export const podcastsQuery = groq`
 }
 `
 export const webinarsQuery = groq`
-*[_type == "post" && contentType == "webinar" && defined(slug.current)] |  order(_updatedAt desc){
+*[_type == "post" && contentType == "webinar" && defined(slug.current) && defined(date)] |  order(date desc){
   _id,
   title,
   slug,
@@ -531,7 +531,7 @@ export const webinarsQuery = groq`
 }
 `
 export const ebooksQuery = groq`
-*[_type == "post" && contentType == "ebook" && defined(slug.current)] |  order(_updatedAt desc){
+*[_type == "post" && contentType == "ebook" && defined(slug.current) && defined(date)] |  order(date desc){
   _id,
   title,
   slug,
@@ -561,7 +561,7 @@ export const ebooksQuery = groq`
 }
 `
 export const pressReleasesQuery = groq`
-*[_type == "post" && contentType == "press-release" && defined(slug.current)] |  order(_updatedAt desc){
+*[_type == "post" && contentType == "press-release" && defined(slug.current) && defined(date)] |  order(date desc){
   _id,
   title,
   slug,
@@ -593,7 +593,7 @@ export const pressReleasesQuery = groq`
 }
 `
 export const artilclesQuery = groq`
-*[_type == "post" && contentType == "article" && defined(slug.current)] |  order(_updatedAt desc){
+*[_type == "post" && contentType == "article" && defined(slug.current) && defined(date)] |  order(date desc){
   _id,
   title,
   slug,
@@ -624,7 +624,7 @@ export const artilclesQuery = groq`
 `
 
 export const caseStudiesQuery = groq`
-*[_type == "post" && contentType == "case-study" && defined(slug.current)] |  order(_updatedAt desc){
+*[_type == "post" && contentType == "case-study" && defined(slug.current) && defined(date)] |  order(date desc){
   _id,
   title,
   slug,

@@ -2,7 +2,7 @@ import { GetStaticProps } from 'next';
 import { Articles } from '~/interfaces/post';
 import { readToken } from '~/lib/sanity.api';
 import { getClient } from '~/lib/sanity.client';
-import { getArticles, getArticlesCount } from '~/lib/sanity.queries';
+import { getArticles, getArticlesCount, getTags } from '~/lib/sanity.queries';
 import { SharedPageProps } from '../_app';
 import Layout from '~/components/Layout';
 import Wrapper from '~/layout/Wrapper';
@@ -15,6 +15,7 @@ import Pagination from '~/components/commonSections/Pagination';
 import CustomHead from '~/utils/customHead';
 import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection';
 import { BaseUrlProvider } from '~/components/Context/UrlContext';
+import TagSelect from '~/contentUtils/TagSelector';
 
 export const getStaticProps: GetStaticProps<SharedPageProps & { articles: Articles[]; totalPages: number }> = async (context) => {
   const draftMode = context.preview || false;
@@ -25,6 +26,8 @@ export const getStaticProps: GetStaticProps<SharedPageProps & { articles: Articl
   const latestArticles: any = await getArticles(client, 0, 3);
   const totalArticles = await getArticlesCount(client);
   const totalPages = Math.ceil(totalArticles / itemsPerPage);
+  const tags = await getTags(client);
+
 
   return {
     props: {
@@ -33,11 +36,12 @@ export const getStaticProps: GetStaticProps<SharedPageProps & { articles: Articl
       articles,
       latestArticles,
       totalPages,
+      tags
     },
   };
 };
 
-const ArticlesPage = ({ articles,latestArticles, totalPages }: { articles: Articles[];latestArticles: Articles[]; totalPages: number }) => {
+const ArticlesPage = ({ articles,latestArticles, totalPages,tags }: { articles: Articles[];latestArticles: Articles[]; totalPages: number,tags: any }) => {
   const router = useRouter();
   const baseUrl = useRef(`/${siteConfig.pageURLs.article}`).current;
 
@@ -52,6 +56,11 @@ const ArticlesPage = ({ articles,latestArticles, totalPages }: { articles: Artic
   return (
     <BaseUrlProvider baseUrl={baseUrl}>
     <Layout>
+    <TagSelect
+				tags={tags}
+				tagLimit={7}
+				showTags={true}
+			/>
       <LatestBlogs  className={'pt-11 pr-9 pb-16 pl-9'} reverse={true} contents={latestArticles} />
       {articles?.length
         ? articles.map((e, i) => {
