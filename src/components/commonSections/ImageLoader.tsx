@@ -2,6 +2,7 @@ import Image from 'next/image';
 import React, { useEffect, useState, useRef } from 'react';
 import { urlForImage } from '~/lib/sanity.image';
 import { average } from '~/utils/color';
+import { rgbToHsl } from '~/utils/common';
 
 interface SanityImageAsset {
   _ref: string;
@@ -95,8 +96,8 @@ const ImageLoader: React.FC<ImageLoaderProps> = ({
 
     const extractColor = async () => {
       if (url && onColorExtracted) {
-        const color:any = await average(url, { amount: 1, format: 'hex' });
-        onColorExtracted(color);
+        const color:any = await average(url, { amount: 1, format: 'array' });
+       onColorExtracted(rgbToHsl(color[0], color[1], color[2]));
       }
     };
 
@@ -112,19 +113,20 @@ const ImageLoader: React.FC<ImageLoaderProps> = ({
 
   if (useClientWidth) {
     return (
-      <div ref={containerRef} className={`relative w-full h-full ${className}`}>
+      <div ref={containerRef} className={`relative w-full h-auto ${className}`}>
         <div
           className="relative w-full h-full flex"
           style={{
-            paddingTop: `${(1 / aspectRatio) * 100}%`
+            paddingTop: `${(1 / aspectRatio) * 100}%`,
+            boxShadow: 'inset 0 0 0 2000px rgba(0, 0, 0, 0.3)',
           }}
         >
           <Image
             src={imageUrl}
             alt={props.altText || image.altText}
-            title={props.title || image.title || ''}
+            title={props.title || image.title }
             fill
-            className="top-0 left-0 object-cover"
+            className="top-0 left-0 object-cover !m-0"
           />
         </div>
       </div>
@@ -132,14 +134,17 @@ const ImageLoader: React.FC<ImageLoaderProps> = ({
   }
 
   return (
-    <div className={`relative w-full h-auto ${className}`}>
+    <div   className={`relative w-full h-auto ${className}`}>
       <Image
         src={imageUrl}
         alt={props.altText || image.altText || 'blog card image'}
         title={props.title || image.title || 'blog card image'}
         width={width}
         height={height}
-        className={`object-cover ${imageClassName}`}
+        className={`object-cover ${imageClassName} `}
+        style={{
+          border: '1px solid rgba(0, 0, 0, 0.1)',
+        }}  
       />
     </div>
   );

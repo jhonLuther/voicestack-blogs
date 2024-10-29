@@ -13,6 +13,34 @@ export const fetchAuthor = (post) => {
   }
 
 
+   export function rgbToHsl(r, g, b) {
+    r /= 255, g /= 255, b /= 255;
+  
+    var max = Math.max(r, g, b), min = Math.min(r, g, b);
+    var h, s, l = (max + min) / 2;
+  
+    if (max == min) {
+      h = s = 0; // achromatic
+    } else {
+      var d = max - min;
+      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+  
+      switch (max) {
+        case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+        case g: h = (b - r) / d + 2; break;
+        case b: h = (r - g) / d + 4; break;
+      }
+  
+      h /= 6;
+    }
+  
+    // return [ h, 40, 40 ];
+
+    return `hsl(${h*360},50%,40%)`
+    // return `hsl(${h*100},40%,40%)`
+  }
+
+
   export function getRelatedFeatures(currentPost: Post, allPosts: Post[]): Post[] {
     const currentTags = new Set(currentPost.tags?.map(tag => tag.tagName) || []);
   
@@ -45,18 +73,4 @@ export const fetchAuthor = (post) => {
   };
 
 
-export async function extractColorFromImage(imageUrl: any): Promise<string> {
-  try {
-    const colors: any = await average(imageUrl, { amount: 1, format: 'hex' });
-    if (colors) {
-      return colors;
-    }
-    return 'white';
-  } catch (error) {
-    console.error('Error extracting color:', error);
-    return 'white';
-  }
-}
-
-export { average };
 

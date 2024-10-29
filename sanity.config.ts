@@ -14,7 +14,7 @@ import {
 } from 'sanity-plugin-iframe-pane'
 import { previewUrl } from 'sanity-plugin-iframe-pane/preview-url'
 import { table } from '@sanity/table'
-import {CogIcon,HomeIcon} from '@sanity/icons'
+import {CogIcon,DesktopIcon,HomeIcon} from '@sanity/icons'
 // see https://www.sanity.io/docs/api-versioning for how versioning works
 import {
   apiVersion,
@@ -124,7 +124,14 @@ export default defineConfig({
               S.documentTypeListItem('customer').title('Customer'),
               S.documentTypeListItem('testimonial').title('Testimonial'),
               S.documentTypeListItem('videos').title('Video'),
-              S.documentTypeListItem('siteSetting').title('Site Configuration'),
+              S.listItem()
+              .title('Site Configuration')
+              .icon(DesktopIcon)
+              .child(
+                S.document()
+                  .schemaType('siteSetting')
+                  .documentId('siteSetting'),
+              ),
               S.documentTypeListItem('customContent').title('Custom Content'),
               // S.documentTypeListItem('testimonial').title('Testimonial'),
             // ...S.documentTypeListItems().filter(

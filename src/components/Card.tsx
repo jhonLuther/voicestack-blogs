@@ -21,7 +21,6 @@ import { VideoModal } from './commonSections/VideoModal';
 import H3Medium from './typography/H3Medium';
 import ChordIcon from '~/assets/reactiveAssets/ChordIcon';
 import CreaterInfo from './commonSections/CreaterInfo';
-import { extractColorFromImage } from '~/utils/common';
 
 interface CardProps {
   post: Post;
