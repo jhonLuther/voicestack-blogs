@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import React, { useEffect, useState, useRef } from 'react';
 import { urlForImage } from '~/lib/sanity.image';
+import useBoundingWidth, { DeviceType } from '~/utils/boundingWIdthHook';
 import { average } from '~/utils/color';
 import { rgbToHsl } from '~/utils/common';
 
@@ -31,7 +32,9 @@ interface ImageLoaderProps {
   className?: string;
   imageClassName?: string;
   useClientWidth?: boolean;
-  onColorExtracted?: (color: string) => void; 
+  onColorExtracted?: (color: string) => void;
+  maxWidth?: number;
+  fixed?: boolean;
   [x: string]: any;
 }
 
@@ -42,112 +45,93 @@ const ImageLoader: React.FC<ImageLoaderProps> = ({
   alt,
   title,
   className = '',
-  imageClassName = "",
+  imageClassName = '',
   useClientWidth = false,
+  maxWidth = 1200,
   onColorExtracted,
+  fixed = true,
   ...props
 }) => {
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const [clientWidth, setClientWidth] = useState<number>(width);  
-  const [clientHeight, setClientHeight] = useState<number>(height);  
+  const autoContainerRef = useRef<HTMLDivElement>(null);
+  const [clientWidth, setClientWidth] = useState<number>(width);
+  const [clientHeight, setClientHeight] = useState<number>(height);
+  const [renderImage, setRenderImage] = useState<string>('');
+  const [renderImageWidth, setRenderImageWidth] = useState<number>(0);
+  const [renderImageHeight, setRenderImageHeight] = useState<number>(0);
+  const [renderImageRatio, setRenderImageRatio] = useState<number>(0);
+
+  const deviceObtained = useBoundingWidth() as DeviceType;
+
+  const imageWidthFromCdn = image?.metadata?.dimensions?.width;
+  const imageRatio = image?.metadata?.dimensions?.aspectRatio;
+
+  console.log(image,'img');
+  
 
   useEffect(() => {
-    if (useClientWidth && containerRef.current) {
-      const handleResize = (width: number, height: number) => {
-        setClientWidth(width);
-        setClientHeight(height);
-      };
-
-      const resizeObserver = new ResizeObserver((entries) => {
-        for (let entry of entries) {
-          handleResize(entry.contentRect.width, entry.contentRect.height);
-        }
-      });
-
-      handleResize(containerRef.current.clientWidth, containerRef.current.clientHeight);
-      resizeObserver.observe(containerRef.current);
-
-      return () => resizeObserver.disconnect();
+    // Calculate proposedWidth based on deviceObtained and image width
+    let newProposedWidth = 0;
+    if (imageWidthFromCdn && imageRatio) {
+      if (deviceObtained === 'smallMobile') {
+        newProposedWidth = Math.min(imageWidthFromCdn, 600);
+      } else if (deviceObtained === 'largeMobile') {
+        newProposedWidth = Math.min(imageWidthFromCdn, 767);
+      } else if (deviceObtained === 'tab') {
+        newProposedWidth = Math.min(imageWidthFromCdn, maxWidth);
+      } else {
+        newProposedWidth = maxWidth;
+      }
     }
-  }, [useClientWidth]);
 
-  useEffect(() => {
-    if (!image) return;
+    setRenderImageWidth(newProposedWidth);
+    setRenderImageRatio(imageRatio);
 
-    let url;
-    if (useClientWidth) {
-      const aspectRatio = image?.metadata?.dimensions?.aspectRatio || 1.5;
-      const calculatedHeight = Math.round(clientWidth / aspectRatio);
+    // Calculate the height based on the aspect ratio
+    const renderImageHeight = newProposedWidth / imageRatio;
 
-      url = urlForImage(image._id || image, {
-        width: clientWidth,
-        height: calculatedHeight,
-        quality: 90,
-      });
-    } else {
-      url = urlForImage(image._id || image, {
-        width: width,
-        height: height,
-        quality: 90,
-      });
-    }
-    setImageUrl(url);    
+    setRenderImageHeight(renderImageHeight);
+
+
+    // Generate the image URL
+    const url = urlForImage(image._id || image, {
+      width: newProposedWidth,
+      height: renderImageHeight,
+      quality: 90,
+    });
 
     const extractColor = async () => {
       if (url && onColorExtracted) {
-        const color:any = await average(url, { amount: 1, format: 'array' });
-       onColorExtracted(rgbToHsl(color[0], color[1], color[2]));
+        const color: any = await average(url, { amount: 1, format: 'array' });
+        onColorExtracted(rgbToHsl(color[0], color[1], color[2]));
       }
     };
 
     extractColor();
 
-  }, [image, clientWidth, useClientWidth, width, height, onColorExtracted]);
+    setRenderImage(url);
+  }, [deviceObtained, imageWidthFromCdn, imageRatio, maxWidth,renderImageWidth,onColorExtracted,image]);
 
-  if (!imageUrl) {
-    return null;
-  }
+  useEffect(() => {
+    if (autoContainerRef.current) {
+      setClientHeight(autoContainerRef.current.clientHeight);
+      setClientWidth(autoContainerRef.current.clientWidth);
+    }
+  }, [renderImageWidth,autoContainerRef]);
 
-  const aspectRatio = clientWidth / clientHeight;
+  console.log(renderImageWidth,'renderImageWidth');
+  
 
-  if (useClientWidth) {
-    return (
-      <div ref={containerRef} className={`relative w-full h-auto ${className}`}>
-        <div
-          className="relative w-full h-full flex"
-          style={{
-            paddingTop: `${(1 / aspectRatio) * 100}%`,
-            boxShadow: 'inset 0 0 0 2000px rgba(0, 0, 0, 0.3)',
-          }}
-        >
-          <Image
-            src={imageUrl}
-            alt={props.altText || image.altText || 'blog card image'}
-            title={props.title || image.title || 'blog card image'}
-            fill
-            className="top-0 left-0 object-cover !m-0"
-          />
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div   className={`relative w-full h-auto ${className}`}>
-      <Image
-        src={imageUrl}
-        alt={props.altText || image.altText || 'blog card image'}
-        title={props.title || image.title || 'blog card image'}
-        width={width}
-        height={height}
-        className={`object-cover ${imageClassName} `}
-        style={{
-          border: '1px solid rgba(0, 0, 0, 0.1)',
-        }}  
-      />
+  return fixed ? (
+    <div ref={containerRef} className="flex w-full h-full relative ">
+      <Image src={renderImage} alt={alt || ''} className={`object-cover object-center ${imageClassName}`} fill />
     </div>
-  );
+  ) : renderImageWidth>0 ? (
+    <div ref={autoContainerRef} className={`w-full h-auto relative `}>
+      <Image className='!m-0' src={renderImage} alt={alt || ''} width={clientWidth} height={(clientWidth / renderImageWidth) * renderImageHeight } />
+    </div>
+  ) : null;
 };
 
 export default ImageLoader;

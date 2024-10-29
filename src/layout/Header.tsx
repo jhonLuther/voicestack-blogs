@@ -4,6 +4,7 @@ import SearchBar from '~/components/widgets/SearchBar';
 import ProgressBar from '~/utils/progressBar/progressBar';
 import {ArrowRightIcon} from '@sanity/icons'
 import { useRouter } from 'next/router';
+import Logo from '~/assets/reactiveAssets/Logo';
 
 const navigationLinks = [
   { href: "/case-study", label: "Case Studies" },
@@ -40,7 +41,7 @@ const Header = () => {
           <div className="flex flex-col gap-3 justify-between py-6">
             <div className='flex md:flex-row gap-2 flex-col justify-between'>
               <Link href="/" className="text-2xl font-extrabold bg-gradient-text bg-clip-text text-transparent font-monrope tracking-tighterText">
-                {`Dentistry's Inner Circle`}
+              <Logo/> 
               </Link>
               
               <div className='flex md:flex-row flex-col gap-2 justify-between items-center'>
@@ -50,7 +51,7 @@ const Header = () => {
                     <Link 
                       key={link.href} 
                       href={link.href} 
-                      className={`hover:text-zinc-300 text-sm md:text-base ${router.pathname === link.href ? 'text-zinc-300' : 'text-zinc-500'}`}
+                      className={`hover:text-zinc-300 text-base ${router.pathname.startsWith(link.href) ? 'text-zinc-300' : 'text-zinc-500'}`}
                     >
                       {link.label}
                     </Link>

@@ -32,7 +32,14 @@ const bodyFragment = `
             slug,
             role,
             bio,
-            "picture": picture.asset->url
+            "picture": picture.asset-> {
+              _id,
+              metadata {
+                dimensions
+              },
+              altText,
+              title
+            },
           },
           image {
             asset->{
