@@ -290,10 +290,11 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
                         {(post.mainImage || post.image) && (
                           <div className="overflow-hidden absolute left-0 right-0 top-0 bottom-0 rounded-lg">
                             <ImageLoader
-                              className="object-center object-cover group-hover:scale-110 transition-transform duration-300"
+                              className="h-full overflow-hidden"
                               image={bgImages[imageIndex].url}
                               alt={post.title || 'Blog Image'}
-                              useClientWidth={true}
+                              // useClientWidth={true}
+                              imageClassName='h-full w-full group-hover:scale-105 transition-transform duration-300'
                             />
                           </div>
                         )}
