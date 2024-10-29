@@ -59,14 +59,16 @@ const SanityPortableText: React.FC<SanityPortableTextProps> = ({
     },
     types: {
       image: ({value}) => {
+        console.log(value,'value');
+        
         return (
           <ImageLoader 
-            image={value.asset.url}
+            image={value.asset}
             priority={true}
             altText={value.asset.altText || "Post image"}
             title={value.asset.title || "Post image"}
             imageClassName='w-full'
-            useDefaultSize={true}
+            fixed={false}
             client={getClient(draftMode ? { token } : undefined)} 
           />
         )

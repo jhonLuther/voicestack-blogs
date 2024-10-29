@@ -54,7 +54,7 @@ const MainImageSection = ({ post, isAuthor, enableDate = false, isAudio = false,
 					</div>
 					<div className='absolute left-1/2 right-0 top-0 bottom-0 w-auto'>
 						<ImageLoader
-							image={post.mainImage || post.image}
+							image={post.mainImage}
 							priority={true}
 							useClientWidth={true}
 							// useDefaultSize={true}

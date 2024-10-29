@@ -159,8 +159,8 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
           ${cardType === 'left-image-card'
             ? 'grid-cols-1 lg:grid-cols-2 md:grid-cols-2 gap-x-6 xl:gap-x-16 gap-y-12'
             : cardType === 'podcast-card'
-              ? 'lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-x-8 gap-y-8'
-              : 'lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-x-8 gap-y-8'
+              ? 'lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-10'
+              : 'lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-10'}
           }
         `}>
           {allContent && allContent.length > 0 ? (
