@@ -123,13 +123,13 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
           <Link href={linkUrl}>
             <div className={`flex flex-row gap-6 relative items-center group hover: transition duration-500 ${className}`}>
               {post.mainImage && (
-                <div className="w-auto rounded-lg transform transition duration-500 overflow-hidden"
+                <div className="md:w-[264px] md:h-[154px] w-auto h-auto rounded-lg transform transition duration-500 overflow-hidden"
                 >
                   <ImageLoader
                     className='transform   duration-300 group-hover:scale-105'
                     image={post?.mainImage}
-                    width={264}
-                    height={154}
+                    // useClientWidth={true}
+                    useDefaultSize={true}
                   />
                 </div>
               )}

@@ -52,7 +52,7 @@ export default function useBoundingWidth() {
     return () => {
     windowObj?.removeEventListener("resize", handleResizeDebounced);
     };
-  }, [windowObj]);
+  }, []);
 
   return device;
 }
@@ -66,5 +66,3 @@ function debounce(callback, delay) {
     }, delay);
   };
 }
-
-export type DeviceType = 'smallMobile' | 'largeMobile' | 'tab' | 'largerDevice' | null;

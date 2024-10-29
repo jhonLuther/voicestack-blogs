@@ -57,6 +57,7 @@ const MainImageSection = ({ post, isAuthor, enableDate = false, isAudio = false,
 							image={post.mainImage || post.image}
 							priority={true}
 							useClientWidth={true}
+							// useDefaultSize={true}
 							alt={post.title || "Post image"}
 							client={client}
 							imageClassName='w-full h-full object-cover'
