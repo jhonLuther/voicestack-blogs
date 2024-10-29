@@ -4,10 +4,91 @@ import Head from 'next/head'
 import { urlForImage } from '~/lib/sanity.image'
 import { getIframeUrl } from '~/components/commonSections/VideoModal'
 
-export const generateMetaData = (params: any) => {
+const ogMetaData = {
+  article: {
+    'title': 'Articles | Official CareStack® Article Series, Read Now',
+    keywords:
+      'carestack articles, carestack blog articles, carestack educational articles, dental articles, articles for dentists',
+    'og:description':
+      'Read some of the CareStack® Articles—perspectives from industry experts & the CareStack team on gaining growth & optimizing performance at your dental office.',
+    'og:url': 'https://carestack.com/support/resources/articles',
+    author: 'CareStack®',
+  },
+  ebook: {
+    'title': 'Official CareStack® eBook Series, Read Now',
+    keywords:
+      'carestack ebooks, downloadable carestack ebooks, carestack educational ebooks, dental ebooks, ebooks for dentists',
+    'og:description':
+      'Read some of the CareStack® e-Books—a collection of playbooks created by industry experts to help you build the right kind of practice management systems.',
+    'og:url': 'https://carestack.com/support/resources/e-books',
+    author: 'CareStack®',
+  },
+  podcast: {
+    'title': 'Podcasts | Official CareStack® Podcast Series, Listen Now',
+    keywords:
+      'carestack podcasts, carestack audio podcasts, carestack educational podcasts, dental software, podcasts, podcasts for dentists',
+    'og:description':
+      'Listen to some of the CareStack® Podcasts—an audio series from practice owners on how they navigated the change and successfully transitioned to CareStack.',
+    'og:url': 'https://carestack.com/support/resources/podcasts',
+    author: 'CareStack®',
+  },
+  webinar: {
+    'title': 'Webinars | Official CareStack® Webinar Series, Watch Now',
+    keywords:
+      'carestack webinars, carestack webinar recordings, carestack educational webinars, dental software webinars',
+    'og:description':
+      'Watch CareStack® Webinars—steamable recordings from practice owners, industry leaders, & CareStack team members discussing trending topics & best practices.',
+    'og:url': 'https://carestack.com/support/resources/webinars',
+    author: 'CareStack®',
+  },
+  caseStudy: {
+    'title': 'In-Depth Case Studies | Achieving Success With CareStack®',
+    keywords:
+      'carestack case studies, carestack customer experiences, carestack client experiences, dental office outcomes',
+    'og:description':
+      'Read first-hand, in-depth accounts of practices that have faced a challenge, found a solution, and achieved success transitioning to CareStack.',
+    'og:url': 'https://carestack.com/dental-software/case-studies',
+    author: 'CareStack®',
+  },
+  pressRelease: {
+    'title': 'Press | CareStack® Press & News | Downloadable Press Kit',
+    keywords:
+      'carestack press kit, carestack in the press, press about carestack, carestack in the news, news about carestack',
+    'og:description':
+      'CareStack® frequently makes waves in the news media. View some of our recent headlines, download our press kit, or contact our corporate press representative.',
+    'og:url': 'https://carestack.com/company/press',
+    author: 'CareStack®',
+  },
+}
+
+export const commonMetaData = (type: string) => {
+  if (type) {
+    const metaData = ogMetaData[type]
+    console.log({ metaData })
+    if (metaData) {
+      return Object.keys(metaData).map((key) => (
+        <Head>
+          {key === 'title' ? (
+            <title> {metaData[key]}</title>
+          ) : (
+            <meta property={key} content={metaData[key]} key={key} />
+          )}
+        </Head>
+      ))
+    }
+  }
+  return null
+}
+
+
+export const generateMetaData = (params: any, type?: string) => {
+  if (type) {
+    commonMetaData(type)
+  }
   if (params) {
     return (
       <Head>
+        <meta property="og:type" content="website" />
         {params?.mainImage ? (
           <meta
             property="og:image"
