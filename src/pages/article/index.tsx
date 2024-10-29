@@ -12,7 +12,7 @@ import { useRouter } from 'next/router';
 import siteConfig from '../../../config/siteConfig';
 import React, { useRef } from 'react';
 import Pagination from '~/components/commonSections/Pagination';
-import CustomHead from '~/utils/customHead';
+import {CustomHead} from '~/utils/customHead';
 import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection';
 import { BaseUrlProvider } from '~/components/Context/UrlContext';
 
@@ -25,7 +25,7 @@ export const getStaticProps: GetStaticProps<SharedPageProps & { articles: Articl
   const latestArticles: any = await getArticles(client, 0, 3);
   const totalArticles = await getArticlesCount(client);
   const totalPages = Math.ceil(totalArticles / itemsPerPage);
-
+  
   return {
     props: {
       draftMode,
@@ -40,7 +40,6 @@ export const getStaticProps: GetStaticProps<SharedPageProps & { articles: Articl
 const ArticlesPage = ({ articles,latestArticles, totalPages }: { articles: Articles[];latestArticles: Articles[]; totalPages: number }) => {
   const router = useRouter();
   const baseUrl = useRef(`/${siteConfig.pageURLs.article}`).current;
-
   const handlePageChange = (page: number) => {
     if (page === 1) {
       router.push(baseUrl);
@@ -52,10 +51,11 @@ const ArticlesPage = ({ articles,latestArticles, totalPages }: { articles: Artic
   return (
     <BaseUrlProvider baseUrl={baseUrl}>
     <Layout>
+      <CustomHead props={articles} type="articleExpanded"/>
       <LatestBlogs  className={'pt-11 pr-9 pb-16 pl-9'} reverse={true} contents={latestArticles} />
       {articles?.length
         ? articles.map((e, i) => {
-            return <CustomHead props={e} type="caseStudy" key={i} />
+            return (<CustomHead props={e} type="caseStudy" key={i} />)
           })
         : null}
         <AllcontentSection

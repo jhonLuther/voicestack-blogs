@@ -16,6 +16,7 @@ import AuthorInfo from '~/components/commonSections/AuthorInfo';
 import ShareableLinks from '~/components/commonSections/ShareableLinks';
 import PodcastNavigator from '~/contentUtils/PodcastNavigator';
 import Section from '~/components/Section';
+import {CustomHead, generateMetaData} from '~/utils/customHead';
 
 interface Props {
   podcast: Podcasts;
@@ -91,6 +92,7 @@ const PodcastPage = ({ podcast,limitedPodcasts, previous, next, currentNumber, t
         jsonLD={jsonLD}
         ogImage={urlForImage(podcast?.mainImage)}
         contentType={podcast?.contentType} />
+        {generateMetaData(podcast)}
       <Layout >
         <MainImageSection isAudio={true} enableDate={true} post={podcast} />
         <Section className='justify-center'>

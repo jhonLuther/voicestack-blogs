@@ -16,7 +16,7 @@ import SEOHead from '~/layout/SeoHead';
 import { generateJSONLD } from '~/utils/generateJSONLD';
 import EbookCard from '~/components/uiBlocks/EbookCard';
 import Section from '~/components/Section';
-import CustomHead from '~/utils/customHead';
+import {CustomHead, generateMetaData} from '~/utils/customHead';
 import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection';
 
 interface Props {
@@ -71,6 +71,7 @@ const EbookPage = ({ ebook,limitedEbooks, draftMode, token }: Props) => {
   return (
     <>
     <CustomHead props ={ebook} type='eBook'/>
+    {generateMetaData(ebook)}
       <Layout >
       <MainImageSection  post={ebook} />
         <Section className='justify-center flex-col'>

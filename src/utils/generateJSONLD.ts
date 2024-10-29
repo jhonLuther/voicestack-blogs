@@ -14,10 +14,7 @@ export function generateJSONLD(post: any) {
   } = post || {}
 
   const contentType = post?.contentType
-  // console.log(contentType,'contentType');
-
-  // console.log(author,'author in json');
-
+  
   if (contentType) {
     switch (contentType) {
       case 'blog':

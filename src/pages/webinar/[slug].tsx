@@ -18,7 +18,7 @@ import SEOHead from '~/layout/SeoHead';
 import { VideoModal } from '~/components/commonSections/VideoModal';
 import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection';
 import Section from '~/components/Section';
-import CustomHead from '~/utils/customHead';
+import {CustomHead, generateMetaData} from '~/utils/customHead';
 
 interface Props {
   webinar: Podcasts;
@@ -72,6 +72,7 @@ const WebinarPage = ({ webinar,limitedwebinars, draftMode, token }: Props) => {
   return (
     <>
       <CustomHead props ={webinar} type="webinar"/>
+      { generateMetaData(webinar) }
       <Layout >
       <MainImageSection isAuthor={true} post={webinar} />
 

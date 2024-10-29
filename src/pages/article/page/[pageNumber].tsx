@@ -13,6 +13,7 @@ import React, { useRef } from 'react';
 import Pagination from '~/components/commonSections/Pagination';
 import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection';
 import { BaseUrlProvider } from '~/components/Context/UrlContext';
+import { CustomHead } from '~/utils/customHead';
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const client = getClient();
@@ -65,7 +66,10 @@ const PaginatedArticlesPage = ({ articles, pageNumber, totalPages }: { articles:
 
   return (
     <BaseUrlProvider baseUrl={baseUrl}>
-    <Layout>
+      <Layout>
+        {articles?.map((e) => {
+          return <CustomHead props={e} type="articleExpanded" />
+        })}
         <AllcontentSection
           className={'pb-9'}
           allContent={articles}
@@ -81,9 +85,9 @@ const PaginatedArticlesPage = ({ articles, pageNumber, totalPages }: { articles:
           content={articles}
         />
         <BannerSubscribeSection />
-    </Layout>
+      </Layout>
     </BaseUrlProvider>
-  );
+  )
 };
 
 export default PaginatedArticlesPage;

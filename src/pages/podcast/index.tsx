@@ -12,7 +12,7 @@ import { useRouter } from 'next/router';
 import siteConfig from '../../../config/siteConfig';
 import React, { useRef } from 'react';
 import Pagination from '~/components/commonSections/Pagination';
-import CustomHead from '~/utils/customHead';
+import {CustomHead} from '~/utils/customHead';
 import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection';
 import { BaseUrlProvider } from '~/components/Context/UrlContext';
 
@@ -52,9 +52,16 @@ const PodcastsPage = ({ podcasts,latestPodcasts, totalPages }: { podcasts: Podca
 
   return (
     <BaseUrlProvider baseUrl={baseUrl}>
-    <Layout>
-      <CustomHead props ={podcasts} type="podcast"/>
-      <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'} reverse={true} contents={latestPodcasts} />
+      <Layout>
+        {podcasts?.map((e, i) => {
+          return <CustomHead props={e} type="podcast" key={i} />
+        })}
+
+        <LatestBlogs
+          className={'pt-11 pr-9 pb-16 pl-9'}
+          reverse={true}
+          contents={latestPodcasts}
+        />
         <AllcontentSection
           className={'pb-9'}
           allContent={podcasts}
@@ -69,10 +76,9 @@ const PodcastsPage = ({ podcasts,latestPodcasts, totalPages }: { podcasts: Podca
           enablePageSlug={true}
         />
         <BannerSubscribeSection />
-    </Layout>
+      </Layout>
     </BaseUrlProvider>
-
-  );
+  )
 };
 
 export default PodcastsPage;

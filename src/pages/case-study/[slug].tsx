@@ -17,7 +17,7 @@ import SanityPortableText from '~/components/blockEditor/sanityBlockEditor';
 import { Toc } from '~/contentUtils/sanity-toc';
 import ShareableLinks from '~/components/commonSections/ShareableLinks';
 import Section from '~/components/Section';
-import CustomHead from '~/utils/customHead';
+import {CustomHead,generateMetaData} from '~/utils/customHead';
 
 interface Props {
   caseStudy: CaseStudies;
@@ -71,7 +71,6 @@ const CaseStudyPage = ({ caseStudy,limitCaseStudies, draftMode, token }: Props) 
   const seoCanonical = caseStudy.seoCanonical || `https://carestack.com/caseStudy/${caseStudy.slug.current}`;
   const jsonLD: any = generateJSONLD(caseStudy);
 
-  // console.log(limitCaseStudies);
   
 
   return (
@@ -83,9 +82,10 @@ const CaseStudyPage = ({ caseStudy,limitCaseStudies, draftMode, token }: Props) 
         robots={seoRobots}
         canonical={seoCanonical}
         jsonLD={jsonLD}
-        ogImage={urlForImage(caseStudy?.mainImage)}
+        ogImage={urlForImage(caseStudy?.mainImage?._id)}
         contentType={caseStudy?.contentType}
       />
+      {generateMetaData(caseStudy)}
       <Layout>
         <MainImageSection isAuthor={true} post={caseStudy} />
         <Section className="justify-center">
@@ -95,7 +95,11 @@ const CaseStudyPage = ({ caseStudy,limitCaseStudies, draftMode, token }: Props) 
               <div className="mt-12 flex md:flex-col flex-col-reverse md:w-2/3 w-full">
                 <div className="post__content w-full">
                   <PracticeProfile contents={caseStudy} />
-                  <SanityPortableText content={caseStudy.body} draftMode={draftMode} token={token} />
+                  <SanityPortableText
+                    content={caseStudy.body}
+                    draftMode={draftMode}
+                    token={token}
+                  />
                 </div>
               </div>
               <div className="flex-1 flex flex-col gap-12 mt-12 relative md:w-1/3 w-full">
@@ -106,21 +110,22 @@ const CaseStudyPage = ({ caseStudy,limitCaseStudies, draftMode, token }: Props) 
                 </div>
               </div>
             </div>
-
           </Wrapper>
         </Section>
         {caseStudy?.relatedCaseStudies?.length > 0 && (
-              <RelatedFeaturesSection
-                contentType={caseStudy?.contentType}
-                allPosts={[
-                  ...(Array.isArray(caseStudy?.relatedArticles) ? caseStudy.relatedArticles : []),
-                  ...(Array.isArray(limitCaseStudies) ? limitCaseStudies : [])
-                ].slice(0, 4)}
-              />
-            )}
+          <RelatedFeaturesSection
+            contentType={caseStudy?.contentType}
+            allPosts={[
+              ...(Array.isArray(caseStudy?.relatedArticles)
+                ? caseStudy.relatedArticles
+                : []),
+              ...(Array.isArray(limitCaseStudies) ? limitCaseStudies : []),
+            ].slice(0, 4)}
+          />
+        )}
       </Layout>
     </>
-  );
+  )
 };
 
 export default CaseStudyPage;

@@ -14,6 +14,7 @@ import React, { useRef } from 'react';
 import Pagination from '~/components/commonSections/Pagination';
 import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection';
 import { BaseUrlProvider } from '~/components/Context/UrlContext';
+import {CustomHead} from '~/utils/customHead';
 
 export const getStaticProps: GetStaticProps<SharedPageProps & { pressReleases: PressRelease[]; totalPages: number }> = async (context) => {
   const draftMode = context.preview || false;
@@ -50,6 +51,9 @@ const PressReleasePage = ({ pressReleases,latestPressReleases, totalPages }: { p
 
   return (
     <BaseUrlProvider baseUrl={baseUrl}>
+      {pressReleases?.map((e,i)=>{
+        return (<CustomHead props={e} type="pressRelease"key={i}/>)
+      })}
     <Layout>
       <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'} reverse={true} contents={latestPressReleases} />
         <AllcontentSection

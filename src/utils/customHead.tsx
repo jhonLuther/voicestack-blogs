@@ -4,7 +4,34 @@ import Head from 'next/head'
 import { urlForImage } from '~/lib/sanity.image'
 import { getIframeUrl } from '~/components/commonSections/VideoModal'
 
-export default function CustomHead({
+export const generateMetaData = (params: any) => {
+  if (params) {
+    return (
+      <Head>
+        {params?.mainImage ? (
+          <meta
+            property="og:image"
+            content={urlForImage(params?.mainImage?._id)}
+          ></meta>
+        ) : null}
+
+        {params?.title ? (
+          <meta property="og:title" content={params?.title}></meta>
+        ) : (
+          <></>
+        )}
+
+        {params?.excerpt ? (
+          <meta property="og:description" content={params?.excerpt}></meta>
+        ) : (
+          <></>
+        )}
+      </Head>
+    )
+  }
+}
+
+export function CustomHead({
   props,
   type = null,
   pageNumber = null,
@@ -16,70 +43,6 @@ export default function CustomHead({
   const head = (data: any, i: string) => {
     return (
       <Head key={i}>
-        {data ? (
-          <>
-            {/* BlogPosting NewsArticle */}
-            {(data['@type'] === 'BlogPosting' ||
-              data['@type'] === 'NewsArticle') && (
-              <>
-                <meta property="og:description" content={data?.headline} />
-                {data.author?.name?.map((e: string) => {
-                  return <meta name="author" content={e} />
-                })}
-              </>
-            )}
-
-            {/* og-title */}
-
-            {data?.title ? (
-              <title>{data?.title}</title>
-            ) : (
-              <title>carestack</title>
-            )}
-
-            {data?.contentType && data?.title ? (
-              <meta name={data?.contentType} content={data?.title} />
-            ) : (
-              ''
-            )}
-
-            {/* description */}
-
-            {data?.excerpt ? (
-              <meta name="description" content={data?.excerpt} />
-            ) : (
-              ''
-            )}
-
-            <meta property="og:type" content="website" />
-            <meta property="og:url" content={url ?? 'www.carestack.com'} />
-            {data?.contentType ? (
-              <meta property="og:title" content={data?.contentType} />
-            ) : (
-              ''
-            )}
-            {data?.excerpt ? (
-              <meta property="og:description" content={data?.excerpt} />
-            ) : (
-              ''
-            )}
-            {data?.mainImage?._id ? (
-              <meta
-                property="og:image"
-                content={
-                  data?.mainImage?._id
-                    ? urlForImage(data?.mainImage?._id)
-                    : 'https://carestack.com/_next/static/media/home-page-logo-white.7d582e15.svg'
-                }
-              />
-            ) : (
-              ''
-            )}
-          </>
-        ) : (
-          <></>
-        )}
-
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
@@ -103,7 +66,6 @@ export default function CustomHead({
   if (props && type === null) {
     return props?.map((e, i) => {
       const data = generateJSONLD(e)
-
       return head(e, i)
     })
   } else if (props && type == 'caseStudy') {
@@ -111,7 +73,7 @@ export default function CustomHead({
       '@context': 'https://schema.org',
       '@type': 'BlogPosting',
       headline: [props?.title],
-      // image: props?.author[0]?.picture ?? '',
+      image: urlForImage(props?.mainImage?._id),
       author: {
         '@type': 'Person',
         name: [
@@ -139,7 +101,7 @@ export default function CustomHead({
       '@context': 'https://schema.org',
       '@type': 'NewsArticle',
       headline: props?.title ?? '',
-      image: [urlForImage(props?.mainImage)],
+      image: [urlForImage(props?.mainImage?._id)],
       author: [
         props?.author?.map((e) => {
           return {
@@ -185,53 +147,63 @@ export default function CustomHead({
     }
     return head(metaData, randomId)
   } else if (props && type === 'webinar') {
-    const metaData = {
-      '@context': 'https://schema.org',
-      '@type': 'Event',
-      name: props?.map((e) => {
-        return e?.name
-      }),
-      // props.excerpt,
-      description: props?.map((e: any) => {
-        return e?.excerpt
-      }),
-      eventStatus: 'https://schema.org/EventScheduled',
-      eventAttendanceMode: 'https://schema.org/OnlineEventAttendanceMode',
-      startDate: '2024-11-10T14:00:00+00:00',
-      endDate: '2024-11-10T15:30:00+00:00',
-      // url: props?.videos?.map((video) => {
-      //   return getIframeUrl(video?.platform, video?.videoId)
-      // }),
-      url: props?.map((ele: any) => {
-        return getIframeUrl(ele?.video.platform, ele.video?.videoId)
-      }),
-      // image: props?.map((e:any)=>{return(urlForImage(e.mainImage)?.width(300)?.height(300).url())}),
-      location: {
-        '@type': 'VirtualLocation',
-        url: props?.videos?.map((video) => {
-          return getIframeUrl(video?.platform, video?.videoId)
-        }),
-      },
-      organizer: {
-        '@type': 'Organization',
-        name: 'CareStack',
-        url: 'https://carestack.com',
-      },
-      performer: {
-        '@type': 'Person',
-        name: props?.map((e: any) => {
-          return e?.name
-        }),
-      },
-      offers: {
-        '@type': 'Offer',
-        url: props?.map((e: any) => {
-          return getIframeUrl(e?.video?.platform, e?.video?.videoId)
-        }),
-        availability: 'https://schema.org/InStock',
-      },
+    if (props?.videos) {
+      const metaData = {
+        name: props?.author ?? 'CareStack',
+        '@context': 'https://schema.org',
+        '@type': 'Event',
+        description: props?.excerpt,
+        eventStatus: 'https://schema.org/EventScheduled',
+        eventAttendanceMode: 'https://schema.org/OnlineEventAttendanceMode',
+        startDate: props?.date ?? new Date(),
+        endDate: props?.date ?? new Date(),
+        image: urlForImage(props?.image?._id),
+        location: {
+          '@type': 'VirtualLocation',
+        },
+        organizer: {
+          '@type': 'Organization',
+
+          url: 'https://carestack.com',
+        },
+
+        offers: {
+          '@type': 'Offer',
+          url: props?.videos?.map((e) => {
+            return getIframeUrl(e?.platform, e?.videoId)
+          }),
+          availability: 'https://schema.org/InStock',
+        },
+      }
+      return head(metaData, randomId)
+    } else {
+      const metaData = {
+        '@context': 'https://schema.org',
+        '@type': 'Event',
+        name: props?.title ?? 'CareStack Event',
+        description: props?.excerpt,
+        eventStatus: 'https://schema.org/EventScheduled',
+        eventAttendanceMode: 'https://schema.org/OnlineEventAttendanceMode',
+        startDate: props?.date ?? new Date().toISOString(),
+        endDate: props?.date ?? new Date().toISOString(),
+        image: urlForImage(props?.image?._id),
+        location: {
+          '@type': 'VirtualLocation',
+        },
+        organizer: {
+          '@type': 'Organization',
+          name: 'CareStack',
+          url: 'https://carestack.com',
+        },
+        offers: props?.videos?.map((e) => ({
+          '@type': 'Offer',
+          url: getIframeUrl(e?.platform, e?.videoId),
+          availability: 'https://schema.org/InStock',
+        })),
+      }
+
+      return head(metaData, randomId)
     }
-    return head(metaData, randomId)
   } else if (props && type === 'breadCrumbs') {
     return breadCrumbJson(props)
   } else if (props && type === 'pagination') {
@@ -262,58 +234,53 @@ export default function CustomHead({
       name: paginationType,
     }
     return head(metaData, randomId)
-  } else if (props && type == 'podcast') {
+  } else if (props && type === 'podcast') {
     const metaData = {
       '@context': 'https://schema.org',
       '@type': 'Event',
-      name: props?.map((e: any) => {
-        return e?.title
-      }),
-      description: props?.map((e: any) => {
-        return e?.excerpt
-      }),
+      name: props?.title,
+      location: 'global',
+      organizer: 'CareStack',
       startDate: new Date(),
-      endDate: new Date(),
-      image: props?.map((el: any) => {
-        return el?.author?.map((e: any) => {
-          return e?.picture
-        })
-      }),
-      eventStatus: 'https://schema.org/EventScheduled',
+      description: props?.excerpt,
+      datePublished: props?.publishedAt,
+      image: urlForImage(props?.mainImage?._id),
+      address: 'CareStack',
       eventAttendanceMode: 'https://schema.org/OnlineEventAttendanceMode',
-      location: {
-        '@type': 'VirtualLocation',
-        url: 'https://example.com/podcast-episode',
-      },
-      performer: {
+      author: props?.author?.map((e) => ({
         '@type': 'Person',
-        name: props?.map((el: any) => {
-          return el?.author?.map((e: any) => {
-            return e?.name
-          })
+        name: e?.name,
+        image: e?.picture,
+      })),
+    }
+    return head(metaData, randomId)
+  } else if (props && type === 'pressRelease') {
+    const metaData = {
+      '@context': 'https://schema.org',
+      '@type': 'NewsArticle',
+      mainEntityOfPage: {
+        '@type': 'WebPage',
+        '@id': 'https://example.com/my-news-article',
+      },
+      headline: props?.title,
+      image: urlForImage(props?.mainImage?._id),
+      datePublished: new Date(props?.date),
+      dateModified: new Date(props?.date),
+      author: {
+        '@type': 'Person',
+        name: props?.author?.map((e) => {
+          return e?.name
         }),
       },
-      organizer: {
+      publisher: {
         '@type': 'Organization',
-        name: props?.title,
-        url: 'https://example.com',
-      },
-      subEvent: {
-        '@type': 'PodcastEpisode',
-        name: 'Episode 12: The Future of AI',
-        description: props?.map((e: any) => {
-          return e?.excerpt
-        }),
-        url: 'https://carestack.com',
-        episodeNumber: 1,
-        partOfSeries: {
-          '@type': 'PodcastSeries',
-          name: 'Dentistry revolution talks ',
+        name: 'CareStack',
+        logo: {
+          '@type': 'ImageObject',
+          url: 'https://elitestrategies-elitestrategies.netdna-ssl.com/wp-content/uploads/2013/04/elitestrategies.png',
         },
-        duration: props?.map((e: any) => {
-          return e?.duration
-        }),
       },
+      description: props?.excerpt,
     }
     return head(metaData, randomId)
   }
