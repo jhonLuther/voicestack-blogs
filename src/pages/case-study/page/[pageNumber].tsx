@@ -67,8 +67,8 @@ const PaginatedCaseStudyPage = ({ caseStudies, pageNumber, totalPages }: { caseS
   return (
     <BaseUrlProvider baseUrl={baseUrl}>
       <Layout>
-        {caseStudies?.map((e) => {
-          return <CustomHead props={e} type="caseStudy" />
+        {caseStudies?.map((e,i) => {
+          return <CustomHead props={e} type="caseStudy" key={i}/>
         })}
         <AllcontentSection
           className={'pb-9'}
