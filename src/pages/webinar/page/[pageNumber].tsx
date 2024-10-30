@@ -67,8 +67,8 @@ const PaginatedWebinarsPage = ({ webinars, pageNumber, totalPages }: { webinars:
   return (
     <BaseUrlProvider baseUrl={baseUrl}>
       <Layout>
-        {webinars?.map((e) => {
-          return <CustomHead props={e} type="webinar" />
+        {webinars?.map((e,i) => {
+          return <CustomHead props={e} key={i} type="webinar" />
         })}
         <AllcontentSection
           className={'pb-9'}

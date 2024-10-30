@@ -66,7 +66,7 @@ const PaginatedEbookPage = ({ podcasts, pageNumber, totalPages }: { podcasts: Po
   return (
     <BaseUrlProvider baseUrl={baseUrl}>
     <Layout>
-      {podcasts?.map((e)=>{return(<CustomHead props={e} type="podcast"/>)})}
+      {podcasts?.map((e,i)=>{return(<CustomHead props={e} key={i} type="podcast"/>)})}
         <AllcontentSection
           className={'pb-9'}
           allContent={podcasts}

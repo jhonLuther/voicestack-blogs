@@ -67,8 +67,8 @@ const PaginatedArticlesPage = ({ articles, pageNumber, totalPages }: { articles:
   return (
     <BaseUrlProvider baseUrl={baseUrl}>
       <Layout>
-        {articles?.map((e) => {
-          return <CustomHead props={e} type="articleExpanded" />
+        {articles?.map((e,i) => {
+          return <CustomHead props={e} key={i} type="articleExpanded" />
         })}
         <AllcontentSection
           className={'pb-9'}

@@ -56,7 +56,7 @@ const PressReleasePage = ({ pressReleases,latestPressReleases, totalPages,tags }
   return (
     <BaseUrlProvider baseUrl={baseUrl}>
       {pressReleases?.map((e,i)=>{
-        return (<CustomHead props={e} type="pressRelease"key={i}/>)
+        return (<CustomHead props={e} type="pressRelease" key={i}/>)
       })}
     <Layout>
     <TagSelect

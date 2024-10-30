@@ -67,8 +67,8 @@ const PaginatedPressReleasePage = ({ pressReleases, pageNumber, totalPages }: { 
   return (
     <BaseUrlProvider baseUrl={baseUrl}>
       <Layout>
-        {pressReleases?.map((e) => {
-          return <CustomHead props={e} type="pressRelease" />
+        {pressReleases?.map((e,i) => {
+          return <CustomHead props={e} type="pressRelease" key={i}/>
         })}
         <AllcontentSection
           className={'pb-9'}
