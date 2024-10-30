@@ -26,8 +26,8 @@ const ImageLoader: React.FC<ImageLoaderProps> = ({
   image,
   width = 700,
   height = 400,
-  alt = 'default image alt',
-  title = 'default image title',
+  alt,
+  title,
   className = '',
   imageClassName = '',
   useClientWidth = false,
@@ -36,6 +36,7 @@ const ImageLoader: React.FC<ImageLoaderProps> = ({
   fixed = true,
   ...props
 }) => {
+  
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const autoContainerRef = useRef<HTMLDivElement>(null);
@@ -49,7 +50,7 @@ const ImageLoader: React.FC<ImageLoaderProps> = ({
   const deviceObtained = useBoundingWidth() as DeviceType;
 
   const imageWidthFromCdn = image?.metadata?.dimensions?.width;
-  const imageRatio = image?.metadata?.dimensions?.aspectRatio;
+  const imageRatio = image?.metadata?.dimensions?.aspectRatio;  
 
   useEffect(() => {
     let newProposedWidth = 0;
@@ -72,7 +73,7 @@ const ImageLoader: React.FC<ImageLoaderProps> = ({
 
     setRenderImageHeight(renderImageHeight);
 
-    const url = urlForImage(image._id, {
+    const url = urlForImage(image._id || image, {
       width: newProposedWidth,
       height: renderImageHeight,
       quality: 90,
@@ -87,23 +88,23 @@ const ImageLoader: React.FC<ImageLoaderProps> = ({
 
     extractColor();
 
-    setRenderImage(url);
-  }, [deviceObtained, imageWidthFromCdn, imageRatio, maxWidth, renderImageWidth, onColorExtracted, image._id]);
+    setRenderImage(url && url);
+  }, [deviceObtained, imageWidthFromCdn, imageRatio, maxWidth,renderImageWidth,onColorExtracted,image]);
 
   useEffect(() => {
     if (autoContainerRef.current) {
       setClientHeight(autoContainerRef.current.clientHeight);
       setClientWidth(autoContainerRef.current.clientWidth);
     }
-  }, [renderImageWidth, autoContainerRef]);
+  }, [renderImageWidth,autoContainerRef]);  
 
-  return fixed && renderImage ? (
+  return fixed ? (
     <div ref={containerRef} className={`flex w-full h-full relative ${className}`}>
-      <Image  priority={true} src={renderImage} alt={image.altText || alt} title={image.title || title} className={`object-cover object-center ${imageClassName}`} fill />
+      <Image src={renderImage} alt={image.altText || ''} title={image.title || title} className={`object-cover object-center ${imageClassName}`} fill />
     </div>
-  ) : renderImageWidth>0 && renderImage ? (
+  ) : renderImageWidth >0 ? (
     <div ref={autoContainerRef} className={`w-full h-auto relative ${className}`}>
-      <Image  priority={true} className='!m-0' src={renderImage} alt={image.altText || alt} title={image.title || title} width={clientWidth} height={(clientWidth / renderImageWidth) * renderImageHeight } />
+      <Image className='!m-0' src={renderImage} alt={image.altText || ''} title={image.title || title} width={clientWidth} height={(clientWidth / renderImageWidth) * renderImageHeight } />
     </div>
   ) : null;
 };
