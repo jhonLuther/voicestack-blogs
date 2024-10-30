@@ -82,7 +82,7 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
       {cardType === 'top-image-card' ? (
         <Link href={linkUrl} className='h-full'>
           <div className={`flex flex-col w-full h-full gap-1 overflow-hidden ${reverse ? 'flex-col-reverse ' : ''}  group rounded-lg text-white`}>
-            <div className={`flex  w-full h-full `} style={{minHeight: `${minHeight}px`}}>
+            <div className={`flex w-full h-full`} style={{minHeight: `${minHeight}px`}}>
               {(post.mainImage) ? (
                   <ImageLoader
                     className='transform duration-300 group-hover:scale-105'
@@ -119,12 +119,12 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
 
         cardType === 'left-image-card' ? (
           <Link href={linkUrl} >
-            <div className={`flex flex-row gap-3 xl:gap-6 relative group hover:transition duration-500 ${className}`}>
+            <div className={`flex flex-col md:flex-row gap-3 xl:gap-6 relative group hover:transition duration-500 ${className}`}>
               {post.mainImage && (
-                <div className="w-auto md:max-w-[266px]  rounded-lg transform transition duration-500 overflow-hidden flex-1"
+                <div className="w-full md:max-w-[266px] rounded-lg transform transition duration-500 overflow-hidden flex-1"
                 >
                   <ImageLoader
-                    className='transform h-full duration-300 group-hover:scale-105'
+                    className='transform h-full duration-300 group-hover:scale-105 min-h-[200px] md:min-h-[157px]'
                     image={post?.mainImage}
                     width={264}
                     height={154}
@@ -290,7 +290,7 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
                 ) : cardType === 'ebook-card' ? (
                   <div className={`flex flex-col w-full h-full group`}>
                     <Link href={linkUrl} className='flex-1 flex'>
-                      <div className='relative flex flex-col'>
+                      <div className='relative flex flex-col w-full'>
                         {(post.mainImage || post.image) && (
                           <div className="overflow-hidden absolute left-0 right-0 top-0 bottom-0 rounded-lg">
                             <ImageLoader
