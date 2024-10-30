@@ -118,7 +118,6 @@ const WebinarPage = ({ webinar,limitedwebinars, draftMode, token }: Props) => {
             contentType={webinar?.contentType}
             allPosts={[
               ...(Array.isArray(webinar?.relatedWebinars) ? webinar?.relatedWebinars : []),
-              ...(Array.isArray(limitedwebinars) ? limitedwebinars : [])
             ].slice(0, 4)}
           />
         )}

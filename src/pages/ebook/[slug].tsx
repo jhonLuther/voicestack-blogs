@@ -110,7 +110,6 @@ const EbookPage = ({ ebook,limitedEbooks, draftMode, token }: Props) => {
                 contentType={ebook?.contentType}
                 allPosts={[
                   ...(Array.isArray(ebook?.relatedEbooks) ? ebook?.relatedEbooks : []),
-                  ...(Array.isArray(limitedEbooks) ? limitedEbooks : [])
                 ].slice(0, 4)}
               />
             )}

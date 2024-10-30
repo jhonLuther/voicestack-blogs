@@ -149,7 +149,6 @@ const PressReleasePage = ({ pressRelease,limitedPressReleases, draftMode, token 
             contentType={pressRelease?.contentType}
             allPosts={[
               ...(Array.isArray(pressRelease?.relatedPressReleases) ? pressRelease?.relatedPressReleases : []),
-              ...(Array.isArray(limitedPressReleases) ? limitedPressReleases : [])
             ].slice(0, 4)}
           />
         )}

@@ -126,7 +126,6 @@ const CaseStudyPage = ({ caseStudy, limitCaseStudies, draftMode, token }: Props)
             contentType={caseStudy?.contentType}
             allPosts={[
               ...(Array.isArray(caseStudy?.relatedArticles) ? caseStudy.relatedArticles : []),
-              ...(Array.isArray(limitCaseStudies) ? limitCaseStudies : [])
             ].slice(0, 4)}
           />
         )}

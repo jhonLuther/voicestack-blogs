@@ -70,12 +70,14 @@ const ArticlePage = ({ articles, limitedArticles, draftMode, token }: Props) => 
   const seoCanonical = articles.seoCanonical || `https://carestack.com/articles/${articles.slug.current}`;
   const jsonLD: any = generateJSONLD(articles);
 
+  console.log(articles?.relatedArticles,'reatedArticles');
+  console.log(limitedArticles,'limitedArticles');
+  
 
   return (
     <>
       <CustomHead props={articles} type="articleExpanded" />
       { generateMetaData(articles)}
-      
       <Layout >
         <MainImageSection enableDate={true} post={articles} />
         <Section className='justify-center'>
@@ -109,7 +111,6 @@ const ArticlePage = ({ articles, limitedArticles, draftMode, token }: Props) => 
             contentType={articles?.contentType}
             allPosts={[
               ...(Array.isArray(articles?.relatedArticles) ? articles?.relatedArticles : []),
-              ...(Array.isArray(limitedArticles) ? limitedArticles : [])
             ].slice(0, 4)}
           />
         )}

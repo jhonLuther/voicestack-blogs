@@ -142,7 +142,6 @@ const PodcastPage = ({ podcast,limitedPodcasts, previous, next, currentNumber, t
             contentType={podcast?.contentType}
             allPosts={[
               ...(Array.isArray(podcast?.relatedPodcasts) ? podcast?.relatedPodcasts : []),
-              ...(Array.isArray(limitedPodcasts) ? limitedPodcasts : [])
             ].slice(0, 4)}
           />
         )}

@@ -1115,8 +1115,10 @@ export async function getTestimonial(
 }
 
 export const relatedContentsQuery = groq`
-  *[_type == "post" && contentType == $type && slug.current != $currentSlug && count(tags[]->_id[ _id in $tagIds ]) > 0] 
-  | order(date desc) [0...$limit] {
+  *[
+    _type == $type && 
+    count(tags[]->_id[@._ref in $tagIds]) > 0 
+  ] | order(publishedAt desc) [0...$limit] {
     _id,
     title,
     slug,
@@ -1131,10 +1133,10 @@ export const relatedContentsQuery = groq`
     "tags": tags[]-> {
       _id,
       tagName,
-      slug,
+      "slug": slug.current
     }
   }
-`
+`;
 export const relatedTestimonialComponents = groq`
   *[_type == 'testimonial' && slug.current != $currentSlug && count(tags[]->_id[ _id in $tagIds ]) > 0] 
   | order(date desc) [0...$limit] {
@@ -1199,7 +1201,7 @@ export const testiMonialQuery = groq`
 export async function getRelatedContents(
   client: SanityClient,
   currentSlug: string = '',
-  type: string = 'post', // default post will be fetched
+  type: string = 'post', 
   tagIds: string[] = [],
   limit: number = 3,
 ): Promise<any[]> {
@@ -1304,6 +1306,8 @@ export async function getArticle(
   const article = await client.fetch(articleBySlugQuery, { slug })
   if (article) {
     const tagIds = article.tags?.map((tag: any) => tag?._id) || []
+    console.log(tagIds,'tagIds');
+    
     if (tagIds.length > 0) {
       const relatedArticles = await getRelatedContents(
         client,
