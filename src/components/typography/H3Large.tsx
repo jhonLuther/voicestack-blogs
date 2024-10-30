@@ -7,7 +7,7 @@ interface H3LargeProps {
 
 function H3Large({className,children}:H3LargeProps) {
   return (
-    <h3 className={`text-2xl md:text-2xl xl:text-4xl font-bold font-manrope  w-full  ${className}`}>
+    <h3 className={`text-[20px] md:text-2xl xl:text-4xl font-bold font-manrope  w-full  ${className}`}>
     {children}
   </h3>  )
 }

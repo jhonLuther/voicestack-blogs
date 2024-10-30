@@ -27,17 +27,20 @@ function BannerSubscribeSection({ isSmall }: BannerSubscribeSectionProps) {
               <p className="md:text-lg text-base font-medium md:max-w-[392px] md:self-end text-zinc-700">Get the best, coolest, and latest in the dental industry delivered to your inbox each week.</p>
             </div>
 
-            <div className={`flex md:flex-row flex-row gap-3 items-center rounded-[10px] border justify-between py-3 md:py-4 pl-3 md:pl-6 pr-3 md:pr-4 border-zinc-300 `}>
+            <div className={`flex md:flex-row flex-col gap-3 items-centerjustify-between relative`}>
+            
               <input id="default-search"
                 type="email"
                 placeholder="Enter your email address"
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
-                className="block flex-1 w-full py-2 
-                 text-zinc-400 font-medium text-sm md:text-2xl bg-transparent focus:ring-blue-500 focus:border-blue-500 dark:bg-transparent focus:outline-none dark:placeholder-zinc-400 dark:text-zinc-600 dark:focus:border-blue-500 placeholder-zinc-300"
+                className="block flex-1 w-full rounded-[5px] md:rounded-[10px] border py-3 md:py-4 pl-3 md:pl-6 pr-3 md:pr-4 border-zinc-300
+                 text-zinc-400 font-medium text-sm md:text-2xl h-[53px] md:h-[84px] bg-transparent focus:ring-blue-500 focus:border-blue-500 
+                 dark:bg-transparent focus:outline-none dark:placeholder-zinc-400 dark:text-zinc-600 dark:focus:border-blue-500 
+                 placeholder-zinc-300"
                 required />
 
-              <Button className='bg-zinc-900 px-12 hover:bg-zinc-800' onClick={handleSubmit}>
+              <Button className='bg-zinc-900 !px-12 hover:bg-zinc-800 md:absolute md:translate-y-[-50%] top-[50%] right-[16px] self-start'  onClick={handleSubmit}>
                 <span className='text-base font-medium'>Submit</span>
               </Button>
             </div>

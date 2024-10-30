@@ -10,6 +10,7 @@ import { getClient } from '~/lib/sanity.client';
 import DynamicPages from '~/layout/DynamicPages'
 import { indexPageJsonLd } from '~/utils/generateJSONLD'
 import Head from 'next/head'
+import { defaultMetaTag } from '~/utils/customHead';
 
 interface IndexPageProps {
   webinars: any;
@@ -83,6 +84,9 @@ export default function IndexPage(props: IndexPageProps) {
   
   return (
     <Layout>
+      {siteSettings?.map((e: any) => {
+        return defaultMetaTag(e)
+      })}
       <Head>
         <script type="application/ld+json">{indexPageJsonLd(props)}</script>
       </Head>

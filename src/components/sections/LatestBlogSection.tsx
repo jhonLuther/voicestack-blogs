@@ -39,10 +39,6 @@ const LatestBlogs: React.FC<LatestBlogsProps> = ({ contents, reverse, className,
 
   return (
     <React.Fragment>
-      {/* experimental */}
-      {contents?.map((e, i) => {
-        return i == 0 ? generateMetaData(e, displayName) :null
-      })}
       <Section className="justify-center md:pt-16 md:pb-24 bg-zinc-900 text-white">
         <Wrapper
           className={`md:flex-row flex-col ${reverse ? 'md:flex-row-reverse' : ''} gap-8 md:gap-12 xl:gap-36`}
