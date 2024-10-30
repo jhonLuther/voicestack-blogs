@@ -27,7 +27,7 @@ const  AuthorInfo = ({ author, contentType,className,showMultiple = false,showNa
         {Array.isArray(author)  &&  author && author.map((authors, index) => (
           <Link className={`${className} !no-underline`}  key={authors?._id || index} href={`/author/${authors?.slug && authors?.slug.current && authors?.slug.current}`}>
             <div className="author-info flex gap-4 cursor-pointer items-center">
-              <div className='h-12 w-12'>
+              <div className='h-12 w-12 shrink-0'>
               {authors?.picture && (
                 <ImageLoader
                   alt={authors.name}

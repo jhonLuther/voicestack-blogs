@@ -99,8 +99,8 @@ const PodcastPage = ({ podcast,relatedContents, previous, next, currentNumber, t
         <PodcastNavigator currentNumber={currentNumber} totalPodcasts={totalPodcasts} nextSlug={next ? next : '/'} prevSlug={previous ? previous : '/'} />
         <Section className='justify-center'>
           <Wrapper className={'flex-col'}>
-            <div className="flex  md:flex-row flex-col">
-              <div className="mt-12 flex md:flex-col flex-col-reverse md:w-2/3 w-full ">
+              <div className="flex md:flex-row flex-col gap-6 md:gap-12 justify-between">
+                <div className="md:mt-12 flex-1 flex md:flex-col flex-col-reverse md:w-2/3 w-full md:max-w-[710px]">
                 <div className='post__content w-full '>
                 {
                   podcast.htmlCode &&
@@ -115,9 +115,8 @@ const PodcastPage = ({ podcast,relatedContents, previous, next, currentNumber, t
                     token={token}
                   />
                 </div>
-              </div>
-              <div className='flex-1 flex flex-col gap-12 mt-12  bg-red relative md:w-1/3 w-full'>
-                <div className='sticky top-12 flex flex-col gap-8'>
+              </div><div className='flex flex-col gap-8 md:mt-12 bg-red relative md:w-1/3 md:max-w-[410px] w-full'>
+              <div className='sticky top-24 flex flex-col gap-8'>
                   {podcast.author  && podcast.author?.length > 0 &&  
                     <div className='flex flex-col gap-8'>
                       <div className='flex flex-col gap-6'>

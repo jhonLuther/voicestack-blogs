@@ -101,8 +101,8 @@ const PressReleasePage = ({ pressRelease,relatedContents, draftMode, token }: Pr
         <MainImageSection enableDate={true} post={pressRelease} />
         <Section className='justify-center !pt-24 !pb-12'>
           <Wrapper className={'flex-col'}>
-            <div className="flex md:flex-row flex-col justify-between gap-20">
-              <div className="flex md:flex-col flex-col-reverse max-w-[710px] w-full ">
+              <div className="flex md:flex-row flex-col gap-6 md:gap-12 justify-between">
+                <div className="md:mt-12 flex-1 flex md:flex-col flex-col-reverse md:w-2/3 w-full md:max-w-[710px]">
                 <div className='post__content w-full '>
                   <SanityPortableText
                     content={pressRelease.body}
@@ -121,8 +121,8 @@ const PressReleasePage = ({ pressRelease,relatedContents, draftMode, token }: Pr
                   }
                 </div>
               </div> */}
-              <div className='flex-1 flex flex-col gap-12 bg-red relative max-w-[410px] w-full'>
-                <div className='sticky top-12 flex flex-col gap-8'>
+              <div className='flex flex-col gap-8 md:mt-12 bg-red relative md:w-1/3 md:max-w-[410px] w-full'>
+                <div className='sticky top-24 flex flex-col gap-8'>
                   <>
                     {pressRelease.pressReleaseUrl && (
                       <>
