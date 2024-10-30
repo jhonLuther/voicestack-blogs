@@ -5,30 +5,12 @@ import useBoundingWidth, { DeviceType } from '~/utils/boundingWIdthHook';
 import { average } from '~/utils/color';
 import { rgbToHsl } from '~/utils/common';
 
-interface SanityImageAsset {
-  _ref: string;
-  _type: 'reference';
-}
 
-interface SanityImage {
-  title: string;
-  altText: string;
-  _id: any;
-  _type: 'image';
-  asset: SanityImageAsset;
-  metadata: {
-    dimensions: {
-      aspectRatio: number;
-      width: number;
-      height: number;
-    };
-  };
-}
 
 interface ImageLoaderProps {
   width?: number;
   height?: number;
-  image: SanityImage;
+  image: any;
   alt?: string;
   title?: string;
   className?: string;
