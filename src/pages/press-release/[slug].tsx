@@ -24,6 +24,7 @@ import SidebarTitle from '~/components/typography/SidebarTitle';
 import ShareableLinks from '~/components/commonSections/ShareableLinks';
 import Button from '~/components/commonSections/Button';
 import {DocumentTextIcon} from '@sanity/icons'
+import { CustomHead, generateMetaData } from '~/utils/customHead';
 
 interface Props {
   pressRelease: PressRelease;
@@ -83,7 +84,7 @@ const PressReleasePage = ({ pressRelease,limitedPressReleases, draftMode, token 
   
   return (
     <>
-      <SEOHead
+      {/* <SEOHead
         title={seoTitle}
         description={seoDescription}
         keywords={seoKeywords}
@@ -91,7 +92,10 @@ const PressReleasePage = ({ pressRelease,limitedPressReleases, draftMode, token 
         canonical={seoCanonical}
         jsonLD={jsonLD}
         ogImage={urlForImage(pressRelease?.mainImage)}
-        contentType={pressRelease?.contentType} />
+        contentType={pressRelease?.contentType} /> */}
+        {generateMetaData(pressRelease)}
+        <CustomHead props={pressRelease} type="pressRelease"/>
+
       <Layout >
         <MainImageSection enableDate={true} post={pressRelease} />
         <Section className='justify-center !pt-24 !pb-12'>

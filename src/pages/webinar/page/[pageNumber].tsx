@@ -13,6 +13,7 @@ import Pagination from '~/components/commonSections/Pagination';
 import {getWebinars, getWebinarsCount} from '~/lib/sanity.queries';
 import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection';
 import { BaseUrlProvider } from '~/components/Context/UrlContext';
+import { CustomHead } from '~/utils/customHead';
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const client = getClient();
@@ -65,7 +66,10 @@ const PaginatedWebinarsPage = ({ webinars, pageNumber, totalPages }: { webinars:
 
   return (
     <BaseUrlProvider baseUrl={baseUrl}>
-    <Layout>
+      <Layout>
+        {webinars?.map((e,i) => {
+          return <CustomHead props={e} key={i} type="webinar" />
+        })}
         <AllcontentSection
           className={'pb-9'}
           allContent={webinars}

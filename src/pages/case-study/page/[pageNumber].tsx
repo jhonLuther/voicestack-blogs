@@ -13,6 +13,7 @@ import React, { useRef } from 'react';
 import Pagination from '~/components/commonSections/Pagination';
 import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection';
 import { BaseUrlProvider } from '~/components/Context/UrlContext';
+import { CustomHead } from '~/utils/customHead';
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const client = getClient();
@@ -65,7 +66,10 @@ const PaginatedCaseStudyPage = ({ caseStudies, pageNumber, totalPages }: { caseS
 
   return (
     <BaseUrlProvider baseUrl={baseUrl}>
-    <Layout>
+      <Layout>
+        {caseStudies?.map((e,i) => {
+          return <CustomHead props={e} type="caseStudy" key={i}/>
+        })}
         <AllcontentSection
           className={'pb-9'}
           allContent={caseStudies}
@@ -81,9 +85,9 @@ const PaginatedCaseStudyPage = ({ caseStudies, pageNumber, totalPages }: { caseS
           content={caseStudies}
         />
         <BannerSubscribeSection />
-    </Layout>
+      </Layout>
     </BaseUrlProvider>
-  );
+  )
 };
 
 export default PaginatedCaseStudyPage;

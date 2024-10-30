@@ -17,7 +17,7 @@ import SanityPortableText from '~/components/blockEditor/sanityBlockEditor';
 import { Toc } from '~/contentUtils/sanity-toc';
 import ShareableLinks from '~/components/commonSections/ShareableLinks';
 import Section from '~/components/Section';
-import CustomHead from '~/utils/customHead';
+import {CustomHead, generateMetaData} from '~/utils/customHead';
 import AuthorInfo from '~/components/commonSections/AuthorInfo';
 
 interface Props {
@@ -85,9 +85,10 @@ const CaseStudyPage = ({ caseStudy, limitCaseStudies, draftMode, token }: Props)
         robots={seoRobots}
         canonical={seoCanonical}
         jsonLD={jsonLD}
-        ogImage={urlForImage(caseStudy?.mainImage)}
+        ogImage={urlForImage(caseStudy?.mainImage?._id)}
         contentType={caseStudy?.contentType}
       />
+      {generateMetaData(caseStudy)}
       <Layout>
         <MainImageSection isAuthor={true} post={caseStudy} />
         {caseStudy?.asideBookFreeDemoBanner && <AsideBannerBlock contents={caseStudy} />}
@@ -131,7 +132,7 @@ const CaseStudyPage = ({ caseStudy, limitCaseStudies, draftMode, token }: Props)
         )}
       </Layout>
     </>
-  );
+  )
 };
 
 export default CaseStudyPage;

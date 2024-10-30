@@ -12,7 +12,7 @@ import { useRouter } from 'next/router';
 import siteConfig from '../../../config/siteConfig';
 import React, { useRef } from 'react';
 import Pagination from '~/components/commonSections/Pagination';
-import CustomHead from '~/utils/customHead' 
+import {customMetaTag, CustomHead, generateMetaData} from '~/utils/customHead' 
 import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection';
 import { BaseUrlProvider } from '~/components/Context/UrlContext';
 import ReviewsGrid from '~/components/sections/ReviewCards';
@@ -65,6 +65,7 @@ const CaseStudiesPage = ({ caseStudies,latestCaseStudies, totalPages,testimonial
 				tagLimit={7}
 				showTags={true}
 			/>
+      {customMetaTag('caseStudy')}
       <CustomHead props={caseStudies} />
       <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'} reverse={true} contents={latestCaseStudies} />
       {caseStudies?.map((e,i) => {

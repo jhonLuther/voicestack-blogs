@@ -65,10 +65,7 @@ const ImageLoader: React.FC<ImageLoaderProps> = ({
   const deviceObtained = useBoundingWidth() as DeviceType;
 
   const imageWidthFromCdn = image?.metadata?.dimensions?.width;
-  const imageRatio = image?.metadata?.dimensions?.aspectRatio;
-
-  console.log(image,'img');
-  
+  const imageRatio = image?.metadata?.dimensions?.aspectRatio;  
 
   useEffect(() => {
     // Calculate proposedWidth based on deviceObtained and image width
@@ -118,17 +115,14 @@ const ImageLoader: React.FC<ImageLoaderProps> = ({
       setClientHeight(autoContainerRef.current.clientHeight);
       setClientWidth(autoContainerRef.current.clientWidth);
     }
-  }, [renderImageWidth,autoContainerRef]);
-
-  console.log(renderImageWidth,'renderImageWidth');
-  
+  }, [renderImageWidth,autoContainerRef]);  
 
   return fixed ? (
-    <div ref={containerRef} className="flex w-full h-full relative ">
+    <div ref={containerRef} className={`flex w-full h-full relative ${className}`}>
       <Image src={renderImage} alt={alt || ''} className={`object-cover object-center ${imageClassName}`} fill />
     </div>
   ) : renderImageWidth>0 ? (
-    <div ref={autoContainerRef} className={`w-full h-auto relative `}>
+    <div ref={autoContainerRef} className={`w-full h-auto relative ${className}`}>
       <Image className='!m-0' src={renderImage} alt={alt || ''} width={clientWidth} height={(clientWidth / renderImageWidth) * renderImageHeight } />
     </div>
   ) : null;

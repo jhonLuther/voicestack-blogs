@@ -13,6 +13,7 @@ import React, { useRef } from 'react';
 import Pagination from '~/components/commonSections/Pagination';
 import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection';
 import { BaseUrlProvider } from '~/components/Context/UrlContext';
+import { CustomHead } from '~/utils/customHead';
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const client = getClient();
@@ -65,7 +66,10 @@ const PaginatedEbookPage = ({ ebooks, pageNumber, totalPages }: { ebooks: Ebooks
 
   return (
     <BaseUrlProvider baseUrl={baseUrl}>
-    <Layout>
+      <Layout>
+        {ebooks?.map((e,i) => {
+          return <CustomHead props={e} type="eBook" key={i} />
+        })}
         <AllcontentSection
           className={'pb-9'}
           allContent={ebooks}
@@ -81,10 +85,9 @@ const PaginatedEbookPage = ({ ebooks, pageNumber, totalPages }: { ebooks: Ebooks
           content={ebooks}
         />
         <BannerSubscribeSection />
-    </Layout>
+      </Layout>
     </BaseUrlProvider>
-
-  );
+  )
 };
 
 export default PaginatedEbookPage;
