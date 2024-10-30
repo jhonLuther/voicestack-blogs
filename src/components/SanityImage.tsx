@@ -12,7 +12,8 @@ export const SanityImage = ({ asset, client,...props }) => {
   <ImageLoader image={imageProps?.src}
      title={props?.title}
      alt={props?.alt}
-    {...imageProps}
-    layout='responsive'    ></ImageLoader>
+    imageClassName='w-full h-full object-cover'
+    useDefaultSize={true}
+       ></ImageLoader>
   )
 }

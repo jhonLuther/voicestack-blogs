@@ -5,7 +5,6 @@ import { Navigation, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import Card from '../Card';
 import Link from 'next/link';
 import {ChevronLeftIcon} from '@sanity/icons'
 import {ChevronRightIcon} from '@sanity/icons'
@@ -18,12 +17,14 @@ interface TagsCarouselProps {
 
 const TagsCarousel: React.FC<TagsCarouselProps> = ({ tags, selectedTag, onTagChanges }) => {
   const swiperRef = useRef(null);
-  
   useEffect(() => {
     if (swiperRef.current) {
       swiperRef.current.navigation.update();
     }
   }, [swiperRef]);
+
+  if(!tags) return null
+
 
   return (
     <>
@@ -58,17 +59,17 @@ const TagsCarousel: React.FC<TagsCarouselProps> = ({ tags, selectedTag, onTagCha
       ><>
       </>
         {tags.map((tag) => (
-          <SwiperSlide key={tag._id} className='!flex items-center justify-center px-3'>
+          <SwiperSlide key={tag._id} className='!flex items-center justify-center px-2 md:px-3'>
             <span
               onClick={() => onTagChanges(tag)}
               className={`flex py-1 text-[14px] font-medium leading-[1.5] text-center cursor-pointer justify-center
-                ${ selectedTag === tag.slug.current
+                ${ selectedTag === tag?.slug?.current
                     ? 'text-zinc-300'
                     : 'text-zinc-400 hover:text-zinc-300'
                 }`}
             >
-              <Link href={`/browse/${tag.slug.current}`} scroll={false}>
-                  <span>{tag.tagName}</span>
+              <Link href={`/browse/${tag?.slug?.current}`} scroll={false}>
+                  <span>{tag?.tagName}</span>
               </Link>
             </span>
           </SwiperSlide>

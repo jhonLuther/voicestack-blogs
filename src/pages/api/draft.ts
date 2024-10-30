@@ -43,7 +43,7 @@ export default async function preview(
 
     if (document) {
       const actualContentType = document.contentType || document._type
-      if (Object.values(siteConfig.pageURLs).map(url => url.slice(1)).includes(actualContentType)) {
+      if (Object.values(siteConfig.pageURLs)) {
         res.setDraftMode({ enable: true })
         res.writeHead(307, { Location: `/${actualContentType}/${slug}` })
         res.end()

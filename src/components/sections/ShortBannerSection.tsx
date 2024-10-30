@@ -8,7 +8,7 @@ import eventBanner from '../../assets/event-banner.svg';
 
 function ShortBannerSection() {
     return (
-        <section className='flex justify-center'>
+        <section className='flex justify-center px-4'>
             <Wrapper>
                 <Link href={'https://carestack.com/company/events/inner-circle-2025'} target='_blank' className='group'>
                 {/* <div className='flex p-9 justify-between items-start rounded cursor-pointer my-9 bg-zinc-900'>

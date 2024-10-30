@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { urlForImage } from '~/lib/sanity.image'
+import ImageLoader from './ImageLoader'
 
 
 interface AuthorProps {
@@ -26,15 +27,16 @@ const  AuthorInfo = ({ author, contentType,className,showMultiple = false,showNa
         {Array.isArray(author)  &&  author && author.map((authors, index) => (
           <Link className={`${className} !no-underline`}  key={authors?._id || index} href={`/author/${authors?.slug && authors?.slug.current && authors?.slug.current}`}>
             <div className="author-info flex gap-4 cursor-pointer items-center">
+              <div className='h-12 w-12'>
               {authors?.picture && (
-                <Image
+                <ImageLoader
                   alt={authors.name}
-                  className="rounded-full !m-0"
-                  src={authors.picture}
+                  imageClassName="rounded-full !m-0"
+                  image={authors.picture}
                   height={48}
-                  width={48}
-                />
-              )}
+                  width={48}  />
+                )}
+              </div>
               <div className='flex flex-col gap-[2px]'>
               <span className={`!font-medium text-base leading-[1.5] !no-underline text-zinc-900 ${className}`}>
                 {authors?.name}

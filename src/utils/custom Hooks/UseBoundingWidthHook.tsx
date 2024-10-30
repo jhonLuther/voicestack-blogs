@@ -66,5 +66,3 @@ function debounce(callback, delay) {
     }, delay);
   };
 }
-
-export type DeviceType = 'smallMobile' | 'largeMobile' | 'tab' | 'largerDevice' | null;
