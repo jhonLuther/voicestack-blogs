@@ -11,6 +11,8 @@ interface SanityImageAsset {
 }
 
 interface SanityImage {
+  title: string;
+  altText: string;
   _id: any;
   _type: 'image';
   asset: SanityImageAsset;
@@ -26,7 +28,7 @@ interface SanityImage {
 interface ImageLoaderProps {
   width?: number;
   height?: number;
-  image: any;
+  image: SanityImage;
   alt?: string;
   title?: string;
   className?: string;
@@ -65,10 +67,9 @@ const ImageLoader: React.FC<ImageLoaderProps> = ({
   const deviceObtained = useBoundingWidth() as DeviceType;
 
   const imageWidthFromCdn = image?.metadata?.dimensions?.width;
-  const imageRatio = image?.metadata?.dimensions?.aspectRatio;  
+  const imageRatio = image?.metadata?.dimensions?.aspectRatio;
 
   useEffect(() => {
-    // Calculate proposedWidth based on deviceObtained and image width
     let newProposedWidth = 0;
     if (imageWidthFromCdn && imageRatio) {
       if (deviceObtained === 'smallMobile') {
@@ -85,14 +86,11 @@ const ImageLoader: React.FC<ImageLoaderProps> = ({
     setRenderImageWidth(newProposedWidth);
     setRenderImageRatio(imageRatio);
 
-    // Calculate the height based on the aspect ratio
     const renderImageHeight = newProposedWidth / imageRatio;
 
     setRenderImageHeight(renderImageHeight);
 
-
-    // Generate the image URL
-    const url = urlForImage(image._id || image, {
+    const url = urlForImage(image._id, {
       width: newProposedWidth,
       height: renderImageHeight,
       quality: 90,
@@ -108,22 +106,33 @@ const ImageLoader: React.FC<ImageLoaderProps> = ({
     extractColor();
 
     setRenderImage(url);
-  }, [deviceObtained, imageWidthFromCdn, imageRatio, maxWidth,renderImageWidth,onColorExtracted,image]);
+  }, [deviceObtained, imageWidthFromCdn, imageRatio, maxWidth, renderImageWidth, onColorExtracted, image._id]);
 
   useEffect(() => {
     if (autoContainerRef.current) {
       setClientHeight(autoContainerRef.current.clientHeight);
       setClientWidth(autoContainerRef.current.clientWidth);
     }
-  }, [renderImageWidth,autoContainerRef]);  
+  }, [renderImageWidth, autoContainerRef]);
 
   return fixed ? (
     <div ref={containerRef} className={`flex w-full h-full relative ${className}`}>
-      <Image src={renderImage} alt={alt || ''} className={`object-cover object-center ${imageClassName}`} fill />
+      {renderImage && (
+        <Image src={renderImage} alt={image.altText || ''} title={image.title || title} className={`object-cover object-center ${imageClassName}`} fill />
+      )}
     </div>
-  ) : renderImageWidth>0 ? (
+  ) : renderImageWidth > 0 ? (
     <div ref={autoContainerRef} className={`w-full h-auto relative ${className}`}>
-      <Image className='!m-0' src={renderImage} alt={alt || ''} width={clientWidth} height={(clientWidth / renderImageWidth) * renderImageHeight } />
+      {renderImage && (
+        <Image
+          className="!m-0"
+          src={renderImage}
+          alt={image.altText || title}
+          title={image.title || title}
+          width={clientWidth}
+          height={(clientWidth / renderImageWidth) * renderImageHeight}
+        />
+      )}
     </div>
   ) : null;
 };

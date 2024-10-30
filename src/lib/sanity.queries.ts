@@ -1055,6 +1055,43 @@ export async function getauthorRelatedContents(
   })
 }
 
+
+
+
+export async function getTagRelatedContents(
+  client: SanityClient,
+  tagId: string,
+  contentType: string = '',
+  limit: number = 4,
+): Promise<any> {
+  if (!tagId) return [];
+
+  const query = groq`
+    *[_type == "post" && contentType == "${contentType}" && "${tagId}" in tags[]->_id] 
+    | order(date desc)  [0...${limit}]  {
+      _id,
+      title,
+      slug,
+      contentType,
+      duration,
+      publishedAt,
+      excerpt,
+      date,
+      ${imageFragment},
+      ${bodyFragment},
+      "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180),
+      "tags": tags[]-> {
+      _id,
+      tagName
+    },
+      
+    }
+  `;
+
+  return await client.fetch(query);
+}
+
+
 export async function getTag(client: SanityClient, slug: string): Promise<any> {
   return await client.fetch(tagBySlugQuery, {
     slug,
@@ -1115,10 +1152,9 @@ export async function getTestimonial(
 }
 
 export const relatedContentsQuery = groq`
-  *[
-    _type == $type && 
-    count(tags[]->_id[@._ref in $tagIds]) > 0 
-  ] | order(publishedAt desc) [0...$limit] {
+  *[_type == $type && slug.current != $currentSlug && 
+    $tagIds in tags[]->_id] 
+  | order(date desc) [0...$limit] {
     _id,
     title,
     slug,
@@ -1133,10 +1169,11 @@ export const relatedContentsQuery = groq`
     "tags": tags[]-> {
       _id,
       tagName,
-      "slug": slug.current
+      slug,
     }
   }
-`;
+`
+
 export const relatedTestimonialComponents = groq`
   *[_type == 'testimonial' && slug.current != $currentSlug && count(tags[]->_id[ _id in $tagIds ]) > 0] 
   | order(date desc) [0...$limit] {
@@ -1201,10 +1238,10 @@ export const testiMonialQuery = groq`
 export async function getRelatedContents(
   client: SanityClient,
   currentSlug: string = '',
-  type: string = 'post', 
+  type: string = 'post', // default post will be fetched
   tagIds: string[] = [],
-  limit: number = 3,
-): Promise<any[]> {
+  limit: number = 4,
+): Promise<any[]> {  
   return await client.fetch(relatedContentsQuery, {
     currentSlug,
     tagIds,
@@ -1305,9 +1342,7 @@ export async function getArticle(
 ): Promise<any> {
   const article = await client.fetch(articleBySlugQuery, { slug })
   if (article) {
-    const tagIds = article.tags?.map((tag: any) => tag?._id) || []
-    console.log(tagIds,'tagIds');
-    
+    const tagIds = article.tags?.map((tag: any) => tag?._id) || []    
     if (tagIds.length > 0) {
       const relatedArticles = await getRelatedContents(
         client,

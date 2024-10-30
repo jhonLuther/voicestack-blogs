@@ -1,7 +1,7 @@
 import { GetStaticProps, GetStaticPaths } from 'next';
 import { useRouter } from 'next/router';
 import { getClient } from '~/lib/sanity.client';
-import { getPodcast, getPodcasts, getRelatedContents, getWebinar, getWebinars, podcastSlugsQuery, webinarSlugsQuery } from '~/lib/sanity.queries';
+import { getPodcast, getPodcasts, getRelatedContents, getTagRelatedContents, getWebinar, getWebinars, podcastSlugsQuery, webinarSlugsQuery } from '~/lib/sanity.queries';
 import { Podcasts } from '~/interfaces/post';
 import Wrapper from '~/layout/Wrapper';
 import Image from 'next/image';
@@ -25,10 +25,10 @@ import SidebarTitle from '~/components/typography/SidebarTitle';
 
 interface Props {
   webinar: Podcasts;
-  limitedwebinars: any;
   allWebinars: any;
   draftMode: boolean;
   token: string;
+  relatedContents: any
 }
 
 
@@ -49,7 +49,8 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
   const client = getClient(draftMode ? { token: readToken } : undefined);
   const webinar = await getWebinar(client, params.slug as string);
   const allWebinars = await getWebinars(client);
-  const limitedwebinars: any = await getWebinars(client, 0, 4);
+  const tagIds = webinar.tags?.map((tag: any) => tag?._id) || []
+  const relatedContents = await getTagRelatedContents(client, tagIds,webinar.contentType);
 
 
   return {
@@ -58,12 +59,12 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
       token: draftMode ? readToken : '',
       webinar,
       allWebinars,
-      limitedwebinars
+      relatedContents
     },
   };
 };
 
-const WebinarPage = ({ webinar,limitedwebinars, draftMode, token }: Props) => {
+const WebinarPage = ({ webinar,relatedContents, draftMode, token }: Props) => {
 
   const seoTitle = webinar.seoTitle || webinar.title;
   const seoDescription = webinar.seoDescription || webinar.excerpt;
@@ -113,12 +114,10 @@ const WebinarPage = ({ webinar,limitedwebinars, draftMode, token }: Props) => {
             </div>
           </Wrapper>
         </Section>
-        {webinar?.relatedWebinars.length > 0 && (
+        {relatedContents.length > 0 && (
           <RelatedFeaturesSection
             contentType={webinar?.contentType}
-            allPosts={[
-              ...(Array.isArray(webinar?.relatedWebinars) ? webinar?.relatedWebinars : []),
-            ].slice(0, 4)}
+            allPosts={relatedContents}
           />
         )}
       </Layout>

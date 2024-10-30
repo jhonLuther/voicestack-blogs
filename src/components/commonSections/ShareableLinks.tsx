@@ -4,9 +4,7 @@ import React from 'react'
 import XSMedium from '../typography/XSMedium';
 
 function ShareableLinks({ props }) {
-  const { asPath: route } = useRouter();
-  console.log({route})
-  
+  const { asPath: route } = useRouter();  
   const encodedUrl = encodeURIComponent(`https://blog.carestack.com${route}`);
 
   return (

@@ -11,8 +11,6 @@ export default function PracticeProfile({
     contents,
 
 }: TagSelectProps) {
-    console.log(contents, 'contents');
-    
 
     return (
         <Fragment>

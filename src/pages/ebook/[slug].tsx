@@ -1,7 +1,7 @@
 import { GetStaticProps, GetStaticPaths } from 'next';
 import { useRouter } from 'next/router';
 import { getClient } from '~/lib/sanity.client';
-import { ebookSlugsQuery, getEbook, getEbooks, getPodcast, getPodcasts, getRelatedContents, getWebinar, getWebinars, podcastSlugsQuery, webinarSlugsQuery } from '~/lib/sanity.queries';
+import { ebookSlugsQuery, getEbook, getEbooks, getPodcast, getPodcasts, getRelatedContents, getTagRelatedContents, getWebinar, getWebinars, podcastSlugsQuery, webinarSlugsQuery } from '~/lib/sanity.queries';
 import { Ebooks, Podcasts } from '~/interfaces/post';
 import Wrapper from '~/layout/Wrapper';
 import Image from 'next/image';
@@ -27,6 +27,7 @@ interface Props {
   limitedEbooks?:any;
   draftMode: boolean;
   token: string;
+  relatedContents: any;
 }
 
 
@@ -47,20 +48,20 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
   const client = getClient(draftMode ? { token: readToken } : undefined);
   const ebook = await getEbook(client, params.slug as string);
   const limitedEbooks: any = await getEbooks(client, 0, 4);
+  const tagIds = ebook.tags?.map((tag: any) => tag?._id) || []
+  const relatedContents = await getTagRelatedContents(client, tagIds,ebook?.contentType);
 
   return {
     props: {
       draftMode,
       token: draftMode ? readToken : '',
       ebook,
-      limitedEbooks
+      relatedContents
     },
   };
 };
 
-const EbookPage = ({ ebook,limitedEbooks, draftMode, token }: Props) => {
-
-  // console.log(ebook, 'ebook');
+const EbookPage = ({ ebook,relatedContents, draftMode, token }: Props) => {
   
 
   const seoTitle = ebook.seoTitle || ebook.title;
@@ -76,7 +77,7 @@ const EbookPage = ({ ebook,limitedEbooks, draftMode, token }: Props) => {
     <CustomHead props ={ebook} type='eBook'/>
     {generateMetaData(ebook)}
       <Layout >
-        <MainImageSection  post={ebook} />
+        <MainImageSection enableDate={true}  post={ebook} />
         <Section className='justify-center flex-col'>
           <div className="flex md:flex-row flex-col justify-center gap-20">
             <div className="flex md:flex-col flex-col-reverse max-w-[710px] w-full ">
@@ -105,14 +106,12 @@ const EbookPage = ({ ebook,limitedEbooks, draftMode, token }: Props) => {
             </div>
           </div>
         </Section>
-        {ebook?.relatedEbooks?.length > 0 && (
-              <RelatedFeaturesSection
-                contentType={ebook?.contentType}
-                allPosts={[
-                  ...(Array.isArray(ebook?.relatedEbooks) ? ebook?.relatedEbooks : []),
-                ].slice(0, 4)}
-              />
-            )}
+        {relatedContents &&relatedContents.length > 0 && (
+          <RelatedFeaturesSection
+            contentType={ebook?.contentType}
+            allPosts={relatedContents}
+          />
+        )}
       </Layout>
     </>
   );

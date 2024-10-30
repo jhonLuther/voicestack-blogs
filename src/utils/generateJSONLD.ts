@@ -3,7 +3,6 @@ import { fetchAuthor } from './common'
 import { urlForImage } from '~/lib/sanity.image'
 
 export function generateJSONLD(post: any) {
-  // console.log({generatedPost:post});
 
   const {
     author = null,

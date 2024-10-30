@@ -1,7 +1,7 @@
 import { GetStaticProps, GetStaticPaths } from 'next';
 import { useRouter } from 'next/router';
 import { getClient } from '~/lib/sanity.client';
-import { getAllPodcastSlugs, getPodcast, getPodcasts, getRelatedContents, podcastSlugsQuery } from '~/lib/sanity.queries';
+import { getAllPodcastSlugs, getPodcast, getPodcasts, getRelatedContents, getTagRelatedContents, podcastSlugsQuery } from '~/lib/sanity.queries';
 import { Podcasts } from '~/interfaces/post';
 import Wrapper from '~/layout/Wrapper';
 import { readToken } from '~/lib/sanity.api';
@@ -28,7 +28,7 @@ interface Props {
   next?: any;
   totalPodcasts?: any;
   currentNumber?: any;
-  limitedPodcasts?: any
+  relatedContents?: any
 }
 
 
@@ -48,9 +48,11 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false, params = {} }) => {
   const client = getClient(draftMode ? { token: readToken } : undefined);
   const podcast = await getPodcast(client, params.slug as string);
-  const limitedPodcasts: any = await getPodcasts(client, 0, 4);
   const currentSlug: any = params?.slug;
   const { current, totalPodcasts, previous, next } = await getAllPodcastSlugs(client, currentSlug);
+
+  const tagIds = podcast.tags?.map((tag: any) => tag?._id) || []
+  const relatedContents = await getTagRelatedContents(client, tagIds,podcast.contentType);
 
 
   return {
@@ -62,12 +64,12 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
       next,
       currentNumber: current.number,
       totalPodcasts,
-      limitedPodcasts
+      relatedContents
     },
   };
 };
 
-const PodcastPage = ({ podcast,limitedPodcasts, previous, next, currentNumber, totalPodcasts, draftMode, token }: Props) => {
+const PodcastPage = ({ podcast,relatedContents, previous, next, currentNumber, totalPodcasts, draftMode, token }: Props) => {
 
   if (!podcast) {
     return <div>Podcast not found</div>
@@ -79,8 +81,6 @@ const PodcastPage = ({ podcast,limitedPodcasts, previous, next, currentNumber, t
   const seoRobots = podcast.seoRobots || 'index,follow';
   const seoCanonical = podcast.seoCanonical || `https://carestack.com/podcast/${podcast.slug.current}`;
   const jsonLD: any = generateJSONLD(podcast);
-
-  // console.log(podcast,'ALL PODCAST');
 
   return (
     <>
@@ -137,12 +137,10 @@ const PodcastPage = ({ podcast,limitedPodcasts, previous, next, currentNumber, t
             </div>
           </Wrapper>
         </Section>
-        {podcast?.relatedPodcasts?.length > 0 && (
+        {relatedContents.length > 0 && (
           <RelatedFeaturesSection
             contentType={podcast?.contentType}
-            allPosts={[
-              ...(Array.isArray(podcast?.relatedPodcasts) ? podcast?.relatedPodcasts : []),
-            ].slice(0, 4)}
+            allPosts={relatedContents}
           />
         )}
       </Layout>

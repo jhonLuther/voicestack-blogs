@@ -68,10 +68,7 @@ export default function AuthorPage({
   relatedContents
 }: InferGetStaticPropsType<typeof getStaticProps>) {
 
-  const baseUrl = useRef(`/${siteConfig.pageURLs.author}`).current;
-
-  console.log(relatedContents,'relatedContents');
-  
+  const baseUrl = useRef(`/${siteConfig.pageURLs.author}`).current;  
 
   return (
     <BaseUrlProvider baseUrl={baseUrl}>

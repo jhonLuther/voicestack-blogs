@@ -1,7 +1,7 @@
 import { GetStaticProps, GetStaticPaths } from 'next';
 import { useRouter } from 'next/router';
 import { getClient } from '~/lib/sanity.client';
-import { articleSlugsQuery, getArticle, getArticles } from '~/lib/sanity.queries';
+import { articleSlugsQuery, getArticle, getArticles, getTagRelatedContents } from '~/lib/sanity.queries';
 import { Articles } from '~/interfaces/post';
 import Wrapper from '~/layout/Wrapper';
 import { readToken } from '~/lib/sanity.api';
@@ -23,7 +23,7 @@ interface Props {
   articles: Articles;
   draftMode: boolean;
   token: string;
-  limitedArticles: any;
+  relatedContents: any
 }
 
 
@@ -45,19 +45,21 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
   const client = getClient(draftMode ? { token: readToken } : undefined);
   const articles = await getArticle(client, params.slug as string);
   const limitedArticles: any = await getArticles(client, 0, 4);
-
+  const tagIds = articles.tags?.map((tag: any) => tag?._id) || []
+  const relatedContents = await getTagRelatedContents(client, tagIds,articles.contentType);
 
   return {
     props: {
       draftMode,
       token: draftMode ? readToken : '',
       articles,
-      limitedArticles
+      relatedContents
+      
     },
   };
 };
 
-const ArticlePage = ({ articles, limitedArticles, draftMode, token }: Props) => {
+const ArticlePage = ({ articles,relatedContents, draftMode, token }: Props) => {
 
   if (!articles) {
     return
@@ -70,8 +72,6 @@ const ArticlePage = ({ articles, limitedArticles, draftMode, token }: Props) => 
   const seoCanonical = articles.seoCanonical || `https://carestack.com/articles/${articles.slug.current}`;
   const jsonLD: any = generateJSONLD(articles);
 
-  console.log(articles?.relatedArticles,'reatedArticles');
-  console.log(limitedArticles,'limitedArticles');
   
 
   return (
@@ -107,12 +107,10 @@ const ArticlePage = ({ articles, limitedArticles, draftMode, token }: Props) => 
             </div>
           </Wrapper>
         </Section>
-        {articles?.relatedArticles.length > 0 && (
+        {relatedContents.length > 0 && (
           <RelatedFeaturesSection
             contentType={articles?.contentType}
-            allPosts={[
-              ...(Array.isArray(articles?.relatedArticles) ? articles?.relatedArticles : []),
-            ].slice(0, 4)}
+            allPosts={relatedContents}
           />
         )}
         <BannerSubscribeSection />

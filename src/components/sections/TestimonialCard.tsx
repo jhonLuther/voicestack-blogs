@@ -10,8 +10,6 @@ interface TestimonialCardProps {
 
 const TestimonialCard: React.FC<TestimonialCardProps> = ({ ...props }:any) => {
     const customerDetails = props.testimonialCard?.testimonial?.customerDetails
-    console.log("customerDetails", customerDetails);
-    
     
   return (
     <div className="w-full p-8 flex flex-col gap-2  rounded-lg bg-zinc-100 border-zinc-300">

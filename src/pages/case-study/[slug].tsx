@@ -1,7 +1,7 @@
 // pages/testimonial/[slug].tsx
 import { GetStaticProps, GetStaticPaths } from 'next';
 import { getClient } from '~/lib/sanity.client';
-import { caseStudySlugsQuery, getCaseStudies, getCaseStudy } from '~/lib/sanity.queries';
+import { caseStudySlugsQuery, getCaseStudies, getCaseStudy, getTagRelatedContents } from '~/lib/sanity.queries';
 import { CaseStudies } from '~/interfaces/post';
 import Wrapper from '~/layout/Wrapper';
 import { readToken } from '~/lib/sanity.api';
@@ -22,9 +22,9 @@ import AuthorInfo from '~/components/commonSections/AuthorInfo';
 
 interface Props {
   caseStudy: CaseStudies;
-  limitCaseStudies?: any;
   draftMode: boolean;
   token: string;
+  relatedContents: any
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -45,6 +45,8 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
   const client = getClient(draftMode ? { token: readToken } : undefined);
   const caseStudy = await getCaseStudy(client, params.slug as string);
   const limitCaseStudies: any = await getCaseStudies(client, 0, 4);
+  const tagIds = caseStudy.tags?.map((tag: any) => tag?._id) || []
+  const relatedContents = await getTagRelatedContents(client, tagIds,caseStudy?.contentType);
 
 
   if (!caseStudy) {
@@ -59,12 +61,12 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
       draftMode,
       token: draftMode ? readToken : '',
       caseStudy,
-      limitCaseStudies
+      relatedContents
     },
   };
 };
 
-const CaseStudyPage = ({ caseStudy, limitCaseStudies, draftMode, token }: Props) => {
+const CaseStudyPage = ({ caseStudy,relatedContents, draftMode, token }: Props) => {
   if(!caseStudy) {
     return null;
   }
@@ -90,7 +92,7 @@ const CaseStudyPage = ({ caseStudy, limitCaseStudies, draftMode, token }: Props)
       />
       {generateMetaData(caseStudy)}
       <Layout>
-        <MainImageSection isAuthor={true} post={caseStudy} />
+        <MainImageSection enableDate={true} isAuthor={true} post={caseStudy} />
         {caseStudy?.asideBookFreeDemoBanner && <AsideBannerBlock contents={caseStudy} />}
         <Section className="justify-center">
           <Wrapper className="flex-col">
@@ -105,7 +107,6 @@ const CaseStudyPage = ({ caseStudy, limitCaseStudies, draftMode, token }: Props)
                 <div className="sticky top-12 flex flex-col gap-12">
                   {(caseStudy?.practiceName || caseStudy?.location || caseStudy?.providers || caseStudy?.headCount || caseStudy?.growingLocations || caseStudy?.facilities) ? <PracticeProfile contents={caseStudy} />
                     :
-
                     <Toc headings={caseStudy?.headings} title="Contents" />
                   }
                   <div className='flex flex-col gap-8'>
@@ -121,12 +122,10 @@ const CaseStudyPage = ({ caseStudy, limitCaseStudies, draftMode, token }: Props)
             </div>
           </Wrapper>
         </Section>
-        {caseStudy?.relatedCaseStudies?.length > 0 && (
+        {relatedContents.length > 0 && (
           <RelatedFeaturesSection
             contentType={caseStudy?.contentType}
-            allPosts={[
-              ...(Array.isArray(caseStudy?.relatedArticles) ? caseStudy.relatedArticles : []),
-            ].slice(0, 4)}
+            allPosts={relatedContents}
           />
         )}
       </Layout>

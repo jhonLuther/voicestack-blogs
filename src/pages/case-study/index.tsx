@@ -48,9 +48,6 @@ const CaseStudiesPage = ({ caseStudies,latestCaseStudies, totalPages,testimonial
   const router = useRouter();
   const baseUrl = useRef(`/${siteConfig.pageURLs.caseStudy}`).current;
 
-  console.log(caseStudies,'caseStudies');
-  
-
 
   const handlePageChange = (page: number) => {
     if (page === 1) {
