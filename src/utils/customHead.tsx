@@ -89,10 +89,16 @@ export const generateMetaData = (params: any, type?: string) => {
       <Head>
         <meta property="og:type" content="website" />
         {params?.mainImage ? (
-          <meta
-            property="og:image"
-            content={urlForImage(params?.mainImage?._id)}
-          ></meta>
+          <>
+            <meta
+              property="og:image"
+              content={urlForImage(params?.mainImage?._id)}
+            ></meta>
+            <meta
+              property="og:logo"
+              content={urlForImage(params?.mainImage?._id)}
+            ></meta>
+          </>
         ) : null}
 
         {params?.title ? (
