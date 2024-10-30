@@ -2,17 +2,18 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { getClient } from '~/lib/sanity.client';
 import { readToken } from '~/lib/sanity.api';
 import {getSitemapData } from '~/lib/sanity.queries';
+import siteConfig from 'config/siteConfig';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 function generateSiteMap(posts: any[]) {
   const staticPages = [
-    `${BASE_URL}`,
-    `${BASE_URL}/case-studies`,
-    `${BASE_URL}/articles`,
-    `${BASE_URL}/podcasts`,
-    `${BASE_URL}/webinars`,
-    `${BASE_URL}/press-releases`,
+    `${BASE_URL}/${siteConfig.pageURLs.caseStudy}`,
+    `${BASE_URL}/${siteConfig.pageURLs.article}`,
+    `${BASE_URL}/${siteConfig.pageURLs.podcast}`,
+    `${BASE_URL}${siteConfig.pageURLs.ebook}`,
+    `${BASE_URL}/${siteConfig.pageURLs.webinar}`,
+    `${BASE_URL}/${siteConfig.pageURLs.pressRelease}`,
   ];
 
   const dynamicPages = posts.map((post) => {    
