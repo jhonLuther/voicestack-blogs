@@ -27,7 +27,7 @@ const TestimonialSection = ({ testimonials }: TestimonialSectionProps) => {
   return (
     <Section className='bg-zinc-100 justify-center'>
       <Wrapper>
-        <div className="w-full gap-0 py-16 relative" >
+        <div className="w-full gap-0 xl:py-16 relative" >
             {testimonials && testimonials.length && testimonials.map((testimonialItem, i) => (
               <div className='flex flex-col md:flex-row gap-4 md:gap-12 content-center items-center justify-between' key={i}>
                 <div className='flex md:px-0 px-0 flex-1 gap-8 max-w-[731px]'>
@@ -36,8 +36,8 @@ const TestimonialSection = ({ testimonials }: TestimonialSectionProps) => {
                       <path d="M32 0.272443L31.1753 5.99065C29.4891 5.84403 28.1512 6.13728 27.1615 6.87038C26.1718 7.56683 25.4937 8.57485 25.1271 9.89444C24.7973 11.1774 24.7423 12.6436 24.9622 14.2931H32V28.4236H18.4192V13.7432C18.4192 8.9414 19.5556 5.31253 21.8282 2.85664C24.1008 0.364081 27.4914 -0.497317 32 0.272443ZM13.5808 0.272443L12.756 5.99065C11.0699 5.84403 9.73196 6.13728 8.74227 6.87038C7.75258 7.56683 7.07446 8.57485 6.7079 9.89444C6.37801 11.1774 6.32302 12.6436 6.54296 14.2931H13.5808V28.4236H0V13.7432C0 8.9414 1.13631 5.31253 3.40893 2.85664C5.68156 0.364081 9.07216 -0.497317 13.5808 0.272443Z" fill="#18181B"/>
                     </svg>
                     <div>
-                      <p className="text-zinc-900 text-4xl font-bold leading-[1.1] tracking-[-0.72px] font-manrope">{testimonialItem.testimonialName}</p>
-                      <p className="mt-6 text-zinc-700 text-xl md:text-2xl leading-[1.3] md:leading-[1.4]">
+                      <p className="text-zinc-900 text-3xl md:text-4xl font-bold leading-[1.1] tracking-[-0.72px] font-manrope">{testimonialItem.testimonialName}</p>
+                      <p className="mt-6 text-zinc-700 text-xl xl:text-2xl leading-[1.4] md:leading-[1.4]">
                       {`${testimonialItem.excerpt ? testimonialItem.excerpt : "Duis aute irure dolor in reprehenderit in voluptate pariatur."}`}
                       </p>
                     </div>
@@ -69,7 +69,7 @@ const TestimonialSection = ({ testimonials }: TestimonialSectionProps) => {
                   </div>
                 </div>
 
-                <div>
+                <div className='flex-1 max-w-[411px]'>
                   {testimonialItem.customer && testimonialItem.customer.picture && (
                     <Image
                       src={testimonialItem.customer.picture}

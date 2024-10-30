@@ -26,10 +26,10 @@ const Header = () => {
       <div className="bg-cs-primary group hover:bg-[#42dd88] transition-all duration-200 px-4">  
         <Link href="https://carestack.com/demo" className="flex justify-center py-3">
           <div className="max-w-7xl flex justify-center gap-3 w-full items-center">
-            <div className="text-sm text-zinc-900">
+            <div className="text-xs md:text-sm text-zinc-900">
               {` Book a Demo with us - It's free!`}
             </div>
-              <div className="flex items-center gap-1 text-sm text-zinc-800 font-medium">
+              <div className="flex items-center gap-1 text-xs md:text-sm text-zinc-800 font-medium">
                 <span>{`Register Now`}</span><ArrowRightIcon className="w-5 h-5 text-zinc-800 group-hover:translate-x-[4px] transition-transform duration-300 ease-in-out"/>
               </div>
           </div>
