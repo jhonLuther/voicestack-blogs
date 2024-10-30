@@ -13,6 +13,7 @@ import Pagination from '~/components/commonSections/Pagination';
 import { getPressReleases, getPressReleasesCount } from '~/lib/sanity.queries';
 import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection';
 import { BaseUrlProvider } from '~/components/Context/UrlContext';
+import { CustomHead } from '~/utils/customHead';
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const client = getClient();
@@ -65,7 +66,10 @@ const PaginatedPressReleasePage = ({ pressReleases, pageNumber, totalPages }: { 
 
   return (
     <BaseUrlProvider baseUrl={baseUrl}>
-    <Layout>
+      <Layout>
+        {pressReleases?.map((e,i) => {
+          return <CustomHead props={e} type="pressRelease" key={i}/>
+        })}
         <AllcontentSection
           className={'pb-9'}
           allContent={pressReleases}

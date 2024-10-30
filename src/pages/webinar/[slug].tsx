@@ -18,7 +18,7 @@ import SEOHead from '~/layout/SeoHead';
 import { VideoModal } from '~/components/commonSections/VideoModal';
 import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection';
 import Section from '~/components/Section';
-import CustomHead from '~/utils/customHead';
+import {CustomHead, generateMetaData} from '~/utils/customHead';
 import AuthorInfo from '~/components/commonSections/AuthorInfo';
 import ShareableLinks from '~/components/commonSections/ShareableLinks';
 import SidebarTitle from '~/components/typography/SidebarTitle';
@@ -75,6 +75,7 @@ const WebinarPage = ({ webinar,limitedwebinars, draftMode, token }: Props) => {
   return (
     <>
       <CustomHead props ={webinar} type="webinar"/>
+      { generateMetaData(webinar) }
       <Layout >
       <MainImageSection isAuthor={true} post={webinar} contentType={webinar?.contentType} enableDate={true}/>
 

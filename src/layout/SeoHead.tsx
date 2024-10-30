@@ -40,14 +40,14 @@ export default function SEOHead({
             dangerouslySetInnerHTML={{ __html: jsonLD }}
           />
         )}
-        {ogImage && (
+        {/* {ogImage && (
           <meta
             id="ogImage"
             property="og:image"
             content={ogImage}
             key="ogImage"
           />
-        )}
+        )} */}
       </Head>
     </>
   )

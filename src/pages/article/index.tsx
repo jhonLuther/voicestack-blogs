@@ -12,7 +12,7 @@ import { useRouter } from 'next/router';
 import siteConfig from '../../../config/siteConfig';
 import React, { useRef } from 'react';
 import Pagination from '~/components/commonSections/Pagination';
-import CustomHead from '~/utils/customHead';
+import {customMetaTag, CustomHead} from '~/utils/customHead';
 import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection';
 import { BaseUrlProvider } from '~/components/Context/UrlContext';
 import TagSelect from '~/contentUtils/TagSelector';
@@ -44,7 +44,6 @@ export const getStaticProps: GetStaticProps<SharedPageProps & { articles: Articl
 const ArticlesPage = ({ articles,latestArticles, totalPages,tags }: { articles: Articles[];latestArticles: Articles[]; totalPages: number,tags: any }) => {
   const router = useRouter();
   const baseUrl = useRef(`/${siteConfig.pageURLs.article}`).current;
-
   const handlePageChange = (page: number) => {
     if (page === 1) {
       router.push(baseUrl);
@@ -56,15 +55,17 @@ const ArticlesPage = ({ articles,latestArticles, totalPages,tags }: { articles: 
   return (
     <BaseUrlProvider baseUrl={baseUrl}>
     <Layout>
+      <CustomHead props={articles} type="articleExpanded"/>
     <TagSelect
 				tags={tags}
 				tagLimit={7}
 				showTags={true}
 			/>
+      {customMetaTag('article')}
       <LatestBlogs  className={'pt-11 pr-9 pb-16 pl-9'} reverse={true} contents={latestArticles} />
       {articles?.length
         ? articles.map((e, i) => {
-            return <CustomHead props={e} type="caseStudy" key={i} />
+            return (<CustomHead props={e} type="caseStudy" key={i} />)
           })
         : null}
         <AllcontentSection

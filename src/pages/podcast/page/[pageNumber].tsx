@@ -12,6 +12,7 @@ import siteConfig from '../../../../config/siteConfig';
 import React, { useRef } from 'react';
 import Pagination from '~/components/commonSections/Pagination';
 import { BaseUrlProvider } from '~/components/Context/UrlContext';
+import { CustomHead } from '~/utils/customHead';
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const client = getClient();
@@ -65,6 +66,7 @@ const PaginatedEbookPage = ({ podcasts, pageNumber, totalPages }: { podcasts: Po
   return (
     <BaseUrlProvider baseUrl={baseUrl}>
     <Layout>
+      {podcasts?.map((e,i)=>{return(<CustomHead props={e} key={i} type="podcast"/>)})}
         <AllcontentSection
           className={'pb-9'}
           allContent={podcasts}

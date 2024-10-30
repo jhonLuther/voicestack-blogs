@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { breadCrumbJsonLd } from '~/utils/generateJSONLD';
 import Head from 'next/head';
-import CustomHead from '~/utils/customHead';
+import {CustomHead} from '~/utils/customHead';
 import {ArrowRightIcon} from '@sanity/icons'
 
 interface BreadCrumbProps {
