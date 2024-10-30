@@ -5,6 +5,7 @@ import Wrapper from '../../layout/Wrapper';
 import H2Large from '../typography/H2Large';
 import Section from '../Section';
 import { useBaseUrl } from '../Context/UrlContext';
+import { customMetaTag, generateMetaData } from '~/utils/customHead';
 
 interface LatestBlogsProps {
   contents: any[];
@@ -38,25 +39,46 @@ const LatestBlogs: React.FC<LatestBlogsProps> = ({ contents, reverse, className,
 
   return (
     <React.Fragment>
-        <Section className='justify-center md:pt-16 md:pb-24 bg-zinc-900 text-white' >
-          <Wrapper className={`md:flex-row flex-col ${reverse ? 'md:flex-row-reverse' : ''} gap-8 md:gap-12 xl:gap-36`}>
-            <div className='flex flex-col gap-9 xl:w-5/12 w-full flex-1'>
-              <H2Large className='select-none' >
-                {reverse ? displayName :`Latest`}
-              </H2Large>
-              <div className='flex flex-col gap-8 '>
-                {otherBlogs.map((blog, i) => (
-                  <Card key={i + 1 || blog._id} cardType='text-only-card' baseUrl={baseUrl}  isLast={i === otherBlogs.length - 1} post={blog} />
-                ))}
-              </div>
+      {/* experimental */}
+      {contents?.map((e, i) => {
+        return i == 0 ? generateMetaData(e, displayName) :null
+      })}
+      <Section className="justify-center md:pt-16 md:pb-24 bg-zinc-900 text-white">
+        <Wrapper
+          className={`md:flex-row flex-col ${reverse ? 'md:flex-row-reverse' : ''} gap-8 md:gap-12 xl:gap-36`}
+        >
+          <div className="flex flex-col gap-9 xl:w-5/12 w-full flex-1">
+            <H2Large className="select-none">
+              {reverse ? displayName : `Latest`}
+            </H2Large>
+            <div className="flex flex-col gap-8 ">
+              {otherBlogs.map((blog, i) => (
+                <Card
+                  key={i + 1 || blog._id}
+                  cardType="text-only-card"
+                  baseUrl={baseUrl}
+                  isLast={i === otherBlogs.length - 1}
+                  post={blog}
+                />
+              ))}
             </div>
-            <div className='xl:w-6/12 w-full h-full flex-1'>
-                <Card minHeight={350} contentType={contentType} baseUrl={baseUrl} cardColor='bg-orange-700' reverse={reverse} cardType='top-image-card'  key={firstBlog?._id} post={firstBlog} />
-            </div>
-          </Wrapper>
-        </Section>
+          </div>
+          <div className="xl:w-6/12 w-full h-full flex-1">
+            <Card
+              minHeight={350}
+              contentType={contentType}
+              baseUrl={baseUrl}
+              cardColor="bg-orange-700"
+              reverse={reverse}
+              cardType="top-image-card"
+              key={firstBlog?._id}
+              post={firstBlog}
+            />
+          </div>
+        </Wrapper>
+      </Section>
     </React.Fragment>
-  );
+  )
 };
 
 export default LatestBlogs;
