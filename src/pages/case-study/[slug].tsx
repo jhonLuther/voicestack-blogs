@@ -44,7 +44,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false, params = {} }) => {
   const client = getClient(draftMode ? { token: readToken } : undefined);
   const caseStudy = await getCaseStudy(client, params.slug as string);
-  const limitCaseStudies: any = await getCaseStudies(client, 0, 4);
   const tagIds = caseStudy.tags?.map((tag: any) => tag?._id) || []
   const relatedContents = await getTagRelatedContents(client, tagIds,caseStudy?.contentType);
 
