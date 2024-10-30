@@ -1361,10 +1361,9 @@ export async function getPressRelease(
 export async function getSitemapData(client: SanityClient): Promise<Post[]> {
   try {
     const posts = await client.fetch(siteMapQuery)
-    const testimonials = await client.fetch(testiMonialQuery)
     const tags = await client.fetch(tagQuery)
     const authors = await client.fetch(authorQuery)
-    return [...posts, ...testimonials, ...tags, ...authors]
+    return [...posts, ...tags, ...authors]
   } catch (error) {
     console.error(error)
     return []
