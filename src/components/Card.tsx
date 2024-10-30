@@ -256,7 +256,7 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
                   <Link href={linkUrl}>
                     <div className={`flex flex-col h-full  relative items-center group hover: transition duration-500 ${className}`}>
                       {post.mainImage && (
-                        <div className="w-auto h-f rounded-t-lg transform transition duration-500 overflow-hidden"
+                        <div className="w-full rounded-t-lg transform transition duration-500 overflow-hidden min-h-[210px]"
                         >
                           <ImageLoader
                             className='transform  rounded-lg  duration-300 group-hover:scale-105'

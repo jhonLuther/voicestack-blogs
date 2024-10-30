@@ -78,6 +78,7 @@ const ArticlePage = ({ articles, limitedArticles, draftMode, token }: Props) => 
     <>
       <CustomHead props={articles} type="articleExpanded" />
       { generateMetaData(articles)}
+      
       <Layout >
         <MainImageSection enableDate={true} post={articles} />
         <Section className='justify-center'>
