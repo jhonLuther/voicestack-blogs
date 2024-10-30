@@ -65,8 +65,8 @@ export const customMetaTag = (type: string) => {
   if (type) {
     const metaData = ogMetaData[type];
     if (metaData) {
-      return Object.keys(metaData).map((key) => (
-        <Head>
+      return Object.keys(metaData).map((key,i) => (
+        <Head key={i}>
           {key === 'title' ? (
             <title> {metaData[key]}</title>
           ) : (
