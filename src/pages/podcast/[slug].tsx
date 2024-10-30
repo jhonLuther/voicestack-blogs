@@ -95,7 +95,7 @@ const PodcastPage = ({ podcast,relatedContents, previous, next, currentNumber, t
         contentType={podcast?.contentType} />
         {generateMetaData(podcast)}
       <Layout >
-        <MainImageSection isAudio={true} enableDate={true} post={podcast} />
+        <MainImageSection isAudio={true} enableDate={true} post={podcast}  contentType={podcast?.contentType}/>
         <PodcastNavigator currentNumber={currentNumber} totalPodcasts={totalPodcasts} nextSlug={next ? next : '/'} prevSlug={previous ? previous : '/'} />
         <Section className='justify-center'>
           <Wrapper className={'flex-col'}>

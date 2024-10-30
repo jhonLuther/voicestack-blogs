@@ -34,12 +34,15 @@ const DurationSection = ({ className, contentType, duration, date, isAudio = fal
 
     return (
         <div className='font-medium text-[14px]'>
-            {isAudio ? (
-                <div className='flex items-center gap-2 mt-8'>
-                    <ClockIcon color='white' width={24} height={24} />
-                    <span>{duration}</span>
-                </div>
-            ) : contentType === 'ebook' ? (
+            {
+            // isAudio ? (
+            //     // <div className='flex items-center gap-2 mt-8'>
+            //     //     <ClockIcon color='white' width={24} height={24} />
+            //     //     <span>{duration}</span>
+            //     // </div>
+
+            // ) : 
+            contentType === 'ebook' ? (
                 date && <div className={`text-white pt-1 ${className}`}>
                     {formatDateShort(date) }
                 </div>

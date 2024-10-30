@@ -92,7 +92,7 @@ const CaseStudyPage = ({ caseStudy,relatedContents, draftMode, token }: Props) =
       />
       {generateMetaData(caseStudy)}
       <Layout>
-        <MainImageSection enableDate={true} isAuthor={true} post={caseStudy} />
+        <MainImageSection isAuthor={true} post={caseStudy} enableDate={true} />
         {caseStudy?.asideBookFreeDemoBanner && <AsideBannerBlock contents={caseStudy} />}
         <Section className="justify-center">
           <Wrapper className="flex-col">

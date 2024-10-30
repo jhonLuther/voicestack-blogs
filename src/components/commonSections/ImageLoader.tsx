@@ -115,24 +115,13 @@ const ImageLoader: React.FC<ImageLoaderProps> = ({
     }
   }, [renderImageWidth, autoContainerRef]);
 
-  return fixed ? (
+  return fixed && renderImage ? (
     <div ref={containerRef} className={`flex w-full h-full relative ${className}`}>
-      {renderImage && (
-        <Image src={renderImage} alt={image.altText || ''} title={image.title || title} className={`object-cover object-center ${imageClassName}`} fill />
-      )}
+      <Image  priority={true} src={renderImage} alt={image.altText || alt } title={image.title || title} className={`object-cover object-center ${imageClassName}`} fill />
     </div>
-  ) : renderImageWidth > 0 ? (
+  ) : renderImageWidth>0 && renderImage ? (
     <div ref={autoContainerRef} className={`w-full h-auto relative ${className}`}>
-      {renderImage && (
-        <Image
-          className="!m-0"
-          src={renderImage}
-          alt={image.altText || title}
-          title={image.title || title}
-          width={clientWidth}
-          height={(clientWidth / renderImageWidth) * renderImageHeight}
-        />
-      )}
+      <Image  priority={true} className='!m-0' src={renderImage} alt={image.altText || alt} width={clientWidth} title={image.title || title} height={(clientWidth / renderImageWidth) * renderImageHeight } />
     </div>
   ) : null;
 };

@@ -303,7 +303,7 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
                     <Link href={linkUrl} className='flex-1 flex'>
                       <div className='relative flex flex-col w-full'>
                         {(post.mainImage || post.image) && (
-                          <div className="overflow-hidden absolute left-0 right-0 top-0 bottom-0 rounded-lg">
+                          <div className="overflow-hidden absolute left-0 right-0 top-0 bottom-0 rounded-[10px]">
                             <ImageLoader
                               className="h-full overflow-hidden"
                               image={bgImages[imageIndex].url}
@@ -313,11 +313,11 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
                             />
                           </div>
                         )}
-                        <div className="flex flex-col gap-1 relative p-8 flex-1">
-                          <div className="bg-white rounded p-5 h-full flex flex-col justify-between gap-2">
+                        <div className="flex flex-col gap-1 relative p-4 md:p-8 flex-1">
+                          <div className="bg-white rounded p-4 md:p-5 h-full flex flex-col justify-between gap-2">
 														<div>
 															{post.contentType && (
-																<span className={`rounded mb-2 bg-zinc-500 text-sm text-white font-medium leading-[1.5] uppercase inline-flex px-2 py-1`}>{post.contentType}</span>
+																<span className={`rounded mb-2 bg-zinc-500 text-xs md:text-sm text-white font-medium leading-[1.5] uppercase inline-flex px-2 py-1`}>{post.contentType}</span>
 															)}
 															<H4Large className={`group-hover: group-hover:underline underline-offset-4`}>
 																{post.title}

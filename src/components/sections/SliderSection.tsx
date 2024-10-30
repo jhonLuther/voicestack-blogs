@@ -17,18 +17,20 @@ const SliderSection: React.FC<BannerBlockProps> = ({ items }) => {
   return (
     <div className={` flex w-full justify-center px-4 `} >
       <section className="my-9 max-w-7xl w-full">
-        <div className="flex justify-between pb-9">
+        <div className="flex justify-between gap-6 pb-9">
           <H2Large >
             {`Ebooks and Webinars`}
           </H2Large>
-          <div className="flex gap-9">
-            <div className="flex gap-9">
+          <div className="flex gap-9 self-end">
+            <div className="flex gap-4 md:gap-9">
               <button className='text-zinc-900 ebook-prev disabled:opacity-30'><ArrowLeftIcon height={48} width={48} /></button>
               <button className='text-zinc-900 ebook-next disabled:opacity-30'><ArrowRightIcon height={48} width={48} /></button>
             </div>
           </div>
         </div>
-        <Carousel items={items}/>
+        <div>
+          <Carousel items={items}/>
+        </div>
       </section>
     </div>
 

@@ -77,7 +77,7 @@ const EbookPage = ({ ebook,relatedContents, draftMode, token }: Props) => {
     <CustomHead props ={ebook} type='eBook'/>
     {generateMetaData(ebook)}
       <Layout >
-        <MainImageSection enableDate={true}  post={ebook} />
+        <MainImageSection  post={ebook} enableDate={true}/>
         <Section className='justify-center flex-col'>
           <div className="flex md:flex-row flex-col justify-center gap-20">
             <div className="flex md:flex-col flex-col-reverse max-w-[710px] w-full ">

@@ -6,7 +6,7 @@ import { getIframeUrl } from '~/components/commonSections/VideoModal'
 
 const ogMetaData = {
   article: {
-    'title': 'Articles | Official CareStack® Article Series, Read Now',
+    title: 'Articles | Official CareStack® Article Series, Read Now',
     keywords:
       'carestack articles, carestack blog articles, carestack educational articles, dental articles, articles for dentists',
     'og:description':
@@ -15,7 +15,7 @@ const ogMetaData = {
     author: 'CareStack®',
   },
   ebook: {
-    'title': 'Official CareStack® eBook Series, Read Now',
+    title: 'Official CareStack® eBook Series, Read Now',
     keywords:
       'carestack ebooks, downloadable carestack ebooks, carestack educational ebooks, dental ebooks, ebooks for dentists',
     'og:description':
@@ -24,7 +24,7 @@ const ogMetaData = {
     author: 'CareStack®',
   },
   podcast: {
-    'title': 'Podcasts | Official CareStack® Podcast Series, Listen Now',
+    title: 'Podcasts | Official CareStack® Podcast Series, Listen Now',
     keywords:
       'carestack podcasts, carestack audio podcasts, carestack educational podcasts, dental software, podcasts, podcasts for dentists',
     'og:description':
@@ -33,7 +33,7 @@ const ogMetaData = {
     author: 'CareStack®',
   },
   webinar: {
-    'title': 'Webinars | Official CareStack® Webinar Series, Watch Now',
+    title: 'Webinars | Official CareStack® Webinar Series, Watch Now',
     keywords:
       'carestack webinars, carestack webinar recordings, carestack educational webinars, dental software webinars',
     'og:description':
@@ -42,7 +42,7 @@ const ogMetaData = {
     author: 'CareStack®',
   },
   caseStudy: {
-    'title': 'In-Depth Case Studies | Achieving Success With CareStack®',
+    title: 'In-Depth Case Studies | Achieving Success With CareStack®',
     keywords:
       'carestack case studies, carestack customer experiences, carestack client experiences, dental office outcomes',
     'og:description':
@@ -51,7 +51,7 @@ const ogMetaData = {
     author: 'CareStack®',
   },
   pressRelease: {
-    'title': 'Press | CareStack® Press & News | Downloadable Press Kit',
+    title: 'Press | CareStack® Press & News | Downloadable Press Kit',
     keywords:
       'carestack press kit, carestack in the press, press about carestack, carestack in the news, news about carestack',
     'og:description':
@@ -63,9 +63,9 @@ const ogMetaData = {
 
 export const customMetaTag = (type: string) => {
   if (type) {
-    const metaData = ogMetaData[type];
+    const metaData = ogMetaData[type]
     if (metaData) {
-      return Object.keys(metaData).map((key,i) => (
+      return Object.keys(metaData).map((key, i) => (
         <Head key={i}>
           {key === 'title' ? (
             <title> {metaData[key]}</title>
@@ -79,6 +79,38 @@ export const customMetaTag = (type: string) => {
   return null
 }
 
+export const defaultMetaTag = (params: any) => {
+  return (
+    <Head key={params?._id}>
+      <meta property="og:type" content="website" />
+      <meta property="og:url" content="www.carestack.com" />
+      {params?.siteTitle ? <title>{params.siteTitle?.trim()}</title> : <></>}
+      {params?.siteDescription ? (
+        <meta property="og:description" content={params.siteDescription}></meta>
+      ) : (
+        <></>
+      )}
+      {params?.openGraphImage ? (
+        <meta
+          property="og:image"
+          content={urlForImage(params.openGraphImage?.asset?._ref)}
+        ></meta>
+      ) : (
+        <></>
+      )}
+      {params?.keywords ? (
+        <meta
+          name="keywords"
+          content={params.keywords.reduce((ac: string, reducer: string) => {
+            return ac + ',' + reducer
+          })}
+        ></meta>
+      ) : (
+        <></>
+      )}
+    </Head>
+  )
+}
 
 export const generateMetaData = (params: any, type?: string) => {
   if (type) {
@@ -89,16 +121,10 @@ export const generateMetaData = (params: any, type?: string) => {
       <Head>
         <meta property="og:type" content="website" />
         {params?.mainImage ? (
-          <>
-            <meta
-              property="og:image"
-              content={urlForImage(params?.mainImage?._id)}
-            ></meta>
-            <meta
-              property="og:logo"
-              content={urlForImage(params?.mainImage?._id)}
-            ></meta>
-          </>
+          <meta
+            property="og:image"
+            content={urlForImage(params?.mainImage?._id)}
+          ></meta>
         ) : null}
 
         {params?.title ? (

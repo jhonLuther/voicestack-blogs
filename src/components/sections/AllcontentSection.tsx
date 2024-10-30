@@ -10,6 +10,9 @@ import Section from '../Section';
 import H2Large from '../typography/H2Large';
 import SearchBar from '../widgets/SearchBar';
 import { useBaseUrl } from '../Context/UrlContext';
+import { getClient } from '~/lib/sanity.client';
+import { getSiteSettings } from '~/lib/sanity.queries';
+import { defaultMetaTag } from '~/utils/customHead';
 
 interface LatestBlogsProps {
   allContent: any[];
@@ -37,7 +40,8 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
   allItemCount
 }) => {
   const postsToShow = itemsPerPage || siteConfig.pagination.itemsPerPage;
-  const [selectedTag, setSelectedTag] = React.useState('');
+  const [selectedTag, setSelectedTag] = useState('');
+  const [siteSettings, setSiteSettings] = useState([]);
   const router = useRouter();
 
   const baseUrl = useBaseUrl();
@@ -53,6 +57,23 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
 
   let browseHeading = contentType ? contentHeading : 'Explore All';
 
+useEffect(() => {
+  const fetchAndProcessSiteSettings = async () => {
+    try {
+      const client = getClient()
+      const siteSettings = await getSiteSettings(client)
+      setSiteSettings(siteSettings)
+      console.log({ siteSettings })
+    } catch (error) {
+      setSiteSettings(null)
+      console.error('Error fetching site settings:', error)
+    }
+  }
+
+  fetchAndProcessSiteSettings()
+}, [])
+
+
   useEffect(() => {
     const updateSelectedTag = () => {
       const isBrowsePath = router.pathname.includes('/browse/');
@@ -62,7 +83,7 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
         const isPageRoute = pathParts.includes('page');
 
         if (isPageRoute) {
-          const storedTag = window.localStorage.getItem("selectedTag");
+          const storedTag = window.localStorage.getItem('selectedTag')
           if (storedTag && storedTag !== 'null' && storedTag !== 'undefined') {
             const cleanTag = storedTag
               .split('-')
@@ -73,25 +94,25 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
             setSelectedTag('');
           }
         } else {
-          const tagFromUrl = pathParts[pathParts.length - 1];
+          const tagFromUrl = pathParts[pathParts.length - 1]
           if (tagFromUrl && tagFromUrl !== 'browse') {
             const cleanTag = tagFromUrl
               .split('-')
-              .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-              .join(' ');
-            setSelectedTag(cleanTag);
+              .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+              .join(' ')
+            setSelectedTag(cleanTag)
           } else {
-            setSelectedTag('');
+            setSelectedTag('')
           }
         }
       } else {
-        setSelectedTag('');
-        window.localStorage.removeItem("selectedTag");
+        setSelectedTag('')
+        window.localStorage.removeItem('selectedTag')
       }
-    };
+    }
 
-    updateSelectedTag();
-  }, [router.pathname, router.asPath]);
+    updateSelectedTag()
+  }, [router.pathname, router.asPath])
 
   if (!allContent) {
     return null;
@@ -135,34 +156,45 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
   return (
     <Section className={`justify-center md:pb-0 md:pt-24 ${className}`}>
       <Wrapper className={`flex-col`}>
-        {!hideHeader && <div className="md:flex-row flex-row gap-8 flex items-end justify-between pb-12">
-          <H2Large className='tracking-tighterText select-none'>
-            {`${selectedTag ? selectedTag : browseHeading} `}
-          </H2Large>
-          {redirect ? (
-            <Link href={siteConfig.paginationBaseUrls.base}>
-              <div className='flex items-center gap-3 transform group duration-300 cursor-pointer'>
-                <span className='text-base font-medium'>{`Browse All`}</span>
-                <span className="text-xl">
-                  <ArrowTopRightIcon
-                    className='group-hover:translate-y-[-2px] transition-transform duration-300'
-                    height={20}
-                    width={20}
-                  />
-                </span>
-              </div>
-            </Link>
-          ) : (<div className='text-zinc-700 font-normal text-base'>{`${totalCount} ${totalCount > 1 ? 'results' : 'result'}`}</div>)}
-        </div>}
+        {siteSettings?.map((e) => {
+          return defaultMetaTag(e)
+        })}
+        {!hideHeader && (
+          <div className="md:flex-row flex-row gap-8 flex items-end justify-between pb-12">
+            <H2Large className="tracking-tighterText select-none">
+              {`${selectedTag ? selectedTag : browseHeading} `}
+            </H2Large>
+            {redirect ? (
+              <Link href={siteConfig.paginationBaseUrls.base}>
+                <div className="flex items-center gap-3 transform group duration-300 cursor-pointer">
+                  <span className="text-base font-medium">{`Browse All`}</span>
+                  <span className="text-xl">
+                    <ArrowTopRightIcon
+                      className="group-hover:translate-y-[-2px] transition-transform duration-300"
+                      height={20}
+                      width={20}
+                    />
+                  </span>
+                </div>
+              </Link>
+            ) : (
+              <div className="text-zinc-700 font-normal text-base">{`${totalCount} ${totalCount > 1 ? 'results' : 'result'}`}</div>
+            )}
+          </div>
+        )}
 
-        <div className={`grid 
-          ${cardType === 'left-image-card'
-            ? 'grid-cols-1 lg:grid-cols-2 md:grid-cols-2 gap-x-6 xl:gap-x-16 gap-y-12'
-            : cardType === 'podcast-card'
-              ? 'lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-10'
-              : 'lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-10'}
+        <div
+          className={`grid 
+          ${
+            cardType === 'left-image-card'
+              ? 'grid-cols-1 lg:grid-cols-2 md:grid-cols-2 gap-x-6 xl:gap-x-16 gap-y-12'
+              : cardType === 'podcast-card'
+                ? 'lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-10'
+                : 'lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-10'
           }
-        `}>
+          }
+        `}
+        >
           {allContent && allContent.length > 0 ? (
             renderPosts()
           ) : (
@@ -173,7 +205,7 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
         </div>
       </Wrapper>
     </Section>
-  );
+  )
 };
 
 export default AllcontentSection;
