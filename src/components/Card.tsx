@@ -65,7 +65,7 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
     const isRouterUrl = pageURLs.some((url) => pathname.includes(url))
     const isPageUrlLink = pageURLs?.includes(normalizedBaseUrl) ;
     setIsPageUrl(isPageUrlLink ? isPageUrlLink :isRouterUrl)
-  }, [pathname,pathname,baseUrl,pageURLs]);
+  }, [pathname,baseUrl,pageURLs]);
   
  
   useEffect(() => {
