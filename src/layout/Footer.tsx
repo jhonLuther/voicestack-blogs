@@ -83,10 +83,10 @@ const Footer = ({ className }) => {
   // ];
 
   return (
-    <footer className={`bg-zinc-900 text-white pt-12 md:pt-24 pb-12 px-4 ${className}`}>
+    <footer className={`bg-black text-white pt-12 md:pt-24 pb-12 px-4 ${className}`}>
       <Wrapper className="container mx-auto max-w-7xl flex flex-col gap-12">
-        <div className="flex flex-col md:flex-row gap-6 md:gap-12 justify-between">
-          <div>
+        <div className="flex flex-col md:flex-row items-center md:items-start gap-6 md:gap-12 justify-between">
+          <div className='flex flex-col items-center md:items-start'>
             <Link href="/" className="text-[30px] font-extrabold bg-gradient-text bg-clip-text text-transparent font-monrope tracking-tighterText max-w-[170px] leading-[1.16] block">
             <Logo/>
             </Link>
@@ -168,7 +168,7 @@ const Footer = ({ className }) => {
               </ul>
             </div> 
             
-            <div className="flex flex-col mt-6 md:mt-12 gap-2">
+            <div className="flex flex-row md:flex-col mt-6 md:mt-12 gap-y-[6px] gap-x-4 md:gap-y-2 flex-wrap justify-center ">
               {terms.map((item:any, idx) => (
                 // <a href={item.url}  key={idx} className="hover:text-zinc-300 text-zinc-500 text-[15px] leading-[1.62]">
                 //   {item.title}
@@ -179,7 +179,7 @@ const Footer = ({ className }) => {
               ))}
             </div>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-5 md:gap-0 text-sm flex-1 max-w-[816px]">
+          <div className="hidden md:grid grid-cols-2 md:grid-cols-4 gap-5 md:gap-0 text-sm flex-1 max-w-[816px]">
             {sections.map((section, index) => (
               <div key={index} className='max-w-[204px]'>
                 <h3 className="text-lg font-semibold mb-4">{section.title}</h3>
@@ -200,7 +200,7 @@ const Footer = ({ className }) => {
           </div>
         </div>
 
-        <div className='flex justify-between items-center pt-8 gap-6 border-t border-[#3F3F46]'>
+        <div className='flex flex-col md:flex-row justify-between items-center pt-8 gap-6 border-t border-[#3F3F46]'>
           <span className='hover:text-zinc-300 text-zinc-500 text-xs md:text-[15px] leading-[1.62]'>&copy; {`2017 - ${currentYear} Good Methods Global Inc. All rights reserved.`}</span>    
           <Link href='https://www.carestack.com' target="_blank">
             <Image src={CsLogo} alt='CareStack' title='CareStack'/>

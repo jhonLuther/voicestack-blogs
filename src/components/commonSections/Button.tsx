@@ -20,7 +20,7 @@ const Button: React.FunctionComponent<ButtonProps> = ({
   className,
   ...rest
 }) => {
-  const baseClasses = `bg-zinc-500 hover:bg-zinc-600 text-white px-6 py-3 text-base leading-[1.5] font-medium rounded-[5px] flex items-center whitespace-nowrap  ${className}`;
+  const baseClasses = `bg-zinc-500 hover:bg-zinc-600 text-white px-6 py-[14px] text-base leading-[1.5] font-medium rounded-[5px] flex items-center whitespace-nowrap  ${className}`;
 
   if (link) {
     return (
