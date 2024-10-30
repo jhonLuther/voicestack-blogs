@@ -20,9 +20,6 @@ interface RelatedFeaturesSectionProps {
 
 const RelatedFeaturesSection: React.FC<RelatedFeaturesSectionProps> = ({ allPosts, contentType }) => {
 
-  console.log(allPosts,'ALLPOST');
-  
-  
   if (!allPosts) {
     return null
   }

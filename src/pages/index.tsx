@@ -79,8 +79,6 @@ export default function IndexPage(props: IndexPageProps) {
   const homeSettings = props?.homeSettings[0];
   const latestPosts = props?.latestPosts;
   const siteSettings = props?.siteSettings;
-
-  console.log(siteSettings,'siteSettings');
   
   return (
     <Layout>

@@ -1,7 +1,6 @@
 import React from 'react'
 import { PortableText, PortableTextReactComponents, toPlainText } from '@portabletext/react'
 import { getClient } from '~/lib/sanity.client'
-import { SanityImage } from '~/components/SanityImage'
 import DecoratorTable from '~/components/DecoratorTable'
 import DynamicComponent from '~/layout/DynamicComponent'
 import ListItem from '~/components/typography/ListItem'
@@ -59,8 +58,7 @@ const SanityPortableText: React.FC<SanityPortableTextProps> = ({
     },
     types: {
       image: ({value}) => {
-        console.log(value,'value');
-        
+
         return (
           <ImageLoader 
             image={value.asset}

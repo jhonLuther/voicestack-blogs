@@ -21,6 +21,7 @@ import { VideoModal } from './commonSections/VideoModal';
 import H3Medium from './typography/H3Medium';
 import ChordIcon from '~/assets/reactiveAssets/ChordIcon';
 import CreaterInfo from './commonSections/CreaterInfo';
+import { usePathname } from 'next/navigation'
 
 interface CardProps {
   post: Post;
@@ -42,6 +43,8 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
   const [linkUrl, setLinkUrl] = useState<string | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [color, setColor] = useState<string | null>(null);
+  const [isPageUrl, setIsPageUrl] = useState<boolean>(false);
+  const pathname = usePathname()
 
 	const bgImages = [
     {url: 'https://cdn.sanity.io/images/bbmnn1wc/production/69f78e1d2126dda19c732337893448dc94969932-784x568.png'},
@@ -53,9 +56,18 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
 	const imageIndex = index % bgImages.length;
   // const image = bgImages[imageIndex];
   const tag = useMemo(() => post?.tags?.find((tag) => tag) || null, [post?.tags]);
-  const normalizedBaseUrl = baseUrl?.replace(/^\/+/, '');
-  const isPageUrl = Object.values(siteConfig.pageURLs).includes(normalizedBaseUrl);
+  const pageURLs = Object.values(siteConfig.pageURLs);
 
+  useEffect((
+  ) => {
+    const normalizedBaseUrl = baseUrl?.replace(/^\/+/, '');
+
+    const isRouterUrl = pageURLs.some((url) => pathname.includes(url))
+    const isPageUrlLink = pageURLs?.includes(normalizedBaseUrl) ;
+    setIsPageUrl(isPageUrlLink ? isPageUrlLink :isRouterUrl)
+  }, [pathname,baseUrl,pageURLs]);
+  
+ 
   useEffect(() => {
     if (router.isReady && post?.slug) {
       const contentTypePath = getBasePath(router, post.contentType); 
@@ -242,15 +254,14 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
 
                 cardType === 'podcast-card' ? (
                   <Link href={linkUrl}>
-                    <div className={`flex flex-col h-full flex-1  relative items-center group hover: transition duration-500 ${className}`}>
+                    <div className={`flex flex-col h-full  relative items-center group hover: transition duration-500 ${className}`}>
                       {post.mainImage && (
                         <div className="w-full rounded-t-lg transform transition duration-500 overflow-hidden min-h-[210px]"
                         >
                           <ImageLoader
                             className='transform  rounded-lg  duration-300 group-hover:scale-105'
                             image={post?.mainImage}
-                            width={290}
-                            height={220}
+                            fixed={true}
                           />
                           {
                             post.contentType === 'podcast' ? (

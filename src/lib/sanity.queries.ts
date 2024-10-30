@@ -1055,6 +1055,43 @@ export async function getauthorRelatedContents(
   })
 }
 
+
+
+
+export async function getTagRelatedContents(
+  client: SanityClient,
+  tagId: string,
+  contentType: string = '',
+  limit: number = 4,
+): Promise<any> {
+  if (!tagId) return [];
+
+  const query = groq`
+    *[_type == "post" && contentType == "${contentType}" && "${tagId}" in tags[]->_id] 
+    | order(date desc)  [0...${limit}]  {
+      _id,
+      title,
+      slug,
+      contentType,
+      duration,
+      publishedAt,
+      excerpt,
+      date,
+      ${imageFragment},
+      ${bodyFragment},
+      "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180),
+      "tags": tags[]-> {
+      _id,
+      tagName
+    },
+      
+    }
+  `;
+
+  return await client.fetch(query);
+}
+
+
 export async function getTag(client: SanityClient, slug: string): Promise<any> {
   return await client.fetch(tagBySlugQuery, {
     slug,
@@ -1077,20 +1114,10 @@ export async function getCaseStudy(
   slug: string,
 ): Promise<any> {
   const caseStudy = await client.fetch(caseStudyBySlugQuery, { slug })
-  if (caseStudy) {
-    const tagIds = caseStudy.tags?.map((tag: any) => tag?._id) || []
-    if (tagIds.length > 0) {
-      const relatedCaseStudies = await getRelatedContents(
-        client,
-        slug,
-        'case-study',
-        tagIds,
-      )
-      return { ...caseStudy, relatedCaseStudies }
-    }
-    return { ...caseStudy, relatedCaseStudies: [] }
+  if(!caseStudy) {
+    null
   }
-  return null
+  return caseStudy
 }
 export async function getTestimonial(
   client: SanityClient,
@@ -1115,7 +1142,8 @@ export async function getTestimonial(
 }
 
 export const relatedContentsQuery = groq`
-  *[_type == "post" && contentType == $type && slug.current != $currentSlug && count(tags[]->_id[ _id in $tagIds ]) > 0] 
+  *[_type == $type && slug.current != $currentSlug && 
+    $tagIds in tags[]->_id] 
   | order(date desc) [0...$limit] {
     _id,
     title,
@@ -1135,6 +1163,7 @@ export const relatedContentsQuery = groq`
     }
   }
 `
+
 export const relatedTestimonialComponents = groq`
   *[_type == 'testimonial' && slug.current != $currentSlug && count(tags[]->_id[ _id in $tagIds ]) > 0] 
   | order(date desc) [0...$limit] {
@@ -1201,8 +1230,8 @@ export async function getRelatedContents(
   currentSlug: string = '',
   type: string = 'post', // default post will be fetched
   tagIds: string[] = [],
-  limit: number = 3,
-): Promise<any[]> {
+  limit: number = 4,
+): Promise<any[]> {  
   return await client.fetch(relatedContentsQuery, {
     currentSlug,
     tagIds,
@@ -1243,20 +1272,10 @@ export async function getPodcast(
   slug: string,
 ): Promise<any> {
   const podcast = await client.fetch(podcastBySlugQuery, { slug })
-  if (podcast) {
-    const tagIds = podcast.tags?.map((tag: any) => tag?._id) || []
-    if (tagIds.length > 0) {
-      const relatedPodcasts = await getRelatedContents(
-        client,
-        slug,
-        'podcast',
-        tagIds,
-      )
-      return { ...podcast, relatedPodcasts }
-    }
-    return { ...podcast, relatedPodcasts: [] }
+  if(!podcast) {
+    null
   }
-  return null
+  return podcast
 }
 
 export const getAllPodcastSlugs = async (
@@ -1302,80 +1321,40 @@ export async function getArticle(
   slug: string,
 ): Promise<any> {
   const article = await client.fetch(articleBySlugQuery, { slug })
-  if (article) {
-    const tagIds = article.tags?.map((tag: any) => tag?._id) || []
-    if (tagIds.length > 0) {
-      const relatedArticles = await getRelatedContents(
-        client,
-        slug,
-        'article',
-        tagIds,
-      )
-      return { ...article, relatedArticles }
-    }
-    return { ...article, relatedArticles: [] }
+  if(!article) {
+    null
   }
-  return null
+  return article
 }
 export async function getWebinar(
   client: SanityClient,
   slug: string,
 ): Promise<any> {
   const webinar = await client.fetch(webinarBySlugQuery, { slug })
-  if (webinar) {
-    const tagIds = webinar.tags?.map((tag: any) => tag?._id) || []
-    if (tagIds.length > 0) {
-      const relatedWebinars = await getRelatedContents(
-        client,
-        slug,
-        'webinar',
-        tagIds,
-      )
-      return { ...webinar, relatedWebinars }
-    }
-    return { ...webinar, relatedWebinars: [] }
+  if(!webinar) {
+    null
   }
-  return null
+  return webinar
 }
 export async function getEbook(
   client: SanityClient,
   slug: string,
 ): Promise<any> {
   const ebook = await client.fetch(ebookBySlugQuery, { slug })
-  if (ebook) {
-    const tagIds = ebook.tags?.map((tag: any) => tag?._id) || []
-    if (tagIds.length > 0) {
-      const relatedEbooks = await getRelatedContents(
-        client,
-        slug,
-        'ebook',
-        tagIds,
-      )
-      return { ...ebook, relatedEbooks }
-    }
-    return { ...ebook, relatedEbooks: [] }
+  if(!ebook) {
+    null
   }
-  return null
+  return ebook
 }
 export async function getPressRelease(
   client: SanityClient,
   slug: string,
 ): Promise<any> {
   const pressRelease = await client.fetch(pressReleaseBySlugQuery, { slug })
-  if (pressRelease) {
-    const tagIds = pressRelease.tags?.map((tag: any) => tag?._id) || []
-    if (tagIds.length > 0) {
-      const relatedPressReleases = await getRelatedContents(
-        client,
-        slug,
-        'press-release',
-        tagIds,
-      )
-      return { ...pressRelease, relatedPressReleases }
-    }
-    return { ...pressRelease, relatedPressReleases: [] }
+  if(!pressRelease) {
+    null
   }
-  return null
+  return pressRelease
 }
 
 export async function getSitemapData(client: SanityClient): Promise<Post[]> {
