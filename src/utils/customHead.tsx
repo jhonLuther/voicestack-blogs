@@ -84,7 +84,7 @@ export const defaultMetaTag = (params: any) => {
     <Head key={params?._id}>
       <meta property="og:type" content="website" />
       <meta property="og:url" content="www.carestack.com" />
-      {params?.siteTitle ? <title> {params.siteTitle}</title> : <></>}
+      {params?.siteTitle ? <title>{params.siteTitle?.trim()}</title> : <></>}
       {params?.siteDescription ? (
         <meta property="og:description" content={params.siteDescription}></meta>
       ) : (
