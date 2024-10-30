@@ -45,7 +45,7 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
   const client = getClient(draftMode ? { token: readToken } : undefined);
   const caseStudy = await getCaseStudy(client, params.slug as string);
   const tagIds = caseStudy.tags?.map((tag: any) => tag?._id) || []
-  const relatedContents = await getTagRelatedContents(client, tagIds,caseStudy?.contentType);
+  const relatedContents = await getTagRelatedContents(client,params.slug as string, tagIds,caseStudy?.contentType);
 
 
   if (!caseStudy) {

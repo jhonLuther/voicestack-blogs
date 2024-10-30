@@ -52,7 +52,7 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
   const { current, totalPodcasts, previous, next } = await getAllPodcastSlugs(client, currentSlug);
 
   const tagIds = podcast.tags?.map((tag: any) => tag?._id) || []
-  const relatedContents = await getTagRelatedContents(client, tagIds,podcast.contentType);
+  const relatedContents = await getTagRelatedContents(client,params.slug as string, tagIds,podcast.contentType);
 
 
   return {

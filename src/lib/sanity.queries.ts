@@ -1060,6 +1060,7 @@ export async function getauthorRelatedContents(
 
 export async function getTagRelatedContents(
   client: SanityClient,
+  currentSlug: string,
   tagId: string,
   contentType: string = '',
   limit: number = 4,
@@ -1067,7 +1068,7 @@ export async function getTagRelatedContents(
   if (!tagId) return [];
 
   const query = groq`
-    *[_type == "post" && contentType == "${contentType}" && "${tagId}" in tags[]->_id] 
+    *[_type == "post"  && slug.current !="${currentSlug}" && contentType == "${contentType}" && "${tagId}" in tags[]->_id] 
     | order(date desc)  [0...${limit}]  {
       _id,
       title,

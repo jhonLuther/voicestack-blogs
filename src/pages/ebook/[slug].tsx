@@ -48,7 +48,7 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
   const client = getClient(draftMode ? { token: readToken } : undefined);
   const ebook = await getEbook(client, params.slug as string);
   const tagIds = ebook.tags?.map((tag: any) => tag?._id) || []
-  const relatedContents = await getTagRelatedContents(client, tagIds,ebook?.contentType);
+  const relatedContents = await getTagRelatedContents(client,params.slug as string, tagIds,ebook?.contentType);
 
   return {
     props: {

@@ -50,7 +50,7 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
   const webinar = await getWebinar(client, params.slug as string);
   const allWebinars = await getWebinars(client);
   const tagIds = webinar.tags?.map((tag: any) => tag?._id) || []
-  const relatedContents = await getTagRelatedContents(client, tagIds,webinar.contentType);
+  const relatedContents = await getTagRelatedContents(client,params.slug as string, tagIds,webinar.contentType);
 
 
   return {

@@ -51,7 +51,7 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
   const client = getClient(draftMode ? { token: readToken } : undefined);
   const pressRelease = await getPressRelease(client, params.slug as string);
   const tagIds = pressRelease.tags?.map((tag: any) => tag?._id) || []
-  const relatedContents = await getTagRelatedContents(client, tagIds,pressRelease.contentType);
+  const relatedContents = await getTagRelatedContents(client,params.slug as string, tagIds,pressRelease.contentType);
 
 
   if (!pressRelease) {
