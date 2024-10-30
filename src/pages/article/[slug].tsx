@@ -82,8 +82,8 @@ const ArticlePage = ({ articles,relatedContents, draftMode, token }: Props) => {
         <MainImageSection enableDate={true} post={articles} />
         <Section className='justify-center'>
           <Wrapper className={`flex-col`} >
-            <div className="flex  md:flex-row flex-col">
-              <div className="mt-12 flex md:flex-col flex-col-reverse md:w-2/3 w-full ">
+            <div className="flex md:flex-row flex-col gap-12">
+              <div className="mt-12 flex-1 flex md:flex-col flex-col-reverse md:w-2/3 w-full ">
                 <div className='post__content w-full '>
                   <SanityPortableText
                     content={articles?.body}
@@ -92,7 +92,7 @@ const ArticlePage = ({ articles,relatedContents, draftMode, token }: Props) => {
                   />
                 </div>
               </div>
-              <div className='flex-1 flex flex-col gap-12 mt-12  bg-red relative md:w-1/3 w-full'>
+              <div className='flex flex-col gap-12 mt-12  bg-red relative md:w-1/3 max-w-[410px] w-full'>
                 <div className='sticky top-12 flex flex-col gap-12'>
                   <Toc headings={articles?.headings} title="Contents" />
                   {articles?.author &&
