@@ -27,12 +27,12 @@ export default function ContentHub({
           </H2Large>
 
           <div className='flex-1 overflow-hidden'>
-            <div className={`flex gap-x-8 relative  `}>
-              <div className="text-zinc-400 flex gap-3">
+            <div className={`flex md:gap-x-8 relative `}>
+              <div className="text-zinc-400 flex flex-wrap gap-3">
                 {Object.keys(contentCount).map((key, index) => (
-                  <span key={index}>
+                  <span key={index} className='text-sm md:text-base'>
                     {contentCount[key]} {key.charAt(0).toUpperCase() + key.slice(1)}
-                    <span className='ml-3'>{index < Object.keys(contentCount).length - 1 && ' • '}</span>
+                    <span className='hidden md:block ml-3'>{index < Object.keys(contentCount).length - 1 && ' • '}</span>
                   </span>
                 ))}
               </div>

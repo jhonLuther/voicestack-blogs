@@ -157,7 +157,7 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
                 </div>
               </Link>
             ) : (
-              <div className="text-zinc-700 font-normal text-base">{`${totalCount} ${totalCount > 1 ? 'results' : 'result'}`}</div>
+              <div className="text-zinc-700 font-normal text-base shrink-0">{`${totalCount} ${totalCount > 1 ? 'results' : 'result'}`}</div>
             )}
           </div>
         )}
