@@ -201,7 +201,7 @@ const Footer = ({ className }) => {
         </div>
 
         <div className='flex flex-col md:flex-row justify-between items-center pt-8 gap-6 border-t border-[#3F3F46]'>
-          <span className='hover:text-zinc-300 text-zinc-500 text-xs md:text-[15px] leading-[1.62]'>&copy; {`2017 - ${currentYear} Good Methods Global Inc. All rights reserved.`}</span>    
+          <span className='hover:text-zinc-300 text-zinc-500 text-center md:text-left text-xs md:text-[15px] leading-[1.62]'>&copy; {`2017 - ${currentYear} Good Methods Global Inc. All rights reserved.`}</span>    
           <Link href='https://www.carestack.com' target="_blank">
             <Image src={CsLogo} alt='CareStack' title='CareStack'/>
           </Link>

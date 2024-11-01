@@ -35,9 +35,6 @@ const Header = () => {
 
   const isMobile: any = useMediaQuery(1024);
 
-  const handleClick = () => {
-    setShowMenu(!showMenu);
-  };
 
   useEffect(() => {
     window.addEventListener("scroll", handleScrollMob);
@@ -51,6 +48,7 @@ const Header = () => {
   return (
     <>
     <ProgressBar/>
+    {showMenu && <div className='fixed top-0 w-full h-full z-[19] bg-zinc-900'></div>}
     <div className={`relative w-full before:content-[''] before:-z-0 before:h-[100px] before:absolute before:left-0 before:right-0 before:top-[-100px] before:bg-zinc-900`}>
       <header className={`fixed w-full top-0 left-0 z-20 transition-all duration-300 ease-linear ${headerFixed && '!fixed w-full !top-[-44px] left-0'}`}>
         <div className={`bg-cs-primary group hover:bg-[#42dd88] transition-all duration-200 px-4 h-[44px]`}>  

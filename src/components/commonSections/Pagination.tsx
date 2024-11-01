@@ -46,7 +46,7 @@ const Pagination = ({
         href={getPageUrl(number)}
         onClick={() => handlePageChange(number)}
         className={`
-          px-3 py-1
+          px-2 md:px-3 py-1
           rounded-md
           transition-all duration-300 ease-in-out
           ${currentPage === number
