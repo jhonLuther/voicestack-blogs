@@ -77,14 +77,11 @@ const EbookPage = ({ ebook,relatedContents, draftMode, token }: Props) => {
     {generateMetaData(ebook)}
       <Layout >
         <MainImageSection  post={ebook} enableDate={true}/>
-        <Section className='justify-center flex-col'>
-          <div className="flex md:flex-row flex-col justify-center gap-20">
-            <div className="flex md:flex-col flex-col-reverse max-w-[710px] w-full ">
-            {/* <EbookCard ebook={ebook}/> */}
+        <Section className='flex justify-center'>
+          <Wrapper className="flex-col">
+            <div className="flex md:flex-row flex-col gap-6 md:gap-12 justify-between">
+              <div className="md:mt-12 flex-1 flex md:flex-col flex-col-reverse md:w-2/3 w-full md:max-w-[710px]">
               <div className='post__content w-full '>
-                
-                {/* <h2 className="text-3xl font-bold mb-4">{ebook?.title}</h2>
-                <p className="text-lg mb-6">{ebook?.excerpt}</p> */}
                 <SanityPortableText
                   content={ebook?.body}
                   draftMode={draftMode}
@@ -92,8 +89,8 @@ const EbookPage = ({ ebook,relatedContents, draftMode, token }: Props) => {
                 />
               </div>
             </div>
-            <div className='flex-1 flex flex-col gap-12 bg-red relative max-w-[410px] w-full'>
-              <div className='sticky top-12 flex flex-col gap-8'>
+            <div className='flex flex-col gap-8 md:mt-12 bg-red relative md:w-1/3 md:max-w-[410px] w-full'>
+                <div className='sticky top-24 flex flex-col gap-8'>
                 <>
                   <SidebarTitle className='border-b border-zinc-200 pb-3'>{`To Know More About`}</SidebarTitle>
                   <div className='flex flex-col gap-6'>
@@ -103,7 +100,8 @@ const EbookPage = ({ ebook,relatedContents, draftMode, token }: Props) => {
                 <ShareableLinks props={ebook?.title} />
               </div>
             </div>
-          </div>
+            </div>
+          </Wrapper>
         </Section>
         {relatedContents &&relatedContents.length > 0 && (
           <RelatedFeaturesSection

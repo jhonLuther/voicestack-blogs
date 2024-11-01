@@ -41,7 +41,6 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
 }) => {
   const postsToShow = itemsPerPage || siteConfig.pagination.childItemsPerPage;
   const [selectedTag, setSelectedTag] = useState('');
-  const [siteSettings, setSiteSettings] = useState([]);
   const router = useRouter();
 
   const baseUrl = useBaseUrl();
@@ -56,23 +55,6 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
         : 'Keep Reading';
 
   let browseHeading = contentType ? contentHeading : 'Explore All';
-
-useEffect(() => {
-  const fetchAndProcessSiteSettings = async () => {
-    try {
-      const client = getClient()
-      const siteSettings = await getSiteSettings(client)
-      setSiteSettings(siteSettings)
-      console.log({ siteSettings })
-    } catch (error) {
-      setSiteSettings(null)
-      console.error('Error fetching site settings:', error)
-    }
-  }
-
-  fetchAndProcessSiteSettings()
-}, [])
-
 
   useEffect(() => {
     const updateSelectedTag = () => {
@@ -156,16 +138,13 @@ useEffect(() => {
   return (
     <Section className={`justify-center md:pb-0 md:pt-24 ${className}`}>
       <Wrapper className={`flex-col`}>
-        {siteSettings?.map((e) => {
-          return defaultMetaTag(e)
-        })}
         {!hideHeader && (
           <div className="md:flex-row flex-row gap-8 flex items-end justify-between pb-12">
             <H2Large className="tracking-tighterText select-none">
               {`${selectedTag ? selectedTag : browseHeading} `}
             </H2Large>
             {redirect ? (
-              <Link href={`/${siteConfig.paginationBaseUrls.base}`}>
+              <Link href={`/${siteConfig.paginationBaseUrls.base}`} className='shrink-0'>
                 <div className="flex items-center gap-3 transform group duration-300 cursor-pointer">
                   <span className="text-base font-medium">{`Browse All`}</span>
                   <span className="text-xl">
@@ -178,7 +157,7 @@ useEffect(() => {
                 </div>
               </Link>
             ) : (
-              <div className="text-zinc-700 font-normal text-base">{`${totalCount} ${totalCount > 1 ? 'results' : 'result'}`}</div>
+              <div className="text-zinc-700 font-normal text-base shrink-0">{`${totalCount} ${totalCount > 1 ? 'results' : 'result'}`}</div>
             )}
           </div>
         )}
@@ -187,10 +166,10 @@ useEffect(() => {
           className={`grid 
           ${
             cardType === 'left-image-card'
-              ? 'grid-cols-1 lg:grid-cols-2 md:grid-cols-2 gap-x-6 xl:gap-x-16 gap-y-12'
+              ? 'grid-cols-1 lg:grid-cols-2 md:grid-cols-2 gap-x-6 xl:gap-x-16 gap-y-6 md:gap-y-12'
               : cardType === 'podcast-card'
-                ? 'lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-10'
-                : 'lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-10'
+                ? 'lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-6 md:gap-10'
+                : 'lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-6 md:gap-10'
           }
           }
         `}

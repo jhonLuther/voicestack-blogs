@@ -75,7 +75,7 @@ export default function AuthorPage({
     <Layout >
       <Section className='justify-center'>
         <Wrapper className={`flex-col`}>
-          <div className='flex md:flex-row flex-col items-center gap-16'>
+          <div className='flex md:flex-row flex-col gap-8 md:gap-16'>
             <div>
               {author.picture && (
                 <Image
@@ -93,15 +93,15 @@ export default function AuthorPage({
               <p className='max-w-3xl text-xl text-cs-zinc-900   font-normal'>{author.bio}</p>
             </div>
           </div>
-          {relatedContents &&
-            <AllcontentSection
-              className={'pb-9'}
-              allContent={relatedContents}
-              itemsPerPage={siteConfig.pagination.childItemsPerPage}
-              redirect={true}
-            />}
         </Wrapper>
       </Section>
+      {relatedContents &&
+        <AllcontentSection
+          className={'pb-9'}
+          allContent={relatedContents}
+          itemsPerPage={siteConfig.pagination.childItemsPerPage}
+          redirect={true}
+        />}
     </Layout >
     </BaseUrlProvider>
   )

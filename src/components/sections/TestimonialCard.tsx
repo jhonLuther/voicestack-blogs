@@ -12,7 +12,7 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({ ...props }:any) => {
     const customerDetails = props.testimonialCard?.testimonial?.customerDetails
     
   return (
-    <div className="w-full p-8 flex flex-col gap-2  rounded-lg bg-zinc-100 border-zinc-300">
+    <div className="w-full p-6 md:p-8 flex flex-col gap-2 rounded-lg bg-zinc-100 border-zinc-300">
       <div className="flex flex-col gap-6">
         <div className="flex flex-col ">
           <ChordIcon/>

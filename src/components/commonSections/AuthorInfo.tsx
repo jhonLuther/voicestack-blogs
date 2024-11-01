@@ -27,7 +27,7 @@ const  AuthorInfo = ({ author, contentType,className,showMultiple = false,showNa
         {Array.isArray(author)  &&  author && author.map((authors, index) => (
           <Link className={`${className} !no-underline`}  key={authors?._id || index} href={`/author/${authors?.slug && authors?.slug.current && authors?.slug.current}`}>
             <div className="author-info flex gap-4 cursor-pointer items-center">
-              <div className='h-12 w-12'>
+              <div className='h-12 w-12 shrink-0'>
               {authors?.picture && (
                 <ImageLoader
                   alt={authors.name}
@@ -41,7 +41,7 @@ const  AuthorInfo = ({ author, contentType,className,showMultiple = false,showNa
               <span className={`!font-medium text-base leading-[1.5] !no-underline text-zinc-900 ${className}`}>
                 {authors?.name}
               </span>
-                {!showNameOnly && <span className={`text-base text-zinc-600 !no-underline leading-[1.3] ${className}`} >{authors?.role}</span>}
+                {!showNameOnly && <span className={`text-sm md:text-base text-zinc-600 !no-underline leading-[1.3] ${className}`} >{authors?.role}</span>}
               </div>
             </div>
           </Link>

@@ -33,6 +33,7 @@ interface Props {
 
 
 export const getStaticPaths: GetStaticPaths = async () => {
+  
   const client = getClient();
   const slugs = await client.fetch(webinarSlugsQuery);
   const paths = slugs?.map((slug: string) => {
@@ -52,6 +53,7 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
   const tagIds = webinar.tags?.map((tag: any) => tag?._id) || []
   const relatedContents = await getTagRelatedContents(client,params.slug as string, tagIds,webinar.contentType);
 
+  console.log({webinar});
 
   return {
     props: {
@@ -82,34 +84,34 @@ const WebinarPage = ({ webinar,relatedContents, draftMode, token }: Props) => {
 
         <Section className='justify-center'>
           <Wrapper className={'flex-col'}>
-            <div className="flex md:flex-row justify-between gap-20 flex-col">
-              <div className="flex md:flex-col flex-col-reverse w-full max-w-[710px]">
-                <VideoModal videoDetails={webinar?.videos} className={`max-w-[100%] flex items-start`} />
-                <div className='post__content w-full  max-w-[800px]'>
-                  <SanityPortableText
-                    content={webinar?.body}
-                    draftMode={draftMode}
-                    token={token}
-                  />
+              <div className="flex md:flex-row flex-col gap-6 md:gap-12 justify-between">
+                <div className="md:mt-12 flex-1 flex md:flex-col flex-col-reverse md:w-2/3 w-full md:max-w-[710px]">
+                  <VideoModal videoDetails={webinar?.videos} className={`max-w-[100%] flex items-start`} />
+                  <div className='post__content w-full  max-w-[800px]'>
+                    <SanityPortableText
+                      content={webinar?.body}
+                      draftMode={draftMode}
+                      token={token}
+                    />
+                  </div>
                 </div>
-              </div>
-              <div className='flex-1 flex flex-col gap-12 bg-red relative max-w-[410px] w-full'>
-                <div className='sticky top-12 flex flex-col gap-8'>
-                    {webinar.author && webinar.author?.length > 0 && 
-                      <>
-                        <SidebarTitle className='border-b border-zinc-200 pb-3'>{`Speakers`}</SidebarTitle>
-                        <div className='flex flex-col gap-6'>
-                            {webinar.author.map((author: any,i) => {
-                              return(
-                                <AuthorInfo key={author._id || i} contentType={'webinar'} author={[author]} />
-                              )
-                          })}
-                        </div>
-                      </>
-                    }
-                  <ShareableLinks props={webinar?.title} />
+                <div className='flex flex-col gap-8 md:mt-12 bg-red relative md:w-1/3 md:max-w-[410px] w-full'>
+                  <div className='sticky top-24 flex flex-col gap-8'>
+                      {webinar.author && webinar.author?.length > 0 && 
+                        <>
+                          <SidebarTitle className='border-b border-zinc-200 pb-3'>{`${webinar.author && webinar.author?.length > 1 ? "Speakers" : "Speaker"}`}</SidebarTitle>
+                          <div className='flex flex-col gap-6'>
+                              {webinar.author.map((author: any,i) => {
+                                return(
+                                  <AuthorInfo key={author._id || i} contentType={'webinar'} author={[author]} />
+                                )
+                            })}
+                          </div>
+                        </>
+                      }
+                    <ShareableLinks props={webinar?.title} />
+                  </div>
                 </div>
-              </div>
                 
             </div>
           </Wrapper>

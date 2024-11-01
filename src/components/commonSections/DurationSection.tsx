@@ -47,14 +47,14 @@ const DurationSection = ({ className, contentType, duration, date, isAudio = fal
                     {formatDateShort(date) }
                 </div>
             ) : (
-                <div className={`flex relative gap-[6px] pt-1 items-center`}>
+                <div className={`flex relative gap-[3px] xl:gap-[6px] pt-1 items-center`}>
                    { date && <div className={`text-white ${className}`}>
                         { formatDateShort(date) }
                     </div>}
                     {durationText && (
                         <>
-                            <DotIcon className='w-[18px] h-[18px] text-zinc-500'/>
-                            <div className={`relative flex flex-col ${className}`}>
+                            <DotIcon className='w-[10px] xl:w-[18px] h-[10px] xl:h-[18px] text-zinc-500'/>
+                            <div className={`relative shrink-0 flex flex-col ${className}`}>
                                 <span>{durationText}</span>
                             </div>
                         </>
