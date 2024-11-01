@@ -32,7 +32,7 @@ export default function ContentHub({
                 {Object.keys(contentCount).map((key, index) => (
                   <span key={index} className='text-sm md:text-base'>
                     {contentCount[key]} {key.charAt(0).toUpperCase() + key.slice(1)}
-                    <span className='hidden md:block ml-3'>{index < Object.keys(contentCount).length - 1 && ' • '}</span>
+                    <span className='hidden md:inline ml-3'>{index < Object.keys(contentCount).length - 1 && ' • '}</span>
                   </span>
                 ))}
               </div>
