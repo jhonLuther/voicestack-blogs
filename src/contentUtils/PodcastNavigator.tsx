@@ -29,7 +29,7 @@ export default function PodcastNavigator({
     return (
         <Section className='justify-center md:pt-4 md:pb-0 '>
         <Wrapper>
-        <div className={` ${className} md:flex-row  flex justify-between items-center w-full border-b py-6 border-zinc-200  text-zinc-500 font-medium text-base`}>
+        <div className={` ${className} md:flex-row  flex justify-between items-center w-full border-b py-6 border-zinc-200  text-zinc-500 font-medium text-sm md:text-base`}>
             <Link href={`/podcast/${prevSlug}`} >
                 <div className="flex items-center ">
                     <ArrowLeftIcon style={{ strokeWidth: 2 }} width={24} height={24} />

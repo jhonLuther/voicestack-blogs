@@ -144,7 +144,7 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
               {`${selectedTag ? selectedTag : browseHeading} `}
             </H2Large>
             {redirect ? (
-              <Link href={`/${siteConfig.paginationBaseUrls.base}`}>
+              <Link href={`/${siteConfig.paginationBaseUrls.base}`} className='shrink-0'>
                 <div className="flex items-center gap-3 transform group duration-300 cursor-pointer">
                   <span className="text-base font-medium">{`Browse All`}</span>
                   <span className="text-xl">
@@ -166,10 +166,10 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
           className={`grid 
           ${
             cardType === 'left-image-card'
-              ? 'grid-cols-1 lg:grid-cols-2 md:grid-cols-2 gap-x-6 xl:gap-x-16 gap-y-12'
+              ? 'grid-cols-1 lg:grid-cols-2 md:grid-cols-2 gap-x-6 xl:gap-x-16 gap-y-6 md:gap-y-12'
               : cardType === 'podcast-card'
-                ? 'lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-10'
-                : 'lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-10'
+                ? 'lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-6 md:gap-10'
+                : 'lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-6 md:gap-10'
           }
           }
         `}
