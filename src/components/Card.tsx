@@ -205,7 +205,7 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
                   }
                 }}
                 >
-                  <div className="flex  p-8 rounded-lg  bg-white flex-col items-start gap-10 flex-1">
+                  <div className="flex p-6  md:p-8 rounded-lg  bg-white flex-col items-start gap-10 flex-1">
                     <div className="flex flex-col gap-6">
                       <div className='flex gap-3 justify-between'>  
                       <ChordIcon/>

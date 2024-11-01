@@ -16,13 +16,13 @@ const CreaterInfo = ({ creater, duration }: CreaterInfoProps) => {
   }
 
   return (
-    <div className="flex gap-6 text-zinc-500  font-medium">
+    <div className="flex gap-6 text-zinc-500 text-sm lg:text-base font-medium">
       {creater.map((item, index) => (
         <div key={index}>{`by ${item.name}`}</div>
       ))}
       <div className='flex gap-2 items-center'>
-        <SpeakerIcon />
-        <span>{duration}</span>
+        <SpeakerIcon className="hidden md:block" />
+        <span className='shrink-0'>{duration}</span>
       </div>
 
     </div>
