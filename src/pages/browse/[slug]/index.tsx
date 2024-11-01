@@ -53,14 +53,14 @@ export const getStaticProps: GetStaticProps<
     }
   }
 
-  const cardsPerPage = siteConfig.pagination.itemsPerPage || 5;
-  const posts = await getPostsByTagAndLimit(client, tag._id, 0, cardsPerPage);
-  const allPostsForTag = await getPostsByTag(client, tag._id);
-  const totalPages = Math.ceil(allPostsForTag.length / cardsPerPage);
-  const totalPodcasts = await getPodcastsCount(client);
-  const totalWebinars = await getWebinarsCount(client);
-  const totalArticles = await getArticlesCount(client);
-  const totalEbooks = await getEbooksCount(client);
+  const cardsPerPage = siteConfig.pagination.itemsPerPage || 5
+  const posts = await getPostsByTagAndLimit(client, tag._id, 0, cardsPerPage)
+  const allPostsForTag = await getPostsByTag(client, tag._id)
+  const totalPages = Math.ceil(allPostsForTag.length / cardsPerPage)
+  const totalPodcasts = await getPodcastsCount(client)
+  const totalWebinars = await getWebinarsCount(client)
+  const totalArticles = await getArticlesCount(client)
+  const totalEbooks = await getEbooksCount(client)
   const siteSettings = await getSiteSettings(client)
 
   return {
@@ -108,17 +108,12 @@ export default function TagPage({
   const baseUrl = useRef(
     `/${siteConfig.paginationBaseUrls.base}/${tag?.slug?.current}`,
   ).current
+  const siteSettingWithImage = siteSettings?.find((e: any) => e?.openGraphImage)
 
   return (
     <BaseUrlProvider baseUrl={baseUrl}>
       <Layout>
-        {siteSettings ? (
-          siteSettings?.map((e) => {
-            return defaultMetaTag(e)
-          })
-        ) : (
-          <></>
-        )}
+        {siteSettingWithImage ? defaultMetaTag(siteSettingWithImage) : <></>}
         <ContentHub contentCount={contentCount} />
         <TagSelect
           tags={allTags}
