@@ -2,7 +2,7 @@ import { GetStaticProps } from 'next';
 import { Articles } from '~/interfaces/post';
 import { readToken } from '~/lib/sanity.api';
 import { getClient } from '~/lib/sanity.client';
-import { getArticles, getArticlesCount, getTags } from '~/lib/sanity.queries';
+import { getArticles, getArticlesCount, getHomeSettings, getTags } from '~/lib/sanity.queries';
 import { SharedPageProps } from '../_app';
 import Layout from '~/components/Layout';
 import Wrapper from '~/layout/Wrapper';
@@ -16,6 +16,7 @@ import {customMetaTag, CustomHead} from '~/utils/customHead';
 import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection';
 import { BaseUrlProvider } from '~/components/Context/UrlContext';
 import TagSelect from '~/contentUtils/TagSelector';
+import { mergeAndRemoveDuplicates } from '~/utils/common';
 
 export const getStaticProps: GetStaticProps<SharedPageProps & { articles: Articles[]; totalPages: number }> = async (context) => {
   const draftMode = context.preview || false;
@@ -23,10 +24,11 @@ export const getStaticProps: GetStaticProps<SharedPageProps & { articles: Articl
   const itemsPerPage = siteConfig.pagination.childItemsPerPage;
 
   const articles: any = await getArticles(client, 0, itemsPerPage);
-  const latestArticles: any = await getArticles(client, 0, 3);
+  const latestArticles: any = await getArticles(client, 0, 5);
   const totalArticles = await getArticlesCount(client);
   const totalPages = Math.ceil(totalArticles / itemsPerPage);
   const tags = await getTags(client);
+  const homeSettings = await getHomeSettings(client);
 
 
   return {
@@ -36,14 +38,20 @@ export const getStaticProps: GetStaticProps<SharedPageProps & { articles: Articl
       articles,
       latestArticles,
       totalPages,
-      tags
+      tags,
+      homeSettings
     },
   };
 };
 
-const ArticlesPage = ({ articles,latestArticles, totalPages,tags }: { articles: Articles[];latestArticles: Articles[]; totalPages: number,tags: any }) => {
+const ArticlesPage = ({ articles,latestArticles, totalPages,tags,homeSettings }: { articles: Articles[];latestArticles: Articles[]; totalPages: number,tags: any,homeSettings?: any }) => {
   const router = useRouter();
   const baseUrl = useRef(`/${siteConfig.pageURLs.article}`).current;
+
+  const featuredArticles = homeSettings?.featuredArticle || [];
+
+  const latestContents = mergeAndRemoveDuplicates(featuredArticles,latestArticles);
+  
   const handlePageChange = (page: number) => {
     if (page === 1) {
       router.push(baseUrl);
@@ -62,7 +70,7 @@ const ArticlesPage = ({ articles,latestArticles, totalPages,tags }: { articles: 
 				showTags={true}
 			/>
       {customMetaTag('article')}
-      <LatestBlogs  className={'pt-11 pr-9 pb-16 pl-9'} reverse={true} contents={latestArticles} />
+      <LatestBlogs  className={'pt-11 pr-9 pb-16 pl-9'} reverse={true} contents={latestContents} />
       {articles?.length
         ? articles.map((e, i) => {
             return (<CustomHead props={e} type="caseStudy" key={i} />)

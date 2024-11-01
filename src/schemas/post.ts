@@ -41,7 +41,7 @@ export default defineType({
           { title: 'Press Release', value: 'press-release' },
         ],
       },
-      validation: (Rule) => Rule.required(),
+      validation: (Rule) => Rule.required().error('Content type is required.'),
     }),
 
     defineField({
@@ -124,7 +124,8 @@ export default defineType({
       type: 'date',
       options: {
         dateFormat: 'YYYY-MM-DD'
-      }
+      },
+      validation: (Rule) => Rule.required().error('Date is required.'),
     }),
     defineField({
       name: 'excerpt',
@@ -270,6 +271,7 @@ export default defineType({
       options: {
         hotspot: true,
       },
+      validation: (Rule) => Rule.required().error('Main image is required.'),
     }),
     defineField({
       name: 'body',
