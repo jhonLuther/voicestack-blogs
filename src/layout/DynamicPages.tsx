@@ -10,6 +10,7 @@ import Wrapper from "~/layout/Wrapper";
 import SliderSection from "~/components/sections/SliderSection";
 import siteConfig from "config/siteConfig";
 import { BaseUrlProvider } from "~/components/Context/UrlContext";
+import { getUniqueReorderedCarouselItems } from "~/utils/common";
 
 interface DynamicProps {
 	children?: React.ReactNode;
@@ -22,7 +23,6 @@ interface DynamicProps {
 	homeSettings?: any;
 	popularBlogs?: any;
 	FeaturedContents?: any;
-	podcastData?: any;
 	webinars?: any;
 	ebooks?: any;
 }
@@ -32,11 +32,9 @@ const DynamicPages = ({
 	tags,
 	testimonials,
 	homeSettings,
-	podcastData,
 	latestPosts,
 	ebooks,
 	webinars,
-	// ...rest
 }: DynamicProps) => {
 
 	
@@ -47,8 +45,8 @@ const DynamicPages = ({
 	
 	const featuredContents = [...featuredBlogs,...posts].slice(0, 4);
 
-	const carouselItems = [...ebooks, ...webinars]
-
+	const reorderedCarouselItems = getUniqueReorderedCarouselItems(homeSettings, ebooks, webinars);
+	  
 	const testimonialList = homeSettings?.testimonial ? homeSettings?.testimonial : testimonials.slice(0, 1);
 
 	const baseUrl = `/${siteConfig.pageURLs.home}`
@@ -64,7 +62,7 @@ const DynamicPages = ({
 			<LatestBlogs contents={latestPosts} />
 			<FeaturedAndPopularBlogs featuredBlog={featuredBlog} popularBlogs={featuredContents} />
 			<BannerSubscribeSection />
-			<SliderSection items={carouselItems} />
+			<SliderSection items={reorderedCarouselItems} />
 			<TestimonialSection testimonials={testimonialList} />
 			<AllcontentSection  customBrowseContent={customBrowseContent} allContent={posts} itemsPerPage={siteConfig.pagination.itemsHomePage}  redirect={true} />
 			<ShortBannerSection />

@@ -74,3 +74,77 @@ export const fetchAuthor = (post) => {
 
 
 
+  export const getUniqueReorderedCarouselItems = (homeSettings, ebooks, webinars) => {
+    if(!homeSettings?.featuredCarouselItems || !ebooks || !webinars) return [];
+    const carouselItems = [
+      ...homeSettings?.featuredCarouselItems,
+      ...ebooks,
+      ...webinars,
+    ];
+  
+    const uniqueCarouselItems = carouselItems.reduce((acc, item) => {
+      if (!acc.some(existingItem => existingItem.slug.current === item.slug.current)) {
+        acc.push(item);
+      }
+      return acc;
+    }, []);
+  
+    return [
+      ...homeSettings?.featuredCarouselItems || [],
+      ...uniqueCarouselItems.filter(
+        item => !homeSettings?.featuredCarouselItems.some(homeItem => homeItem.slug.current === item.slug.current)
+      ),
+    ];
+  };
+
+
+export const mergeReviews = (homeSettingsReviews = [], otherReviews = [], uniqueKey = '_id') => {
+  const seen = new Set();
+  const result = [];
+    if (homeSettingsReviews && homeSettingsReviews.length > 0) {
+    result.push(...homeSettingsReviews);
+    homeSettingsReviews.forEach(review => seen.add(review[uniqueKey]));
+  }
+  otherReviews.forEach(review => {
+    if (!seen.has(review[uniqueKey])) {
+      seen.add(review[uniqueKey]);
+      result.push(review);
+    }
+  });
+
+  return result;
+};
+
+
+export const mergeAndRemoveDuplicates = (primaryArray, secondaryArray = [], uniqueKey = '_id') => {
+  if (!primaryArray || !secondaryArray) return [];
+
+  const seen = new Set();
+  const result = [];
+
+  if (!Array.isArray(primaryArray)) {
+    if (primaryArray[uniqueKey] && !seen.has(primaryArray[uniqueKey])) {
+      seen.add(primaryArray[uniqueKey]);
+      result.push(primaryArray);
+    }
+  } else {
+    primaryArray.forEach(item => {
+      if (item && !seen.has(item[uniqueKey]) && result.length < 5) {
+        seen.add(item[uniqueKey]);
+        result.push(item);
+      }
+    });
+  }
+
+  secondaryArray.forEach(item => {
+    if (item && !seen.has(item[uniqueKey]) && result.length < 5) {
+      seen.add(item[uniqueKey]);
+      result.push(item);
+    }
+  });
+
+  return result;
+};
+
+
+

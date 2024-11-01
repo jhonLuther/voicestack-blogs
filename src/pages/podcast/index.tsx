@@ -2,7 +2,7 @@ import { GetStaticProps } from 'next';
 import { Podcasts } from '~/interfaces/post';
 import { readToken } from '~/lib/sanity.api';
 import { getClient } from '~/lib/sanity.client';
-import { getEbooks, getEbooksCount, getPodcasts, getPodcastsCount, getTags } from '~/lib/sanity.queries';
+import { getEbooks, getEbooksCount, getHomeSettings, getPodcasts, getPodcastsCount, getTags } from '~/lib/sanity.queries';
 import { SharedPageProps } from '../_app';
 import Layout from '~/components/Layout';
 import Wrapper from '~/layout/Wrapper';
@@ -16,6 +16,7 @@ import {customMetaTag, CustomHead} from '~/utils/customHead';
 import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection';
 import { BaseUrlProvider } from '~/components/Context/UrlContext';
 import TagSelect from '~/contentUtils/TagSelector';
+import { mergeAndRemoveDuplicates } from '~/utils/common';
 
 export const getStaticProps: GetStaticProps<SharedPageProps & { podcasts: Podcasts[]; totalPages: number }> = async (context) => {
   const draftMode = context.preview || false;
@@ -23,10 +24,11 @@ export const getStaticProps: GetStaticProps<SharedPageProps & { podcasts: Podcas
   const itemsPerPage = siteConfig.pagination.childItemsPerPage;
 
   const podcasts: any = await getPodcasts(client, 0, itemsPerPage);
-  const latestPodcasts: any = await getPodcasts(client, 0, 4);
+  const latestPodcasts: any = await getPodcasts(client, 0, 5);
   const totalPodcasts = await getPodcastsCount(client);
   const totalPages = Math.ceil(totalPodcasts / itemsPerPage);
   const tags = await getTags(client);
+  const homeSettings = await getHomeSettings(client);
 
 
   return {
@@ -36,16 +38,19 @@ export const getStaticProps: GetStaticProps<SharedPageProps & { podcasts: Podcas
       podcasts,
       latestPodcasts,
       totalPages,
-      tags
+      tags,
+      homeSettings
     },
   };
 };
 
-const PodcastsPage = ({ podcasts,latestPodcasts, totalPages,tags }: { podcasts: Podcasts[];latestPodcasts: Podcasts[]; totalPages: number,tags: any }) => {
+const PodcastsPage = ({ podcasts,latestPodcasts, totalPages,tags,homeSettings }: { podcasts: Podcasts[];latestPodcasts: Podcasts[]; totalPages: number,tags: any,homeSettings: any }) => {
   const router = useRouter();
   const baseUrl = useRef(`/${siteConfig.pageURLs.podcast}`).current;
   if(!podcasts) return null
 
+  const featuredPodcast = homeSettings?.featuredPodcast || [];
+  const latestArticles = mergeAndRemoveDuplicates(featuredPodcast,latestPodcasts)
   const handlePageChange = (page: number) => {
     if (page === 1) {
       router.push(baseUrl);
@@ -64,7 +69,7 @@ const PodcastsPage = ({ podcasts,latestPodcasts, totalPages,tags }: { podcasts: 
 				showTags={true}
 			/>
       {customMetaTag('podcast')}
-      <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'} reverse={true} contents={latestPodcasts} />
+      <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'} reverse={true} contents={latestArticles} />
         <AllcontentSection
           className={'pb-9'}
           allContent={podcasts}
