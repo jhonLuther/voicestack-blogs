@@ -15,9 +15,10 @@ interface Props {
 	enableDate?: boolean
 	isAudio?: boolean
 	contentType?: string
+	landing?: boolean
 }
 
-const MainImageSection = ({ post, isAuthor, enableDate = false, isAudio = false, contentType }: Props) => {
+const MainImageSection = ({ post, isAuthor, enableDate = false, isAudio = false, contentType, landing = false }: Props) => {
 
 	const tag = useMemo(() => post?.tags?.find((tag) => tag) || null, [post?.tags]);
 
@@ -32,19 +33,24 @@ const MainImageSection = ({ post, isAuthor, enableDate = false, isAudio = false,
 		<div className='w-full flex gap-1 items-center bg-zinc-900 relative overflow-hidden' >
 			<Section className={`justify-center w-full !py-0`}>
 				<Wrapper className="z-10 flex h-auto flex-col md:flex-row">
-					<div className='flex flex-col items-start gap-32 text-white md:max-w-[46%] max-w-lg h-full justify-center py-8 md:py-12 md:min-h-[450px]'>
-						<div className='flex flex-col items-start justify-between h-full gap-6 md:gap-24'>
-							<Breadcrumb />
+					<div className='flex flex-col items-start  gap-32 text-white md:max-w-[46%] max-w-lg h-full justify-center py-8 md:py-12 md:min-h-[550px]'>
+						<div className={`flex flex-col items-start ${landing ? 'justify-center' : 'justify-between'} h-full gap-6 md:gap-24`}>
+							{!landing && <Breadcrumb />}
 							<div>
-								<SubText className='!text-sky-500 mb-3 block'>
-									{tag?.tagName ? tag?.tagName : ''}
-								</SubText>
+								{!landing ? (
+									<SubText className='!text-sky-500 mb-3 block'>{tag?.tagName ? tag?.tagName : ''}</SubText>
+								):(
+									<SubText className='!text-yellow-500 mb-3 block'>{post?.tagName ? post?.tagName : ''}</SubText>
+								)}
 								<h1 className="text-white font-manrope leading-tight lg:text-5xl text-2xl font-bold  mb-[10px]">
 									{post.title ? post.title : 'Post Title'}
 								</h1>
 								{
 									enableDate && <DurationSection isAudio={isAudio} duration={post?.estimatedReadingTime ? post.estimatedReadingTime : post.duration} contentType={contentType} date={post?.date ? post?.date : ""} />
 								}
+								{landing && post.description &&(
+									<p className='text-base font-medium text-white opacity-50 leading-[1.5] pt-4'>{post.description}</p>
+								)}
 							</div>
 						</div>
 					</div>
