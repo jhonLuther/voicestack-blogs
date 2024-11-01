@@ -14,7 +14,6 @@ import DescriptionText from './typography/DescriptionText';
 import Image from 'next/image';
 import SoundIcon from '../assets/speakerIcon.svg';
 import { ArrowTopRightIcon } from '@sanity/icons'
-import { formatDateShort } from '~/utils/formateDate';
 import DurationSection from './commonSections/DurationSection';
 import PlayIcon from '../assets/reactiveAssets/PlayIcon';
 import { VideoModal } from './commonSections/VideoModal';
@@ -47,11 +46,11 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
   const pathname = usePathname()
 
 	const bgImages = [
-    {url: 'https://cdn.sanity.io/images/bbmnn1wc/production/69f78e1d2126dda19c732337893448dc94969932-784x568.png'},
-    {url: 'https://cdn.sanity.io/images/bbmnn1wc/production/880ec674fe4f1672dbc1bbfebf0ba967b7941900-784x568.png'},
-    {url: 'https://cdn.sanity.io/images/bbmnn1wc/production/30ff45d24d2f4688f1885c96fecc94d319eb76d0-784x568.png'},
-    {url: 'https://cdn.sanity.io/images/bbmnn1wc/production/baf2c5ede0b78146b13c4ac8854d5459fdd1bb7c-2400x1350.jpg'},
-    {url: 'https://cdn.sanity.io/images/bbmnn1wc/production/8df81deaa98d4958936163340be7b77f798d1dcf-2500x2000.jpg'},
+    {src: 'https://cdn.sanity.io/images/bbmnn1wc/production/69f78e1d2126dda19c732337893448dc94969932-784x568.png'},
+    {src: 'https://cdn.sanity.io/images/bbmnn1wc/production/880ec674fe4f1672dbc1bbfebf0ba967b7941900-784x568.png'},
+    {src: 'https://cdn.sanity.io/images/bbmnn1wc/production/30ff45d24d2f4688f1885c96fecc94d319eb76d0-784x568.png'},
+    {src: 'https://cdn.sanity.io/images/bbmnn1wc/production/baf2c5ede0b78146b13c4ac8854d5459fdd1bb7c-2400x1350.jpg'},
+    {src: 'https://cdn.sanity.io/images/bbmnn1wc/production/8df81deaa98d4958936163340be7b77f798d1dcf-2500x2000.jpg'},
   ]
 	const imageIndex = index % bgImages.length;
   // const image = bgImages[imageIndex];
@@ -263,6 +262,7 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
                             image={post?.mainImage}
                             fixed={true}
                           />
+                          <div className=''>
                           {
                             post.contentType === 'podcast' ? (
                               <div className='absolute bottom-6 left-6 flex items-center gap-2'>
@@ -276,6 +276,8 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
                                 </div>
                               ) : ""
                           }
+                          </div>
+    
                         </div>
                       )}
                       <div className='flex p-6 bg-zinc-100 w-full justify-center'>
@@ -306,7 +308,7 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
                           <div className="overflow-hidden absolute left-0 right-0 top-0 bottom-0 rounded-[10px]">
                             <ImageLoader
                               className="h-full overflow-hidden"
-                              image={bgImages[imageIndex].url}
+                              image={bgImages[imageIndex].src}
                               alt={post.title || 'Blog Image'}
                               // useClientWidth={true}
                               imageClassName='h-full w-full group-hover:scale-105 transition-transform duration-300'

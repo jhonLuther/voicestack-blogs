@@ -81,7 +81,6 @@ const PressReleasePage = ({ pressRelease,relatedContents, draftMode, token }: Pr
   const seoCanonical = pressRelease.seoCanonical || `https://carestack.com/pressRelease/${pressRelease.slug.current}`;
   const jsonLD: any = generateJSONLD(pressRelease);
 
-  console.log({pressRelease});
   
   return (
     <>

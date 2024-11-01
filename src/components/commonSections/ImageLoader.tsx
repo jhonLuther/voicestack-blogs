@@ -5,8 +5,6 @@ import useBoundingWidth, { DeviceType } from '~/utils/boundingWIdthHook';
 import { average } from '~/utils/color';
 import { rgbToHsl } from '~/utils/common';
 
-
-
 interface ImageLoaderProps {
   width?: number;
   height?: number;
@@ -36,77 +34,114 @@ const ImageLoader: React.FC<ImageLoaderProps> = ({
   fixed = true,
   ...props
 }) => {
-  
-  const [imageUrl, setImageUrl] = useState<string | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const autoContainerRef = useRef<HTMLDivElement>(null);
   const [clientWidth, setClientWidth] = useState<number>(width);
   const [clientHeight, setClientHeight] = useState<number>(height);
-  const [renderImage, setRenderImage] = useState<string>('');
-  const [renderImageWidth, setRenderImageWidth] = useState<number>(0);
-  const [renderImageHeight, setRenderImageHeight] = useState<number>(0);
-  const [renderImageRatio, setRenderImageRatio] = useState<number>(0);
+  const [imageData, setImageData] = useState({
+    url: typeof image === 'string' ? image : '',
+    width: 0,
+    height: 0,
+    ratio: 0
+  });
 
   const deviceObtained = useBoundingWidth() as DeviceType;
 
-  const imageWidthFromCdn = image?.metadata?.dimensions?.width;
-  const imageRatio = image?.metadata?.dimensions?.aspectRatio;  
-
   useEffect(() => {
-    let newProposedWidth = 0;
-    if (imageWidthFromCdn && imageRatio) {
-      if (deviceObtained === 'smallMobile') {
-        newProposedWidth = Math.min(imageWidthFromCdn, 600);
-      } else if (deviceObtained === 'largeMobile') {
-        newProposedWidth = Math.min(imageWidthFromCdn, 767);
-      } else if (deviceObtained === 'tab') {
-        newProposedWidth = Math.min(imageWidthFromCdn, maxWidth);
-      } else {
-        newProposedWidth = maxWidth;
+    const processImage = async () => {
+      if (typeof image === 'string') {
+        setImageData({
+          url: image,
+          width: clientWidth,
+          height: clientHeight,
+          ratio: clientWidth / clientHeight
+        });
+        return;
       }
-    }
 
-    setRenderImageWidth(newProposedWidth);
-    setRenderImageRatio(imageRatio);
+      const imageWidthFromCdn = image?.metadata?.dimensions?.width;
+      const imageRatio = image?.metadata?.dimensions?.aspectRatio;
 
-    const renderImageHeight = newProposedWidth / imageRatio;
+      if (imageWidthFromCdn && imageRatio) {
+        let newProposedWidth = maxWidth;
+        switch (deviceObtained) {
+          case 'smallMobile':
+            newProposedWidth = Math.min(imageWidthFromCdn, 600);
+            break;
+          case 'largeMobile':
+            newProposedWidth = Math.min(imageWidthFromCdn, 767);
+            break;
+          case 'tab':
+            newProposedWidth = Math.min(imageWidthFromCdn, maxWidth);
+            break;
+        }
 
-    setRenderImageHeight(renderImageHeight);
+        const newHeight = newProposedWidth / imageRatio;
+        
+        const url = urlForImage(image._id || image, {
+          width: newProposedWidth,
+          height: newHeight,
+          quality: 90,
+        });
 
-    const url = urlForImage(image._id || image, {
-      width: newProposedWidth,
-      height: renderImageHeight,
-      quality: 90,
-    });
+        if (url && onColorExtracted) {
+          try {
+            const color: any = await average(url, { amount: 1, format: 'array' });
+            onColorExtracted(rgbToHsl(color[0], color[1], color[2]));
+          } catch (error) {
+            console.error('Error extracting color:', error);
+          }
+        }
 
-    const extractColor = async () => {
-      if (url && onColorExtracted) {
-        const color: any = await average(url, { amount: 1, format: 'array' });
-        onColorExtracted(rgbToHsl(color[0], color[1], color[2]));
+        setImageData({
+          url: url || '',
+          width: newProposedWidth,
+          height: newHeight,
+          ratio: imageRatio
+        });
       }
     };
 
-    extractColor();
-
-    setRenderImage(url && url);
-  }, [deviceObtained, imageWidthFromCdn, imageRatio, maxWidth,renderImageWidth,onColorExtracted,image]);
+    processImage();
+  }, [image, deviceObtained, maxWidth, onColorExtracted, clientWidth, clientHeight]);
 
   useEffect(() => {
     if (autoContainerRef.current) {
       setClientHeight(autoContainerRef.current.clientHeight);
       setClientWidth(autoContainerRef.current.clientWidth);
     }
-  }, [renderImageWidth,autoContainerRef]);  
+  }, [imageData.width]);
 
-  return fixed ? (
-    <div ref={containerRef} className={`flex w-full h-full relative ${className}`}>
-      <Image src={renderImage} alt={image.altText || ''} title={image.title || title} className={`object-cover object-center ${imageClassName}`} fill />
-    </div>
-  ) : renderImageWidth >0 ? (
+  if (!imageData.url) {
+    return null;
+  }
+
+  if (fixed) {
+    return (
+      <div ref={containerRef} className={`flex w-full h-full relative ${className}`}>
+        <Image
+          src={imageData.url}
+          alt={alt || image.altText || ''}
+          title={title || image.title || ''}
+          className={`object-cover object-center ${imageClassName}`}
+          fill
+        />
+      </div>
+    );
+  }
+
+  return (
     <div ref={autoContainerRef} className={`w-full h-auto relative ${className}`}>
-      <Image className='!m-0' src={renderImage} alt={image.altText || ''} title={image.title || title} width={clientWidth} height={(clientWidth / renderImageWidth) * renderImageHeight } />
+      <Image
+        className={`!m-0 ${imageClassName}`}
+        src={imageData.url}
+        alt={alt || image.altText || ''}
+        title={title || image.title || ''}
+        width={imageData.width || clientWidth}
+        height={imageData.height || clientHeight}
+      />
     </div>
-  ) : null;
+  );
 };
 
 export default ImageLoader;

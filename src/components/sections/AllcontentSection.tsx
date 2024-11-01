@@ -39,7 +39,7 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
   contentType,
   allItemCount
 }) => {
-  const postsToShow = itemsPerPage || siteConfig.pagination.itemsPerPage;
+  const postsToShow = itemsPerPage || siteConfig.pagination.childItemsPerPage;
   const [selectedTag, setSelectedTag] = useState('');
   const [siteSettings, setSiteSettings] = useState([]);
   const router = useRouter();

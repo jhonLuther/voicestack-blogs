@@ -39,6 +39,7 @@ export const getStaticProps: GetStaticProps<SharedPageProps & { posts: Post[] }>
     const siteSettings = await getSiteSettings(client);
     const ebooks: any = await getEbooks(client);
     const webinars: any = await getWebinars(client);
+    
 
 
 
@@ -76,7 +77,7 @@ export const getStaticProps: GetStaticProps<SharedPageProps & { posts: Post[] }>
 
 export default function IndexPage(props: IndexPageProps) {
   
-  const homeSettings = props?.homeSettings[0];
+  const homeSettings = props?.homeSettings;
   const latestPosts = props?.latestPosts;
   const siteSettings = props?.siteSettings;
   

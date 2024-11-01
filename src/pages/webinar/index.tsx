@@ -2,7 +2,7 @@ import { GetStaticProps } from 'next';
 import { Webinars } from '~/interfaces/post';
 import { readToken } from '~/lib/sanity.api';
 import { getClient } from '~/lib/sanity.client';
-import { getTags, getWebinars, getWebinarsCount } from '~/lib/sanity.queries';
+import { getHomeSettings, getTags, getWebinars, getWebinarsCount } from '~/lib/sanity.queries';
 import { SharedPageProps } from '../_app';
 import Layout from '~/components/Layout';
 import Wrapper from '~/layout/Wrapper';
@@ -16,6 +16,7 @@ import {customMetaTag, CustomHead} from '~/utils/customHead';
 import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection';
 import { BaseUrlProvider } from '~/components/Context/UrlContext';
 import TagSelect from '~/contentUtils/TagSelector';
+import { mergeAndRemoveDuplicates } from '~/utils/common';
 
 export const getStaticProps: GetStaticProps<SharedPageProps & { webinars: Webinars[]; totalPages: number }> = async (context) => {
   const draftMode = context.preview || false;
@@ -23,10 +24,11 @@ export const getStaticProps: GetStaticProps<SharedPageProps & { webinars: Webina
   const itemsPerPage = siteConfig.pagination.childItemsPerPage;
 
   const webinars: any = await getWebinars(client, 0, itemsPerPage);
-  const latestWebinars: any = await getWebinars(client, 0, 4);
+  const latestWebinars: any = await getWebinars(client, 0, 5);
   const totalWebinars = await getWebinarsCount(client);
   const totalPages = Math.ceil(totalWebinars / itemsPerPage);
   const tags = await getTags(client);
+  const homeSettings = await getHomeSettings(client);
 
 
   return {
@@ -36,15 +38,20 @@ export const getStaticProps: GetStaticProps<SharedPageProps & { webinars: Webina
       webinars,
       latestWebinars,
       totalPages,
-      tags
+      tags,
+      homeSettings
     },
   };
 };
 
-const WebinarsPage = ({ webinars,latestWebinars, totalPages,tags }: { webinars: Webinars[];latestWebinars: Webinars[]; totalPages: number,tags: any }) => {
+const WebinarsPage = ({ webinars,latestWebinars,homeSettings, totalPages,tags }: { webinars: Webinars[];latestWebinars: Webinars[]; totalPages: number,tags: any,homeSettings: any }) => {
   const router = useRouter();
   const baseUrl = useRef(`/${siteConfig.pageURLs.webinar}`).current;
+  if(!webinars) return null
 
+  const featuredWebinar = homeSettings?.featuredWebinar || [];
+
+  const latestWebinar = mergeAndRemoveDuplicates(featuredWebinar,latestWebinars)
   const handlePageChange = (page: number) => {
     if (page === 1) {
       router.push(baseUrl);
@@ -63,7 +70,7 @@ const WebinarsPage = ({ webinars,latestWebinars, totalPages,tags }: { webinars: 
 				showTags={true}
 			/>
       {customMetaTag('webinar')}
-      <LatestBlogs contentType="webinar" className={'pt-11 pr-9 pb-16 pl-9'} reverse={true} contents={latestWebinars} />
+      <LatestBlogs contentType="webinar" className={'pt-11 pr-9 pb-16 pl-9'} reverse={true} contents={latestWebinar} />
         <AllcontentSection
           className={'pb-9'}
           allContent={webinars}
