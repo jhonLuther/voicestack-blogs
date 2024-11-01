@@ -53,6 +53,21 @@ export default {
       
     },
     {
+      name: 'featuredCarouselItems',
+      description: 'This content will be displayed in the Carousel section',
+      title: 'Featured Carousel Contents',
+      type: 'array',
+      of: [{
+        type: 'reference',
+        to: [{ type: 'post' }],
+        options: {  
+          filter: '_type == "post" && (contentType in ["webinar", "ebook"])',
+          disableNew: true
+        }
+      }],
+      group: 'popularBlogs'
+    },
+    {
       name: 'customBrowseContent',
       description:'Selected content will be displayed in the Projected Browse section',
       title: 'Custom Browse Content',
@@ -60,65 +75,95 @@ export default {
       to: [{ type: 'customContent' }],
       group: 'popularBlogs'
     },
-    // {
-    //   name: 'FeaturedArticle',
-    //   description: 'This content will be featured as an article in its landing page',
-    //   title: 'Featured Article',
-    //   type: 'reference',
-    //   to: [{ 
-    //     type: 'post',
-    //     options: {
-    //       filter: ({document}) => document.contentType === 'article',
-    //       filterParams: {}
-    //     }
-    //   }],
-    //   group: 'popularBlogs',
-    // },
+    {
+      name: 'featuredArticle',
+      title: 'Featured Article',
+      description: 'This content will be featured as an article in its landing page',
+      type: 'reference',
+      to: [{ type: 'post' }],
+      options: {
+        filter: `_type == "post" && contentType == "article"`,
+        disableNew: true,
+      },
+      group: 'popularBlogs',
+    },
     
-    // {
-    //   name: 'FeaturedWebinar',
-    //   description: 'This content will be featured as a webinar in its landing page',
-    //   title: 'Featured Webinar',
-    //   type: 'reference',
-    //   to: [{ type: 'post', filter: 'contentType == "webinar"' }],
-    //   group: 'popularBlogs',
-    // },
+    {
+      name: 'featuredWebinar',
+      description: 'This content will be featured as a webinar in its landing page',
+      title: 'Featured Webinar',
+      type: 'reference',
+      to: [{ type: 'post' }],
+      options: {
+        filter: `_type == "post" && contentType == "webinar"`,
+        disableNew: true,
+      },
+      group: 'popularBlogs',
+    },
     
-    // {
-    //   name: 'FeaturedPodcast',
-    //   description: 'This content will be featured as a podcast in its landing page',
-    //   title: 'Featured Podcast',
-    //   type: 'reference',
-    //   to: [{ type: 'post', filter: 'contentType == "podcast"' }],
-    //   group: 'popularBlogs',
-    // },
+    {
+      name: 'featuredPodcast',
+      description: 'This content will be featured as a podcast in its landing page',
+      title: 'Featured Podcast',
+      type: 'reference',
+      to: [{ type: 'post' }],
+      options: {
+        filter: `_type == "post" && contentType == "podcast"`,
+        disableNew: true,
+      },
+      group: 'popularBlogs',
+    },
     
-    // {
-    //   name: 'FeaturedEbook',
-    //   description: 'This content will be featured as an ebook in the article landing page',
-    //   title: 'Featured Ebook',
-    //   type: 'reference',
-    //   to: [{ type: 'post', filter: 'contentType == "ebook"' }],
-    //   group: 'popularBlogs',
-    // },
+    {
+      name: 'featuredEbook',
+      description: 'This content will be featured as an ebook in the article landing page',
+      title: 'Featured Ebook',
+      type: 'reference',
+      to: [{ type: 'post' }],
+      options: {
+        filter: `_type == "post" && contentType == "ebook"`,
+        disableNew: true,
+      },
+      group: 'popularBlogs',
+    },
     
-    // {
-    //   name: 'FeaturedCasestudy',
-    //   description: 'This content will be featured as a case study in the article landing page',
-    //   title: 'Featured Case Study',
-    //   type: 'reference',
-    //   to: [{ type: 'post', filter: 'contentType == "case-study"' }],
-    //   group: 'popularBlogs',
-    // },
+    {
+      name: 'featuredCasestudy',
+      description: 'This content will be featured as a case study in the article landing page',
+      title: 'Featured Case Study',
+      type: 'reference',
+      to: [{ type: 'post' }],
+      options: {
+        filter: `_type == "post" && contentType == "case-study"`,
+        disableNew: true,
+      },
+      group: 'popularBlogs',
+    },
     
-    // {
-    //   name: 'FeaturedPressRelease',
-    //   description: 'This content will be featured as a press release in the article landing page',
-    //   title: 'Featured Press Release',
-    //   type: 'reference',
-    //   to: [{ type: 'post', filter: 'contentType == "press-release"' }],
-    //   group: 'popularBlogs',
-    // },
+    {
+      name: 'featuredPressRelease',
+      description: 'This content will be featured as a press release in the article landing page',
+      title: 'Featured Press Release',
+      type: 'reference',
+      to: [{ type: 'post' }],
+      options: {
+        filter: `_type == "post" && contentType == "press-release"`,
+        disableNew: true,
+      },
+      group: 'popularBlogs',
+    },
+
+    {
+      name: 'featuredReviews',
+      description:'This content will be displayed in the reviews section',
+      title: 'Featured Reviews',
+      type: 'array',
+      of: [{ type: 'reference', to: [{ type: 'testimonial' }] }],
+      options: {
+        disableNew: true,
+      },
+      group: 'popularBlogs',
+    },
 
   ],
   preview: {

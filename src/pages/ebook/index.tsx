@@ -2,7 +2,7 @@ import { GetStaticProps } from 'next';
 import { CaseStudies, Ebooks } from '~/interfaces/post';
 import { readToken } from '~/lib/sanity.api';
 import { getClient } from '~/lib/sanity.client';
-import { getEbooks, getEbooksCount, getTags } from '~/lib/sanity.queries';
+import { getEbooks, getEbooksCount, getHomeSettings, getTags } from '~/lib/sanity.queries';
 import { SharedPageProps } from '../_app';
 import Layout from '~/components/Layout';
 import Wrapper from '~/layout/Wrapper';
@@ -16,6 +16,7 @@ import {customMetaTag, CustomHead} from '~/utils/customHead';
 import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection';
 import { BaseUrlProvider } from '~/components/Context/UrlContext';
 import TagSelect from '~/contentUtils/TagSelector';
+import { mergeAndRemoveDuplicates } from '~/utils/common';
 
 export const getStaticProps: GetStaticProps<SharedPageProps & { ebooks: Ebooks[]; totalPages: number }> = async (context) => {
   const draftMode = context.preview || false;
@@ -23,10 +24,12 @@ export const getStaticProps: GetStaticProps<SharedPageProps & { ebooks: Ebooks[]
   const itemsPerPage = siteConfig.pagination.childItemsPerPage;
 
   const ebooks: any = await getEbooks(client, 0, itemsPerPage);
-  const latestEbooks: any = await getEbooks(client, 0, 4);
+  const latestEbooks: any = await getEbooks(client, 0, 5);
   const totalEbooks = await getEbooksCount(client);
   const totalPages = Math.ceil(totalEbooks / itemsPerPage);
   const tags = await getTags(client);
+  const homeSettings = await getHomeSettings(client);
+
 
 
   return {
@@ -36,14 +39,19 @@ export const getStaticProps: GetStaticProps<SharedPageProps & { ebooks: Ebooks[]
       ebooks,
       latestEbooks,
       totalPages,
-      tags
+      tags,
+      homeSettings
     },
   };
 };
 
-const EbooksPage = ({ ebooks, latestEbooks, totalPages,tags }: { ebooks: Ebooks[]; latestEbooks: Ebooks[]; totalPages: number,tags: any }) => {
+const EbooksPage = ({ ebooks, latestEbooks, totalPages,tags,homeSettings }: { ebooks: Ebooks[]; latestEbooks: Ebooks[]; totalPages: number,tags: any ,homeSettings: any}) => {
   const router = useRouter();
   const baseUrl = useRef(`/${siteConfig.pageURLs.ebook}`).current;
+  if(!ebooks) return null
+  const featuredEbook = homeSettings?.featuredEbook || [];
+
+  const latestEbook = mergeAndRemoveDuplicates(featuredEbook,latestEbooks)
 
   const handlePageChange = (page: number) => {
     if (page === 1) {
@@ -68,7 +76,7 @@ const EbooksPage = ({ ebooks, latestEbooks, totalPages,tags }: { ebooks: Ebooks[
         <LatestBlogs
           className={'pt-11 pr-9 pb-16 pl-9'}
           reverse={true}
-          contents={latestEbooks}
+          contents={latestEbook}
         />
         <AllcontentSection
           className={'pb-9'}
