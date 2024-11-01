@@ -41,7 +41,6 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
 }) => {
   const postsToShow = itemsPerPage || siteConfig.pagination.itemsPerPage;
   const [selectedTag, setSelectedTag] = useState('');
-  const [siteSettings, setSiteSettings] = useState([]);
   const router = useRouter();
 
   const baseUrl = useBaseUrl();
@@ -56,23 +55,6 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
         : 'Keep Reading';
 
   let browseHeading = contentType ? contentHeading : 'Explore All';
-
-useEffect(() => {
-  const fetchAndProcessSiteSettings = async () => {
-    try {
-      const client = getClient()
-      const siteSettings = await getSiteSettings(client)
-      setSiteSettings(siteSettings)
-      console.log({ siteSettings })
-    } catch (error) {
-      setSiteSettings(null)
-      console.error('Error fetching site settings:', error)
-    }
-  }
-
-  fetchAndProcessSiteSettings()
-}, [])
-
 
   useEffect(() => {
     const updateSelectedTag = () => {
@@ -156,9 +138,6 @@ useEffect(() => {
   return (
     <Section className={`justify-center md:pb-0 md:pt-24 ${className}`}>
       <Wrapper className={`flex-col`}>
-        {siteSettings?.map((e) => {
-          return defaultMetaTag(e)
-        })}
         {!hideHeader && (
           <div className="md:flex-row flex-row gap-8 flex items-end justify-between pb-12">
             <H2Large className="tracking-tighterText select-none">
