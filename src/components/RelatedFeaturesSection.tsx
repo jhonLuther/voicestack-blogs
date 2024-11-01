@@ -25,7 +25,7 @@ const RelatedFeaturesSection: React.FC<RelatedFeaturesSectionProps> = ({ allPost
   }
   
   return (
-      <Section className="flex flex-col md:!p-0 md:!pb-12  !bg-zinc-50">
+      <section className="flex flex-col md:!p-0 md:!pb-12  !bg-zinc-50">
         <AllcontentSection
           className={'pb-9'}
           allContent={allPosts}
@@ -34,7 +34,7 @@ const RelatedFeaturesSection: React.FC<RelatedFeaturesSectionProps> = ({ allPost
           redirect={true}
           contentType={contentType}
         />
-      </Section>
+      </section>
   );
 };
 

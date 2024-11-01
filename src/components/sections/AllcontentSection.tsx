@@ -165,7 +165,7 @@ useEffect(() => {
               {`${selectedTag ? selectedTag : browseHeading} `}
             </H2Large>
             {redirect ? (
-              <Link href={`/${siteConfig.paginationBaseUrls.base}`}>
+              <Link href={`/${siteConfig.paginationBaseUrls.base}`} className='shrink-0'>
                 <div className="flex items-center gap-3 transform group duration-300 cursor-pointer">
                   <span className="text-base font-medium">{`Browse All`}</span>
                   <span className="text-xl">
