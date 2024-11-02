@@ -238,7 +238,14 @@ export const homeSettingsQuery = groq`
       title,
       date,
       duration,
-      ${imageFragment},
+      "customImage": customImage.asset-> {
+        _id,
+        metadata {
+          dimensions
+        },
+        altText,
+        title
+      },
     },
     featuredArticle->{
       _id,
