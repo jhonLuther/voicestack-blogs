@@ -17,6 +17,7 @@ import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection
 import { BaseUrlProvider } from '~/components/Context/UrlContext';
 import ReviewsGrid from '~/components/sections/ReviewCards';
 import TagSelect from '~/contentUtils/TagSelector';
+import MainImageSection from '~/components/MainImageSection';
 import { mergeAndRemoveDuplicates, mergeReviews } from '~/utils/common';
 
 export const getStaticProps: GetStaticProps<SharedPageProps & { caseStudies: CaseStudies[]; totalPages: number }> = async (context) => {
@@ -51,6 +52,12 @@ const CaseStudiesPage = ({ caseStudies,latestCaseStudies,homeSettings, totalPage
   const router = useRouter();
   const baseUrl = useRef(`/${siteConfig.pageURLs.caseStudy}`).current;
 
+  const heroData = {
+    tagName : "CUSTOMER STORIES",
+    title : "Learn from the Best: Dental Practice Success Stories",
+    description : "From small, solo practices to large, multi-location clinics, these case studies demonstrate the versatility and value of CareStack in improving the patient experience and driving practice growth.",
+    mainImage : "https://cdn.sanity.io/images/bbmnn1wc/production/e2d855bb29dd80923c85acec6ddcaaabeb50248c-1724x990.png"
+  }
 
   const handlePageChange = (page: number) => {
     if (page === 1) {
@@ -77,7 +84,8 @@ const CaseStudiesPage = ({ caseStudies,latestCaseStudies,homeSettings, totalPage
 			/>
       {customMetaTag('caseStudy')}
       <CustomHead props={caseStudies} />
-      <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'} reverse={true} contents={latestContents} />
+      {/* <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'} reverse={true} contents={latestContents} /> */}
+      <MainImageSection landing={true} post={heroData}/>
       {caseStudies?.map((e,i) => {
         return <CustomHead props={e} type="caseStudy"  key={i}/>
       })}
