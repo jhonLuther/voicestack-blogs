@@ -23,8 +23,8 @@ const SliderSection: React.FC<BannerBlockProps> = ({ items }) => {
           </H2Large>
           <div className="flex gap-9 self-end">
             <div className="flex gap-4 md:gap-9">
-              <button className='text-zinc-900 ebook-prev disabled:opacity-30'><ArrowLeftIcon height={48} width={48} /></button>
-              <button className='text-zinc-900 ebook-next disabled:opacity-30'><ArrowRightIcon height={48} width={48} /></button>
+              <button className='text-zinc-900 ebook-prev disabled:opacity-30 select-none'><ArrowLeftIcon height={48} width={48} /></button>
+              <button className='text-zinc-900 ebook-next disabled:opacity-30 select-none'><ArrowRightIcon height={48} width={48} /></button>
             </div>
           </div>
         </div>

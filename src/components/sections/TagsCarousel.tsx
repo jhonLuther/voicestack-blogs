@@ -75,8 +75,8 @@ const TagsCarousel: React.FC<TagsCarouselProps> = ({ tags, selectedTag, onTagCha
           </SwiperSlide>
         ))}
       </Swiper>
-        <div className='swiper-prev absolute left-0 cursor-pointer top-[50%] translate-y-[-50%]'><ChevronLeftIcon className='text-zinc-200 w-6 h-6 hover:text-white'/></div>
-        <div className='swiper-next absolute right-0 cursor-pointer top-[50%] translate-y-[-50%]'><ChevronRightIcon className='text-zinc-200 w-6 h-6 hover:text-white'/></div>
+        <div className='swiper-prev absolute left-0 cursor-pointer top-[50%] translate-y-[-50%] select-none'><ChevronLeftIcon className='text-zinc-200 w-6 h-6 hover:text-white'/></div>
+        <div className='swiper-next absolute right-0 cursor-pointer top-[50%] translate-y-[-50%] select-none'><ChevronRightIcon className='text-zinc-200 w-6 h-6 hover:text-white'/></div>
     </>
   );
 };
