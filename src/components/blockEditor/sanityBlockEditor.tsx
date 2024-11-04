@@ -63,7 +63,7 @@ const SanityPortableText: React.FC<SanityPortableTextProps> = ({
           <ImageLoader 
             image={value.asset}
             priority={true}
-            altText={value.asset.altText || "Post image"}
+            altText={value?.asset?.altText || "Post image"}
             title={value.asset.title || "Post image"}
             imageClassName='w-full'
             fixed={false}
