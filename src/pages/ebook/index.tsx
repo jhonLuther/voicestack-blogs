@@ -90,6 +90,7 @@ const EbooksPage = ({ ebooks, latestEbooks, totalPages,tags,homeSettings }: { eb
           currentPage={1}
           onPageChange={handlePageChange}
           enablePageSlug={true}
+          type='custom'
         />
         <BannerSubscribeSection />
       </Layout>

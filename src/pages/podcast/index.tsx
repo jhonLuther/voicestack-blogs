@@ -82,6 +82,7 @@ const PodcastsPage = ({ podcasts,latestPodcasts, totalPages,tags,homeSettings }:
           currentPage={1}
           onPageChange={handlePageChange}
           enablePageSlug={true}
+          type ='custom'
         />
         <BannerSubscribeSection />
       </Layout>

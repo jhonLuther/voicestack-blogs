@@ -101,6 +101,7 @@ const CaseStudiesPage = ({ caseStudies,latestCaseStudies,homeSettings, totalPage
           currentPage={1}
           onPageChange={handlePageChange}
           enablePageSlug={true}
+          type='custom'
         />
         <ReviewsGrid testimonials={reviews}/>
         <BannerSubscribeSection />

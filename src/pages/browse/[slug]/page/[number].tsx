@@ -127,6 +127,7 @@ export default function TagPagePaginated({
           currentPage={currentPage}
           enablePageSlug={true}
           content={posts}
+          type='custom'
         />
         <BannerSubscribeSection />
     </Layout>

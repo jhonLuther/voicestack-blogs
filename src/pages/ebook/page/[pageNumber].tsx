@@ -83,6 +83,7 @@ const PaginatedEbookPage = ({ ebooks, pageNumber, totalPages }: { ebooks: Ebooks
           onPageChange={handlePageChange}
           enablePageSlug={true}
           content={ebooks}
+          type ='custom'
         />
         <BannerSubscribeSection />
       </Layout>

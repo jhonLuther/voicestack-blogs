@@ -89,6 +89,7 @@ const ArticlesPage = ({ articles,latestArticles, totalPages,tags,homeSettings }:
           onPageChange={handlePageChange}
           enablePageSlug={true}
           content={articles}
+          type='custom'
         />
         <BannerSubscribeSection />
     </Layout>
