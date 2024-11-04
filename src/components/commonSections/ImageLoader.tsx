@@ -121,8 +121,8 @@ const ImageLoader: React.FC<ImageLoaderProps> = ({
       <div ref={containerRef} className={`flex w-full h-full relative ${className}`}>
         <Image
           src={imageData.url}
-          alt={alt || image?.altText || ''}
-          title={title || image.title || ''}
+          alt={alt || (image?.altText ?? '') || ''}
+          title={title || (image?.title ?? '' )|| ''}
           className={`object-cover object-center ${imageClassName}`}
           fill
         />
@@ -135,8 +135,8 @@ const ImageLoader: React.FC<ImageLoaderProps> = ({
       <Image
         className={`!m-0 ${imageClassName}`}
         src={imageData.url}
-        alt={alt || image?.altText || ''}
-        title={title || image?.title || ''}
+        alt={alt || (image?.altText ?? '') || ''}
+        title={title || (image?.title  ?? '') || ''}
         width={imageData.width || clientWidth}
         height={imageData.height || clientHeight}
       />
