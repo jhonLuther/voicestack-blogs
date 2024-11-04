@@ -24,11 +24,23 @@ const Pagination = ({
   const baseUrl = useBaseUrl();
   
   if(totalPages === 1) return null 
-  const getPageUrl = (page: number) => {
-    if (page === 1) return baseUrl;
-    return enablePageSlug
-      ? `${baseUrl}/page/${page}`
-      : `${baseUrl}/${page}`;
+
+  const getPageUrl = (page: number, previousOrNext?: string) => {
+    if (previousOrNext === 'previous' && currentPage !== 0) {
+      return enablePageSlug
+        ? `${baseUrl}/page/${currentPage - 1}`
+        : `${baseUrl}/${page}`
+    } else if (previousOrNext === 'next') {
+      return enablePageSlug
+        ? `${baseUrl}/page/${currentPage + 1}`
+        : `${baseUrl}/${page}`
+    }
+
+    if (page == 0) {
+      return baseUrl
+    } else {
+      return enablePageSlug ? `${baseUrl}/page/${page}` : `${baseUrl}/${page}`
+    }
   };
 
   const handlePageChange = (page: number) => {
@@ -92,7 +104,7 @@ const Pagination = ({
       <Wrapper className="justify-center">
         <div className="flex items-center space-x-2">
           <Link
-            href={getPageUrl(currentPage - 1)}
+            href={getPageUrl(currentPage,'previous')}
             onClick={() => handlePageChange(currentPage - 1)}
             className={arrowLinkClass}
           >
@@ -105,7 +117,7 @@ const Pagination = ({
           {renderPageNumbers()}
 
           <Link
-            href={getPageUrl(currentPage + 1)}
+            href={getPageUrl(currentPage,'next')}
             onClick={() => handlePageChange(currentPage + 1)}
             className={nextArrowLinkClass}
           >
