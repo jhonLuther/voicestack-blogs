@@ -136,7 +136,7 @@ const ImageLoader: React.FC<ImageLoaderProps> = ({
         className={`!m-0 ${imageClassName}`}
         src={imageData.url}
         alt={alt || image?.altText || ''}
-        title={title || image.title || ''}
+        title={title || image?.title || ''}
         width={imageData.width || clientWidth}
         height={imageData.height || clientHeight}
       />
