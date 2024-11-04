@@ -22,8 +22,7 @@ const Pagination = ({
 
 
   const baseUrl = useBaseUrl();
-  
-  if(totalPages === 1) return null 
+  if(totalPages == 1) return null 
 
   const getPageUrl = (page: number, previousOrNext?: string) => {
     if (previousOrNext === 'previous' && currentPage !== 0) {
@@ -100,7 +99,7 @@ const Pagination = ({
   `;
 
   return (
-    <Section className="justify-center md:pb-12 md:pt-16">
+    totalPages > 1 && <Section className="justify-center md:pb-12 md:pt-16">
       <Wrapper className="justify-center">
         <div className="flex items-center space-x-2">
           <Link

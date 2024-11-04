@@ -43,6 +43,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       posts,
       tags,
       totalPages,
+      totalPosts,
       currentPage: pageNumber,
       contentCount:{
 				podcasts: totalPodcasts,
@@ -79,9 +80,10 @@ export default function TagPagePaginated({
   totalPages,
   currentPage,
   contentCount,
+  totalPosts
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const router = useRouter();
-  const totalCount:any = Object.values(contentCount).reduce((acc:any, count) => acc + count, 0);
+  const totalCount:any = totalPosts?.length ?? 0;
 
 
   const baseUrl = useRef(`/${siteConfig.paginationBaseUrls.base}`).current;

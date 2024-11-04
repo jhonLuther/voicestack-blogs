@@ -93,7 +93,7 @@ export default function Card({ post, isLast, cardType, reverse, className, cardC
       {cardType === 'top-image-card' ? (
         <Link href={linkUrl} className='h-full'>
           <div className={`flex flex-col w-full h-full gap-1 overflow-hidden ${reverse ? 'flex-col-reverse ' : ''}  group rounded-lg text-white`}>
-            <div className={`flex w-full h-full`} style={{minHeight: `${minHeight}px`}}>
+            <div className={`flex w-full h-full overflow-hidden`} style={{minHeight: `${minHeight}px`}}>
               {(post.mainImage) ? (
                   <ImageLoader
                     className='transform duration-300 group-hover:scale-105'
