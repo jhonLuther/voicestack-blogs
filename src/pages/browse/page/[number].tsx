@@ -18,7 +18,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const client = getClient();
     const pageNumber = params?.number ? parseInt(params.number as string, 10) : 1;
   
-  const cardsPerPage = siteConfig.pagination.itemsPerPage || 5;
+  const cardsPerPage = siteConfig.pagination.childItemsPerPage || 5;
   const startLimit = (pageNumber - 1) * cardsPerPage;
   const endLimit = startLimit + cardsPerPage;
 
@@ -58,7 +58,7 @@ export const getStaticPaths = async () => {
   const client = getClient()
   const slugs = await client.fetch(postSlugsQuery)
   const numberOfPosts = slugs.length
-  const cardsPerPage = siteConfig.pagination.itemsPerPage || 5;
+  const cardsPerPage = siteConfig.pagination.childItemsPerPage || 5;
   const numberOfPages = Math.ceil(numberOfPosts / cardsPerPage)
 
   const paths = []
