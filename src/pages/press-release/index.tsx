@@ -85,6 +85,7 @@ const PressReleasePage = ({ pressReleases,latestPressReleases,totalPages,tags,ho
           currentPage={1}
           onPageChange={handlePageChange}
           enablePageSlug={true}
+          type ='custom'
         />
         <BannerSubscribeSection />
       </Layout>

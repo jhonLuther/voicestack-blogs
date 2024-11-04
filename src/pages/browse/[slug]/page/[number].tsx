@@ -39,7 +39,7 @@ export const getStaticProps: GetStaticProps<
     };
   }
 
-  const cardsPerPage = siteConfig.pagination.itemsPerPage || 5;
+  const cardsPerPage = siteConfig.pagination.childItemsPerPage || 5;
   const startLimit = (pageNumber - 1) * cardsPerPage;
   const endLimit = startLimit + cardsPerPage;
 
@@ -76,7 +76,7 @@ export const getStaticPaths = async () => {
 
   const client = getClient()
   const tags = await getTags(client)
-  const cardsPerPage = siteConfig.pagination.itemsPerPage || 5
+  const cardsPerPage = siteConfig.pagination.childItemsPerPage || 5
 
   const paths = []
 
@@ -127,6 +127,7 @@ export default function TagPagePaginated({
           currentPage={currentPage}
           enablePageSlug={true}
           content={posts}
+          type='custom'
         />
         <BannerSubscribeSection />
     </Layout>

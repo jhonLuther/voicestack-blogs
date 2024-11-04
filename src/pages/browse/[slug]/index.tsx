@@ -53,7 +53,7 @@ export const getStaticProps: GetStaticProps<
     }
   }
 
-  const cardsPerPage = siteConfig.pagination.itemsPerPage || 5
+  const cardsPerPage = siteConfig.pagination.childItemsPerPage || 5
   const posts = await getPostsByTagAndLimit(client, tag._id, 0, cardsPerPage)
   const allPostsForTag = await getPostsByTag(client, tag._id)
   const totalPages = Math.ceil(allPostsForTag.length / cardsPerPage)

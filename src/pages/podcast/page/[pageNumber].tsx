@@ -80,6 +80,7 @@ const PaginatedEbookPage = ({ podcasts, pageNumber, totalPages }: { podcasts: Po
           onPageChange={handlePageChange}
           enablePageSlug={true}
           content={podcasts}
+          type ='custom'
         />
     </Layout>
     </BaseUrlProvider>

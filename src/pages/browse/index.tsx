@@ -32,7 +32,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     ? parseInt(params.pageNumber as string, 10)
     : 1
 
-  const cardsPerPage = siteConfig.pagination.itemsPerPage || 5
+  const cardsPerPage = siteConfig.pagination.childItemsPerPage || 5
   const startLimit = (pageNumber - 1) * cardsPerPage
 
   const tags = await getTags(client)
@@ -77,12 +77,8 @@ export default function ProjectSlugRoute(
 ) {
   const router = useRouter()
 
-  const { posts, totalPages, tags, contentCount, totalPosts, siteSettings } =
-    props
-  const totalCount: any = Object.values(contentCount).reduce(
-    (acc: any, count) => acc + count,
-    0,
-  )
+  const { posts, totalPages, tags, contentCount, totalPosts, siteSettings } = props
+  const totalCount: any = totalPosts.length ?? 0;
 
   const baseUrl = useRef(`/${siteConfig.paginationBaseUrls.base}`).current
 

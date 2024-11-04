@@ -83,6 +83,7 @@ const PaginatedArticlesPage = ({ articles, pageNumber, totalPages }: { articles:
           onPageChange={handlePageChange}
           enablePageSlug={true}
           content={articles}
+          type='custom'
         />
         <BannerSubscribeSection />
       </Layout>

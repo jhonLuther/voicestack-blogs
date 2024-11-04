@@ -83,6 +83,7 @@ const PaginatedWebinarsPage = ({ webinars, pageNumber, totalPages }: { webinars:
           onPageChange={handlePageChange}
           enablePageSlug={true}
           content={webinars}
+          type ='custom'
         />
         <BannerSubscribeSection />
     </Layout>

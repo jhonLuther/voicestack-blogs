@@ -83,6 +83,7 @@ const PaginatedCaseStudyPage = ({ caseStudies, pageNumber, totalPages }: { caseS
           onPageChange={handlePageChange}
           enablePageSlug={true}
           content={caseStudies}
+          type='custom'
         />
         <BannerSubscribeSection />
       </Layout>

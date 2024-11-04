@@ -83,6 +83,7 @@ const PaginatedPressReleasePage = ({ pressReleases, pageNumber, totalPages }: { 
           onPageChange={handlePageChange}
           enablePageSlug={true}
           content={pressReleases}
+          type ='custom'
         />
         <BannerSubscribeSection />
     </Layout>

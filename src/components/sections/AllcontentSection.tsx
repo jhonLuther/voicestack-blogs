@@ -174,7 +174,7 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
           {allContent && allContent.length > 0 ? (
             renderPosts()
           ) : (
-            <div className="text-center py-10 text-xl font-semibold">
+            <div className="py-10 text-xl">
               <p>{`No matching posts found`}.</p>
             </div>
           )}

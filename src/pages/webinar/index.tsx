@@ -83,6 +83,7 @@ const WebinarsPage = ({ webinars,latestWebinars,homeSettings, totalPages,tags }:
           currentPage={1}
           onPageChange={handlePageChange}
           enablePageSlug={true}
+          type ='custom'
         />
         <BannerSubscribeSection />
       </Layout>
