@@ -1,20 +1,18 @@
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
-import { useRouter } from 'next/router'
 import { getClient } from '~/lib/sanity.client'
-import { authorBySlugQuery, authorSlugsQuery, getAuthor, getauthorRelatedContents, getAuthors, getPost } from '~/lib/sanity.queries'
+import { authorSlugsQuery, getAuthor, getauthorRelatedContents, getAuthors, getPost } from '~/lib/sanity.queries'
 import Layout from '~/components/Layout'
 import Wrapper from '~/layout/Wrapper'
 import { readToken } from '~/lib/sanity.api'
 import { Author, Post } from '~/interfaces/post'
 import { SharedPageProps } from '../_app'
 import Image from 'next/image'
-import RelatedFeaturesSection from '~/components/RelatedFeaturesSection'
-import Card from '~/components/Card'
 import AllcontentSection from '~/components/sections/AllcontentSection'
 import siteConfig from 'config/siteConfig'
 import Section from '~/components/Section'
 import { useRef } from 'react'
 import { BaseUrlProvider } from '~/components/Context/UrlContext'
+import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection'
 
 interface Query {
   [key: string]: string
@@ -99,9 +97,11 @@ export default function AuthorPage({
         <AllcontentSection
           className={'pb-9'}
           allContent={relatedContents}
-          itemsPerPage={siteConfig.pagination.childItemsPerPage}
+          itemsPerPage={6}
           redirect={true}
+          authorName={author.name}
         />}
+      <BannerSubscribeSection />
     </Layout >
     </BaseUrlProvider>
   )

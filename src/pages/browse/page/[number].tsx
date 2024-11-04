@@ -18,7 +18,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const client = getClient();
     const pageNumber = params?.number ? parseInt(params.number as string, 10) : 1;
   
-  const cardsPerPage = siteConfig.pagination.itemsPerPage || 5;
+  const cardsPerPage = siteConfig.pagination.childItemsPerPage || 5;
   const startLimit = (pageNumber - 1) * cardsPerPage;
   const endLimit = startLimit + cardsPerPage;
 
@@ -43,6 +43,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       posts,
       tags,
       totalPages,
+      totalPosts,
       currentPage: pageNumber,
       contentCount:{
 				podcasts: totalPodcasts,
@@ -58,7 +59,7 @@ export const getStaticPaths = async () => {
   const client = getClient()
   const slugs = await client.fetch(postSlugsQuery)
   const numberOfPosts = slugs.length
-  const cardsPerPage = siteConfig.pagination.itemsPerPage || 5;
+  const cardsPerPage = siteConfig.pagination.childItemsPerPage || 5;
   const numberOfPages = Math.ceil(numberOfPosts / cardsPerPage)
 
   const paths = []
@@ -79,9 +80,10 @@ export default function TagPagePaginated({
   totalPages,
   currentPage,
   contentCount,
+  totalPosts
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const router = useRouter();
-  const totalCount:any = Object.values(contentCount).reduce((acc:any, count) => acc + count, 0);
+  const totalCount:any = totalPosts?.length ?? 0;
 
 
   const baseUrl = useRef(`/${siteConfig.paginationBaseUrls.base}`).current;

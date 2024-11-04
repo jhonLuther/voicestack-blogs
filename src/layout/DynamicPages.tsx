@@ -66,7 +66,7 @@ const DynamicPages = ({
 			<TestimonialSection testimonials={testimonialList} />
 			<AllcontentSection  customBrowseContent={customBrowseContent} allContent={posts} itemsPerPage={siteConfig.pagination.itemsHomePage}  redirect={true} />
 			<ShortBannerSection />
-			</BaseUrlProvider>
+		</BaseUrlProvider>
 		</>
 	);
 };

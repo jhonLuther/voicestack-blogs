@@ -1,18 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { ArrowTopRightIcon } from '@sanity/icons';
-
 import siteConfig from 'config/siteConfig';
 import Wrapper from '~/layout/Wrapper';
 import Card from '../Card';
 import Section from '../Section';
 import H2Large from '../typography/H2Large';
-import SearchBar from '../widgets/SearchBar';
 import { useBaseUrl } from '../Context/UrlContext';
-import { getClient } from '~/lib/sanity.client';
-import { getSiteSettings } from '~/lib/sanity.queries';
-import { defaultMetaTag } from '~/utils/customHead';
+import { usePathname } from 'next/navigation';
+import { useRouter } from 'next/router';
 
 interface LatestBlogsProps {
   allContent: any[];
@@ -22,9 +18,9 @@ interface LatestBlogsProps {
   redirect?: boolean;
   itemsPerPage?: number;
   customBrowseContent?: any;
-  enableDateSort?: boolean
   allItemCount?: any
   contentType?: string
+  authorName ?: string
 }
 
 const AllcontentSection: React.FC<LatestBlogsProps> = ({
@@ -35,12 +31,13 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
   cardType,
   itemsPerPage,
   redirect = false,
-  enableDateSort,
   contentType,
-  allItemCount
+  allItemCount,
+  authorName
 }) => {
   const postsToShow = itemsPerPage || siteConfig.pagination.childItemsPerPage;
   const [selectedTag, setSelectedTag] = useState('');
+  const pathname = usePathname()
   const router = useRouter();
 
   const baseUrl = useBaseUrl();
@@ -48,13 +45,13 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
   const totalCount = allItemCount ? allItemCount : allContent.length;
 
   let contentHeading =
-    contentType === 'podcast'
+     contentType === 'podcast'
       ? 'Keep Listening'
       : contentType === 'webinar'
         ? 'Keep Watching'
         : 'Keep Reading';
 
-  let browseHeading = contentType ? contentHeading : 'Explore All';
+  let browseHeading = contentType ? contentHeading : authorName ? `Posts By ${authorName}`  : 'Explore All';
 
   useEffect(() => {
     const updateSelectedTag = () => {
@@ -103,16 +100,16 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
   const renderPosts = () => {
     const posts = [];
     const slicedContent = allContent.slice(0, postsToShow);
+    const isHomePage =  pathname === `${siteConfig.pageURLs.home}`
 
     slicedContent.forEach((post, index) => {
-      const isVaryingIndex = (index === 3) && cardType !== 'left-image-card';
+      const isVaryingIndex = (index === 3) && cardType !== 'left-image-card' && isHomePage;
+      
       const shouldUseCustomContent = isVaryingIndex && customBrowseContent;
-
       if (isVaryingIndex && !customBrowseContent) {
         return;
       }
-
-      const postContent = shouldUseCustomContent ? customBrowseContent : post;
+      const postContent = shouldUseCustomContent  ? customBrowseContent : post;
 
       posts.push(
         <div
@@ -177,8 +174,8 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
           {allContent && allContent.length > 0 ? (
             renderPosts()
           ) : (
-            <div className="text-center py-10">
-              <p>No matching posts found.</p>
+            <div className="py-10 text-xl">
+              <p>{`No matching posts found`}.</p>
             </div>
           )}
         </div>

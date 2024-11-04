@@ -1197,29 +1197,29 @@ export async function getAuthor(
 export async function getauthorRelatedContents(
   client: SanityClient,
   authorId: string,
+  limit: number = 6,
 ): Promise<any> {
   let relatedAuthors = authorRelatedContentQuery
 
   if (authorId.length > 0) {
     relatedAuthors = groq`
-  *[_type == "post" && "${authorId}" in author[]->_id] {
-    _id,
-    title,
-    slug,
-    contentType,
-    duration,
-    publishedAt,
-    excerpt,
-    date,
-   ${imageFragment},
-    ${bodyFragment},
-    "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180),
-
+      *[_type == "post" && "${authorId}" in author[]->_id] | order(date desc) [0...${limit}] {
+        _id,
+        title,
+        slug,
+        contentType,
+        duration,
+        publishedAt,
+        excerpt,
+        date,
+        ${imageFragment},
+        ${bodyFragment},
+        "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180),
+      }
+    `
   }
-      `
-  }
 
-  return await client.fetch(authorRelatedContentQuery, {
+  return await client.fetch(relatedAuthors, {
     authorId,
   })
 }
