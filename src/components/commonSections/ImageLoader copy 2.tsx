@@ -122,7 +122,7 @@ const ImageLoader: React.FC<ImageLoaderProps> = ({
         >
           <Image
             src={imageUrl}
-            alt={props.altText || image.altText}
+            alt={props?.altText || image?.altText}
             title={props.title || image.title || ''}
             fill
             className="top-0 left-0 object-cover"
@@ -136,7 +136,7 @@ const ImageLoader: React.FC<ImageLoaderProps> = ({
     <div className={`relative w-full h-auto ${className}`}>
       <Image
         src={imageUrl}
-        alt={props.altText || image.altText || 'blog card image'}
+        alt={props?.altText || image?.altText || 'blog card image'}
         title={props.title || image.title || 'blog card image'}
         width={width}
         height={height}
