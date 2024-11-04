@@ -31,7 +31,7 @@ const Pagination = ({
     page: number,
   ) => {
     if (previousOrNext === 'previous') {
-      if (currentPage >= 2) {
+      if (currentPage === 1 || currentPage === 2) {
         return `${baseUrl}`
       } else {
         return enablePageSlug
