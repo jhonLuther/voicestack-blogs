@@ -44,7 +44,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false, params = {} }) => {
   const client = getClient(draftMode ? { token: readToken } : undefined);
   const articles = await getArticle(client, params.slug as string);
-  const tagIds = articles.tags?.map((tag: any) => tag?._id) || []
+  const tagIds = articles?.tags?.map((tag: any) => tag?._id) || []
   const relatedContents = await getTagRelatedContents(client,params.slug as string, tagIds,articles.contentType);
 
   return {

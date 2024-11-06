@@ -146,5 +146,14 @@ export const mergeAndRemoveDuplicates = (primaryArray, secondaryArray = [], uniq
   return result;
 };
 
-
+export const removeUnwantedCharacters = (path: string) => {
+  if (!path) {
+    throw new Error('Provide a valid path');
+  }
+  const excludeCharacters = ['?', '#'];
+  const cleanPath = excludeCharacters.reduce((acc, character) => {
+    return acc.split(character)[0];
+  }, path);
+  return cleanPath;
+}
 
