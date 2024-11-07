@@ -97,7 +97,7 @@ const ArticlePage = ({ articles,relatedContents, draftMode, token }: Props) => {
                   <Toc headings={articles?.headings} title="Contents" />
                   {articles?.author &&
                     <div className=''>
-                      <AuthorInfo contentType={articles?.contentType} author={articles?.author} />
+                      <AuthorInfo author={articles?.author} />
                     </div>
                   }
                   <ShareableLinks props={articles?.title} />

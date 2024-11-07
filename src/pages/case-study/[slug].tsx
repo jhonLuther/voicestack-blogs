@@ -111,7 +111,7 @@ const CaseStudyPage = ({ caseStudy,relatedContents, draftMode, token }: Props) =
                   <div className='flex flex-col gap-8'>
                   {caseStudy?.author &&
                     <div className=''>
-                      <AuthorInfo contentType={caseStudy?.contentType} author={caseStudy?.author} />
+                      <AuthorInfo author={caseStudy?.author} />
                     </div>
                   }
                   <ShareableLinks props={caseStudy?.title} />
