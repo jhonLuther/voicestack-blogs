@@ -12,25 +12,25 @@ function BannerSubscribeSection({ isSmall }: BannerSubscribeSectionProps) {
   const [email, setEmail] = useState('');
   const [isSubmitted,setIsSubmitted] =  useState(false)
 
-    const handleSubmit = async (event) => {
-      event.preventDefault();
-      try {
-        const response = await fetch('https://script.google.com/a/macros/carestack.com/s/AKfycbxA63dkm1kfBlfARXWyxsvf2qILj-RkeRiRF8HwRUnJrOBv9Q_MakNx4wlfe31V131u/exec', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            email: email
-          })
-        });
-        const data = await response.json();
-        setIsSubmitted(true)
-        console.log(data);
-      } catch (error) {
-        console.error('Error:', error);
-      }
-    };
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const response = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email: email
+        })
+      });
+      const data = await response.json();
+      setIsSubmitted(true)
+      console.log(data);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
 
   return (
     <Section className='justify-center' >
@@ -59,11 +59,7 @@ function BannerSubscribeSection({ isSmall }: BannerSubscribeSectionProps) {
               <Button className='bg-zinc-900 !px-12 hover:bg-zinc-700 md:absolute md:translate-y-[-50%] top-[50%] right-[16px] self-start'  onClick={handleSubmit}>
                 <span className='text-base font-medium'>{`Submit`}</span>
               </Button>
-              {
-                isSubmitted && <p className="text-xs md:text-base font-medium text-zinc-500 leading-[1.2]">Thank you for subscribing!</p>
-              }
             </div>
-
           </div>
         </div>
 
