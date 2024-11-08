@@ -76,6 +76,8 @@ const PaginatedCaseStudyPage = ({ caseStudies, pageNumber, totalPages }: { caseS
           cardType="left-image-card"
           hideHeader={true}
           itemsPerPage={siteConfig.pagination.childItemsPerPage}
+          contentType='case-study'
+          showCount={true}
         />
         <Pagination
           totalPages={totalPages}

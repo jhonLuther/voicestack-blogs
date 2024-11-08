@@ -73,9 +73,10 @@ const PaginatedArticlesPage = ({ articles, pageNumber, totalPages }: { articles:
         <AllcontentSection
           className={'pb-9'}
           allContent={articles}
-          hideHeader={true}
           cardType="left-image-card"
           itemsPerPage={siteConfig.pagination.childItemsPerPage}
+          contentType='article'
+          showCount={true}
         />
         <Pagination
           totalPages={totalPages}

@@ -123,7 +123,7 @@ const PodcastPage = ({ podcast,relatedContents, previous, next, currentNumber, t
                       {podcast.author && podcast.author?.length > 0 && 
                         podcast.author.map((author: any,i) => {
                           return(
-                            <AuthorInfo key={author._id || i} contentType={'podcast'} author={[author]} />
+                            <AuthorInfo key={author._id || i}  author={[author]} />
                           )
                         })
                       }

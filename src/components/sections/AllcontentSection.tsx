@@ -9,6 +9,7 @@ import H2Large from '../typography/H2Large';
 import { useBaseUrl } from '../Context/UrlContext';
 import { usePathname } from 'next/navigation';
 import { useRouter } from 'next/router';
+import { removeUnwantedCharacters } from '~/utils/common';
 
 interface LatestBlogsProps {
   allContent: any[];
@@ -21,6 +22,7 @@ interface LatestBlogsProps {
   allItemCount?: any
   contentType?: string
   authorName ?: string
+  showCount ?: boolean
 }
 
 const AllcontentSection: React.FC<LatestBlogsProps> = ({
@@ -33,7 +35,8 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
   redirect = false,
   contentType,
   allItemCount,
-  authorName
+  authorName,
+  showCount = false
 }) => {
   const postsToShow = itemsPerPage || siteConfig.pagination.childItemsPerPage;
   const [selectedTag, setSelectedTag] = useState('');
@@ -73,7 +76,7 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
             setSelectedTag('');
           }
         } else {
-          const tagFromUrl = pathParts[pathParts.length - 1]
+          const tagFromUrl = removeUnwantedCharacters(pathParts[pathParts.length - 1])
           if (tagFromUrl && tagFromUrl !== 'browse') {
             const cleanTag = tagFromUrl
               .split('-')
@@ -154,7 +157,7 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
                 </div>
               </Link>
             ) : (
-              <div className="text-zinc-700 font-normal text-base shrink-0">{`${totalCount} ${totalCount > 1 ? 'results' : 'result'}`}</div>
+               !showCount && <div className="text-zinc-700 font-normal text-base shrink-0">{`${totalCount} ${totalCount > 1 ? 'results' : 'result'}`}</div>
             )}
           </div>
         )}

@@ -105,7 +105,7 @@ export default function ProjectSlugRoute(
                     />
                   </div>
                   <div className='md:hidden block'>
-                    {authorInfo && <AuthorInfo contentType={post.contentType} author={authorInfo} />}
+                    {authorInfo && <AuthorInfo author={authorInfo} />}
                   </div>
                 </div>
                 <div className='flex flex-col gap-8 md:mt-12 bg-red relative md:w-1/3 md:max-w-[410px] w-full'>
@@ -113,7 +113,7 @@ export default function ProjectSlugRoute(
                   <Toc headings={ post?.headings} title="Contents" />
                     {authorInfo &&
                       <div className=''>
-                        <AuthorInfo contentType={post.contentType} author={authorInfo} />
+                        <AuthorInfo author={authorInfo} />
                       </div>
                     }
                     <ShareableLinks props={post?.title} />
