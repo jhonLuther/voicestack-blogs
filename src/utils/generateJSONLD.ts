@@ -214,7 +214,7 @@ export function breadCrumbJsonLd(
           '@type': 'ListItem',
           position: 1,
           item: {
-            '@id': `${baseUrl}/${item?.href}`,
+            '@id': `${baseUrl}${item?.href}`,
             "name": item?.label ?? "",
           },
         },

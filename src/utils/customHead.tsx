@@ -4,6 +4,181 @@ import Head from 'next/head'
 import { urlForImage } from '~/lib/sanity.image'
 import { getIframeUrl } from '~/components/commonSections/VideoModal'
 
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Corporation',
+  name: 'CareStack',
+  legalName: 'Good Methods Global, Inc.',
+  image:
+    'https://a.storyblok.com/f/144863/1200x1200/db11368ff8/carestack-logo-1200x1200.jpg',
+  logo: 'https://a.storyblok.com/f/144863/1200x1200/db11368ff8/carestack-logo-1200x1200.jpg',
+  url: 'https://carestack.com',
+  email: 'hello@carestack.com',
+  numberOfEmployees: '600',
+  description:
+    'CareStack is an award-winning, cloud dental practice management software trusted by thousands of dentists & dental practices.',
+  slogan: "The last dental software you'll ever need.",
+  mainEntityOfPage: 'https://carestack.com',
+  areaServed: [
+    {
+      '@type': 'Country',
+      name: 'United States',
+    },
+    {
+      '@type': 'Country',
+      name: 'United Kingdom',
+    },
+  ],
+  keywords:
+    'carestack, dental software, carestack dental software, top dental software, best dental software, cloud dental practice management software, dental practice management software',
+  knowsAbout: [
+    'Dental Software',
+    'Cloud Dental Software',
+    'Dental Practice Management Software',
+  ],
+  foundingDate: '2015-01-07',
+  founders: [
+    {
+      '@type': 'Person',
+      name: 'Abhi Krishna',
+      jobTitle: 'Co-Founder & CEO',
+    },
+    {
+      '@type': 'Person',
+      name: 'Varun Nelson',
+      jobTitle: 'Co-Founder & VP Product Opearations',
+    },
+    {
+      '@type': 'Person',
+      name: 'Kevin Cook',
+      jobTitle: 'Co-Founder & VP, Customer Experience',
+    },
+  ],
+  awards: [
+    '2022 Software Advice FrontRunner',
+    '2022 Software Suggest Trending',
+    '2022 GetApp Category Leader',
+    '2021 G2 High Performer',
+    '2021 SoftwarePundit SMB10',
+    'G2 Best Meets Requirements - Summer 2024',
+    'G2 Best Meets Requirements (Small Business) - Summer 2024',
+    'G2 Best Relationship (Small Business) - Summer 2024',
+    'G2 Best Relationship - Summer 2024',
+    'G2 Best Results - Summer 2024',
+    'G2 Best Support - Summer 2024',
+    'G2 Best Usability (Small Business) - Summer 2024',
+    'G2 Best Usability - Summer 2024',
+    'G2 Highest User Adoption (Small Business) - Summer 2024',
+    'G2 Leader - Summer 2024',
+    'G2 Leader (Small Business) - Summer 2024',
+    'G2 Momentum Leader - Summer 2024',
+    'MarketsandMarkets Emerging Leader',
+  ],
+  sameAs: [
+    'https://carestack.com',
+    'https://www.facebook.com/CareStackSystem/',
+    'https://twitter.com/CareStackSystem/',
+    'https://www.instagram.com/carestack_/',
+    'https://www.youtube.com/@CareStack',
+    'https://www.linkedin.com/company/carestack/',
+    'https://vimeo.com/user14264510',
+  ],
+  address: [
+    {
+      '@type': 'PostalAddress',
+      streetAddress: '2954 Mallory Cir #209',
+      addressLocality: 'Kissimmee',
+      addressRegion: 'FL',
+      postalCode: '34747',
+      addressCountry: 'US',
+    },
+    {
+      '@type': 'PostalAddress',
+      streetAddress: '10th Yamuna, Technopark Phase III Main Rd',
+      addressLocality: 'Thiruvananthapuram',
+      addressRegion: 'KL',
+      postalCode: '695583',
+      addressCountry: 'IN',
+    },
+  ],
+  '@logo': [
+    {
+      '@type': 'ImageObject',
+      '@id':
+        'https://a.storyblok.com/f/144863/1200x1200/db11368ff8/carestack-logo-1200x1200.jpg',
+      url: 'https://a.storyblok.com/f/144863/1200x1200/db11368ff8/carestack-logo-1200x1200.jpg',
+      contentUrl:
+        'https://a.storyblok.com/f/144863/1200x1200/db11368ff8/carestack-logo-1200x1200.jpg',
+      caption: 'CareStack logo',
+      inLanguage: ['en-US', 'en-GB'],
+      width: 1200,
+      height: 1200,
+    },
+  ],
+  '@icon': [
+    {
+      '@type': 'ImageObject',
+      '@id':
+        'https://a.storyblok.com/f/144863/1201x1201/a1d1cbd61c/carestack-favicon-1200x1200.png',
+      url: 'https://a.storyblok.com/f/144863/1201x1201/a1d1cbd61c/carestack-favicon-1200x1200.png',
+      contentUrl:
+        'https://a.storyblok.com/f/144863/1201x1201/a1d1cbd61c/carestack-favicon-1200x1200.png',
+      caption: 'CareStack icon',
+      inLanguage: ['en-US', 'en-GB'],
+      width: 1200,
+      height: 1200,
+    },
+  ],
+  contactPoint: [
+    {
+      '@type': 'ContactPoint',
+      contactType: 'Customer Service',
+      telephone: '+1 (407) 833-6123',
+      email: 'support@carestack.com',
+    },
+    {
+      '@type': 'ContactPoint',
+      contactType: 'Sales',
+      telephone: '+1 (407) 833-6123',
+      email: 'sales@carestack.com',
+    },
+  ],
+}
+
+const head = (data: any, i: string) => {
+  return (
+    <Head key={i}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+      ></script>
+    </Head>
+  )
+}
+
+const siteLink = {
+  '@context': 'https://schema.org/',
+  '@type': 'WebSite',
+  name: 'CareStack',
+  url: 'https://carestack.com',
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: 'https://carestack.com/?s={search_term_string}',
+    'query-input': 'required name=search_term_string',
+  },
+}
+
+export const orgSchema = () => {
+  return head(
+    organizationSchema,
+    Math.log10(Math.random()).toString() + 'randomId',
+  )
+}
+
+export const siteLinkSchema = () => {
+  return head(siteLink, Math.log10(Math.random()).toString() + 'randomId1')
+}
+
 const ogMetaData = {
   article: {
     title: 'Articles | Official CareStack® Article Series, Read Now',
