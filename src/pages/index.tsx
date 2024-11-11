@@ -87,7 +87,9 @@ export default function IndexPage(props: IndexPageProps) {
         return defaultMetaTag(e)
       })}
       <Head>
-        <script type="application/ld+json">{indexPageJsonLd(props)}</script>
+        <script type="application/ld+json">
+          {JSON.stringify(indexPageJsonLd(props))}
+        </script>
       </Head>
       <DynamicPages
         posts={props.posts}

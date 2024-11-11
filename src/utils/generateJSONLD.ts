@@ -178,27 +178,28 @@ export function generateJSONLD(post: any) {
 }
 
 export function indexPageJsonLd(params: any) {
-  return JSON.stringify({
-    maintainer: 'CareSTack',
-    publisher: 'CareSTack',
-    '@context': 'https://schema.org',
-    '@type': 'Article',
-    headline:
-      params?.posts?.map((e: any) => {
-        return [e.title]
-      }) || [],
-    text:
-      params?.latestPosts?.map((e: any) => {
-        return [e.title]
-      }) || [],
-    copyrightHolder: {
+  return {
+    maintainer: 'CareStack',
+    publisher: {
+      '@type': 'Organization',
+      name: 'CareStack',
       '@id': 'https://carestack.com/#organization',
     },
-    name: params.title,
-    startDate: params._createdAt,
-    description: params.excerpt,
-  })
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: params?.title || '',
+    articleBody:
+      params?.posts?.map((e: any) => e?.title).join(', ') || '',
+    copyrightHolder: {
+      '@type': 'Organization',
+      '@id': 'https://carestack.com/#organization',
+    },
+    name: params?.title || '',
+    datePublished: params?._createdAt || '',
+    description: params?.excerpt || '',
+  };
 }
+
 
 export function breadCrumbJsonLd(
   breadCrumbList: { breadcrumb: string; url?: string }[],
