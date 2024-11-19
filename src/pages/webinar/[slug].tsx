@@ -103,7 +103,7 @@ const WebinarPage = ({ webinar,relatedContents, draftMode, token }: Props) => {
                           <div className='flex flex-col gap-6'>
                               {webinar.author.map((author: any,i) => {
                                 return(
-                                  <AuthorInfo key={author._id || i} contentType={'webinar'} author={[author]} />
+                                  <AuthorInfo key={author._id || i}  author={[author]} />
                                 )
                             })}
                           </div>

@@ -2,9 +2,9 @@ import { useState, useEffect, Fragment, useMemo, useRef } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { breadCrumbJsonLd } from '~/utils/generateJSONLD';
-import Head from 'next/head';
 import {CustomHead} from '~/utils/customHead';
 import {ArrowRightIcon} from '@sanity/icons'
+import { removeUnwantedCharacters } from '~/utils/common';
 
 interface BreadCrumbProps {
   className?: string
@@ -14,7 +14,6 @@ const Breadcrumb = ({className}:BreadCrumbProps) => {
   const router = useRouter();
   const [breadcrumbs, setBreadcrumbs] = useState([]);
   const pathSegments = useRef(router.asPath.split('/').filter(segment => segment !== ''));
-  const prevRouterAsPath = useRef(router.asPath);
 
   const breadcrumbLabels = useMemo(() => ({
     blogs: 'Blogs',
@@ -52,9 +51,9 @@ const Breadcrumb = ({className}:BreadCrumbProps) => {
             return (
               <span key={breadcrumb.href} className={`flex items-center ${isLast && 'w-full cursor-default'}`}>
                 {isLast ? (
-                  <span aria-current="page" className='zinc-400 text-xs font-500 uppercase opacity-50 mt-2'>{breadcrumb.label}</span>
+                  <span aria-current="page" className='zinc-400 text-xs font-500 uppercase opacity-50 mt-2'>{removeUnwantedCharacters(breadcrumb.label)}</span>
                 ) : (
-                  <Link href={breadcrumb.href} className='zinc-300 text-xs font-500 uppercase'>{breadcrumb.label}</Link>
+                  <Link href={breadcrumb.href} className='zinc-300 text-xs font-500 uppercase'>{removeUnwantedCharacters(breadcrumb.label)}</Link>
                 )}
                 {!isLast && <span className="mx-3 text-zinc-500"><ArrowRightIcon width={24} height={24}/></span>}
               </span>

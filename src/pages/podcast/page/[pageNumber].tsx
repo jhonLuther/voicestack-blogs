@@ -73,6 +73,8 @@ const PaginatedEbookPage = ({ podcasts, pageNumber, totalPages }: { podcasts: Po
           cardType="left-image-card"
           hideHeader={true}
           itemsPerPage={siteConfig.pagination.childItemsPerPage}
+          contentType='podcast'
+          showCount={true}
         />
         <Pagination
           totalPages={totalPages}

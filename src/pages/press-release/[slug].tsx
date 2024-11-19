@@ -115,7 +115,7 @@ const PressReleasePage = ({ pressRelease,relatedContents, draftMode, token }: Pr
                   <Toc headings={pressRelease?.headings} title="Contents" />
                   {pressRelease?.author &&
                     <div className=''>
-                      <AuthorInfo contentType={pressRelease.contentType} author={pressRelease?.author} />
+                      <AuthorInfo  author={pressRelease?.author} />
                     </div>
                   }
                 </div>
@@ -134,7 +134,7 @@ const PressReleasePage = ({ pressRelease,relatedContents, draftMode, token }: Pr
                     )}
                     {pressRelease?.author &&
                     <div className=''>
-                      <AuthorInfo contentType={pressRelease.contentType} author={pressRelease?.author} />
+                      <AuthorInfo author={pressRelease?.author} />
                     </div>
                   }
                   </>

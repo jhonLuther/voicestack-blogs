@@ -76,6 +76,8 @@ const PaginatedEbookPage = ({ ebooks, pageNumber, totalPages }: { ebooks: Ebooks
           cardType="left-image-card"
           hideHeader={true}
           itemsPerPage={siteConfig.pagination.childItemsPerPage}
+          contentType='ebook'
+          showCount={true}
         />
         <Pagination
           totalPages={totalPages}

@@ -76,6 +76,8 @@ const PaginatedPressReleasePage = ({ pressReleases, pageNumber, totalPages }: { 
           cardType="left-image-card"
           hideHeader={true}
           itemsPerPage={siteConfig.pagination.childItemsPerPage}
+          contentType='press-release'
+          showCount={true}
         />
         <Pagination
           totalPages={totalPages}
