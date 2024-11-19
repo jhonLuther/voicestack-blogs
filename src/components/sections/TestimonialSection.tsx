@@ -7,6 +7,7 @@ import Wrapper from '../../layout/Wrapper';
 import Link from 'next/link';
 import useMediaQuery from '~/utils/useMediaQueryHook';
 import Section from '../Section';
+import ImageLoader from '../commonSections/ImageLoader';
 
 
 
@@ -29,7 +30,7 @@ const TestimonialSection = ({ testimonials }: TestimonialSectionProps) => {
       <Wrapper>
         <div className="w-full gap-0 xl:py-16 relative" >
             {testimonials && testimonials.length && testimonials.map((testimonialItem, i) => (
-              <div className='flex flex-col md:flex-row gap-4 md:gap-12 content-center items-center justify-between' key={i}>
+              <div className='flex flex-col md:flex-row gap-4 md:gap-12 content-center items-center justify-between w-full' key={i}>
                 <div className='flex md:px-0 px-0 flex-1 gap-8 max-w-[731px]'>
                   <div className='flex flex-col gap-y-6 md:gap-y-8'>
                     <svg width="32" height="29" viewBox="0 0 32 29" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -42,14 +43,12 @@ const TestimonialSection = ({ testimonials }: TestimonialSectionProps) => {
                       </p>
                     </div>
                     <div className='flex flex-row gap-4 items-center'>
-                      <div className='md:hidden shrink-0'>
+                      <div className='md:hidden shrink-0 w-[70px] h-[70px] rounded-s overflow-hidden'>
                         {testimonialItem.customer && testimonialItem.customer.picture && (
-                          <Image
-                            src={testimonialItem.customer.picture}
+                          <ImageLoader
+                            image={testimonialItem.customer.picture}
                             alt={testimonialItem.customer.picture.alt || ''}
-                            width={70}
-                            height={70}
-                            className="rounded-full object-cover"
+                            className="rounded-full object-cover "
                           />
                         )}
                       </div>
@@ -58,38 +57,17 @@ const TestimonialSection = ({ testimonials }: TestimonialSectionProps) => {
                         <span className='text-zinc-700 text-base'>{testimonialItem.customer?.role}</span>
                       </div>
                     </div>
-                    {/* <div className='flex justify-between'>
-                      <Link
-                        href={'/'}
-                        // href={testimonialItem.slug.current && `/testimonial/${testimonialItem.slug.current}`}
-                        className="text-sm font-semibold flex items-center space-x-1 hover:scale-90 transition duration-300 ease-in-out"
-                      >
-                        <span className='text-xs font-medium'>{`Read Now`}</span>
-                        <span className="text-xl">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10" fill="none">
-                            <path d="M0 0.5H9M9 0.5V9.5M9 0.5L1.125 8.375" stroke="#151515" />
-                          </svg>
-                        </span>
-                      </Link>
-                    </div> */}
-
-                    {/* <blockquote className="mt-6 line-clamp-4 overflow-hidden  md:text-5xl text-2xl font-extrabold font-manrope leading-[1.2] md:leading-[1.2]">
-                      {`${testimonialItem.excerpt ? testimonialItem.excerpt : "Duis aute irure dolor in reprehenderit in voluptate pariatur."}`}
-                    </blockquote> */}
 
                     
 
                   </div>
                 </div>
-
-                <div className='hidden md:block flex-1 max-w-[411px]'>
+                <div className='rounded-s overflow-hidden hidden md:block flex-1 max-w-[411px]'>
                   {testimonialItem.customer && testimonialItem.customer.picture && (
-                    <Image
-                      src={testimonialItem.customer.picture}
+                    <ImageLoader
+                      image={testimonialItem.customer.picture}
                       alt={testimonialItem.customer.picture.alt || ''}
-                      width={411}
-                      height={414}
-                      className="rounded-lg object-cover"
+                      className=" object-cover md:min-w-[360px] md:h-full min-h-[370px]"
                     />
                   )}
                 </div>
