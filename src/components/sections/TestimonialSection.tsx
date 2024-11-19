@@ -67,7 +67,7 @@ const TestimonialSection = ({ testimonials }: TestimonialSectionProps) => {
                     <ImageLoader
                       image={testimonialItem.customer.picture}
                       alt={testimonialItem.customer.picture.alt || ''}
-                      className=" object-cover md:min-w-[360px] md:h-full min-h-[370px]"
+                      className=" object-cover md:min-w-[390px] md:h-full min-h-[390px]"
                     />
                   )}
                 </div>
