@@ -2,6 +2,7 @@ import '~/styles/global.scss';
 import type { AppProps } from 'next/app';
 import { lazy } from 'react';
 import Head from 'next/head';
+import { orgSchema, siteLinkSchema } from '~/utils/customHead';
 
 export interface SharedPageProps {
   draftMode: boolean;
@@ -24,6 +25,8 @@ export default function App({
         <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
         <title>Dentistry’s Inner Circle</title>
       </Head>
+      {orgSchema()}
+      {siteLinkSchema()}
       {draftMode ? (
         <PreviewProvider token={token}>
           <Component {...pageProps} />
