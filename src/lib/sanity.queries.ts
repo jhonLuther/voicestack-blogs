@@ -81,6 +81,16 @@ const imageFragment = `
     title
   }
 `
+const authorImageFragment = `
+  "picture": picture.asset-> {
+    _id,
+    metadata {
+      dimensions
+    },
+    altText,
+    title
+  }
+`
 
 export const postsQuery = groq`
 *[_type == "post" && defined(slug.current) && defined(date)] | order(date desc) {
@@ -94,7 +104,7 @@ export const postsQuery = groq`
       _id,
       name,
       slug,
-      "picture": picture.asset->url
+      ${authorImageFragment},
   },
   date,
   duration,
@@ -125,7 +135,7 @@ export const testiMonialsQuery = groq`
     name,
     role,
     slug,
-    "picture": picture.asset->url
+    ${authorImageFragment},
   },
     excerpt,
     layoutSwitcher,
@@ -159,7 +169,7 @@ export const homeSettingsQuery = groq`
       slug,
       role,
       bio,
-      "picture": picture.asset->url
+      ${authorImageFragment},
     },
       tags[]->{
         _id,
@@ -177,7 +187,7 @@ export const homeSettingsQuery = groq`
         name,
         role,
         slug,
-        "picture": picture.asset->url
+        ${authorImageFragment},
       },
       excerpt,
       layoutSwitcher,
@@ -261,7 +271,7 @@ export const homeSettingsQuery = groq`
       _id,
       name,
       slug,
-      "picture": picture.asset->url
+      ${authorImageFragment},
     },
     tags[]->{
         _id,
@@ -283,7 +293,7 @@ export const homeSettingsQuery = groq`
       _id,
       name,
       slug,
-      "picture": picture.asset->url
+      ${authorImageFragment},
     },
     tags[]->{
         _id,
@@ -305,7 +315,7 @@ export const homeSettingsQuery = groq`
       _id,
       name,
       slug,
-      "picture": picture.asset->url
+      ${authorImageFragment},
     },
     tags[]->{
         _id,
@@ -327,7 +337,7 @@ export const homeSettingsQuery = groq`
       _id,
       name,
       slug,
-      "picture": picture.asset->url
+      ${authorImageFragment},
     },
     tags[]->{
         _id,
@@ -349,7 +359,7 @@ export const homeSettingsQuery = groq`
       _id,
       name,
       slug,
-      "picture": picture.asset->url
+      ${authorImageFragment},
     },
     tags[]->{
         _id,
@@ -371,7 +381,7 @@ export const homeSettingsQuery = groq`
       _id,
       name,
       slug,
-      "picture": picture.asset->url
+      ${authorImageFragment},
     },
     tags[]->{
         _id,
@@ -388,7 +398,7 @@ export const homeSettingsQuery = groq`
       name,
       role,
       slug,
-      "picture": picture.asset->url
+      ${authorImageFragment},
     },
       excerpt,
       layoutSwitcher,
@@ -422,7 +432,7 @@ export const homeSettingsQuery = groq`
       slug,
       role,
       bio,
-      "picture": picture.asset->url
+      ${authorImageFragment},
     },
     },
   }[0]
@@ -639,7 +649,7 @@ export async function getPostsBySlug(
         slug,
         role,
         bio,
-        "picture": picture.asset->url
+        ${authorImageFragment},
       },
         tags[]->{
         _id,
@@ -668,7 +678,7 @@ export const podcastsQuery = groq`
     role,
     slug,
     bio,
-    "picture": picture.asset->url,
+    ${authorImageFragment},
   },
   tags[]-> {
     _id,
@@ -697,7 +707,7 @@ export const webinarsQuery = groq`
     role,
     slug,
     bio,
-    "picture": picture.asset->url,
+    ${authorImageFragment},
   },
   tags[]-> {
     _id,
@@ -727,7 +737,7 @@ export const ebooksQuery = groq`
     role,
     slug,
     bio,
-    "picture": picture.asset->url,
+    ${authorImageFragment},
   },
   tags[]-> {
     _id,
@@ -759,7 +769,7 @@ export const pressReleasesQuery = groq`
     role,
     slug,
     bio,
-    "picture": picture.asset->url,
+    ${authorImageFragment},
   },
   tags[]-> {
     _id,
@@ -789,7 +799,7 @@ export const artilclesQuery = groq`
     role,
     slug,
     bio,
-    "picture": picture.asset->url,
+    ${authorImageFragment},
   },
   tags[]-> {
     _id,
@@ -821,7 +831,7 @@ export const caseStudiesQuery = groq`
     role,
     slug,
     bio,
-    "picture": picture.asset->url,
+    ${authorImageFragment},
   },
   tags[]-> {
     _id,
@@ -881,7 +891,7 @@ export const postBySlugQuery = groq`
       slug,
       role,
       bio,
-      "picture": picture.asset->url
+      ${authorImageFragment},
     },
     tags[]-> {
       _id,
@@ -897,7 +907,7 @@ export const authorBySlugQuery = groq`
     role,
     slug,
     bio,
-    "picture": picture.asset->url,
+    ${authorImageFragment},
   }
 `
 export const testiMonialBySlugQuery = groq`
@@ -952,7 +962,7 @@ export const podcastBySlugQuery = groq`
     slug,
     role,
     bio,
-    "picture": picture.asset->url
+    ${authorImageFragment},
   },
   "tags": tags[]-> {
     _id,
@@ -988,7 +998,7 @@ export const ebookBySlugQuery = groq`
       slug,
       role,
       bio,
-      "picture": picture.asset->url
+      ${authorImageFragment},
     },
     "tags": tags[]-> {
     _id,
@@ -1026,7 +1036,7 @@ export const webinarBySlugQuery = groq`
       slug,
       role,
       bio,
-      "picture": picture.asset->url
+      ${authorImageFragment},
     },
     "tags": tags[]-> {
     _id,
@@ -1062,7 +1072,7 @@ export const pressReleaseBySlugQuery = groq`
       slug,
       role,
       bio,
-      "picture": picture.asset->url
+      ${authorImageFragment},
     },
     "tags": tags[]-> {
     _id,
@@ -1094,7 +1104,7 @@ export const articleBySlugQuery = groq`
       slug,
       role,
       bio,
-      "picture": picture.asset->url
+      ${authorImageFragment},
     },
     "tags": tags[]-> {
     _id,
@@ -1128,7 +1138,7 @@ export const caseStudyBySlugQuery = groq`
       role,
       slug,
       bio,
-      "picture": picture.asset->url,
+      ${authorImageFragment},
     },
     "tags": tags[]-> {
       _id,
