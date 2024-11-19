@@ -13,6 +13,7 @@ import Section from '~/components/Section'
 import { useRef } from 'react'
 import { BaseUrlProvider } from '~/components/Context/UrlContext'
 import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection'
+import ImageLoader from '~/components/commonSections/ImageLoader'
 
 interface Query {
   [key: string]: string
@@ -73,16 +74,13 @@ export default function AuthorPage({
     <Layout >
       <Section className='justify-center'>
         <Wrapper className={`flex-col`}>
-          <div className='flex md:flex-row flex-col gap-8 md:gap-16'>
-            <div>
+          <div className='flex md:flex-row justify-between flex-col gap-8 md:gap-16'>
+            <div className='md:min-w-[360px] md:h-full min-h-[370px]  '>
               {author.picture && (
-                <Image
-                  src={author.picture}
-                  alt={author.name}
-                  width={360}
-                  height={360}
-                  className='rounded-s'
-                />
+                <ImageLoader
+                className='object-cover h-full w-full '
+                image={author.picture}
+              />
               )}
             </div>
             <div className=' flex flex-col gap-6'>
