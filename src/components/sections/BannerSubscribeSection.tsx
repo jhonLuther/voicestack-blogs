@@ -38,7 +38,7 @@ function BannerSubscribeSection({ isSmall }: BannerSubscribeSectionProps) {
         <div className={`bg-white flex gap-3`}>
           <div className='flex flex-col gap-6 flex-1'>
             <div className='flex gap-1 justify-between items-start md:flex-row flex-col'>
-              <H3XL className={`text-zinc-900 md:text-5xl text-2xl font-monrope tracking-[-0.96px] font-manrope font-extrabold`}>Subscribe to<br /> <span className=' bg-gradient-text2 bg-clip-text text-transparent '>Dentistry’s Inner Circle</span></H3XL>
+              <H3XL className={`text-zinc-900 md:text-5xl text-2xl font-monrope tracking-[-0.96px] font-manrope font-extrabold`}>Subscribe to<br /> <span className=' bg-gradient-text2 bg-clip-text text-transparent '>CS GrowthClub</span></H3XL>
               <p className="md:text-lg text-base font-medium md:max-w-[392px] md:self-end text-zinc-700">Get the best, coolest, and latest in the dental industry delivered to your inbox each week.</p>
             </div>
 

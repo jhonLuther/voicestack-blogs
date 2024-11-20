@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Wrapper from './Wrapper';
 import Image from 'next/image';
 import CsLogo from '../assets/carestack-logo-white.svg'
-import Logo from '~/assets/reactiveAssets/Logo';
+import ClubLogo from '~/assets/reactiveAssets/ClubLogo';
 
 const Footer = ({ className }) => {
 
@@ -88,7 +88,7 @@ const Footer = ({ className }) => {
         <div className="flex flex-col md:flex-row items-center md:items-start gap-6 md:gap-12 justify-between">
           <div className='flex flex-col items-center md:items-start'>
             <Link href="/" className="text-[30px] font-extrabold bg-gradient-text bg-clip-text text-transparent font-monrope tracking-tighterText max-w-[170px] leading-[1.16] block">
-            <Logo/>
+            <ClubLogo/>
             </Link>
             
             {/* Social media   */}
