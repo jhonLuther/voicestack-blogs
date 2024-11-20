@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import SearchBar from '~/components/widgets/SearchBar';
 import ProgressBar from '~/utils/progressBar/progressBar';
 import {ArrowRightIcon} from '@sanity/icons'
 import { useRouter } from 'next/router';
-import Logo from '~/assets/reactiveAssets/Logo';
-import {MenuIcon} from '@sanity/icons'
 import {CloseIcon} from '@sanity/icons'
 import useMediaQuery from '~/utils/useMediaQueryHook';
+import ClubLogo from '~/assets/reactiveAssets/ClubLogo';
 
 const navigationLinks = [
   { href: "/case-study", label: "Case Studies" },
@@ -69,9 +67,8 @@ const Header = () => {
             <div className={`flex flex-col gap-3 justify-between py-[10px] transition-all duration-300 ease-linear  ${headerFixed ? '!lg:py-3' : 'lg:py-6'}`}>
               <div className='flex flex-row gap-2 justify-between'>
                 <Link href="/" className="text-2xl font-extrabold bg-gradient-text bg-clip-text text-transparent font-monrope tracking-tighterText">
-                  <Logo/> 
+                  <ClubLogo/> 
                 </Link>
-                {/* <div onClick={toggleMenu} className='flex lg:hidden text-zinc-400'> {showMenu ? <CloseIcon width={40} height={40}/>: <MenuIcon width={40} height={40}/>}</div> */}
                 <div onClick={toggleMenu} className='flex lg:hidden text-zinc-400'> {showMenu ? <CloseIcon width={40} height={40}/>: 
                 <svg width="46" height="41" viewBox="0 0 46 41" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 12.4062H34" stroke="#A1A1AA" strokeWidth="2" strokeLinecap="round"/>
@@ -91,9 +88,6 @@ const Header = () => {
                       </Link>
                     ))}
                   </nav>
-                  {/* <div className=" text-white">
-                    <SearchBar header={true} />
-                  </div> */}
                 </div>
               </div>
             </div>

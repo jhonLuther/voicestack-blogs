@@ -23,7 +23,7 @@ export default function App({
         <link rel="icon" href="/favicon-32x32.png" sizes="32x32" type="image/png" />
         <link rel="icon" href="/favicon-16x16.png" sizes="16x16" type="image/png" />
         <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-        <title>Dentistry’s Inner Circle</title>
+        <title>CS GrowthClub</title>
       </Head>
       {orgSchema()}
       {siteLinkSchema()}
