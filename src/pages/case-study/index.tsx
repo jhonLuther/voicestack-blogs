@@ -86,7 +86,6 @@ const CaseStudiesPage = ({ caseStudies,latestCaseStudies,homeSettings, totalPage
 			/>
       {customMetaTag('caseStudy')}
       <CustomHead props={caseStudies} />
-      {/* <LatestBlogs className={'pt-11 pr-9 pb-16 pl-9'} reverse={true} contents={latestContents} /> */}
       <MainImageSection landing={true} post={heroData}/>
       {caseStudies?.map((e,i) => {
         return <CustomHead props={e} type="caseStudy"  key={i}/>

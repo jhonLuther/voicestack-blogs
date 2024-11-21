@@ -19,17 +19,25 @@ import TagSelect from '~/contentUtils/TagSelector';
 import { mergeAndRemoveDuplicates } from '~/utils/common';
 import { GlobalDataProvider } from '~/components/Context/GlobalDataContext';
 
-export const getStaticProps: GetStaticProps<SharedPageProps & { articles: Articles[]; totalPages: number }> = async (context) => {
+export const getStaticProps: GetStaticProps<SharedPageProps & {}> = async (context) => {
   const draftMode = context.preview || false;
   const client = getClient(draftMode ? { token: readToken } : undefined);
   const itemsPerPage = siteConfig.pagination.childItemsPerPage;
 
-  const articles: any = await getArticles(client, 0, itemsPerPage);
-  const latestArticles: any = await getArticles(client, 0, 5);
   const totalArticles = await getArticlesCount(client);
   const totalPages = Math.ceil(totalArticles / itemsPerPage);
-  const tags = await getTags(client);
-  const homeSettings = await getHomeSettings(client);
+
+  const [
+    articles,
+    latestArticles,
+    tags,
+    homeSettings
+  ] = await Promise.all([
+    getArticles(client, 0, itemsPerPage),
+    getArticles(client, 0, 5),          
+    getTags(client),                    
+    getHomeSettings(client),            
+  ]);
 
 
   return {

@@ -31,27 +31,35 @@ interface Query {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const client = getClient()
   const pageNumber = params?.pageNumber
-    ? parseInt(params.pageNumber as string, 10)
-    : 1
+  ? parseInt(params.pageNumber as string, 10)
+  : 1;
 
-  const cardsPerPage = siteConfig.pagination.childItemsPerPage || 5
-  const startLimit = (pageNumber - 1) * cardsPerPage
+const cardsPerPage = siteConfig.pagination.childItemsPerPage || 5;
+const startLimit = (pageNumber - 1) * cardsPerPage;
 
-  const tags = await getTags(client)
+  const [
+    tags,
+    posts,
+    totalPosts,
+    siteSettings,
+    totalPodcasts,
+    totalWebinars,
+    totalArticles,
+    totalEbooks,
+    homeSettings
+  ] = await Promise.all([
+    getTags(client),                                    
+    getPostsByLimit(client, startLimit, cardsPerPage), 
+    getPosts(client),                                  
+    getSiteSettings(client),                           
+    getPodcastsCount(client),                          
+    getWebinarsCount(client),                          
+    getArticlesCount(client),                          
+    getEbooksCount(client),                            
+    getHomeSettings(client)                           
+  ]);
 
-  const endLimit = startLimit + cardsPerPage
-
-  const posts = await getPostsByLimit(client, startLimit, cardsPerPage)
-  const totalPosts = await getPosts(client)
-  const siteSettings = await getSiteSettings(client)
-
-  const totalPages = Math.ceil(totalPosts.length / cardsPerPage)
-
-  const totalPodcasts = await getPodcastsCount(client)
-  const totalWebinars = await getWebinarsCount(client)
-  const totalArticles = await getArticlesCount(client)
-  const totalEbooks = await getEbooksCount(client)
-  const homeSettings = await getHomeSettings(client);
+  const totalPages = Math.ceil(totalPosts.length / cardsPerPage);
 
   return {
     props: {

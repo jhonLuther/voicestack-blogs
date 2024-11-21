@@ -63,15 +63,7 @@ const ArticlePage = ({ articles,relatedContents, draftMode, token }: Props) => {
   if (!articles) {
     return
   }
- 
-  const seoTitle = articles?.seoTitle || articles?.title;
-  const seoDescription = articles.seoDescription || articles?.excerpt;
-  const seoKeywords = articles.seoKeywords || '';
-  const seoRobots = articles.seoRobots || 'index,follow';
-  const seoCanonical = articles.seoCanonical || `https://carestack.com/articles/${articles.slug.current}`;
-  const jsonLD: any = generateJSONLD(articles);
-
-  
+   
 
   return (
     <>

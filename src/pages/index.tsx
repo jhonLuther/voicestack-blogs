@@ -33,19 +33,28 @@ export const getStaticProps: GetStaticProps<SharedPageProps & { posts: Post[] }>
   const client = getClient(draftMode ? { token: readToken } : undefined);
 
   try {
-    const latestPosts = await getPosts(client, 4);
-    const posts = await getPosts(client);
-    const tags = await getTags(client);
-    const tagsByOrder = await getTagsByOrder(client);
-    const testimonials = await getTestiMonials(client);
-    const homeSettings = await getHomeSettings(client);
-    const siteSettings = await getSiteSettings(client);
-    const ebooks: any = await getEbooks(client);
-    const webinars: any = await getWebinars(client);
+    const [
+      latestPosts,
+      posts,
+      tags,
+      tagsByOrder,
+      testimonials,
+      homeSettings,
+      siteSettings,
+      ebooks,
+      webinars,
+    ] = await Promise.all([
+      getPosts(client, 4),
+      getPosts(client),
+      getTags(client),
+      getTagsByOrder(client),
+      getTestiMonials(client),
+      getHomeSettings(client),
+      getSiteSettings(client),
+      getEbooks(client),
+      getWebinars(client),
+    ]);
     
-
-
-
     return {
       props: {
         draftMode,

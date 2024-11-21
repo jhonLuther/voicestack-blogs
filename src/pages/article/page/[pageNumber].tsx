@@ -28,36 +28,54 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps<
-  SharedPageProps & { articles: Articles[]; pageNumber: number; totalPages: number }
+  SharedPageProps & {}
 > = async (context) => {
   const draftMode = context.preview || false;
   const client = getClient(draftMode ? { token: readToken } : undefined);
-
 
   const pageNumber = Number(context.params?.pageNumber) || 1;
   const itemsPerPage = siteConfig.pagination.childItemsPerPage;
   const skip = (pageNumber - 1) * itemsPerPage;
 
-  const articles: any = await getArticles(client, skip, itemsPerPage);
-  const totalArticles = await getArticlesCount(client);
-  const totalPages = Math.ceil(totalArticles / itemsPerPage);
-  const tags = await getTags(client);
-  const homeSettings = await getHomeSettings(client);
+  try {
+    const [articles, totalArticles, tags, homeSettings] = await Promise.all([
+      getArticles(client, skip, itemsPerPage),
+      getArticlesCount(client),
+      getTags(client),
+      getHomeSettings(client),
+    ]);
 
-  return {
-    props: {
-      draftMode,
-      token: draftMode ? readToken : '',
-      articles,
-      pageNumber,
-      totalPages,
-      tags,
-      homeSettings
-    },
-  };
+    const totalPages = Math.ceil(totalArticles / itemsPerPage);
+
+    return {
+      props: {
+        draftMode,
+        token: draftMode ? readToken : '',
+        articles,
+        pageNumber,
+        totalPages,
+        tags,
+        homeSettings
+      },
+    };
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    return {
+      props: {
+        draftMode,
+        token: draftMode ? readToken : '',
+        articles: [],
+        pageNumber: 1,
+        totalPages: 1,
+        tags: [],
+        homeSettings: []
+      },
+    };
+
+  }
 };
 
-const PaginatedArticlesPage = ({ articles,tags,homeSettings, pageNumber, totalPages }: { articles: Articles[];tags: any;homeSettings: any; pageNumber: number; totalPages: number }) => {
+const PaginatedArticlesPage = ({ articles, tags, homeSettings, pageNumber, totalPages }: { articles: Articles[]; tags: any; homeSettings: any; pageNumber: number; totalPages: number }) => {
   const router = useRouter();
   const baseUrl = useRef(`/${siteConfig.pageURLs.article}`).current;
 
@@ -71,30 +89,30 @@ const PaginatedArticlesPage = ({ articles,tags,homeSettings, pageNumber, totalPa
 
   return (
     <GlobalDataProvider data={tags} featuredTags={homeSettings.featuredTags} >
-    <BaseUrlProvider baseUrl={baseUrl}>
-      <Layout>
-        {articles?.map((e,i) => {
-          return <CustomHead props={e} key={i} type="articleExpanded" />
-        })}
-        <AllcontentSection
-          className={'pb-9'}
-          allContent={articles}
-          cardType="left-image-card"
-          itemsPerPage={siteConfig.pagination.childItemsPerPage}
-          contentType='article'
-          showCount={true}
-        />
-        <Pagination
-          totalPages={totalPages}
-          currentPage={pageNumber}
-          onPageChange={handlePageChange}
-          enablePageSlug={true}
-          content={articles}
-          type='custom'
-        />
-        <BannerSubscribeSection />
-      </Layout>
-    </BaseUrlProvider>
+      <BaseUrlProvider baseUrl={baseUrl}>
+        <Layout>
+          {articles?.map((e, i) => {
+            return <CustomHead props={e} key={i} type="articleExpanded" />
+          })}
+          <AllcontentSection
+            className={'pb-9'}
+            allContent={articles}
+            cardType="left-image-card"
+            itemsPerPage={siteConfig.pagination.childItemsPerPage}
+            contentType='article'
+            showCount={true}
+          />
+          <Pagination
+            totalPages={totalPages}
+            currentPage={pageNumber}
+            onPageChange={handlePageChange}
+            enablePageSlug={true}
+            content={articles}
+            type='custom'
+          />
+          <BannerSubscribeSection />
+        </Layout>
+      </BaseUrlProvider>
     </GlobalDataProvider>
   )
 };
