@@ -4,7 +4,7 @@ import Layout from '~/components/Layout';
 import Wrapper from '~/layout/Wrapper';
 import AllcontentSection from '~/components/sections/AllcontentSection';
 import { getClient } from '~/lib/sanity.client';
-import { getArticles, getArticlesCount, getCaseStudies, getCaseStudiesCount, getEbooks, getEbooksCount, getPodcasts, getPodcastsCount } from '~/lib/sanity.queries';
+import { getArticles, getArticlesCount, getCaseStudies, getCaseStudiesCount, getEbooks, getEbooksCount, getHomeSettings, getPodcasts, getPodcastsCount, getTags } from '~/lib/sanity.queries';
 import { readToken } from '~/lib/sanity.api';
 import { SharedPageProps } from '../../_app';
 import { Articles, CaseStudies, Ebooks, Podcasts } from '~/interfaces/post';
@@ -13,6 +13,7 @@ import React, { useRef } from 'react';
 import Pagination from '~/components/commonSections/Pagination';
 import { BaseUrlProvider } from '~/components/Context/UrlContext';
 import { CustomHead } from '~/utils/customHead';
+import { GlobalDataProvider } from '~/components/Context/GlobalDataContext';
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const client = getClient();
@@ -40,6 +41,9 @@ export const getStaticProps: GetStaticProps<
   const podcasts: any = await getPodcasts(client, skip, itemsPerPage);
   const totalPodcasts = await getPodcastsCount(client);
   const totalPages = Math.ceil(totalPodcasts / itemsPerPage);
+  const tags = await getTags(client);
+  const homeSettings = await getHomeSettings(client);
+
   return {
     props: {
       draftMode,
@@ -47,11 +51,13 @@ export const getStaticProps: GetStaticProps<
       podcasts,
       pageNumber,
       totalPages,
+      tags,
+      homeSettings
     },
   };
 };
 
-const PaginatedEbookPage = ({ podcasts, pageNumber, totalPages }: { podcasts: Podcasts[]; pageNumber: number; totalPages: number }) => {
+const PaginatedEbookPage = ({ podcasts,tags, pageNumber,homeSettings, totalPages }: { podcasts: Podcasts[];tags: any;homeSettings: any; pageNumber: number; totalPages: number }) => {
   const router = useRouter();
   const baseUrl = useRef(`/${siteConfig.pageURLs.podcast}`).current;
 
@@ -64,6 +70,7 @@ const PaginatedEbookPage = ({ podcasts, pageNumber, totalPages }: { podcasts: Po
   };
 
   return (
+    <GlobalDataProvider data={tags} featuredTags={homeSettings?.featuredTags}>
     <BaseUrlProvider baseUrl={baseUrl}>
     <Layout>
       {podcasts?.map((e,i)=>{return(<CustomHead props={e} key={i} type="podcast"/>)})}
@@ -86,6 +93,7 @@ const PaginatedEbookPage = ({ podcasts, pageNumber, totalPages }: { podcasts: Po
         />
     </Layout>
     </BaseUrlProvider>
+    </GlobalDataProvider>
   );
 };
 

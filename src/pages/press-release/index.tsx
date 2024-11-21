@@ -16,6 +16,7 @@ import { BaseUrlProvider } from '~/components/Context/UrlContext';
 import {customMetaTag, CustomHead} from '~/utils/customHead';
 import TagSelect from '~/contentUtils/TagSelector';
 import { mergeAndRemoveDuplicates } from '~/utils/common';
+import { GlobalDataProvider } from '~/components/Context/GlobalDataContext';
 
 export const getStaticProps: GetStaticProps<SharedPageProps & { pressReleases: PressRelease[]; totalPages: number }> = async (context) => {
   const draftMode = context.preview || false;
@@ -61,6 +62,7 @@ const PressReleasePage = ({ pressReleases,latestPressReleases,totalPages,tags,ho
   };
 
   return (
+    <GlobalDataProvider data={tags} featuredTags={homeSettings?.featuredTags}>
     <BaseUrlProvider baseUrl={baseUrl}>
       {pressReleases?.map((e,i)=>{
         return (<CustomHead props={e} type="pressRelease" key={i}/>)
@@ -90,7 +92,7 @@ const PressReleasePage = ({ pressReleases,latestPressReleases,totalPages,tags,ho
         <BannerSubscribeSection />
       </Layout>
       </BaseUrlProvider>
-
+      </GlobalDataProvider>
   );
 };
 

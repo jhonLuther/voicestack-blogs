@@ -19,6 +19,7 @@ import ReviewsGrid from '~/components/sections/ReviewCards';
 import TagSelect from '~/contentUtils/TagSelector';
 import MainImageSection from '~/components/MainImageSection';
 import { mergeAndRemoveDuplicates, mergeReviews } from '~/utils/common';
+import { GlobalDataProvider } from '~/components/Context/GlobalDataContext';
 
 export const getStaticProps: GetStaticProps<SharedPageProps & { caseStudies: CaseStudies[]; totalPages: number }> = async (context) => {
   const draftMode = context.preview || false;
@@ -75,6 +76,7 @@ const CaseStudiesPage = ({ caseStudies,latestCaseStudies,homeSettings, totalPage
   
 
   return (
+    <GlobalDataProvider data={tags} featuredTags={homeSettings.featuredTags}>
     <BaseUrlProvider baseUrl={baseUrl}>
     <Layout>
     <TagSelect
@@ -107,8 +109,7 @@ const CaseStudiesPage = ({ caseStudies,latestCaseStudies,homeSettings, totalPage
         <BannerSubscribeSection />
     </Layout>
     </BaseUrlProvider>
-
-    
+    </GlobalDataProvider> 
   )
 };
 

@@ -20,6 +20,16 @@ export default {
   ],
   fields: [
     {
+      name: 'featuredTags',
+      title: 'Featured Tags ',
+      type: 'array',
+      of: [{
+        type: 'reference',
+        to: [{ type: 'tag' }],
+      }],
+      group: 'popularBlogs'
+    },
+    {
       name: 'testimonial',  
       title: 'Testimonials',
       type: 'array',

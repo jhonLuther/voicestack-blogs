@@ -3,7 +3,7 @@ import type { GetStaticProps, InferGetStaticPropsType } from 'next';
 import Layout from '~/components/Layout';
 import Section from '~/components/Section';
 import { readToken } from '~/lib/sanity.api';
-import { getEbooks, getHomeSettings, getPosts, getSiteSettings, getTags, getTestiMonials, getWebinars } from '~/lib/sanity.queries';
+import { getEbooks, getHomeSettings, getPosts, getSiteSettings, getTags, getTagsByOrder, getTestiMonials, getWebinars } from '~/lib/sanity.queries';
 import type { SharedPageProps } from '~/pages/_app';
 import { Post } from '~/interfaces/post';
 import { getClient } from '~/lib/sanity.client';
@@ -11,8 +11,10 @@ import DynamicPages from '~/layout/DynamicPages'
 import { indexPageJsonLd } from '~/utils/generateJSONLD'
 import Head from 'next/head'
 import { defaultMetaTag } from '~/utils/customHead';
+import { GlobalDataProvider } from '~/components/Context/GlobalDataContext';
 
 interface IndexPageProps {
+  tagsByOrder: any;
   webinars: any;
   ebooks: any;
   siteSettings: any;
@@ -24,7 +26,7 @@ interface IndexPageProps {
   posts: Array<Post>;
   tags: Array<any>;
   testimonials: Array<any>;
-  homeSettings: Array<any>;
+  homeSettings: any;
 }
 
 export const getStaticProps: GetStaticProps<SharedPageProps & { posts: Post[] }> = async ({ draftMode = false }) => {
@@ -34,6 +36,7 @@ export const getStaticProps: GetStaticProps<SharedPageProps & { posts: Post[] }>
     const latestPosts = await getPosts(client, 4);
     const posts = await getPosts(client);
     const tags = await getTags(client);
+    const tagsByOrder = await getTagsByOrder(client);
     const testimonials = await getTestiMonials(client);
     const homeSettings = await getHomeSettings(client);
     const siteSettings = await getSiteSettings(client);
@@ -50,6 +53,7 @@ export const getStaticProps: GetStaticProps<SharedPageProps & { posts: Post[] }>
         posts,
         latestPosts,
         tags,
+        tagsByOrder,
         testimonials,
         homeSettings,
         siteSettings,
@@ -80,12 +84,16 @@ export default function IndexPage(props: IndexPageProps) {
   const homeSettings = props?.homeSettings;
   const latestPosts = props?.latestPosts;
   const siteSettings = props?.siteSettings;
+
+  console.log(props,'props');
+  
   
   return (
-    <Layout>
+    <GlobalDataProvider data={props?.tags} featuredTags={homeSettings.featuredTags} >
+    <Layout   >
       {siteSettings?.map((e: any) => {
         return defaultMetaTag(e)
-      })}
+    })}
       <Head>
         <script type="application/ld+json">
           {JSON.stringify(indexPageJsonLd(props))}
@@ -102,5 +110,6 @@ export default function IndexPage(props: IndexPageProps) {
         webinars={props?.webinars}
       />
     </Layout>
+    </GlobalDataProvider>
   )
 }

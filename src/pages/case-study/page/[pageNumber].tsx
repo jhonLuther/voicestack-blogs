@@ -4,7 +4,7 @@ import Layout from '~/components/Layout';
 import Wrapper from '~/layout/Wrapper';
 import AllcontentSection from '~/components/sections/AllcontentSection';
 import { getClient } from '~/lib/sanity.client';
-import { getArticles, getArticlesCount, getCaseStudies, getCaseStudiesCount } from '~/lib/sanity.queries';
+import { getArticles, getArticlesCount, getCaseStudies, getCaseStudiesCount, getHomeSettings, getTags } from '~/lib/sanity.queries';
 import { readToken } from '~/lib/sanity.api';
 import { SharedPageProps } from '../../_app';
 import { Articles, CaseStudies } from '~/interfaces/post';
@@ -14,6 +14,7 @@ import Pagination from '~/components/commonSections/Pagination';
 import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection';
 import { BaseUrlProvider } from '~/components/Context/UrlContext';
 import { CustomHead } from '~/utils/customHead';
+import { GlobalDataProvider } from '~/components/Context/GlobalDataContext';
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const client = getClient();
@@ -41,6 +42,10 @@ export const getStaticProps: GetStaticProps<
   const caseStudies: any = await getCaseStudies(client, skip, itemsPerPage);
   const totalCaseStudies = await getCaseStudiesCount(client);
   const totalPages = Math.ceil(totalCaseStudies / itemsPerPage);
+  const tags = await getTags(client);
+  const homeSettings = await getHomeSettings(client);
+
+
   return {
     props: {
       draftMode,
@@ -48,11 +53,13 @@ export const getStaticProps: GetStaticProps<
       caseStudies,
       pageNumber,
       totalPages,
+      tags,
+      homeSettings
     },
   };
 };
 
-const PaginatedCaseStudyPage = ({ caseStudies, pageNumber, totalPages }: { caseStudies: CaseStudies[]; pageNumber: number; totalPages: number }) => {
+const PaginatedCaseStudyPage = ({ caseStudies,tags,homeSettings, pageNumber, totalPages }: { caseStudies: CaseStudies[]; tags: any;homeSettings: any; pageNumber: number; totalPages: number }) => {
   const router = useRouter();
   const baseUrl = useRef(`/${siteConfig.pageURLs.caseStudy}`).current;
 
@@ -65,6 +72,7 @@ const PaginatedCaseStudyPage = ({ caseStudies, pageNumber, totalPages }: { caseS
   };
 
   return (
+    <GlobalDataProvider data={tags} featuredTags={homeSettings?.featuredTags}>
     <BaseUrlProvider baseUrl={baseUrl}>
       <Layout>
         {caseStudies?.map((e,i) => {
@@ -90,6 +98,7 @@ const PaginatedCaseStudyPage = ({ caseStudies, pageNumber, totalPages }: { caseS
         <BannerSubscribeSection />
       </Layout>
     </BaseUrlProvider>
+    </GlobalDataProvider>
   )
 };
 

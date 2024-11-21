@@ -10,10 +10,11 @@ import { Articles, CaseStudies, Ebooks, Podcasts, PressRelease } from '~/interfa
 import siteConfig from '../../../../config/siteConfig';
 import React, { useRef } from 'react';
 import Pagination from '~/components/commonSections/Pagination';
-import { getPressReleases, getPressReleasesCount } from '~/lib/sanity.queries';
+import { getHomeSettings, getPressReleases, getPressReleasesCount, getTags } from '~/lib/sanity.queries';
 import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection';
 import { BaseUrlProvider } from '~/components/Context/UrlContext';
 import { CustomHead } from '~/utils/customHead';
+import { GlobalDataProvider } from '~/components/Context/GlobalDataContext';
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const client = getClient();
@@ -41,6 +42,9 @@ export const getStaticProps: GetStaticProps<
   const pressReleases: any = await getPressReleases(client, skip, itemsPerPage);
   const totalPressReleases = await getPressReleasesCount(client);
   const totalPages = Math.ceil(totalPressReleases / itemsPerPage);
+  const tags = await getTags(client);
+  const homeSettings = await getHomeSettings(client);
+
   return {
     props: {
       draftMode,
@@ -48,11 +52,13 @@ export const getStaticProps: GetStaticProps<
       pressReleases,
       pageNumber,
       totalPages,
+      tags,
+      homeSettings
     },
   };
 };
 
-const PaginatedPressReleasePage = ({ pressReleases, pageNumber, totalPages }: { pressReleases: Podcasts[]; pageNumber: number; totalPages: number }) => {
+const PaginatedPressReleasePage = ({ pressReleases,tags,homeSettings, pageNumber, totalPages }: { pressReleases: Podcasts[];tags?: any;homeSettings?: any; pageNumber: number; totalPages: number }) => {
   const router = useRouter();
   const baseUrl = useRef(`/${siteConfig.pageURLs.pressRelease}`).current;
 
@@ -65,6 +71,7 @@ const PaginatedPressReleasePage = ({ pressReleases, pageNumber, totalPages }: { 
   };
 
   return (
+    <GlobalDataProvider data={tags} featuredTags={homeSettings?.featuredTags}>
     <BaseUrlProvider baseUrl={baseUrl}>
       <Layout>
         {pressReleases?.map((e,i) => {
@@ -90,7 +97,7 @@ const PaginatedPressReleasePage = ({ pressReleases, pageNumber, totalPages }: { 
         <BannerSubscribeSection />
     </Layout>
     </BaseUrlProvider>
-
+    </GlobalDataProvider>
   );
 };
 

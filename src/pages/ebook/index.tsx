@@ -17,6 +17,7 @@ import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection
 import { BaseUrlProvider } from '~/components/Context/UrlContext';
 import TagSelect from '~/contentUtils/TagSelector';
 import { mergeAndRemoveDuplicates } from '~/utils/common';
+import { GlobalDataProvider } from '~/components/Context/GlobalDataContext';
 
 export const getStaticProps: GetStaticProps<SharedPageProps & { ebooks: Ebooks[]; totalPages: number }> = async (context) => {
   const draftMode = context.preview || false;
@@ -62,6 +63,7 @@ const EbooksPage = ({ ebooks, latestEbooks, totalPages,tags,homeSettings }: { eb
   };
 
   return (
+    <GlobalDataProvider data={tags} featuredTags={homeSettings.featuredTags}>
     <BaseUrlProvider baseUrl={baseUrl}>
       <Layout>
         {ebooks?.map((e, i) => {
@@ -95,6 +97,7 @@ const EbooksPage = ({ ebooks, latestEbooks, totalPages,tags,homeSettings }: { eb
         <BannerSubscribeSection />
       </Layout>
     </BaseUrlProvider>
+    </GlobalDataProvider>
   );
 };
 

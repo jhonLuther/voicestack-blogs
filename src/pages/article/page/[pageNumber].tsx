@@ -1,19 +1,19 @@
 import { GetStaticProps, GetStaticPaths } from 'next';
 import { useRouter } from 'next/router';
 import Layout from '~/components/Layout';
-import Wrapper from '~/layout/Wrapper';
 import AllcontentSection from '~/components/sections/AllcontentSection';
 import { getClient } from '~/lib/sanity.client';
-import { getArticles, getArticlesCount } from '~/lib/sanity.queries';
+import { getArticles, getArticlesCount, getHomeSettings, getTags } from '~/lib/sanity.queries';
 import { readToken } from '~/lib/sanity.api';
 import { SharedPageProps } from '../../_app';
 import { Articles } from '~/interfaces/post';
 import siteConfig from '../../../../config/siteConfig';
-import React, { useRef } from 'react';
+import React, { useContext, useRef } from 'react';
 import Pagination from '~/components/commonSections/Pagination';
 import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection';
 import { BaseUrlProvider } from '~/components/Context/UrlContext';
 import { CustomHead } from '~/utils/customHead';
+import { GlobalDataProvider } from '~/components/Context/GlobalDataContext';
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const client = getClient();
@@ -41,6 +41,9 @@ export const getStaticProps: GetStaticProps<
   const articles: any = await getArticles(client, skip, itemsPerPage);
   const totalArticles = await getArticlesCount(client);
   const totalPages = Math.ceil(totalArticles / itemsPerPage);
+  const tags = await getTags(client);
+  const homeSettings = await getHomeSettings(client);
+
   return {
     props: {
       draftMode,
@@ -48,11 +51,13 @@ export const getStaticProps: GetStaticProps<
       articles,
       pageNumber,
       totalPages,
+      tags,
+      homeSettings
     },
   };
 };
 
-const PaginatedArticlesPage = ({ articles, pageNumber, totalPages }: { articles: Articles[]; pageNumber: number; totalPages: number }) => {
+const PaginatedArticlesPage = ({ articles,tags,homeSettings, pageNumber, totalPages }: { articles: Articles[];tags: any;homeSettings: any; pageNumber: number; totalPages: number }) => {
   const router = useRouter();
   const baseUrl = useRef(`/${siteConfig.pageURLs.article}`).current;
 
@@ -65,6 +70,7 @@ const PaginatedArticlesPage = ({ articles, pageNumber, totalPages }: { articles:
   };
 
   return (
+    <GlobalDataProvider data={tags} featuredTags={homeSettings.featuredTags} >
     <BaseUrlProvider baseUrl={baseUrl}>
       <Layout>
         {articles?.map((e,i) => {
@@ -89,6 +95,7 @@ const PaginatedArticlesPage = ({ articles, pageNumber, totalPages }: { articles:
         <BannerSubscribeSection />
       </Layout>
     </BaseUrlProvider>
+    </GlobalDataProvider>
   )
 };
 

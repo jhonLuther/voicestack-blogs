@@ -4,7 +4,7 @@ import Layout from '~/components/Layout';
 import Wrapper from '~/layout/Wrapper';
 import AllcontentSection from '~/components/sections/AllcontentSection';
 import { getClient } from '~/lib/sanity.client';
-import { getArticles, getArticlesCount, getCaseStudies, getCaseStudiesCount, getEbooks, getEbooksCount } from '~/lib/sanity.queries';
+import { getArticles, getArticlesCount, getCaseStudies, getCaseStudiesCount, getEbooks, getEbooksCount, getHomeSettings, getTags } from '~/lib/sanity.queries';
 import { readToken } from '~/lib/sanity.api';
 import { SharedPageProps } from '../../_app';
 import { Articles, CaseStudies, Ebooks } from '~/interfaces/post';
@@ -14,6 +14,7 @@ import Pagination from '~/components/commonSections/Pagination';
 import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection';
 import { BaseUrlProvider } from '~/components/Context/UrlContext';
 import { CustomHead } from '~/utils/customHead';
+import { GlobalDataProvider } from '~/components/Context/GlobalDataContext';
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const client = getClient();
@@ -41,6 +42,10 @@ export const getStaticProps: GetStaticProps<
   const ebooks: any = await getEbooks(client, skip, itemsPerPage);
   const totalEbooks = await getEbooksCount(client);
   const totalPages = Math.ceil(totalEbooks / itemsPerPage);
+  const tags = await getTags(client);
+  const homeSettings = await getHomeSettings(client);
+
+
   return {
     props: {
       draftMode,
@@ -48,11 +53,13 @@ export const getStaticProps: GetStaticProps<
       ebooks,
       pageNumber,
       totalPages,
+      homeSettings,
+      tags
     },
   };
 };
 
-const PaginatedEbookPage = ({ ebooks, pageNumber, totalPages }: { ebooks: Ebooks[]; pageNumber: number; totalPages: number }) => {
+const PaginatedEbookPage = ({ ebooks,tags,homeSettings, pageNumber, totalPages }: { ebooks: Ebooks[];tags: any; pageNumber: number;homeSettings: any; totalPages: number }) => {
   const router = useRouter();
   const baseUrl = useRef(`/${siteConfig.pageURLs.ebook}`).current;
 
@@ -65,6 +72,7 @@ const PaginatedEbookPage = ({ ebooks, pageNumber, totalPages }: { ebooks: Ebooks
   };
 
   return (
+    <GlobalDataProvider data={tags} featuredTags={homeSettings.featuredTags}>
     <BaseUrlProvider baseUrl={baseUrl}>
       <Layout>
         {ebooks?.map((e,i) => {
@@ -90,6 +98,7 @@ const PaginatedEbookPage = ({ ebooks, pageNumber, totalPages }: { ebooks: Ebooks
         <BannerSubscribeSection />
       </Layout>
     </BaseUrlProvider>
+    </GlobalDataProvider>
   )
 };
 

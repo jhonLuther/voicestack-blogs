@@ -1,5 +1,5 @@
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
-import { getTag, getPostsByTag, tagsSlugsQuery, getTags, getPostsByTagAndLimit, getWebinarsCount, getArticlesCount, getEbooksCount, getPodcastsCount } from '~/lib/sanity.queries'
+import { getTag, getPostsByTag, tagsSlugsQuery, getTags, getPostsByTagAndLimit, getWebinarsCount, getArticlesCount, getEbooksCount, getPodcastsCount, getHomeSettings } from '~/lib/sanity.queries'
 import { getClient } from '~/lib/sanity.client'
 import { SharedPageProps } from '../../../_app'
 import siteConfig from 'config/siteConfig'
@@ -13,6 +13,7 @@ import ContentHub from '~/contentUtils/ContentHub'
 import { useRef } from 'react'
 import { BaseUrlProvider } from '~/components/Context/UrlContext'
 import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection'
+import { GlobalDataProvider } from '~/components/Context/GlobalDataContext'
 
 export const getStaticProps: GetStaticProps<
   SharedPageProps & {
@@ -23,6 +24,7 @@ export const getStaticProps: GetStaticProps<
     currentPage: number;
     contentCount:any
     totalPostCount: any[];
+    homeSettings: any;
   }
 > = async ({ params }) => {
   const client = getClient();
@@ -51,6 +53,7 @@ export const getStaticProps: GetStaticProps<
 	const totalWebinars = await getWebinarsCount(client);
 	const totalArticles = await getArticlesCount(client);
 	const totalEbooks = await getEbooksCount(client);
+  const homeSettings = await getHomeSettings(client);
 
   return {
     props: {
@@ -62,6 +65,7 @@ export const getStaticProps: GetStaticProps<
       currentPage: pageNumber,
       draftMode: false, 
       token: null,  
+      homeSettings,
       contentCount:{
 				podcasts: totalPodcasts,
 				webinars: totalWebinars,
@@ -101,7 +105,8 @@ export default function TagPagePaginated({
   totalPages,
   currentPage,
   contentCount,
-  totalPostCount
+  totalPostCount,
+  homeSettings
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const handlePageChange = (page: number) => {
     console.log(`Navigating to page: ${page}`)
@@ -111,6 +116,7 @@ export default function TagPagePaginated({
 
 
   return (
+    <GlobalDataProvider data={allTags} featuredTags={homeSettings.featuredTags}>
     <BaseUrlProvider baseUrl={baseUrl}>
     <Layout>
         <ContentHub contentCount={contentCount}/>
@@ -132,5 +138,6 @@ export default function TagPagePaginated({
         <BannerSubscribeSection />
     </Layout>
     </BaseUrlProvider>
+    </GlobalDataProvider>
   )
 }

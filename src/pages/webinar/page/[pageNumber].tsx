@@ -10,10 +10,11 @@ import { Webinars } from '~/interfaces/post';
 import siteConfig from '../../../../config/siteConfig';
 import React, { useRef } from 'react';
 import Pagination from '~/components/commonSections/Pagination';
-import {getWebinars, getWebinarsCount} from '~/lib/sanity.queries';
+import {getHomeSettings, getTags, getWebinars, getWebinarsCount} from '~/lib/sanity.queries';
 import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection';
 import { BaseUrlProvider } from '~/components/Context/UrlContext';
 import { CustomHead } from '~/utils/customHead';
+import { GlobalDataProvider } from '~/components/Context/GlobalDataContext';
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const client = getClient();
@@ -41,6 +42,9 @@ export const getStaticProps: GetStaticProps<
   const webinars: any = await getWebinars(client, skip, itemsPerPage);
   const totalWebinars = await getWebinarsCount(client);
   const totalPages = Math.ceil(totalWebinars / itemsPerPage);
+  const tags = await getTags(client);
+  const homeSettings = await getHomeSettings(client);
+
   return {
     props: {
       draftMode,
@@ -48,11 +52,13 @@ export const getStaticProps: GetStaticProps<
       webinars,
       pageNumber,
       totalPages,
+      tags,
+      homeSettings
     },
   };
 };
 
-const PaginatedWebinarsPage = ({ webinars, pageNumber, totalPages }: { webinars: Webinars[]; pageNumber: number; totalPages: number }) => {
+const PaginatedWebinarsPage = ({ webinars,tags,homeSettings, pageNumber, totalPages }: { webinars: Webinars[];tags: any;homeSettings: any; pageNumber: number; totalPages: number }) => {
   const router = useRouter();
   const baseUrl = useRef(`/${siteConfig.pageURLs.webinar}`).current;
 
@@ -65,6 +71,7 @@ const PaginatedWebinarsPage = ({ webinars, pageNumber, totalPages }: { webinars:
   };
 
   return (
+    <GlobalDataProvider data={tags} featuredTags={homeSettings.featuredTags}>
     <BaseUrlProvider baseUrl={baseUrl}>
       <Layout>
         {webinars?.map((e,i) => {
@@ -88,7 +95,7 @@ const PaginatedWebinarsPage = ({ webinars, pageNumber, totalPages }: { webinars:
         <BannerSubscribeSection />
     </Layout>
     </BaseUrlProvider>
-
+    </GlobalDataProvider>
   );
 };
 

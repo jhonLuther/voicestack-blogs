@@ -17,6 +17,7 @@ import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection
 import { BaseUrlProvider } from '~/components/Context/UrlContext';
 import TagSelect from '~/contentUtils/TagSelector';
 import { mergeAndRemoveDuplicates } from '~/utils/common';
+import { GlobalDataProvider } from '~/components/Context/GlobalDataContext';
 
 export const getStaticProps: GetStaticProps<SharedPageProps & { podcasts: Podcasts[]; totalPages: number }> = async (context) => {
   const draftMode = context.preview || false;
@@ -60,6 +61,7 @@ const PodcastsPage = ({ podcasts,latestPodcasts, totalPages,tags,homeSettings }:
   };
 
   return (
+    <GlobalDataProvider data={tags} featuredTags={homeSettings.featuredTags}>
     <BaseUrlProvider baseUrl={baseUrl}>
     <Layout>
       <CustomHead props ={podcasts} type="podcast"/>
@@ -87,6 +89,7 @@ const PodcastsPage = ({ podcasts,latestPodcasts, totalPages,tags,homeSettings }:
         <BannerSubscribeSection />
       </Layout>
     </BaseUrlProvider>
+    </GlobalDataProvider>
   )
 };
 

@@ -122,8 +122,9 @@ export const iframesQuery = groq`*[_type == "iframes" && defined(slug.current)] 
 
 export const authorsQuery = groq`*[_type == "author" && defined(slug.current)] | order(date desc)`
 
-export const tagsQuery = groq`*[_type == "tag"]`
+export const tagsQuery = groq`*[_type == "tag"]  | order(tagName asc)`
 
+export const tagsByOrderQuery = groq`*[_type == "tag"] | order(tagName asc) {_id, slug, tagName}`;
 // combined query testimonials with associated customer names
 export const testiMonialsQuery = groq`
   *[_type == "testimonial" && defined(slug.current)] | order(date desc) {
@@ -197,7 +198,11 @@ export const homeSettingsQuery = groq`
       rating,
       date
     },
-
+    featuredTags[]->{
+      _id,
+      slug,
+      tagName
+    },
     popularBlogs[]->{
       _id,
       slug,
@@ -475,6 +480,9 @@ export async function getAuthors(client: SanityClient): Promise<Author[]> {
 }
 export async function getTags(client: SanityClient): Promise<Tag[]> {
   return await client.fetch(tagsQuery)
+}
+export async function getTagsByOrder(client: SanityClient): Promise<Tag[]> {
+  return await client.fetch(tagsByOrderQuery)
 }
 
 export async function getPostsByTagAndLimit(
