@@ -32,9 +32,14 @@ export default {
       group: 'popularBlogs',
       validation: (rule) => rule.max(5).unique(),
     },
-
-    
-    
+    {
+      name: 'featuredEvent',
+      description:'This Event Will be featured in the Home Page',
+      title: 'Featured Event',
+      type: 'reference',
+      to: [{ type: 'eventCard' }],
+      group: 'popularBlogs',
+    },
     {
       name: 'testimonial',  
       title: 'Testimonials',
