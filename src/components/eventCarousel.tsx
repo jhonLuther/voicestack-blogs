@@ -16,7 +16,6 @@ import { formatDateShort } from '~/utils/formateDate';
 import Button from './commonSections/Button';
 
 const EventCarousel = ({ allEventCards }: { allEventCards?: any; homeSettings?: any }) => {
-  if(!allEventCards) return null
   const swiperRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -26,19 +25,17 @@ const EventCarousel = ({ allEventCards }: { allEventCards?: any; homeSettings?: 
     }
   }, [swiperRef]);
 
-  const router = useRouter();
-  console.log(allEventCards);
-
+  if(!allEventCards) return null
 
   return (
-    <Section className='justify-center bg-zinc-900 !p-0'>
+    <Section className='justify-center bg-zinc-900 md:!p-0'>
       <Wrapper className='w-full relative h-[200px] '>
         <Swiper
           className='w-full h-full'
           modules={[Navigation, Pagination, EffectFade]}
           effect={'fade'}
           direction={'vertical'}
-          fadeEffect={{
+        fadeEffect={{
             crossFade: true
           }}
           speed={800}
@@ -88,7 +85,6 @@ const EventCarousel = ({ allEventCards }: { allEventCards?: any; homeSettings?: 
                       {events.eventLocation}
                       </span>
                       </div>
-             
                       </div>
                       <div>
                         <div className='self-start md:self-center flex justify-center'>

@@ -1,7 +1,7 @@
 import { GetStaticProps, GetStaticPaths } from 'next';
 import { useRouter } from 'next/router';
 import { getClient } from '~/lib/sanity.client';
-import { getAllPodcastSlugs, getPodcast, getPodcasts, getRelatedContents, getTagRelatedContents, podcastSlugsQuery } from '~/lib/sanity.queries';
+import { getAllPodcastSlugs, getHomeSettings, getPodcast, getPodcasts, getRelatedContents, getTagRelatedContents, getTags, podcastSlugsQuery } from '~/lib/sanity.queries';
 import { Podcasts } from '~/interfaces/post';
 import Wrapper from '~/layout/Wrapper';
 import { readToken } from '~/lib/sanity.api';
@@ -18,6 +18,7 @@ import PodcastNavigator from '~/contentUtils/PodcastNavigator';
 import Section from '~/components/Section';
 import {CustomHead, generateMetaData} from '~/utils/customHead';
 import SidebarTitle from '~/components/typography/SidebarTitle';
+import { GlobalDataProvider } from '~/components/Context/GlobalDataContext';
 
 interface Props {
   podcast: Podcasts;
@@ -29,6 +30,8 @@ interface Props {
   totalPodcasts?: any;
   currentNumber?: any;
   relatedContents?: any
+  tags?: any
+  homeSettings?: any
 }
 
 
@@ -53,6 +56,8 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
 
   const tagIds = podcast.tags?.map((tag: any) => tag?._id) || []
   const relatedContents = await getTagRelatedContents(client,params.slug as string, tagIds,podcast.contentType);
+  const tags =  await getTags(client)
+  const homeSettings = await getHomeSettings(client)
 
 
   return {
@@ -64,12 +69,14 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
       next,
       currentNumber: current.number,
       totalPodcasts,
-      relatedContents
+      relatedContents,
+      tags,
+      homeSettings
     },
   };
 };
 
-const PodcastPage = ({ podcast,relatedContents, previous, next, currentNumber, totalPodcasts, draftMode, token }: Props) => {
+const PodcastPage = ({ podcast,relatedContents, previous, next, currentNumber,tags,homeSettings, totalPodcasts, draftMode, token }: Props) => {
 
   if (!podcast) {
     return <div>Podcast not found</div>
@@ -94,6 +101,7 @@ const PodcastPage = ({ podcast,relatedContents, previous, next, currentNumber, t
         ogImage={urlForImage(podcast?.mainImage)}
         contentType={podcast?.contentType} />
         {generateMetaData(podcast)}
+      <GlobalDataProvider data={tags} featuredTags={homeSettings.featuredTags} >
       <Layout >
         <MainImageSection isAudio={true} enableDate={true} post={podcast}  contentType={podcast?.contentType}/>
         <PodcastNavigator currentNumber={currentNumber} totalPodcasts={totalPodcasts} nextSlug={next ? next : '/'} prevSlug={previous ? previous : '/'} />
@@ -143,6 +151,7 @@ const PodcastPage = ({ podcast,relatedContents, previous, next, currentNumber, t
           />
         )}
       </Layout>
+      </GlobalDataProvider>
     </>
   );
 };

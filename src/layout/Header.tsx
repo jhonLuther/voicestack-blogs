@@ -9,6 +9,7 @@ import ClubLogo from '~/assets/reactiveAssets/ClubLogo';
 import { NavPopover } from './overlaynav/NavPopover';
 import { useGlobalData } from '~/components/Context/GlobalDataContext';
 
+
 export const navigationLinks = [
   { href: "/case-study", label: "Case Studies" },
   { href: "/article", label: "Articles" },
@@ -20,7 +21,10 @@ export const navigationLinks = [
 
 const Header = () => {
 
-  const {featuredTags } = useGlobalData();
+  let  {featuredTags } = useGlobalData();
+  if(useGlobalData){
+
+  }
   const [showMenu, setShowMenu] = useState(false);
   const [headerFixed, setHeaderFixed] = useState(false);
 
@@ -120,7 +124,6 @@ const Header = () => {
   ];
 
   console.log(featuredTags,'featuredTags');
-  
 
   const router = useRouter();
   const before = "before:content-[''] before:h-[100px] before:absolute before:left-0 before:right-0 before:top-full before:bg-zinc-900"; 

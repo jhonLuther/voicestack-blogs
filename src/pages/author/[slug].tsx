@@ -1,6 +1,6 @@
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import { getClient } from '~/lib/sanity.client'
-import { authorSlugsQuery, getAuthor, getauthorRelatedContents, getAuthors, getPost } from '~/lib/sanity.queries'
+import { authorSlugsQuery, getAuthor, getauthorRelatedContents, getAuthors, getHomeSettings, getPost, getTags } from '~/lib/sanity.queries'
 import Layout from '~/components/Layout'
 import Wrapper from '~/layout/Wrapper'
 import { readToken } from '~/lib/sanity.api'
@@ -14,6 +14,7 @@ import { useRef } from 'react'
 import { BaseUrlProvider } from '~/components/Context/UrlContext'
 import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection'
 import ImageLoader from '~/components/commonSections/ImageLoader'
+import { GlobalDataProvider } from '~/components/Context/GlobalDataContext'
 
 interface Query {
   [key: string]: string
@@ -23,12 +24,16 @@ export const getStaticProps: GetStaticProps<
   SharedPageProps & {
     author: Author
     relatedContents: Post[]
+    tags: any
+    homeSettings: any
   },
   Query
 > = async ({ draftMode = false, params = {} }) => {
   const client = getClient(draftMode ? { token: readToken } : undefined)
   const author = await getAuthor(client, params.slug)
   const authorId = author?._id
+  const tags =  await getTags(client)
+  const homeSettings = await getHomeSettings(client)
 
   const relatedContents = await getauthorRelatedContents(client, authorId);
 
@@ -44,7 +49,9 @@ export const getStaticProps: GetStaticProps<
       draftMode,
       token: draftMode ? readToken : '',
       author,
-      relatedContents
+      relatedContents,
+      tags,
+      homeSettings
     },
   }
 }
@@ -64,12 +71,15 @@ export const getStaticPaths = async () => {
 
 export default function AuthorPage({
   author,
-  relatedContents
+  relatedContents,
+  tags,
+  homeSettings
 }: InferGetStaticPropsType<typeof getStaticProps>) {
 
   const baseUrl = useRef(`/${siteConfig.pageURLs.author}`).current;  
 
   return (
+    <GlobalDataProvider data={tags} featuredTags={homeSettings.featuredTags} >
     <BaseUrlProvider baseUrl={baseUrl}>
     <Layout >
       <Section className='justify-center'>
@@ -102,5 +112,6 @@ export default function AuthorPage({
       <BannerSubscribeSection />
     </Layout >
     </BaseUrlProvider>
+    </GlobalDataProvider>
   )
 }

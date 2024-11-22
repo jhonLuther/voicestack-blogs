@@ -1,7 +1,7 @@
 // pages/testimonial/[slug].tsx
 import { GetStaticProps, GetStaticPaths } from 'next';
 import { getClient } from '~/lib/sanity.client';
-import { caseStudySlugsQuery, getCaseStudies, getCaseStudy, getTagRelatedContents } from '~/lib/sanity.queries';
+import { caseStudySlugsQuery, getCaseStudies, getCaseStudy, getHomeSettings, getTagRelatedContents, getTags } from '~/lib/sanity.queries';
 import { CaseStudies } from '~/interfaces/post';
 import Wrapper from '~/layout/Wrapper';
 import { readToken } from '~/lib/sanity.api';
@@ -19,12 +19,16 @@ import ShareableLinks from '~/components/commonSections/ShareableLinks';
 import Section from '~/components/Section';
 import {CustomHead, generateMetaData} from '~/utils/customHead';
 import AuthorInfo from '~/components/commonSections/AuthorInfo';
+import { GlobalDataProvider } from '~/components/Context/GlobalDataContext';
+import homeSettings from '~/schemas/homeSettings';
 
 interface Props {
   caseStudy: CaseStudies;
   draftMode: boolean;
   token: string;
   relatedContents: any
+  tags: any
+  homeSettings: any
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -46,6 +50,8 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
   const caseStudy = await getCaseStudy(client, params.slug as string);
   const tagIds = caseStudy.tags?.map((tag: any) => tag?._id) || []
   const relatedContents = await getTagRelatedContents(client,params.slug as string, tagIds,caseStudy?.contentType);
+  const tags =  await getTags(client)
+  const homeSettings = await getHomeSettings(client)
 
 
   if (!caseStudy) {
@@ -60,12 +66,14 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
       draftMode,
       token: draftMode ? readToken : '',
       caseStudy,
-      relatedContents
+      relatedContents,
+      tags,
+      homeSettings
     },
   };
 };
 
-const CaseStudyPage = ({ caseStudy,relatedContents, draftMode, token }: Props) => {
+const CaseStudyPage = ({ caseStudy,relatedContents,tags,homeSettings, draftMode, token }: Props) => {
   if(!caseStudy) {
     return null;
   }
@@ -79,6 +87,7 @@ const CaseStudyPage = ({ caseStudy,relatedContents, draftMode, token }: Props) =
 
   return (
     <>
+      <GlobalDataProvider data={tags} featuredTags={homeSettings.featuredTags} >
       <SEOHead
         title={seoTitle}
         description={seoDescription}
@@ -128,6 +137,7 @@ const CaseStudyPage = ({ caseStudy,relatedContents, draftMode, token }: Props) =
           />
         )}
       </Layout>
+      </GlobalDataProvider>
     </>
   )
 };

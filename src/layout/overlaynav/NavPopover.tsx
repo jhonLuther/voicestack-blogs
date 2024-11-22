@@ -12,6 +12,7 @@ interface NavProps {
 }
 
 export const NavPopover = ({ className = '' }: NavProps) => {
+
   const { data, featuredTags } = useGlobalData();
   const [active, setActive] = useState(false);
   const [tagData, setTagData] = useState(null);
