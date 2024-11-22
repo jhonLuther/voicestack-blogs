@@ -31,8 +31,8 @@ const EventCarousel = ({ allEventCards }: { allEventCards?: any; homeSettings?: 
 
 
   return (
-    <Section className='justify-center bg-zinc-900'>
-      <Wrapper className='w-full relative h-[200px]'>
+    <Section className='justify-center bg-zinc-900 !p-0'>
+      <Wrapper className='w-full relative h-[200px] '>
         <Swiper
           className='w-full h-full'
           modules={[Navigation, Pagination, EffectFade]}
@@ -54,15 +54,15 @@ const EventCarousel = ({ allEventCards }: { allEventCards?: any; homeSettings?: 
               key={events._id}
               className='!flex items-center justify-center '
             >
-              <div className='w-full '>
+              <div className='w-full bg-zinc-900  '>
                 <div
                   style={{ backgroundColor: `${events.bgColor ? events.bgColor : '#000000'}` }}
                   className={`flex flex-col md:flex-row gap-6 relative group hover:transition duration-500 rounded-lg overflow-hidden`}
                 >
                   {events && events?.mainImage && (
-                    <div className="w-full md:max-w-[266px] transform transition duration-500 overflow-hidden flex-1">
+                    <div className="w-full md:max-w-[393px] transform transition duration-500 overflow-hidden flex-1">
                       <ImageLoader
-                        className='transform h-full w-full duration-300  min-h-[200px] md:min-h-[157px]'
+                        className='transform h-full w-full duration-300  min-h-[156px] md:min-h-[156px]'
                         image={events?.mainImage}
                       />
                     </div>
@@ -117,8 +117,6 @@ const EventCarousel = ({ allEventCards }: { allEventCards?: any; homeSettings?: 
             </SwiperSlide>
           ))}
         </Swiper>
-
-
       </Wrapper>
     </Section>
   );
