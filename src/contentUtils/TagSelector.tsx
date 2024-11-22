@@ -25,6 +25,7 @@ export default function TagSelect({
 }: TagSelectProps) {
   const [visibleTagCount, setVisibleTagCount] = useState(tagLimit);
   const [selectedTag, setSelectedTag] = useState('');
+  const [hideTags, setHideTags] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
@@ -50,7 +51,7 @@ export default function TagSelect({
   return (
     <Section className='bg-zinc-900 justify-center !py-0'>
       <Wrapper>
-      {showTags && (
+      {showTags && !hideTags && (
         <div className="flex flex-col md:flex-row gap-2 md:gap-6 pt-6 md:pt-6 pb-6 w-full md:items-center">
           {/* {showHeading && selectedTag && (
             <h2 className="md:text-5xl text-xl text-center font-manrope font-extrabold text-cs-zinc-900">
