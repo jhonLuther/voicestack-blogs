@@ -3,7 +3,7 @@ import type { GetStaticProps, InferGetStaticPropsType } from 'next';
 import Layout from '~/components/Layout';
 import Section from '~/components/Section';
 import { readToken } from '~/lib/sanity.api';
-import { getEbooks, getHomeSettings, getPosts, getSiteSettings, getTags, getTagsByOrder, getTestiMonials, getWebinars } from '~/lib/sanity.queries';
+import { getEbooks, getEventCards, getHomeSettings, getPosts, getSiteSettings, getTags, getTagsByOrder, getTestiMonials, getWebinars } from '~/lib/sanity.queries';
 import type { SharedPageProps } from '~/pages/_app';
 import { Post } from '~/interfaces/post';
 import { getClient } from '~/lib/sanity.client';
@@ -14,6 +14,7 @@ import { defaultMetaTag } from '~/utils/customHead';
 import { GlobalDataProvider } from '~/components/Context/GlobalDataContext';
 
 interface IndexPageProps {
+  allEventCards: any;
   tagsByOrder: any;
   webinars: any;
   ebooks: any;
@@ -43,6 +44,7 @@ export const getStaticProps: GetStaticProps<SharedPageProps & { posts: Post[] }>
       siteSettings,
       ebooks,
       webinars,
+      allEventCards
     ] = await Promise.all([
       getPosts(client, 4),
       getPosts(client),
@@ -53,6 +55,7 @@ export const getStaticProps: GetStaticProps<SharedPageProps & { posts: Post[] }>
       getSiteSettings(client),
       getEbooks(client),
       getWebinars(client),
+      getEventCards(client)
     ]);
     
     return {
@@ -67,7 +70,8 @@ export const getStaticProps: GetStaticProps<SharedPageProps & { posts: Post[] }>
         homeSettings,
         siteSettings,
         ebooks,
-        webinars
+        webinars,
+        allEventCards
       },
     };
   } catch (error) {
@@ -93,6 +97,7 @@ export default function IndexPage(props: IndexPageProps) {
   const homeSettings = props?.homeSettings;
   const latestPosts = props?.latestPosts;
   const siteSettings = props?.siteSettings;
+  const eventCards = props?.allEventCards
 
   console.log(props,'props');
   
@@ -117,6 +122,7 @@ export default function IndexPage(props: IndexPageProps) {
         latestPosts={latestPosts}
         ebooks={props?.ebooks}
         webinars={props?.webinars}
+        eventCards={eventCards}
       />
     </Layout>
     </GlobalDataProvider>

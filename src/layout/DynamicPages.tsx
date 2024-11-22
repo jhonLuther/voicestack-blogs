@@ -11,6 +11,7 @@ import SliderSection from "~/components/sections/SliderSection";
 import siteConfig from "config/siteConfig";
 import { BaseUrlProvider } from "~/components/Context/UrlContext";
 import { getUniqueReorderedCarouselItems } from "~/utils/common";
+import EventCarousel from "~/components/eventCarousel";
 
 interface DynamicProps {
 	children?: React.ReactNode;
@@ -35,9 +36,9 @@ const DynamicPages = ({
 	latestPosts,
 	ebooks,
 	webinars,
+	eventCards
 }: DynamicProps) => {
 
-	
 
 	const featuredBlog = homeSettings?.FeaturedBlog || posts[0];
 	const customBrowseContent = homeSettings?.customBrowseContent || posts[0];
@@ -59,6 +60,7 @@ const DynamicPages = ({
 				tagLimit={7}
 				showTags={true}
 			/>
+			<EventCarousel allEventCards={eventCards}/>
 			<LatestBlogs contents={latestPosts} />
 			<FeaturedAndPopularBlogs featuredBlog={featuredBlog} popularBlogs={featuredContents} />
 			<BannerSubscribeSection />

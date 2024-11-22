@@ -125,6 +125,21 @@ export const authorsQuery = groq`*[_type == "author" && defined(slug.current)] |
 export const tagsQuery = groq`*[_type == "tag"]  | order(tagName asc)`
 
 export const tagsByOrderQuery = groq`*[_type == "tag"] | order(tagName asc) {_id, slug, tagName}`;
+
+export const eventCardQuery = groq`
+  *[_type == "eventCard"] | order(eventStartDate desc) {
+    _id,
+    eventName,
+    ${imageFragment},
+    bgColor,
+    eventType,
+    eventStartDate,
+    eventEndDate,
+    eventLocation,
+    registrationLink,
+    registerBtnTxt
+  }
+`
 // combined query testimonials with associated customer names
 export const testiMonialsQuery = groq`
   *[_type == "testimonial" && defined(slug.current)] | order(date desc) {
@@ -485,6 +500,9 @@ export async function getTagsByOrder(client: SanityClient): Promise<Tag[]> {
   return await client.fetch(tagsByOrderQuery)
 }
 
+export async function getEventCards(client: SanityClient): Promise<Tag[]> {
+  return await client.fetch(eventCardQuery)
+}
 export async function getPostsByTagAndLimit(
   client: SanityClient,
   tagId: string,
