@@ -26,12 +26,12 @@ export const formatDate = (dateString: any) => {
   })}`;
 };
 
-export const formatDateShort = (dateString: any) => {
+export const formatDateShort = (dateString: any,yearOnly = false) => {
   const date = new Date(dateString);
 
   return ` 
   ${months[date.getMonth()]} 
-  ${date.getDate()}, ${date.getFullYear()}
+  ${date.getDate()}   ${ yearOnly ? '' :`, ${date.getFullYear()}`}
   `;
 };
 

@@ -124,11 +124,12 @@ export default defineConfig({
               S.documentTypeListItem('customer').title('Customer'),
               S.documentTypeListItem('testimonial').title('Testimonial'),
               S.documentTypeListItem('videos').title('Video'),
+              S.documentTypeListItem('eventCard').title('Events Card'),
               S.listItem()
               .title('Site Configuration')
               .icon(DesktopIcon)
               .child(
-                S.document()
+                S.document()  
                   .schemaType('siteSetting')
                   .documentId('siteSetting'),
               ),

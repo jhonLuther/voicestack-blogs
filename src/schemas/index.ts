@@ -19,8 +19,9 @@ import testimonialCard from './sections/testimonialCard'
 import videos from './videos'
 import siteSetting from './siteSetting'
 import customContent from './customContent'
+import eventCard from './eventCard'
 
-export const schemaTypes = [post, iframe, blockContent, newContent, tag,dynamicComponent,demoBannerBlock,author,homeSettings,testiMonial,customer,link,globalSettings,table,htmlCode,asideBannerBlock,testimonialCard,videos,siteSetting,customContent]
+export const schemaTypes = [post, iframe, blockContent, newContent, tag,dynamicComponent,demoBannerBlock,author,homeSettings,testiMonial,customer,link,globalSettings,table,htmlCode,asideBannerBlock,testimonialCard,videos,siteSetting,customContent,eventCard]
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [post, iframe, blockContent, newContent, tag,dynamicComponent,demoBannerBlock,author,homeSettings,testiMonial,customer,link,globalSettings,table,htmlCode,asideBannerBlock,testimonialCard,videos,siteSetting,customContent],
+  types: [post, iframe, blockContent, newContent, tag,dynamicComponent,demoBannerBlock,author,homeSettings,testiMonial,customer,link,globalSettings,table,htmlCode,asideBannerBlock,testimonialCard,videos,siteSetting,customContent,eventCard],
 }

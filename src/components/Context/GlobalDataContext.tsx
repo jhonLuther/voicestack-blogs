@@ -4,8 +4,8 @@ import React, { createContext, useContext, ReactNode } from 'react';
 
 const GlobalDataContext = createContext<any | null>(null);
 
-export const GlobalDataProvider = ({ data,featuredTags, children }: { data: any;featuredTags?:any; children: ReactNode }) => {
-  return <GlobalDataContext.Provider value={{ data, featuredTags }}>{children}</GlobalDataContext.Provider>;
+export const GlobalDataProvider = ({ data,featuredTags,eventCards, children }: { data?: any;featuredTags?:any; eventCards ?: any; children: ReactNode }) => {
+  return <GlobalDataContext.Provider value={{ data, featuredTags,eventCards }}>{children}</GlobalDataContext.Provider>;
 };
 
 export const useGlobalData = () => {

@@ -3,7 +3,7 @@ import type { GetStaticProps, InferGetStaticPropsType } from 'next';
 import Layout from '~/components/Layout';
 import Section from '~/components/Section';
 import { readToken } from '~/lib/sanity.api';
-import { getEbooks, getHomeSettings, getPosts, getSiteSettings, getTags, getTagsByOrder, getTestiMonials, getWebinars } from '~/lib/sanity.queries';
+import { getEbooks, getEventCards, getHomeSettings, getPosts, getSiteSettings, getTags, getTagsByOrder, getTestiMonials, getWebinars } from '~/lib/sanity.queries';
 import type { SharedPageProps } from '~/pages/_app';
 import { Post } from '~/interfaces/post';
 import { getClient } from '~/lib/sanity.client';
@@ -14,6 +14,7 @@ import { defaultMetaTag } from '~/utils/customHead';
 import { GlobalDataProvider } from '~/components/Context/GlobalDataContext';
 
 interface IndexPageProps {
+  allEventCards: any;
   tagsByOrder: any;
   webinars: any;
   ebooks: any;
@@ -33,19 +34,30 @@ export const getStaticProps: GetStaticProps<SharedPageProps & { posts: Post[] }>
   const client = getClient(draftMode ? { token: readToken } : undefined);
 
   try {
-    const latestPosts = await getPosts(client, 4);
-    const posts = await getPosts(client);
-    const tags = await getTags(client);
-    const tagsByOrder = await getTagsByOrder(client);
-    const testimonials = await getTestiMonials(client);
-    const homeSettings = await getHomeSettings(client);
-    const siteSettings = await getSiteSettings(client);
-    const ebooks: any = await getEbooks(client);
-    const webinars: any = await getWebinars(client);
+    const [
+      latestPosts,
+      posts,
+      tags,
+      tagsByOrder,
+      testimonials,
+      homeSettings,
+      siteSettings,
+      ebooks,
+      webinars,
+      allEventCards
+    ] = await Promise.all([
+      getPosts(client, 4),
+      getPosts(client),
+      getTags(client),
+      getTagsByOrder(client),
+      getTestiMonials(client),
+      getHomeSettings(client),
+      getSiteSettings(client),
+      getEbooks(client),
+      getWebinars(client),
+      getEventCards(client)
+    ]);
     
-
-
-
     return {
       props: {
         draftMode,
@@ -58,7 +70,8 @@ export const getStaticProps: GetStaticProps<SharedPageProps & { posts: Post[] }>
         homeSettings,
         siteSettings,
         ebooks,
-        webinars
+        webinars,
+        allEventCards
       },
     };
   } catch (error) {
@@ -84,6 +97,7 @@ export default function IndexPage(props: IndexPageProps) {
   const homeSettings = props?.homeSettings;
   const latestPosts = props?.latestPosts;
   const siteSettings = props?.siteSettings;
+  const eventCards = props?.allEventCards
 
   console.log(props,'props');
   
@@ -108,6 +122,7 @@ export default function IndexPage(props: IndexPageProps) {
         latestPosts={latestPosts}
         ebooks={props?.ebooks}
         webinars={props?.webinars}
+        eventCards={eventCards}
       />
     </Layout>
     </GlobalDataProvider>

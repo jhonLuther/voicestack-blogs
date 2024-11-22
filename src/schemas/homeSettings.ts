@@ -21,14 +21,20 @@ export default {
   fields: [
     {
       name: 'featuredTags',
-      title: 'Featured Tags ',
+      title: 'Featured Tags',
       type: 'array',
-      of: [{
-        type: 'reference',
-        to: [{ type: 'tag' }],
-      }],
-      group: 'popularBlogs'
+      of: [
+        {
+          type: 'reference',
+          to: [{ type: 'tag' }],
+        },
+      ],
+      group: 'popularBlogs',
+      validation: (rule) => rule.max(5).unique(),
     },
+
+    
+    
     {
       name: 'testimonial',  
       title: 'Testimonials',
