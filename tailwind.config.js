@@ -14,6 +14,7 @@ module.exports = {
         'sans':['Inter', 'sans-serif'],
         'manrope':['Manrope', 'system-ui', 'sans-serif']
       },
+
       extend: {
 
         colors:{
@@ -44,7 +45,9 @@ module.exports = {
           '7xl':"1240px"
         },
 
-
+        boxShadow: {
+          custom: '-20px 20px 30px 0px rgba(0, 0, 0, 0.5)',
+        },
 
         backgroundImage: {
           'gradient-text': 'linear-gradient(90deg, #FEF08A 0%, #60A5FA 100%)',  
