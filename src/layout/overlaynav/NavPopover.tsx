@@ -48,9 +48,9 @@ export const NavPopover = ({ className = '', showMenu }: NavProps) => {
   };
 
   return (
-    <section className={`pt-[10px] px-[10px] pb-[20px] rounded-[12px] bg-white shadow-custom 
-    justify-center bg-transparent absolute top-0 left-0 w-full 
-    overflow-hidden transition-all duration-200 ${showMenu ? 'flex' : 'hidden'}`}>
+    <section className={`pt-[10px] px-[10px] pb-[20px] lg:rounded-[12px] bg-white shadow-custom 
+    justify-center bg-transparent absolute lg:top-0 left-0 w-full h-[100vh] lg:h-auto overflow-auto 
+    lg:overflow-hidden transition-all duration-200 top-0 ${showMenu ? 'flex' : 'hidden'}`}>
       <Wrapper>
         <div
           className={`${className} w-full`}
@@ -63,29 +63,22 @@ export const NavPopover = ({ className = '', showMenu }: NavProps) => {
             <TruncateIcon width={40} height={40} />
           </button> */}
 
-          <div
-            className={`
-              
-              }
-            `}
-            
-            // onMouseLeave={handleMouseLeave}
-          >
+          <div>
             <div ref={contentRef} className={`w-full transform transition-all duration-200}`}>
 
-              <nav className="flex flex-col lg:flex-row gap-y-2 gap-x-6 lg:gap-x-10 flex-wrap rounded-[10px] py-[17px] px-[20px] bg-zinc-100">
+              <nav className="flex flex-col lg:flex-row gap-y-4 gap-x-6 lg:gap-x-10 flex-wrap rounded-[10px] py-[17px] px-[20px] bg-zinc-100">
                 {navigationLinks?.map((link, i) => (
                   <Link
                     key={link.href}
                     href={link.href}
-                    className={`hover:text-zinc-500 font-medium text-sm flex items-center gap-2 ${router.pathname.startsWith(link.href) ? 'text-zinc-600' : 'text-zinc-600'}`}
+                    className={`hover:text-zinc-500 self-start font-medium text-base lg:text-sm flex items-center gap-2 ${router.pathname.startsWith(link.href) ? 'text-zinc-600' : 'text-zinc-600'}`}
                   >
                     {link.icon && <link.icon />}{link.label}
                   </Link>
 
                 ))}
               </nav>
-              <div className='p-6'>
+              <div className='px-[10px] py-6 lg:p-6'>
                 <div className='text-zinc-400 pb-6 font-medium text-sm uppercase'>Browse By Key Topics</div>
                 <div className="lg:columns-4 gap-6">
                   {tagData && tagData.map((tag, index) => (

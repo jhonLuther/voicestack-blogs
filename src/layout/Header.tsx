@@ -36,7 +36,14 @@ const Header = () => {
     setShowMenu(false);  
   };
 
-  const toggleMenu = () => setShowMenu(!showMenu);
+  const toggleMenu = () => {
+    setShowMenu(!showMenu);
+    if (window.innerWidth < 1024 && showMenu == true) {
+      document.body.classList.add("menu-active");
+    } else {
+      document.body.classList.remove("menu-active");
+    }
+  }
 
   const handleScrollMob = () => {
     setHeaderFixed(window.scrollY > 44);
@@ -83,7 +90,7 @@ const Header = () => {
             {/* <div className={`flex flex-col gap-3 justify-between py-[10px] transition-all duration-300 ease-linear relative  ${headerFixed ? '!lg:py-3' : 'lg:py-6'}`}> */}
             <div className={`flex flex-col gap-3 justify-between py-0 transition-all duration-300 ease-linear`}>
               <div className={`flex flex-row gap-2 justify-between items-center rounded-xl border border-zinc-700 
-                lg:pl-[18px] relative transition-all duration-300 ease-in-out ${headerFixed ? 'my-3' : 'mt-8'}`}>
+                pl-[18px] lg:relative transition-all duration-300 ease-in-out ${headerFixed ? 'my-3' : 'lg:mt-8 mt-3 mb-3'}`}>
                 <Link href="/" className="text-2xl font-extrabold bg-gradient-text bg-clip-text text-transparent font-monrope tracking-tighterText">
                   {/* <ClubLogo/>  */}
                   <GrowthClubLogo/>
@@ -103,9 +110,9 @@ const Header = () => {
                   </nav>
                 </div>
                 
-                <div onClick={toggleMenu} className={`flex text-zinc-900 cursor-pointer items-center select-none z-20 rounded-xl py-[6px] pr-[10px] pl-[14px]
-                  ${showMenu ? 'pr-[15px] pt-[15px]' : 'bg-white'}`}>
-                  {!showMenu && <span className='hidden md:inline-flex text-zinc-800 text-sm'>More</span>}
+                <div onClick={toggleMenu} className={`flex text-zinc-900 cursor-pointer items-center select-none z-20 rounded-lg lg:rounded-xl lg:py-[6px] lg:pr-[10px] lg:pl-[14px]
+                  ${showMenu ? 'lg:pr-[15px] lg:pt-[15px] absolute top-[20px] right-[20px] lg:static' : 'bg-white'}`}>
+                  {!showMenu && <span className='hidden lg:inline-flex text-zinc-800 text-sm'>More</span>}
                   {showMenu ? <CloseIcon width={40} height={40}/>: <MenuIcon width={40} height={40}/>
                   // <svg width="46" height="41" viewBox="0 0 46 41" fill="none" xmlns="http://www.w3.org/2000/svg">
                   //   <path d="M12 12.4062H34" stroke="#A1A1AA" strokeWidth="2" strokeLinecap="round"/>
