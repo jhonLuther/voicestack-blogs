@@ -27,9 +27,9 @@ export default defineType({
       type: 'string',
     }),
     defineField({
-        title: "eventType",
+        title: "EventType",
         description: "Pick the type of event",
-        name: "type",
+        name: "evenTtype",
         type: "string",
         options: {
           list: [
@@ -38,6 +38,12 @@ export default defineType({
           ],
         },
         validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'eventDescription',
+      title: 'Event Description',
+      description: 'A short description of the event',
+      type: 'string',
     }),
     defineField({
         title: 'Event Start Date',
