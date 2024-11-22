@@ -1,7 +1,7 @@
 import { GetStaticProps, GetStaticPaths } from 'next';
 import { useRouter } from 'next/router';
 import { getClient } from '~/lib/sanity.client';
-import { articleSlugsQuery, getArticle, getArticles, getTagRelatedContents } from '~/lib/sanity.queries';
+import { articleSlugsQuery, getArticle, getArticles, getHomeSettings, getTagRelatedContents, getTags } from '~/lib/sanity.queries';
 import { Articles } from '~/interfaces/post';
 import Wrapper from '~/layout/Wrapper';
 import { readToken } from '~/lib/sanity.api';
@@ -10,20 +10,21 @@ import SanityPortableText from '~/components/blockEditor/sanityBlockEditor';
 import Layout from '~/components/Layout';
 import MainImageSection from '~/components/MainImageSection';
 import RelatedFeaturesSection from '~/components/RelatedFeaturesSection';
-import SEOHead from '~/layout/SeoHead';
-import { generateJSONLD } from '~/utils/generateJSONLD';
 import { Toc } from '~/contentUtils/sanity-toc';
 import AuthorInfo from '~/components/commonSections/AuthorInfo';
 import ShareableLinks from '~/components/commonSections/ShareableLinks';
 import {CustomHead,generateMetaData} from '~/utils/customHead';
 import Section from '~/components/Section';
 import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection';
+import { GlobalDataProvider } from '~/components/Context/GlobalDataContext';
 
 interface Props {
   articles: Articles;
   draftMode: boolean;
   token: string;
   relatedContents: any
+  tags : any
+  homeSettings : any
 }
 
 
@@ -46,19 +47,22 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
   const articles = await getArticle(client, params.slug as string);
   const tagIds = articles?.tags?.map((tag: any) => tag?._id) || []
   const relatedContents = await getTagRelatedContents(client,params.slug as string, tagIds,articles.contentType);
+  const tags =  await getTags(client)
+  const homeSettings = await getHomeSettings(client)
 
   return {
     props: {
       draftMode,
       token: draftMode ? readToken : '',
       articles,
-      relatedContents
-      
+      relatedContents,
+      tags,
+      homeSettings
     },
   };
 };
 
-const ArticlePage = ({ articles,relatedContents, draftMode, token }: Props) => {
+const ArticlePage = ({ articles,relatedContents,tags, homeSettings, draftMode, token }: Props) => {
 
   if (!articles) {
     return
@@ -67,6 +71,7 @@ const ArticlePage = ({ articles,relatedContents, draftMode, token }: Props) => {
 
   return (
     <>
+      <GlobalDataProvider data={tags} featuredTags={homeSettings.featuredTags} >
       <CustomHead props={articles} type="articleExpanded" />
       { generateMetaData(articles)}
       
@@ -106,6 +111,7 @@ const ArticlePage = ({ articles,relatedContents, draftMode, token }: Props) => {
         )}
         <BannerSubscribeSection />
       </Layout>
+      </GlobalDataProvider>
     </>
   );
 };

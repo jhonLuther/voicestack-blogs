@@ -1,7 +1,7 @@
 import { GetStaticProps, GetStaticPaths } from 'next';
 import { useRouter } from 'next/router';
 import { getClient } from '~/lib/sanity.client';
-import { getPodcast, getPodcasts, getRelatedContents, getTagRelatedContents, getWebinar, getWebinars, podcastSlugsQuery, webinarSlugsQuery } from '~/lib/sanity.queries';
+import { getHomeSettings, getPodcast, getPodcasts, getRelatedContents, getTagRelatedContents, getTags, getWebinar, getWebinars, podcastSlugsQuery, webinarSlugsQuery } from '~/lib/sanity.queries';
 import { Podcasts } from '~/interfaces/post';
 import Wrapper from '~/layout/Wrapper';
 import Image from 'next/image';
@@ -22,6 +22,7 @@ import {CustomHead, generateMetaData} from '~/utils/customHead';
 import AuthorInfo from '~/components/commonSections/AuthorInfo';
 import ShareableLinks from '~/components/commonSections/ShareableLinks';
 import SidebarTitle from '~/components/typography/SidebarTitle';
+import { GlobalDataProvider } from '~/components/Context/GlobalDataContext';
 
 interface Props {
   webinar: Podcasts;
@@ -29,6 +30,8 @@ interface Props {
   draftMode: boolean;
   token: string;
   relatedContents: any
+  tags: any
+  homeSettings: any
 }
 
 
@@ -52,8 +55,8 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
   const allWebinars = await getWebinars(client);
   const tagIds = webinar.tags?.map((tag: any) => tag?._id) || []
   const relatedContents = await getTagRelatedContents(client,params.slug as string, tagIds,webinar.contentType);
-
-  console.log({webinar});
+  const tags =  await getTags(client)
+  const homeSettings = await getHomeSettings(client)
 
   return {
     props: {
@@ -61,12 +64,14 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
       token: draftMode ? readToken : '',
       webinar,
       allWebinars,
-      relatedContents
+      relatedContents,
+      tags,
+      homeSettings
     },
   };
 };
 
-const WebinarPage = ({ webinar,relatedContents, draftMode, token }: Props) => {
+const WebinarPage = ({ webinar,relatedContents, draftMode,tags,homeSettings, token }: Props) => {
 
   const seoTitle = webinar.seoTitle || webinar.title;
   const seoDescription = webinar.seoDescription || webinar.excerpt;
@@ -79,6 +84,7 @@ const WebinarPage = ({ webinar,relatedContents, draftMode, token }: Props) => {
     <>
       <CustomHead props ={webinar} type="webinar"/>
       { generateMetaData(webinar) }
+      <GlobalDataProvider data={tags} featuredTags={homeSettings.featuredTags} >
       <Layout >
       <MainImageSection isAuthor={true} post={webinar} contentType={webinar?.contentType} enableDate={true}/>
 
@@ -123,6 +129,7 @@ const WebinarPage = ({ webinar,relatedContents, draftMode, token }: Props) => {
           />
         )}
       </Layout>
+      </GlobalDataProvider>
     </>
   );
 };

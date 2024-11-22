@@ -1,36 +1,29 @@
-// pages/testimonial/[slug].tsx
 import { GetStaticProps, GetStaticPaths } from 'next';
-import { useRouter } from 'next/router';
 import { getClient } from '~/lib/sanity.client';
-import { pressReleaseSlugsQuery, getCaseStudy, getPressRelease, getRelatedContents, getPressReleases, getTagRelatedContents } from '~/lib/sanity.queries';
-import { CaseStudies, PressRelease } from '~/interfaces/post';
+import { pressReleaseSlugsQuery, getCaseStudy, getPressRelease, getRelatedContents, getPressReleases, getTagRelatedContents, getHomeSettings, getTags } from '~/lib/sanity.queries';
+import { PressRelease } from '~/interfaces/post';
 import Wrapper from '~/layout/Wrapper';
-import Image from 'next/image';
 import { readToken } from '~/lib/sanity.api';
-import { draftMode } from 'next/headers';
 import MainImageSection from '~/components/MainImageSection';
 import RelatedFeaturesSection from '~/components/RelatedFeaturesSection';
 import Layout from '~/components/Layout';
-import AsideBannerBlock from '~/components/sections/asideBannerBlock';
-import PracticeProfile from '~/contentUtils/PracticeProfile';
-import { generateJSONLD } from '~/utils/generateJSONLD';
-import SEOHead from '~/layout/SeoHead';
-import { urlForImage } from '~/lib/sanity.image';
 import SanityPortableText from '~/components/blockEditor/sanityBlockEditor';
 import AuthorInfo from '~/components/commonSections/AuthorInfo';
-import { Toc } from '~/contentUtils/sanity-toc';
 import Section from '~/components/Section';
 import SidebarTitle from '~/components/typography/SidebarTitle';
 import ShareableLinks from '~/components/commonSections/ShareableLinks';
 import Button from '~/components/commonSections/Button';
 import {DocumentTextIcon} from '@sanity/icons'
 import { CustomHead, generateMetaData } from '~/utils/customHead';
+import { GlobalDataProvider } from '~/components/Context/GlobalDataContext';
 
 interface Props {
   pressRelease: PressRelease;
   draftMode: boolean;
   token: string;
   relatedContents?: any;
+  tags?: any;
+  homeSettings?: any
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -52,6 +45,8 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
   const pressRelease = await getPressRelease(client, params.slug as string);
   const tagIds = pressRelease.tags?.map((tag: any) => tag?._id) || []
   const relatedContents = await getTagRelatedContents(client,params.slug as string, tagIds,pressRelease.contentType);
+  const tags =  await getTags(client)
+  const homeSettings = await getHomeSettings(client)
 
 
   if (!pressRelease) {
@@ -67,35 +62,20 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
       draftMode,
       token: draftMode ? readToken : '',
       pressRelease,
-      relatedContents
+      relatedContents,
+      tags,
+      homeSettings
     },
   };
 }
 
-const PressReleasePage = ({ pressRelease,relatedContents, draftMode, token }: Props) => {
-
-  const seoTitle = pressRelease.seoTitle || pressRelease.title;
-  const seoDescription = pressRelease.seoDescription || pressRelease.excerpt;
-  const seoKeywords = pressRelease.seoKeywords || '';
-  const seoRobots = pressRelease.seoRobots || 'index,follow';
-  const seoCanonical = pressRelease.seoCanonical || `https://carestack.com/pressRelease/${pressRelease.slug.current}`;
-  const jsonLD: any = generateJSONLD(pressRelease);
-
+const PressReleasePage = ({ pressRelease,relatedContents,tags,homeSettings, draftMode, token }: Props) => {
   
   return (
     <>
-      {/* <SEOHead
-        title={seoTitle}
-        description={seoDescription}
-        keywords={seoKeywords}
-        robots={seoRobots}
-        canonical={seoCanonical}
-        jsonLD={jsonLD}
-        ogImage={urlForImage(pressRelease?.mainImage)}
-        contentType={pressRelease?.contentType} /> */}
-        {generateMetaData(pressRelease)}
-        <CustomHead props={pressRelease} type="pressRelease"/>
-
+    {generateMetaData(pressRelease)}
+    <CustomHead props={pressRelease} type="pressRelease"/>
+    <GlobalDataProvider data={tags} featuredTags={homeSettings.featuredTags} >
       <Layout >
         <MainImageSection enableDate={true} post={pressRelease} />
         <Section className='justify-center !pt-24 !pb-12'>
@@ -151,6 +131,7 @@ const PressReleasePage = ({ pressRelease,relatedContents, draftMode, token }: Pr
           />
         )}
       </Layout>
+      </GlobalDataProvider>
     </>
   );
 };

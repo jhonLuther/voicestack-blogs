@@ -1,10 +1,9 @@
 import { GetStaticProps, GetStaticPaths } from 'next';
 import { useRouter } from 'next/router';
 import { getClient } from '~/lib/sanity.client';
-import { ebookSlugsQuery, getEbook, getEbooks, getPodcast, getPodcasts, getRelatedContents, getTagRelatedContents, getWebinar, getWebinars, podcastSlugsQuery, webinarSlugsQuery } from '~/lib/sanity.queries';
+import { ebookSlugsQuery, getEbook, getEbooks, getHomeSettings, getPodcast, getPodcasts, getRelatedContents, getTagRelatedContents, getTags, getWebinar, getWebinars, podcastSlugsQuery, webinarSlugsQuery } from '~/lib/sanity.queries';
 import { Ebooks, Podcasts } from '~/interfaces/post';
 import Wrapper from '~/layout/Wrapper';
-import Image from 'next/image';
 import { readToken } from '~/lib/sanity.api';
 import { urlForImage } from '~/lib/sanity.image';
 import SanityPortableText from '~/components/blockEditor/sanityBlockEditor';
@@ -21,6 +20,8 @@ import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection
 import AuthorInfo from '~/components/commonSections/AuthorInfo';
 import SidebarTitle from '~/components/typography/SidebarTitle';
 import ShareableLinks from '~/components/commonSections/ShareableLinks';
+import { GlobalDataProvider } from '~/components/Context/GlobalDataContext';
+import homeSettings from '~/schemas/homeSettings';
 
 interface Props {
   ebook: Ebooks;
@@ -28,6 +29,8 @@ interface Props {
   draftMode: boolean;
   token: string;
   relatedContents: any;
+  tags: any;
+  homeSettings: any
 }
 
 
@@ -49,30 +52,26 @@ export const getStaticProps: GetStaticProps<Props> = async ({ draftMode = false,
   const ebook = await getEbook(client, params.slug as string);
   const tagIds = ebook.tags?.map((tag: any) => tag?._id) || []
   const relatedContents = await getTagRelatedContents(client,params.slug as string, tagIds,ebook?.contentType);
+  const tags =  await getTags(client)
+  const homeSettings = await getHomeSettings(client)
 
   return {
     props: {
       draftMode,
       token: draftMode ? readToken : '',
       ebook,
-      relatedContents
+      relatedContents,
+      tags,
+      homeSettings
     },
   };
 };
 
-const EbookPage = ({ ebook,relatedContents, draftMode, token }: Props) => {
+const EbookPage = ({ ebook,relatedContents,tags,homeSettings, draftMode, token }: Props) => {
   
-
-  const seoTitle = ebook.seoTitle || ebook.title;
-  const seoDescription = ebook.seoDescription || ebook.excerpt;
-  const seoKeywords = ebook.seoKeywords || '';
-  const seoRobots = ebook.seoRobots || 'index,follow';
-  const seoCanonical = ebook.seoCanonical || `https://carestack.com/ebook/${ebook.slug.current}`;
-  const jsonLD: any = generateJSONLD(ebook);
-
-
   return (
     <>
+    <GlobalDataProvider data={tags} featuredTags={homeSettings.featuredTags} >
     <CustomHead props ={ebook} type='eBook'/>
     {generateMetaData(ebook)}
       <Layout >
@@ -110,6 +109,7 @@ const EbookPage = ({ ebook,relatedContents, draftMode, token }: Props) => {
           />
         )}
       </Layout>
+      </GlobalDataProvider>
     </>
   );
 };
