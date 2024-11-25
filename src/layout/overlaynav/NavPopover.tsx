@@ -1,103 +1,100 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Wrapper from '../Wrapper';
-import Section from '~/components/Section';
 import { useGlobalData } from '~/components/Context/GlobalDataContext';
 import Link from 'next/link';
-import { TruncateIcon } from '@sanity/icons'
 import { navigationLinks } from '../Header';
 import { useRouter } from 'next/router';
+import { CloseIcon } from '@sanity/icons';
 
 interface NavProps {
   className?: string;
   showMenu?: boolean;
+  onClose: () => void;
 }
 
-export const NavPopover = ({ className = '', showMenu }: NavProps) => {
-  const { data, featuredTags } = useGlobalData();
-  const [active, setActive] = useState(false);
+export const NavPopover = ({ className = '', showMenu, onClose }: NavProps) => {
+  const { data } = useGlobalData();
+  const [isVisible, setIsVisible] = useState(false);
   const [tagData, setTagData] = useState(null);
-  const [contentHeight, setContentHeight] = useState(0);
-  const contentRef = useRef(null);
-  const buttonRef = useRef(null);
   const router = useRouter();
 
-
   useEffect(() => {
-    if (active && contentRef.current) {
-      setContentHeight(contentRef.current.scrollHeight);
+    if (showMenu) {
+      requestAnimationFrame(() => setIsVisible(true));
     } else {
-      setContentHeight(0);
+      setIsVisible(false); // Trigger the transition animation
     }
-  }, [active]);
+  }, [showMenu]);
 
   useEffect(() => {
     if (data) setTagData(data);
-  }, [tagData, data]);
+  }, [data]);
 
-  const handleMouseEnter = () => {
-    setActive(true);
-  };
-
-  const handleMouseLeave = (event) => {
-    const rect = buttonRef.current.getBoundingClientRect();
-    const x = event.clientX;
-    const y = event.clientY;
-    if (x < rect.left || x > rect.right || y < rect.top || y > rect.bottom) {
-      setActive(false); // to hide default menu
+  // Close the menu after the animation ends
+  const handleAnimationEnd = () => {
+    if (!isVisible) {
+      onClose(); // Trigger onClose only after the animation completes
     }
   };
 
+  if (!showMenu && !isVisible) return null;
+
   return (
-    <section className={`pt-[10px] px-[10px] pb-[20px] lg:rounded-[12px] bg-white shadow-custom 
-    justify-center bg-transparent absolute lg:top-0 left-0 w-full h-[100vh] lg:h-auto overflow-auto 
-    lg:overflow-hidden transition-all duration-200 top-0 ${showMenu ? 'flex' : 'hidden'}`}>
-      <Wrapper>
-        <div
-          className={`${className} w-full`}
-        >
-          {/* <button
-            ref={buttonRef}
-            className="px-4 py-3 text-sm font-medium  hover:bg-zinc-300 rounded-md"
-            onMouseEnter={handleMouseEnter}
-          >
-            <TruncateIcon width={40} height={40} />
-          </button> */}
+    <>
+      <div
+        className={`fixed inset-0 bg-black/50 z-[19] transition-opacity duration-300 ease-in-out ${
+          isVisible ? 'opacity-100' : 'opacity-0'
+        }`}
+        onClick={() => setIsVisible(false)}
+      />
 
-          <div>
-            <div ref={contentRef} className={`w-full transform transition-all duration-200}`}>
+      <div
+        className={`fixed lg:absolute z-[20] w-full bg-white shadow-xl transition-transform duration-300 ease-in-out ${
+          isVisible ? 'translate-y-0 opacity-100' : '-translate-y-4 opacity-0'
+        } top-0 lg:top-[100%] left-0 lg:rounded-xl max-h-[90vh] lg:max-h-[80vh] overflow-y-auto`}
+        style={{ transformOrigin: 'top' }}
+        onTransitionEnd={handleAnimationEnd}
+      >
+        <Wrapper>
+          <div className="w-full py-4">
+            <nav className="flex flex-col lg:flex-row gap-4 p-4 bg-zinc-100 rounded-xl mb-4 mt-12 lg:mt-4">
+              {navigationLinks?.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="flex items-center gap-2 text-zinc-600 hover:text-zinc-900 transition-colors duration-200 font-medium"
+                >
+                  {link.icon && <link.icon />}
+                  {link.label}
+                </Link>
+              ))}
+              <button
+                onClick={() => setIsVisible(false)}
+                className="fixed lg:absolute top-[2.5rem] right-4 z-[21] p-2 rounded-full bg-white hover:bg-gray-100 transition-colors duration-200 shadow-lg"
+              >
+                <CloseIcon className="w-6 h-6 text-gray-600" />
+              </button>
+            </nav>
 
-              <nav className="flex flex-col lg:flex-row gap-y-4 gap-x-6 lg:gap-x-10 flex-wrap rounded-[10px] py-[17px] px-[20px] bg-zinc-100">
-                {navigationLinks?.map((link, i) => (
+            <div className="px-4 pb-4">
+              <h3 className="text-zinc-400 font-medium text-sm uppercase mb-4">
+                Browse By Key Topics
+              </h3>
+              <div className="grid lg:grid-cols-4 gap-4">
+                {tagData?.map((tag, index) => (
                   <Link
-                    key={link.href}
-                    href={link.href}
-                    className={`hover:text-zinc-500 self-start font-medium text-base lg:text-sm flex items-center gap-2 ${router.pathname.startsWith(link.href) ? 'text-zinc-600' : 'text-zinc-600'}`}
+                    key={index}
+                    href={`/browse/${tag?.slug?.current}`}
+                    className="text-zinc-600 hover:text-zinc-900 transition-colors font-medium text-sm"
                   >
-                    {link.icon && <link.icon />}{link.label}
+                    {tag?.tagName}
                   </Link>
-
                 ))}
-              </nav>
-              <div className='px-[10px] py-6 lg:p-6'>
-                <div className='text-zinc-400 pb-6 font-medium text-sm uppercase'>Browse By Key Topics</div>
-                <div className="lg:columns-4 gap-6">
-                  {tagData && tagData.map((tag, index) => (
-                    <Link
-                      key={index}
-                      href={`/browse/${tag?.slug?.current}`}
-                      scroll={false}
-                      className="text-zinc-500 pb-[14px] font-medium text-sm flex hover:text-zinc-600 transition-colors break-inside-avoid"
-                    >
-                      <span>{tag?.tagName}</span>
-                    </Link>
-                  ))}
-                </div>
               </div>
-
             </div>
           </div>
-        </div>
-      </Wrapper>
-    </section>
+        </Wrapper>
+      </div>
+    </>
   );
 };

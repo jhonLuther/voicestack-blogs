@@ -1,6 +1,4 @@
-import Layout from '~/components/Layout';
 import Wrapper from '~/layout/Wrapper';
-import { useRouter } from 'next/router';
 import React, { useEffect, useRef, useState } from 'react'; // Added useState
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, EffectFade } from 'swiper/modules';
@@ -70,7 +68,7 @@ const EventCarousel = ({ allEventCards }: { allEventCards?: any; homeSettings?: 
                         {events.eventDescription}
                       </H4Large>
                     </div>
-                    <div className='flex  justify-between items-center '>
+                    <div className='flex md:flex-row  flex-col justify-between items-center '>
                       <div className='flex items-center gap-6'>
                       <div className='flex pt-[7px] pb-[7px] pl-[10px] pr-[10px] justify-center items-center gap-3 rounded-full bg-gray-900 bg-opacity-20 '>
                         <SubText className='!text-white'>
@@ -88,7 +86,7 @@ const EventCarousel = ({ allEventCards }: { allEventCards?: any; homeSettings?: 
                       </div>
                       <div>
                         <div className='self-start md:self-center flex justify-center'>
-                          <Button className='bg-zinc-900 !px-12 hover:bg-zinc-700 !no-underline ' link={events?.registrationLink ? events?.registrationLink : 'https://carestack.com/demo'}>
+                          <Button className='bg-zinc-900  hover:bg-zinc-700 !no-underline ' link={events?.registrationLink ? events?.registrationLink : 'https://carestack.com/demo'}>
                             <span className='text-base font-medium'>{events.registerBtnTxt ? events.registerBtnTxt : 'Register Now'}</span>
                           </Button>
                         </div>
