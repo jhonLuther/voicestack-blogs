@@ -116,6 +116,7 @@ export default function IndexPage(props: IndexPageProps) {
     <GlobalDataProvider
       data={props?.tags}
       featuredTags={homeSettings.featuredTags}
+      homeSettings={homeSettings}
     >
       <Layout>
         {siteSettings?.map((e: any) => {

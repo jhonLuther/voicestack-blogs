@@ -401,6 +401,7 @@ export const homeSettingsQuery = groq`
         slug
       },
     },
+    demoBanner,
     featuredPressRelease->{
       _id,
       slug,
