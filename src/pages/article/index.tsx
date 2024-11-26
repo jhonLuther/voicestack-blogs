@@ -83,7 +83,7 @@ const ArticlesPage = ({ articles,latestArticles, totalPages,tags,homeSettings }:
       <LatestBlogs  className={'pt-11 pr-9 pb-16 pl-9'} reverse={true} contents={latestContents} />
       {articles?.length
         ? articles.map((e, i) => {
-            return (<CustomHead props={e} type="caseStudy" key={i} />)
+            return (<CustomHead props={e} type="articleExpanded" key={i} />)
           })
         : null}
         <AllcontentSection

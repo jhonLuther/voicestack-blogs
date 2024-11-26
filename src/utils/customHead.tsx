@@ -382,11 +382,11 @@ export function CustomHead({
       },
     }
     return head(metaData, randomId)
-  } else if (props && type === 'articleExpanded') {
+  } else if (props && type === 'articleExpanded' && props?.title) {
     /* for url if author url available add field , for now  url:"www.carestack.com" */
-    const metaData = {
+     const metaData = {
       '@context': 'https://schema.org',
-      '@type': 'NewsArticle',
+      '@type': 'Article',
       headline: props?.title ?? '',
       image: [urlForImage(props?.mainImage?._id)],
       author: [
@@ -398,6 +398,15 @@ export function CustomHead({
           }
         }) || null,
       ],
+      inLanguage: 'en-US',
+      copyrightHolder: {
+        '@id': 'https://carestack.com/#organization',
+      },
+      publisher: {
+        '@type': 'Organization',
+        name: 'CareStack',
+        url: 'https://carestack.com',
+      },
     }
     return head(metaData, randomId)
   } else if (props && type === 'eBook') {
@@ -502,10 +511,11 @@ export function CustomHead({
       name: paginationType,
     }
     return head(metaData, randomId)
-  } else if (props && type === 'podcast') {
+  } else if (props && type === 'podcast') { debugger
     const metaData = {
       '@context': 'https://schema.org',
       '@type': 'Event',
+      performer:props?.author?.map((e)=>e?.name)[0],
       name: props?.title,
       location: 'global',
       organizer: 'CareStack',
@@ -525,7 +535,7 @@ export function CustomHead({
   } else if (props && type === 'pressRelease') {
     const metaData = {
       '@context': 'https://schema.org',
-      '@type': 'NewsArticle',
+      '@type': 'Article',
       mainEntityOfPage: {
         '@type': 'WebPage',
         '@id': 'https://example.com/my-news-article',

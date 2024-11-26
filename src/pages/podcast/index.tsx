@@ -64,7 +64,7 @@ const PodcastsPage = ({ podcasts,latestPodcasts, totalPages,tags,homeSettings }:
     <GlobalDataProvider data={tags} featuredTags={homeSettings.featuredTags}>
     <BaseUrlProvider baseUrl={baseUrl}>
     <Layout>
-      <CustomHead props ={podcasts} type="podcast"/>
+      {podcasts?.map((e,i)=>{return(<CustomHead props={e} key={i} type="podcast"/>)})}
       <TagSelect
 				tags={tags}
 				tagLimit={7}
