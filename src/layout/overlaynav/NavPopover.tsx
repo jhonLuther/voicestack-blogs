@@ -111,14 +111,16 @@ export const NavPopover = ({ className = '', showMenu, setShowMenu }: NavProps) 
                 <div className='text-zinc-400 pb-6 font-medium text-sm uppercase'>Browse By Key Topics</div>
                 <div className="lg:columns-4 gap-6">
                   {tagData && tagData.map((tag, index) => (
-                    <Link
-                      key={index}
-                      href={`/browse/${tag?.slug?.current}`}
-                      scroll={false}
-                      className="text-zinc-500 pb-[14px] font-medium text-sm flex hover:text-zinc-600 transition-colors break-inside-avoid"
-                    >
-                      <span>{tag?.tagName}</span>
-                    </Link>
+                    <div className='break-inside-avoid pb-[14px]'>
+                      <Link
+                        key={index}
+                        href={`/browse/${tag?.slug?.current}`}
+                        scroll={false}
+                        className="text-zinc-500 font-medium text-sm hover:text-zinc-600 transition-colors inlin-flex underline underline-offset-2"
+                      >
+                        <span>{tag?.tagName}</span>
+                      </Link>
+                    </div>
                   ))}
                 </div>
               </div>
@@ -135,14 +137,16 @@ export const NavPopover = ({ className = '', showMenu, setShowMenu }: NavProps) 
             <div className={`px-[10px] py-6 lg:p-6 lg:hidden block absolute top-[56px] h-full left-0 w-full overflow-auto transition-all duration-300 ease  ${showTags ? 'translate-x-0' : 'translate-x-full'}`}>
               <div className="columns-2 gap-6">
                 {tagData && tagData.map((tag, index) => (
-                  <Link
-                    key={index}
-                    href={`/browse/${tag?.slug?.current}`}
-                    scroll={false}
-                    className="text-zinc-500 pb-[14px] font-medium text-sm flex hover:text-zinc-600 transition-colors break-inside-avoid"
-                  >
-                    <span>{tag?.tagName}</span>
-                  </Link>
+                  <div className='break-inside-avoid'>
+                    <Link
+                      key={index}
+                      href={`/browse/${tag?.slug?.current}`}
+                      scroll={false}
+                      className="text-zinc-500 pb-[14px] font-medium text-sm flex hover:text-zinc-600 transition-colors"
+                    >
+                      <span>{tag?.tagName}</span>
+                    </Link>
+                  </div>
                 ))}
               </div>
             </div>
