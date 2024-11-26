@@ -1,31 +1,30 @@
-import React, { useRef, useEffect } from 'react';
-import { Post } from '~/interfaces/post';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import Card from '../Card';
-import { ArrowRightIcon } from '@sanity/icons';
-import { ArrowLeftIcon } from '@sanity/icons';
+import React, { useRef, useEffect } from 'react'
+import { Post } from '~/interfaces/post'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Navigation, Pagination } from 'swiper/modules'
+import 'swiper/css'
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
+import Card from '../Card'
+import { ArrowRightIcon } from '@sanity/icons'
+import { ArrowLeftIcon } from '@sanity/icons'
 
 interface CarouselProps {
-  items: Post[];
-  swiperRef?: React.MutableRefObject<any>;
+  items: Post[]
+  swiperRef?: React.MutableRefObject<any>
 }
 
 const Carousel: React.FC<CarouselProps> = ({ items }) => {
-  const swiperRef = useRef(null);
-  
+  const swiperRef = useRef(null)
+
   useEffect(() => {
     if (swiperRef.current) {
-      swiperRef.current.navigation.update();
+      swiperRef.current.navigation.update()
     }
-  }, [swiperRef]);
+  }, [swiperRef])
 
   return (
     <>
-    
       <Swiper
         modules={[Navigation, Pagination]}
         spaceBetween={30}
@@ -35,7 +34,6 @@ const Carousel: React.FC<CarouselProps> = ({ items }) => {
           nextEl: '.ebook-next',
           prevEl: '.ebook-prev',
         }}
-        
         breakpoints={{
           640: {
             slidesPerView: 2,
@@ -47,14 +45,13 @@ const Carousel: React.FC<CarouselProps> = ({ items }) => {
             slidesPerView: 3,
           },
         }}
-        
         onSwiper={(swiper) => {
-          swiperRef.current = swiper; 
+          swiperRef.current = swiper
         }}
       >
         {items.map((item, index) => (
-          <SwiperSlide key={item._id} className='!h-auto'>
-            <Card cardType='ebook-card' post={item} index={index} />
+          <SwiperSlide key={item._id} className="!h-auto">
+            <Card cardType="ebook-card" post={item} index={index} />
           </SwiperSlide>
         ))}
 
@@ -63,10 +60,9 @@ const Carousel: React.FC<CarouselProps> = ({ items }) => {
             <Card cardType='ebook-card' post={item}  index={index}/>
           </SwiperSlide>
         ))} */}
-        
       </Swiper>
     </>
-  );
-};
+  )
+}
 
-export default Carousel;
+export default Carousel

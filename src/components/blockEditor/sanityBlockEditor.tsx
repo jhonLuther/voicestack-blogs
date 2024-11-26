@@ -1,5 +1,9 @@
 import React from 'react'
-import { PortableText, PortableTextReactComponents, toPlainText } from '@portabletext/react'
+import {
+  PortableText,
+  PortableTextReactComponents,
+  toPlainText,
+} from '@portabletext/react'
 import { getClient } from '~/lib/sanity.client'
 import DecoratorTable from '~/components/DecoratorTable'
 import DynamicComponent from '~/layout/DynamicComponent'
@@ -21,9 +25,9 @@ const SanityPortableText: React.FC<SanityPortableTextProps> = ({
 }) => {
   const portableTextComponents: Partial<PortableTextReactComponents> = {
     marks: {
-      link: ({value, children}) => {
+      link: ({ value, children }) => {
         return (
-          <a href={value?.href} target='_blank' className="!text-blue-500">
+          <a href={value?.href} target="_blank" className="!text-blue-500">
             {children}
           </a>
         )
@@ -35,43 +39,46 @@ const SanityPortableText: React.FC<SanityPortableTextProps> = ({
     // },
     // listItem: {
     //   bullet: ({children, index}) => (
-    //     <ListItem 
-    //       node={{ children }} 
-    //       index={index ?? 0} 
-    //       isOrdered={false} 
+    //     <ListItem
+    //       node={{ children }}
+    //       index={index ?? 0}
+    //       isOrdered={false}
     //     />
     //   ),
     //   number: ({children, index}) => (
-    //     <ListItem 
-    //       node={{ children }} 
-    //       index={index ?? 0} 
-    //       isOrdered={true} 
+    //     <ListItem
+    //       node={{ children }}
+    //       index={index ?? 0}
+    //       isOrdered={true}
     //     />
     //   ),
     // },
     block: {
       h2: ({ children, value }) => {
         // `value` is the single Portable Text block for this header
-        const slug = slugify(toPlainText(value));
-        return <h2 className='scroll-my-8' id={slug}>{children}</h2>;
+        const slug = slugify(toPlainText(value))
+        return (
+          <h2 className="scroll-my-8" id={slug}>
+            {children}
+          </h2>
+        )
       },
     },
     types: {
-      image: ({value}) => {
-
+      image: ({ value }) => {
         return (
-          <ImageLoader 
+          <ImageLoader
             image={value.asset}
             priority={true}
-            altText={value?.asset?.altText || "Post image"}
-            title={value.asset.title || "Post image"}
-            imageClassName='w-full'
+            altText={value?.asset?.altText || 'Post image'}
+            title={value.asset.title || 'Post image'}
+            imageClassName="w-full"
             fixed={false}
-            client={getClient(draftMode ? { token } : undefined)} 
+            client={getClient(draftMode ? { token } : undefined)}
           />
         )
       },
-      videoReference: ({value}) => {
+      videoReference: ({ value }) => {
         return (
           <VideoModal
             {...value}
@@ -79,22 +86,22 @@ const SanityPortableText: React.FC<SanityPortableTextProps> = ({
           />
         )
       },
-      table: ({value}) => {
+      table: ({ value }) => {
         return <DecoratorTable>{value}</DecoratorTable>
       },
-      htmlCode: ({value}) => {
+      htmlCode: ({ value }) => {
         return (
-          <div 
-            className="content-wrapper w-full" 
-            dangerouslySetInnerHTML={{ __html: value.htmlCode }} 
+          <div
+            className="content-wrapper w-full"
+            dangerouslySetInnerHTML={{ __html: value.htmlCode }}
           />
         )
       },
-      dynamicComponent: ({value}) => {
+      dynamicComponent: ({ value }) => {
         return (
-          <DynamicComponent 
-            {...value} 
-            client={getClient(draftMode ? { token } : undefined)} 
+          <DynamicComponent
+            {...value}
+            client={getClient(draftMode ? { token } : undefined)}
           />
         )
       },

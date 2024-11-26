@@ -21,7 +21,51 @@ import siteSetting from './siteSetting'
 import customContent from './customContent'
 import eventCard from './eventCard'
 
-export const schemaTypes = [post, iframe, blockContent, newContent, tag,dynamicComponent,demoBannerBlock,author,homeSettings,testiMonial,customer,link,globalSettings,table,htmlCode,asideBannerBlock,testimonialCard,videos,siteSetting,customContent,eventCard]
+export const schemaTypes = [
+  post,
+  iframe,
+  blockContent,
+  newContent,
+  tag,
+  dynamicComponent,
+  demoBannerBlock,
+  author,
+  homeSettings,
+  testiMonial,
+  customer,
+  link,
+  globalSettings,
+  table,
+  htmlCode,
+  asideBannerBlock,
+  testimonialCard,
+  videos,
+  siteSetting,
+  customContent,
+  eventCard,
+]
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [post, iframe, blockContent, newContent, tag,dynamicComponent,demoBannerBlock,author,homeSettings,testiMonial,customer,link,globalSettings,table,htmlCode,asideBannerBlock,testimonialCard,videos,siteSetting,customContent,eventCard],
+  types: [
+    post,
+    iframe,
+    blockContent,
+    newContent,
+    tag,
+    dynamicComponent,
+    demoBannerBlock,
+    author,
+    homeSettings,
+    testiMonial,
+    customer,
+    link,
+    globalSettings,
+    table,
+    htmlCode,
+    asideBannerBlock,
+    testimonialCard,
+    videos,
+    siteSetting,
+    customContent,
+    eventCard,
+  ],
 }

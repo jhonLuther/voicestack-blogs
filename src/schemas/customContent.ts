@@ -1,5 +1,5 @@
 import { defineField, defineType } from 'sanity'
-import {ComposeIcon} from '@sanity/icons'
+import { ComposeIcon } from '@sanity/icons'
 
 export default defineType({
   name: 'customContent',
@@ -50,7 +50,6 @@ export default defineType({
         hotspot: true,
       },
     }),
-
   ],
   preview: {
     select: {

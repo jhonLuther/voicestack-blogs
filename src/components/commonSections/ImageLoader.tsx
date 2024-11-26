@@ -1,23 +1,23 @@
-import Image from 'next/image';
-import React, { useEffect, useState, useRef } from 'react';
-import { urlForImage } from '~/lib/sanity.image';
-import useBoundingWidth, { DeviceType } from '~/utils/boundingWIdthHook';
-import { average } from '~/utils/color';
-import { rgbToHsl } from '~/utils/common';
+import Image from 'next/image'
+import React, { useEffect, useState, useRef } from 'react'
+import { urlForImage } from '~/lib/sanity.image'
+import useBoundingWidth, { DeviceType } from '~/utils/boundingWIdthHook'
+import { average } from '~/utils/color'
+import { rgbToHsl } from '~/utils/common'
 
 interface ImageLoaderProps {
-  width?: number;
-  height?: number;
-  image: any;
-  alt?: string;
-  title?: string;
-  className?: string;
-  imageClassName?: string;
-  useClientWidth?: boolean;
-  onColorExtracted?: (color: string) => void;
-  maxWidth?: number;
-  fixed?: boolean;
-  [x: string]: any;
+  width?: number
+  height?: number
+  image: any
+  alt?: string
+  title?: string
+  className?: string
+  imageClassName?: string
+  useClientWidth?: boolean
+  onColorExtracted?: (color: string) => void
+  maxWidth?: number
+  fixed?: boolean
+  [x: string]: any
 }
 
 const ImageLoader: React.FC<ImageLoaderProps> = ({
@@ -34,18 +34,18 @@ const ImageLoader: React.FC<ImageLoaderProps> = ({
   fixed = true,
   ...props
 }) => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const autoContainerRef = useRef<HTMLDivElement>(null);
-  const [clientWidth, setClientWidth] = useState<number>(width);
-  const [clientHeight, setClientHeight] = useState<number>(height);
+  const containerRef = useRef<HTMLDivElement>(null)
+  const autoContainerRef = useRef<HTMLDivElement>(null)
+  const [clientWidth, setClientWidth] = useState<number>(width)
+  const [clientHeight, setClientHeight] = useState<number>(height)
   const [imageData, setImageData] = useState({
     url: typeof image === 'string' ? image : '',
     width: 0,
     height: 0,
-    ratio: 0
-  });
+    ratio: 0,
+  })
 
-  const deviceObtained = useBoundingWidth() as DeviceType;
+  const deviceObtained = useBoundingWidth() as DeviceType
 
   useEffect(() => {
     const processImage = async () => {
@@ -54,42 +54,45 @@ const ImageLoader: React.FC<ImageLoaderProps> = ({
           url: image,
           width: clientWidth,
           height: clientHeight,
-          ratio: clientWidth / clientHeight
-        });
-        return;
+          ratio: clientWidth / clientHeight,
+        })
+        return
       }
 
-      const imageWidthFromCdn = image?.metadata?.dimensions?.width;
-      const imageRatio = image?.metadata?.dimensions?.aspectRatio;
+      const imageWidthFromCdn = image?.metadata?.dimensions?.width
+      const imageRatio = image?.metadata?.dimensions?.aspectRatio
 
       if (imageWidthFromCdn && imageRatio) {
-        let newProposedWidth = maxWidth;
+        let newProposedWidth = maxWidth
         switch (deviceObtained) {
           case 'smallMobile':
-            newProposedWidth = Math.min(imageWidthFromCdn, 600);
-            break;
+            newProposedWidth = Math.min(imageWidthFromCdn, 600)
+            break
           case 'largeMobile':
-            newProposedWidth = Math.min(imageWidthFromCdn, 767);
-            break;
+            newProposedWidth = Math.min(imageWidthFromCdn, 767)
+            break
           case 'tab':
-            newProposedWidth = Math.min(imageWidthFromCdn, maxWidth);
-            break;
+            newProposedWidth = Math.min(imageWidthFromCdn, maxWidth)
+            break
         }
 
-        const newHeight = newProposedWidth / imageRatio;
-        
+        const newHeight = newProposedWidth / imageRatio
+
         const url = urlForImage(image._id || image, {
           width: newProposedWidth,
           height: newHeight,
           quality: 90,
-        });
+        })
 
         if (url && onColorExtracted) {
           try {
-            const color: any = await average(url, { amount: 1, format: 'array' });
-            onColorExtracted(rgbToHsl(color[0], color[1], color[2]));
+            const color: any = await average(url, {
+              amount: 1,
+              format: 'array',
+            })
+            onColorExtracted(rgbToHsl(color[0], color[1], color[2]))
           } catch (error) {
-            console.error('Error extracting color:', error);
+            console.error('Error extracting color:', error)
           }
         }
 
@@ -97,51 +100,64 @@ const ImageLoader: React.FC<ImageLoaderProps> = ({
           url: url || '',
           width: newProposedWidth,
           height: newHeight,
-          ratio: imageRatio
-        });
+          ratio: imageRatio,
+        })
       }
-    };
+    }
 
-    processImage();
-  }, [image, deviceObtained, maxWidth, onColorExtracted, clientWidth, clientHeight]);
+    processImage()
+  }, [
+    image,
+    deviceObtained,
+    maxWidth,
+    onColorExtracted,
+    clientWidth,
+    clientHeight,
+  ])
 
   useEffect(() => {
     if (autoContainerRef.current) {
-      setClientHeight(autoContainerRef.current.clientHeight);
-      setClientWidth(autoContainerRef.current.clientWidth);
+      setClientHeight(autoContainerRef.current.clientHeight)
+      setClientWidth(autoContainerRef.current.clientWidth)
     }
-  }, [imageData.width]);
+  }, [imageData.width])
 
   if (!imageData.url) {
-    return null;
+    return null
   }
 
   if (fixed) {
     return (
-      <div ref={containerRef} className={`flex w-full h-full relative ${className}`}>
+      <div
+        ref={containerRef}
+        className={`flex w-full h-full relative ${className}`}
+      >
         <Image
           src={imageData.url}
           alt={alt || (image?.altText ?? '') || ''}
-          title={title || (image?.title ?? '' )|| ''}
+          title={title || (image?.title ?? '') || ''}
           className={`object-cover object-center ${imageClassName}`}
           fill
         />
       </div>
-    );
+    )
   }
 
   return (
-    <div ref={autoContainerRef} className={`w-full h-auto relative ${className}`}>
+    <div
+      ref={autoContainerRef}
+      className={`w-full h-auto relative ${className}`}
+    >
       <Image
         className={`!m-0 ${imageClassName}`}
         src={imageData.url}
         alt={alt || (image?.altText ?? '') || ''}
-        title={title || (image?.title  ?? '') || ''}
+        title={title || (image?.title ?? '') || ''}
         width={imageData.width || clientWidth}
         height={imageData.height || clientHeight}
       />
     </div>
-  );
-};
+  )
+}
 
-export default ImageLoader;
+export default ImageLoader

@@ -1,12 +1,16 @@
 import React from 'react'
 
 interface SubTextProps {
-    className ?:string;
-    children?:any
+  className?: string
+  children?: any
 }
-function SubText({className,children}:SubTextProps) {
+function SubText({ className, children }: SubTextProps) {
   return (
-    <span className={`uppercase text-zinc-500 text-xs md:text-sm font-medium ${className}`}>{children}</span>
+    <span
+      className={`uppercase text-zinc-500 text-xs md:text-sm font-medium ${className}`}
+    >
+      {children}
+    </span>
   )
 }
 

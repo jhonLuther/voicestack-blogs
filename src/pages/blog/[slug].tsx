@@ -36,9 +36,9 @@ export const getStaticProps: GetStaticProps<
 > = async ({ draftMode = false, params = {} }) => {
   const client = getClient(draftMode ? { token: readToken } : undefined)
   const post = await getPost(client, params.slug)
-  const allPosts = await getPosts(client);
-  const relatedContents = await getRelatedContents(client, params?.slug);
-  const tags =  await getTags(client)
+  const allPosts = await getPosts(client)
+  const relatedContents = await getRelatedContents(client, params?.slug)
+  const tags = await getTags(client)
   const homeSettings = await getHomeSettings(client)
 
   if (!post) {
@@ -55,50 +55,61 @@ export const getStaticProps: GetStaticProps<
       allPosts,
       relatedContents,
       tags,
-      homeSettings
+      homeSettings,
     },
   }
 }
 
 export default function ProjectSlugRoute(
-  props: InferGetStaticPropsType<typeof getStaticProps> & { tags: any,homeSettings: any, allPosts: Post[] ,relatedContents: Post[]},
+  props: InferGetStaticPropsType<typeof getStaticProps> & {
+    tags: any
+    homeSettings: any
+    allPosts: Post[]
+    relatedContents: Post[]
+  },
 ) {
   const [post] = useLiveQuery(props.post, postBySlugQuery, {
     slug: props.post?.slug?.current,
   })
 
-  const [allPosts] = useLiveQuery(props.allPosts, postsQuery);
+  const [allPosts] = useLiveQuery(props.allPosts, postsQuery)
 
   if (!post) {
     return <div>Loading...</div>
   }
 
-
   return (
     <>
-     <GlobalDataProvider data={props.tags} featuredTags={props?.homeSettings.featuredTags} >
-      <Layout >
-        <MainImageSection post={post} />
-        <section >
-          <div className="post__container">
-            <Wrapper>
-              <div className="flex md:flex-row flex-col gap-6 md:gap-12 justify-between">
-                <div className="md:mt-12 flex-1 flex md:flex-col flex-col-reverse md:w-2/3 w-full md:max-w-[710px]">
-                  <div className='post__content w-full '>
-                  <SanityPortableText
-                      content={post.body}
-                      draftMode={props.draftMode}
-                      token={props.token}
-                    />
+      <GlobalDataProvider
+        data={props.tags}
+        featuredTags={props?.homeSettings.featuredTags}
+      >
+        <Layout>
+          <MainImageSection post={post} />
+          <section>
+            <div className="post__container">
+              <Wrapper>
+                <div className="flex md:flex-row flex-col gap-6 md:gap-12 justify-between">
+                  <div className="md:mt-12 flex-1 flex md:flex-col flex-col-reverse md:w-2/3 w-full md:max-w-[710px]">
+                    <div className="post__content w-full ">
+                      <SanityPortableText
+                        content={post.body}
+                        draftMode={props.draftMode}
+                        token={props.token}
+                      />
+                    </div>
                   </div>
-    
                 </div>
-              </div>
-              {post?.relatedPosts && <RelatedFeaturesSection  contentType={post.contentType} allPosts={post?.relatedPosts} />}
-            </Wrapper>
-          </div>
-        </section>
-      </Layout>
+                {post?.relatedPosts && (
+                  <RelatedFeaturesSection
+                    contentType={post.contentType}
+                    allPosts={post?.relatedPosts}
+                  />
+                )}
+              </Wrapper>
+            </div>
+          </section>
+        </Layout>
       </GlobalDataProvider>
     </>
   )

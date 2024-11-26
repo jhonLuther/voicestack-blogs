@@ -384,7 +384,7 @@ export function CustomHead({
     return head(metaData, randomId)
   } else if (props && type === 'articleExpanded' && props?.title) {
     /* for url if author url available add field , for now  url:"www.carestack.com" */
-     const metaData = {
+    const metaData = {
       '@context': 'https://schema.org',
       '@type': 'Article',
       headline: props?.title ?? '',
@@ -511,11 +511,12 @@ export function CustomHead({
       name: paginationType,
     }
     return head(metaData, randomId)
-  } else if (props && type === 'podcast') { debugger
+  } else if (props && type === 'podcast') {
+    debugger
     const metaData = {
       '@context': 'https://schema.org',
       '@type': 'Event',
-      performer:props?.author?.map((e)=>e?.name)[0],
+      performer: props?.author?.map((e) => e?.name)[0],
       name: props?.title,
       location: 'global',
       organizer: 'CareStack',

@@ -37,11 +37,11 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-        name: 'layoutSwitcher',
-        title: 'Layout Switcher',
-        type: 'boolean',
-        description: 'Toggle to switch between layouts',
-      }),
+      name: 'layoutSwitcher',
+      title: 'Layout Switcher',
+      type: 'boolean',
+      description: 'Toggle to switch between layouts',
+    }),
     defineField({
       name: 'hasVideo',
       title: 'Has Video',
@@ -60,7 +60,7 @@ export default defineType({
       ],
     }),
 
-        // Tags Field
+    // Tags Field
     defineField({
       name: 'tags',
       title: 'Tags',

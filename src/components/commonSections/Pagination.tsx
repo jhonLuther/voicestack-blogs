@@ -131,29 +131,31 @@ const Pagination = ({
   `
 
   return (
-    totalPages > 1 && <Section className="justify-center md:pb-12 md:pt-16">
-      <Wrapper className="justify-center">
-        <div className="flex items-center space-x-2">
-          <Link
-            href={getPageUrl(currentPage, 'previous')}
-            onClick={() => handlePageChange(currentPage - 1)}
-            className={arrowLinkClass}
-          >
-            <ArrowLeftIcon height={25} className={iconClass} />
-          </Link>
+    totalPages > 1 && (
+      <Section className="justify-center md:pb-12 md:pt-16">
+        <Wrapper className="justify-center">
+          <div className="flex items-center space-x-2">
+            <Link
+              href={getPageUrl(currentPage, 'previous')}
+              onClick={() => handlePageChange(currentPage - 1)}
+              className={arrowLinkClass}
+            >
+              <ArrowLeftIcon height={25} className={iconClass} />
+            </Link>
 
-          {renderPageNumbers()}
+            {renderPageNumbers()}
 
-          <Link
-            href={getPageUrl(currentPage, 'next')}
-            onClick={() => handlePageChange(currentPage + 1)}
-            className={nextArrowLinkClass}
-          >
-            <ArrowRightIcon height={25} className={iconClass} />
-          </Link>
-        </div>
-      </Wrapper>
-    </Section>
+            <Link
+              href={getPageUrl(currentPage, 'next')}
+              onClick={() => handlePageChange(currentPage + 1)}
+              className={nextArrowLinkClass}
+            >
+              <ArrowRightIcon height={25} className={iconClass} />
+            </Link>
+          </div>
+        </Wrapper>
+      </Section>
+    )
   )
 }
 

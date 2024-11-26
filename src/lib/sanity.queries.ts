@@ -124,7 +124,7 @@ export const authorsQuery = groq`*[_type == "author" && defined(slug.current)] |
 
 export const tagsQuery = groq`*[_type == "tag"]  | order(tagName asc)`
 
-export const tagsByOrderQuery = groq`*[_type == "tag"] | order(tagName asc) {_id, slug, tagName}`;
+export const tagsByOrderQuery = groq`*[_type == "tag"] | order(tagName asc) {_id, slug, tagName}`
 
 export const eventCardQuery = groq`
   *[_type == "eventCard"] | order(eventStartDate desc) {

@@ -1,4 +1,4 @@
-import { defineField, defineType } from 'sanity';
+import { defineField, defineType } from 'sanity'
 
 export default defineType({
   name: 'link',
@@ -18,4 +18,4 @@ export default defineType({
       validation: (Rule) => Rule.uri({ allowRelative: true }),
     }),
   ],
-});
+})

@@ -31,11 +31,11 @@ interface Query {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const client = getClient()
   const pageNumber = params?.pageNumber
-  ? parseInt(params.pageNumber as string, 10)
-  : 1;
+    ? parseInt(params.pageNumber as string, 10)
+    : 1
 
-const cardsPerPage = siteConfig.pagination.childItemsPerPage || 5;
-const startLimit = (pageNumber - 1) * cardsPerPage;
+  const cardsPerPage = siteConfig.pagination.childItemsPerPage || 5
+  const startLimit = (pageNumber - 1) * cardsPerPage
 
   const [
     tags,
@@ -46,20 +46,20 @@ const startLimit = (pageNumber - 1) * cardsPerPage;
     totalWebinars,
     totalArticles,
     totalEbooks,
-    homeSettings
+    homeSettings,
   ] = await Promise.all([
-    getTags(client),                                    
-    getPostsByLimit(client, startLimit, cardsPerPage), 
-    getPosts(client),                                  
-    getSiteSettings(client),                           
-    getPodcastsCount(client),                          
-    getWebinarsCount(client),                          
-    getArticlesCount(client),                          
-    getEbooksCount(client),                            
-    getHomeSettings(client)                           
-  ]);
+    getTags(client),
+    getPostsByLimit(client, startLimit, cardsPerPage),
+    getPosts(client),
+    getSiteSettings(client),
+    getPodcastsCount(client),
+    getWebinarsCount(client),
+    getArticlesCount(client),
+    getEbooksCount(client),
+    getHomeSettings(client),
+  ])
 
-  const totalPages = Math.ceil(totalPosts.length / cardsPerPage);
+  const totalPages = Math.ceil(totalPosts.length / cardsPerPage)
 
   return {
     props: {
@@ -75,7 +75,7 @@ const startLimit = (pageNumber - 1) * cardsPerPage;
         ebooks: totalEbooks,
       },
       siteSettings: siteSettings,
-      homeSettings: homeSettings
+      homeSettings: homeSettings,
     },
   }
 }
@@ -89,8 +89,16 @@ export default function ProjectSlugRoute(
 ) {
   const router = useRouter()
 
-  const { posts, totalPages, tags, contentCount, totalPosts, siteSettings,homeSettings } = props
-  const totalCount: any = totalPosts.length ?? 0;
+  const {
+    posts,
+    totalPages,
+    tags,
+    contentCount,
+    totalPosts,
+    siteSettings,
+    homeSettings,
+  } = props
+  const totalCount: any = totalPosts.length ?? 0
 
   const baseUrl = useRef(`/${siteConfig.paginationBaseUrls.base}`).current
 
@@ -106,21 +114,25 @@ export default function ProjectSlugRoute(
   return (
     <>
       <GlobalDataProvider data={tags} featuredTags={homeSettings?.featuredTags}>
-      <BaseUrlProvider baseUrl={baseUrl}>
-        <Layout>
-          {siteSettingWithImage ? defaultMetaTag(siteSettingWithImage) : <></>}
-          <ContentHub contentCount={contentCount} />
-          <TagSelect tags={tags} tagLimit={5} showTags={true} />
-          <AllcontentSection allItemCount={totalCount} allContent={posts} />
-          <Pagination
-            totalPages={totalPages}
-            onPageChange={handlePageChange}
-            currentPage={0}
-            enablePageSlug={true}
-          />
-          <BannerSubscribeSection />
-        </Layout>
-      </BaseUrlProvider>
+        <BaseUrlProvider baseUrl={baseUrl}>
+          <Layout>
+            {siteSettingWithImage ? (
+              defaultMetaTag(siteSettingWithImage)
+            ) : (
+              <></>
+            )}
+            <ContentHub contentCount={contentCount} />
+            <TagSelect tags={tags} tagLimit={5} showTags={true} />
+            <AllcontentSection allItemCount={totalCount} allContent={posts} />
+            <Pagination
+              totalPages={totalPages}
+              onPageChange={handlePageChange}
+              currentPage={0}
+              enablePageSlug={true}
+            />
+            <BannerSubscribeSection />
+          </Layout>
+        </BaseUrlProvider>
       </GlobalDataProvider>
     </>
   )

@@ -65,7 +65,7 @@ export const getStaticProps: GetStaticProps<
   const totalArticles = await getArticlesCount(client)
   const totalEbooks = await getEbooksCount(client)
   const siteSettings = await getSiteSettings(client)
-  const homeSettings = await getHomeSettings(client);
+  const homeSettings = await getHomeSettings(client)
 
   return {
     props: {
@@ -83,7 +83,7 @@ export const getStaticProps: GetStaticProps<
         ebooks: totalEbooks,
       },
       siteSettings,
-      homeSettings
+      homeSettings,
     },
   }
 }
@@ -106,7 +106,7 @@ export default function TagPage({
   contentCount,
   totalPostCount,
   siteSettings,
-  homeSettings
+  homeSettings,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const handlePageChange = (page: number) => {
     console.log(`Navigating to page: ${page}`)
@@ -116,31 +116,30 @@ export default function TagPage({
   ).current
   const siteSettingWithImage = siteSettings?.find((e: any) => e?.openGraphImage)
 
-
   return (
     <GlobalDataProvider data={allTags} featuredTags={homeSettings.featuredTags}>
-    <BaseUrlProvider baseUrl={baseUrl}>
-      <Layout>
-        {siteSettingWithImage ? defaultMetaTag(siteSettingWithImage) : <></>}
-        <ContentHub contentCount={contentCount} />
-        <TagSelect
-          tags={allTags}
-          tagLimit={5}
-          showTags={true}
-          className="mt-12"
-        />
-        <AllcontentSection allItemCount={totalPostCount} allContent={posts} />
-        <Pagination
-          totalPages={totalPages}
-          // baseUrl={`/${siteConfig.paginationBaseUrls.base}/${tag?.slug?.current}`}
-          onPageChange={handlePageChange}
-          currentPage={1}
-          enablePageSlug={true}
-          content={posts}
-        />
-        <BannerSubscribeSection />
-      </Layout>
-    </BaseUrlProvider>
+      <BaseUrlProvider baseUrl={baseUrl}>
+        <Layout>
+          {siteSettingWithImage ? defaultMetaTag(siteSettingWithImage) : <></>}
+          <ContentHub contentCount={contentCount} />
+          <TagSelect
+            tags={allTags}
+            tagLimit={5}
+            showTags={true}
+            className="mt-12"
+          />
+          <AllcontentSection allItemCount={totalPostCount} allContent={posts} />
+          <Pagination
+            totalPages={totalPages}
+            // baseUrl={`/${siteConfig.paginationBaseUrls.base}/${tag?.slug?.current}`}
+            onPageChange={handlePageChange}
+            currentPage={1}
+            enablePageSlug={true}
+            content={posts}
+          />
+          <BannerSubscribeSection />
+        </Layout>
+      </BaseUrlProvider>
     </GlobalDataProvider>
   )
 }

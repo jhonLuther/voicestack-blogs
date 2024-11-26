@@ -1,20 +1,18 @@
-import { DocumentIcon } from '@sanity/icons';
-import link from './link'; 
+import { DocumentIcon } from '@sanity/icons'
+import link from './link'
 
 export default {
-  name: 'globalSettings', 
+  name: 'globalSettings',
   title: 'Global Settings',
   type: 'document',
-  icon: DocumentIcon,  
+  icon: DocumentIcon,
   fields: [
     {
       name: 'category',
       title: 'Category',
       type: 'string',
       options: {
-        list: [
-          { title: 'HeaderFooter', value: 'headerFooter' },
-        ],
+        list: [{ title: 'HeaderFooter', value: 'headerFooter' }],
       },
     },
     {
@@ -34,10 +32,10 @@ export default {
               options: { hotspot: true },
             },
             {
-                name: 'navigationLinks',
-                title: 'Navigation Links',
-                type: 'array',
-                of: [link], 
+              name: 'navigationLinks',
+              title: 'Navigation Links',
+              type: 'array',
+              of: [link],
             },
           ],
         },
@@ -56,7 +54,7 @@ export default {
               name: 'footerLinks',
               title: 'Footer Links',
               type: 'array',
-                of: [link], 
+              of: [link],
             },
             {
               name: 'footerText',
@@ -68,4 +66,4 @@ export default {
       ],
     },
   ],
-};
+}

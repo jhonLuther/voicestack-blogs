@@ -1,41 +1,52 @@
-import React from 'react';
-import { Post } from '~/interfaces/post';
-import Card from '../Card';
-import Wrapper from '../../layout/Wrapper';
-import H2Large from '../typography/H2Large';
-import Section from '../Section';
-import { useBaseUrl } from '../Context/UrlContext';
-import { customMetaTag, generateMetaData } from '~/utils/customHead';
+import React from 'react'
+import { Post } from '~/interfaces/post'
+import Card from '../Card'
+import Wrapper from '../../layout/Wrapper'
+import H2Large from '../typography/H2Large'
+import Section from '../Section'
+import { useBaseUrl } from '../Context/UrlContext'
+import { customMetaTag, generateMetaData } from '~/utils/customHead'
 
 interface LatestBlogsProps {
-  contents: any[];
-  reverse?: boolean;
-  className?: string;
+  contents: any[]
+  reverse?: boolean
+  className?: string
   showPlayIcon?: boolean
   page?: string
-  contentType?: 'ebook' | 'article' | 'podcast' | 'webinar' | 'case-study' | 'press-release'
+  contentType?:
+    | 'ebook'
+    | 'article'
+    | 'podcast'
+    | 'webinar'
+    | 'case-study'
+    | 'press-release'
 }
 
-
-const LatestBlogs: React.FC<LatestBlogsProps> = ({ contents, reverse, className, showPlayIcon }) => {
-  const baseUrl = useBaseUrl();
+const LatestBlogs: React.FC<LatestBlogsProps> = ({
+  contents,
+  reverse,
+  className,
+  showPlayIcon,
+}) => {
+  const baseUrl = useBaseUrl()
 
   if (!contents) {
     return null
   }
 
   const types = {
-    'ebook': 'Ebooks',
-    'article': 'Articles',
-    'podcast': 'Podcasts',
-    'webinar': 'Webinars',
+    ebook: 'Ebooks',
+    article: 'Articles',
+    podcast: 'Podcasts',
+    webinar: 'Webinars',
     'case-study': 'Case Studies',
     'press-release': 'Press Releases',
   }
 
-  const contentType = contents && contents?.find(c => c.contentType)?.contentType;
-  const displayName = types[contentType];
-  const [firstBlog, ...otherBlogs] = contents && contents;
+  const contentType =
+    contents && contents?.find((c) => c.contentType)?.contentType
+  const displayName = types[contentType]
+  const [firstBlog, ...otherBlogs] = contents && contents
 
   return (
     <React.Fragment>
@@ -75,6 +86,6 @@ const LatestBlogs: React.FC<LatestBlogsProps> = ({ contents, reverse, className,
       </Section>
     </React.Fragment>
   )
-};
+}
 
-export default LatestBlogs;
+export default LatestBlogs
