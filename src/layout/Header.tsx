@@ -124,7 +124,7 @@ const Header = () => {
                   // </svg>
                   }
                 </div>
-                <NavPopover showMenu={showMenu} className='z-10'/>
+                <NavPopover showMenu={showMenu} setShowMenu={setShowMenu} className='z-10'/>
               </div>
             </div>
           </div>
