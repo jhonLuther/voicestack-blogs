@@ -278,6 +278,19 @@ export const homeSettingsQuery = groq`
         title
       },
     },
+    featuredEvent->{
+      _id,
+      eventName,
+      ${imageFragment},
+      bgColor,
+      evenTtype,
+      eventDescription,
+      eventStartDate,
+      eventEndDate,
+      eventLocation,
+      registrationLink,
+      registerBtnTxt,
+    },
     featuredArticle->{
       _id,
       slug,

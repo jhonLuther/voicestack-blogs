@@ -10,7 +10,7 @@ import Wrapper from "~/layout/Wrapper";
 import SliderSection from "~/components/sections/SliderSection";
 import siteConfig from "config/siteConfig";
 import { BaseUrlProvider } from "~/components/Context/UrlContext";
-import { getUniqueReorderedCarouselItems } from "~/utils/common";
+import { getUniqueData, getUniqueReorderedCarouselItems } from "~/utils/common";
 import EventCarousel from "~/components/eventCarousel";
 
 interface DynamicProps {
@@ -46,6 +46,12 @@ const DynamicPages = ({
 	
 	const featuredContents = [...featuredBlogs,...posts].slice(0, 4);
 
+	const featuredEvent = homeSettings?.featuredEvent &&  [homeSettings?.featuredEvent] || [];
+
+	const eventCardData = [...featuredEvent, ...eventCards]
+
+	const uniqueEventCards = getUniqueData(eventCardData)
+
 	const reorderedCarouselItems = getUniqueReorderedCarouselItems(homeSettings, ebooks, webinars);
 	  
 	const testimonialList = homeSettings?.testimonial ? homeSettings?.testimonial : testimonials.slice(0, 1);
@@ -60,7 +66,7 @@ const DynamicPages = ({
 				tagLimit={7}
 				showTags={true}
 			/>
-			<EventCarousel allEventCards={eventCards}/>
+			<EventCarousel allEventCards={uniqueEventCards}/>
 			<LatestBlogs contents={latestPosts} />
 			<FeaturedAndPopularBlogs featuredBlog={featuredBlog} popularBlogs={featuredContents} />
 			<BannerSubscribeSection />

@@ -157,3 +157,12 @@ export const removeUnwantedCharacters = (path: string) => {
   return cleanPath;
 }
 
+export const getUniqueData = (data) => {
+  if(!data) return [];
+  return data.reduce((acc, current) => {
+    if (!acc.find((item) => item._id === current._id)) {
+      acc.push(current)
+    }
+    return acc
+  }, [])
+}

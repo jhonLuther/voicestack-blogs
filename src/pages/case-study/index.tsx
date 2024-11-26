@@ -18,7 +18,7 @@ import { BaseUrlProvider } from '~/components/Context/UrlContext';
 import ReviewsGrid from '~/components/sections/ReviewCards';
 import TagSelect from '~/contentUtils/TagSelector';
 import MainImageSection from '~/components/MainImageSection';
-import { mergeAndRemoveDuplicates, mergeReviews } from '~/utils/common';
+import { getUniqueData, mergeAndRemoveDuplicates } from '~/utils/common';
 import { GlobalDataProvider } from '~/components/Context/GlobalDataContext';
 
 export const getStaticProps: GetStaticProps<SharedPageProps & { caseStudies: CaseStudies[]; totalPages: number }> = async (context) => {
@@ -69,8 +69,14 @@ const CaseStudiesPage = ({ caseStudies,latestCaseStudies,homeSettings, totalPage
   };
 
   const featuredReviews = homeSettings?.featuredReviews || [];
-  const reviews  = mergeReviews(featuredReviews,testimonials).slice(0,6) || [];
   const featuredCaseStudy = homeSettings?.featuredCasestudy || [];
+
+  console.log(featuredReviews,'featuredReviews');
+  
+
+	const reviews = [...featuredReviews, ...testimonials].slice(0,6) || [];
+
+	const uniqueReviews = getUniqueData(reviews)
 
   const latestContents = mergeAndRemoveDuplicates(featuredCaseStudy,latestCaseStudies)
   
@@ -104,7 +110,7 @@ const CaseStudiesPage = ({ caseStudies,latestCaseStudies,homeSettings, totalPage
           enablePageSlug={true}
           type='custom'
         />
-        <ReviewsGrid testimonials={reviews}/>
+        <ReviewsGrid testimonials={uniqueReviews}/>
         <BannerSubscribeSection />
     </Layout>
     </BaseUrlProvider>

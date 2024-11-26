@@ -119,7 +119,7 @@ export function RenderToc({
   level?: number;
 }) {
   return (
-    <ol className={` list-decimal list-inside flex flex-col gap-3 text-sm font-semibold text-zinc-600`}>
+    <ol className={` list-decimal list-inside flex flex-col gap-3 text-base  text-zinc-600`}>
       {elements.map((el, index) => (
         <li key={el.text} className={` ${level > 1 ? '[&:first-child]:mt-2' : ''}`}>
           <Link href={`#${el.slug}`} className="hover:underline hover:underline-offset-4">
