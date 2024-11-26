@@ -36,8 +36,6 @@ const Header = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [headerFixed, setHeaderFixed] = useState(false);
 
-  const isMobileV1 = useMediaQuery(767);
-
   const closeMenu = () => {
     setShowMenu(false);  
   };
@@ -94,13 +92,13 @@ const Header = () => {
           <div className="max-w-7xl mx-auto">
             {/* <div className={`flex flex-col gap-3 justify-between py-[10px] transition-all duration-300 ease-linear relative  ${headerFixed ? '!lg:py-3' : 'lg:py-6'}`}> */}
             <div className={`flex flex-col gap-3 justify-between py-0 transition-all duration-300 ease-linear`}>
-              <div className={`flex flex-row gap-2 justify-between items-center 
+              <div className={`flex flex-row gap-2 justify-between items-center rounded-xl border border-zinc-700 
                 pl-[18px] lg:relative transition-all duration-300 ease-in-out ${headerFixed ? 'my-3' : 'lg:mt-8 mt-3 mb-3'}`}>
                 <Link href="/" className="text-2xl font-extrabold bg-gradient-text bg-clip-text text-transparent font-monrope tracking-tighterText">
                   {/* <ClubLogo/>  */}
                   <GrowthClubLogo/>
                 </Link>
-                <div className={`border rounded-xl  border-zinc-700 md:!pl-[18px] lg:flex-row top-[110px] hidden right-0 px-4 pt-4 pb-8 lg:p-0 bg-zinc-900 lg:bg-transparent left-0 lg:static flex-col gap-6 justify-between lg:items-center lg:flex`}>
+                <div className={`lg:flex-row top-[110px] hidden right-0 px-4 pt-4 pb-8 lg:p-0 bg-zinc-900 lg:bg-transparent left-0 lg:static flex-col gap-2 justify-between lg:items-center lg:flex`}>
                   <nav className="flex flex-col lg:flex-row gap-y-2 gap-x-5 lg:gap-x-5 flex-wrap ">
                     {featuredTags && featuredTags?.map((link,i) => (
                       <Link 
@@ -113,27 +111,20 @@ const Header = () => {
                       
                     ))}
                   </nav>
-                  {!isMobileV1 && <div onClick={toggleMenu} className={` ${showMenu ? 'invisible' : 'visible'} md:h-[3.3rem] md:w-[6rem] flex text-zinc-900 cursor-pointer items-center select-none z-20 rounded-lg lg:rounded-xl lg:py-[6px] lg:pr-[10px] lg:pl-[14px]
-                  ${showMenu ? 'lg:pr-[15px] lg:pt-[15px] absolute top-[20px] right-[20px] lg:static' : 'bg-white'} `}>
-                  {!showMenu && <span className='hidden lg:inline-flex text-zinc-800 text-sm'>More</span>}
-                  <MenuIcon  width={40} height={40}/>
-                </div>}
                 </div>
-
-                {isMobileV1 && <div onClick={toggleMenu} className={` ${showMenu ? 'invisible' : 'visible'} md:h-[3.3rem] md:w-[6rem] flex text-zinc-900 cursor-pointer items-center select-none z-20 rounded-lg lg:rounded-xl lg:py-[6px] lg:pr-[10px] lg:pl-[14px]
-                  ${showMenu ? 'lg:pr-[15px] lg:pt-[15px] absolute top-[20px] right-[20px] lg:static' : 'bg-white'} `}>
+                
+                <div onClick={toggleMenu} className={`flex text-zinc-900 cursor-pointer items-center select-none z-20 rounded-lg lg:rounded-xl lg:py-[6px] lg:pr-[10px] lg:pl-[14px]
+                  ${showMenu ? 'lg:pr-[15px] lg:pt-[15px] absolute top-[20px] right-[20px] lg:static' : 'bg-white'}`}>
                   {!showMenu && <span className='hidden lg:inline-flex text-zinc-800 text-sm'>More</span>}
-                  {<MenuIcon  width={40} height={40}/>
-                  // {showMenu ? <CloseIcon width={40} height={40}/>: <MenuIcon width={40} height={40}/>
+                  {showMenu ? <CloseIcon width={40} height={40}/>: <MenuIcon width={40} height={40}/>
                   // <svg width="46" height="41" viewBox="0 0 46 41" fill="none" xmlns="http://www.w3.org/2000/svg">
                   //   <path d="M12 12.4062H34" stroke="#A1A1AA" strokeWidth="2" strokeLinecap="round"/>
                   //   <path d="M12 20.4062H34" stroke="#A1A1AA" strokeWidth="2" strokeLinecap="round"/>
                   //   <path d="M23 28.4062L34 28.4062" stroke="#A1A1AA" strokeWidth="2" strokeLinecap="round"/>
                   // </svg>
                   }
-                </div>}                
-
-                <NavPopover showMenu={showMenu} onClose={() => setShowMenu(false)}  className='z-10'/>
+                </div>
+                <NavPopover showMenu={showMenu} className='z-10'/>
               </div>
             </div>
           </div>
