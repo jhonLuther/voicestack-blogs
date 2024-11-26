@@ -7,22 +7,19 @@ interface LayoutProps {
   children: React.ReactNode
   fullWidth?: boolean
   className?: string
-  data?: any
-  featuredTags?: any
 }
 
 export default function Layout({
   children,
-  data,
-  featuredTags,
   className,
   fullWidth = false,
 }: LayoutProps) {
-  console.log(featuredTags, data, 'featuredTags in layout')
+
+  const { homeSettings } = useGlobalData();
 
   return (
     <div
-      className={`flex flex-col w-full items-center pt-[110px] lg:pt-[138px]`}
+      className={`flex flex-col w-full items-center pt-[110px] ${homeSettings?.demoBanner ? 'lg:pt-[138px]' :'lg:pt-[80px]' }`}
     >
       <Header />
       <main className="w-full flex flex-col">{children}</main>
