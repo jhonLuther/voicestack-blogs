@@ -50,7 +50,8 @@ export const NavPopover = ({ className = '', showMenu }: NavProps) => {
   return (
     <section className={`pt-[10px] px-[10px] pb-[20px] lg:rounded-[12px] bg-white shadow-custom 
     justify-center bg-transparent absolute lg:top-0 left-0 w-full h-[100vh] lg:h-auto overflow-auto 
-    lg:overflow-hidden transition-all duration-200 top-0 ${showMenu ? 'flex' : 'hidden'}`}>
+    lg:overflow-hidden top-0 transition-transform duration-300 linear ${
+    showMenu ? 'flex translate-y-0 opacity-100 visible' : 'lg:-translate-y-3 opacity-0 invisible'}`}>
       <Wrapper>
         <div
           className={`${className} w-full`}
