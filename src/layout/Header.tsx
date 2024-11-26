@@ -63,8 +63,6 @@ const Header = () => {
     }
   });
 
-
-
   console.log(featuredTags, 'featuredTags');
 
   const router = useRouter();
@@ -127,7 +125,6 @@ const Header = () => {
                   </div>
                   <NavPopover showMenu={showMenu} setShowMenu={setShowMenu} className='z-10' />
                 </div>
-                <NavPopover showMenu={showMenu} setShowMenu={setShowMenu} className='z-10'/>
               </div>
             </div>
           </div>
