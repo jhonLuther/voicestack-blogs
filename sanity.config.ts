@@ -14,7 +14,7 @@ import {
 } from 'sanity-plugin-iframe-pane'
 import { previewUrl } from 'sanity-plugin-iframe-pane/preview-url'
 import { table } from '@sanity/table'
-import { CogIcon, DesktopIcon, HomeIcon } from '@sanity/icons'
+import { CogIcon, ControlsIcon, DesktopIcon, HomeIcon } from '@sanity/icons'
 // see https://www.sanity.io/docs/api-versioning for how versioning works
 import {
   apiVersion,
@@ -127,7 +127,7 @@ export default defineConfig({
             S.documentTypeListItem('eventCard').title('Events Card'),
             S.listItem()
               .title('Site Configuration')
-              .icon(DesktopIcon)
+              .icon(ControlsIcon)
               .child(
                 S.document()
                   .schemaType('siteSetting')

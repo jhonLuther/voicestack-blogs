@@ -161,6 +161,7 @@ export default {
       group: 'popularBlogs',
     },
     
+    
     {
       name: 'featuredPressRelease',
       description: 'This content will be featured as a press release in the article landing page',
@@ -173,16 +174,37 @@ export default {
       },
       group: 'popularBlogs',
     },
-
+    {
+      name: 'demoBanner',
+      title: 'Demo Banner',
+      type: 'boolean',
+      description: 'Enable this to Display a call to action banner on the home page',
+    },
     {
       name: 'featuredReviews',
-      description:'This content will be displayed in the reviews section',
+      description: 'This content will be displayed in the reviews section',
       title: 'Featured Reviews',
       type: 'array',
       of: [{ type: 'reference', to: [{ type: 'testimonial' }] }],
-      options: {
-        disableNew: true,
-      },
+      validation: Rule => Rule
+      .unique()
+      .custom((refs) => {
+        if (!refs || !Array.isArray(refs)) return true;
+        const uniqueIds = new Set();
+        const duplicates = refs.some(ref => {
+          if (!ref || !ref._ref) return false;
+          if (uniqueIds.has(ref._ref)) {
+            return true;
+          }
+          uniqueIds.add(ref._ref);
+          return false;
+        });
+        
+        return duplicates 
+          ? 'Duplicate testimonials are not allowed. Please select unique testimonials.'
+          : true;
+      })
+      .min(6),
       group: 'popularBlogs',
     },
 
