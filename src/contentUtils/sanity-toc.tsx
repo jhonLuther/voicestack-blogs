@@ -161,11 +161,11 @@ export function RenderToc({
       {elements.map((el, index) => (
         <li
           key={el.text}
-          className={` ${level > 1 ? '[&:first-child]:mt-2' : ''} ${activeSection === index + 1 ? 'text-zinc-600 font-medium underline underline-offset-4' : ''}`}
+          className={` ${level > 1 ? '[&:first-child]:mt-2' : ''} ${activeSection === index + 1 ? 'text-zinc-600 font-medium ' : ''}`}
         >
           <a
             href={`#${el.slug}`}
-            className={`hover:underline hover:underline-offset-4`}
+            className={`hover:underline hover:underline-offset-4 ${activeSection === index + 1 ? 'underline underline-offset-4' : ''}`}
           >
             {`${el.slug}`}
           </a>
