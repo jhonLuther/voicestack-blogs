@@ -76,9 +76,9 @@ const EventCarousel = ({ allEventCards }: { allEventCards?: any; homeSettings?: 
                           </SubText>
                         </div>
                         <div className='flex items-center'>
-                          <span className='text-xs xl:text-base'>{`${formatDateShort(events.eventStartDate, true)} - ${formatDateShort(events.eventEndDate)} `}</span>
-                          <span className='text-xs xl:text-base pt-0 pl-3 pr-3'>/</span>
-                          <span className='text-xs xl:text-base'>{events.eventLocation}</span>
+                          <span className='text-sm xl:text-base'>{`${formatDateShort(events.eventStartDate, true)} - ${formatDateShort(events.eventEndDate)} `}</span>
+                          <span className='text-sm xl:text-base pt-0 pl-3 pr-3'>/</span>
+                          <span className='text-sm xl:text-base'>{events.eventLocation}</span>
                         </div>
                       </div>
                       <div className='self-center md:self-auto'>
