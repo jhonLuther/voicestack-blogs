@@ -7,7 +7,6 @@ import { CloseIcon, TruncateIcon, ChevronRightIcon, ChevronLeftIcon } from '@san
 import { navigationLinks } from '../Header';
 import { useRouter } from 'next/router';
 import GrowthClubLogo from '~/assets/reactiveAssets/GrowthClubLogo';
-import { transform } from 'next/dist/build/swc';
 
 interface NavProps {
   className?: string;
@@ -23,8 +22,43 @@ export const NavPopover = ({ className = '', showMenu, setShowMenu }: NavProps) 
   const [contentHeight, setContentHeight] = useState(0);
   const contentRef = useRef(null);
   const buttonRef = useRef(null);
+  const navPopoverRef = useRef(null);
   const router = useRouter();
 
+  useEffect(() => {
+    const handleRouteChange = () => {
+      if (showMenu) {
+        setShowMenu(false);
+        setShowTags(false);
+      }
+    };
+
+    router.events.on('routeChangeStart', handleRouteChange);
+
+    return () => {
+      router.events.off('routeChangeStart', handleRouteChange);
+    };
+  }, [router, showMenu, setShowMenu]);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        showMenu && 
+        navPopoverRef.current && 
+        !navPopoverRef.current.contains(event.target as Node)
+      ) {
+        setShowMenu(false);
+        setShowTags(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    // document.addEventListener('scroll',handleClickOutside) // can be used if needed
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      // document.removeEventListener('scroll',handleClickOutside)
+    };
+  }, [showMenu, setShowMenu]);
 
   useEffect(() => {
     if (active && contentRef.current) {
@@ -59,15 +93,14 @@ export const NavPopover = ({ className = '', showMenu, setShowMenu }: NavProps) 
       setActive(false) // to hide default menu
     }
   }
-
   return (
-    <section className={`pt-[10px] px-4 lg:px-[10px] pb-[20px] lg:rounded-[12px] bg-white shadow-custom 
+    <section ref={navPopoverRef} className={`pt-[10px] px-4 lg:px-[10px] pb-[20px] lg:rounded-[12px] bg-white shadow-custom 
     justify-center bg-transparent fixed lg:absolute lg:top-0 left-0 w-full h-[100vh] lg:h-auto 
     lg:overflow-hidden top-0 transition-transform duration-300 linear z-20 lg:z-10 ${
-    showMenu ? 'flex lg:translate-y-0 opacity-100 visible' : 'lg:-translate-y-3 opacity-0 invisible'}`}>
+    showMenu ? 'flex lg:translate-y-0 opacity-100 visible' : 'lg:-translate-y-3 opacity-0 invisible'}`} >
       <Wrapper>
         <div
-          className={`${className} w-full lg:pt-0 pt-14`}
+          className={`${className} w-full lg:pt-0 pt-14`}  
         >
           {/* <button
             ref={buttonRef}
