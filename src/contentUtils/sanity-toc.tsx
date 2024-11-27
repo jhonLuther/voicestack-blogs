@@ -156,7 +156,7 @@ export function RenderToc({
   }, []);
   return (
     <ol
-      className={` list-decimal list-inside flex flex-col gap-3 text-sm lg:text-base  text-zinc-600`}
+      className={` list-decimal ml-5 flex flex-col gap-3 text-sm lg:text-base  text-zinc-600`}
     >
       {elements.map((el, index) => (
         <li
