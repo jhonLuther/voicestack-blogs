@@ -128,7 +128,7 @@ export const NavPopover = ({ className = '', showMenu, setShowMenu }: NavProps) 
           <div className={`transition-all duration-300 ease ${showTags && '-translate-x-[105%]'} lg:translate-x-0`}>
             <div ref={contentRef} className={`w-full transform transition-all duration-200}`}>
 
-              <nav className="flex flex-col lg:flex-row gap-y-6 gap-x-6 lg:gap-x-10 flex-wrap rounded-[10px] py-[17px] lg:px-[20px] lg:bg-zinc-100">
+              <nav className="flex flex-col lg:flex-row gap-y-6 gap-x-6 lg:gap-x-10 flex-wrap rounded-[6px] py-[17px] lg:px-[20px] lg:bg-zinc-100">
                 {navigationLinks?.map((link, i) => (
                   <Link
                     key={link.href}

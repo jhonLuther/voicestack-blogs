@@ -44,7 +44,7 @@ module.exports = {
       },
 
       boxShadow: {
-        custom: '-20px 20px 30px 0px rgba(0, 0, 0, 0.5)',
+        custom: '0px 20px 90px 0px rgba(0, 0, 0, 0.15)',
       },
 
       backgroundImage: {
