@@ -122,9 +122,10 @@ export function RenderToc({
 }) {
 
   const [activeSection, setActiveSection] = React.useState<number | null>(null);
-  let scrollTimeout: ReturnType<typeof setTimeout> | null = null;
 
   React.useEffect(() => {
+    let scrollTimeout: ReturnType<typeof setTimeout>;
+    
     const handleScroll = () => {
       if (scrollTimeout) {
         clearTimeout(scrollTimeout);
@@ -134,7 +135,7 @@ export function RenderToc({
         for (let i = 0; i < sections.length; i++) {
           const section = sections[i];
           const rect = section.getBoundingClientRect();
-
+  
           if (rect.top >= 0 && rect.top <= window.innerHeight) {
             setActiveSection(i + 1);
             break;
@@ -142,16 +143,15 @@ export function RenderToc({
           else {
             setActiveSection(null);
           }
-
         }
       }, 50);
     };
-
+  
     window.addEventListener('scroll', handleScroll);
-
+  
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      clearTimeout(scrollTimeout as ReturnType<typeof setTimeout>);
+      clearTimeout(scrollTimeout);
     };
   }, []);
   return (
@@ -161,11 +161,11 @@ export function RenderToc({
       {elements.map((el, index) => (
         <li
           key={el.text}
-          className={` ${level > 1 ? '[&:first-child]:mt-2' : ''} ${activeSection === index + 1 ? 'text-zinc-600 font-medium' : ''}`}
+          className={` ${level > 1 ? '[&:first-child]:mt-2' : ''} ${activeSection === index + 1 ? 'text-zinc-600 font-medium ' : ''}`}
         >
           <a
             href={`#${el.slug}`}
-            className={`hover:underline hover:underline-offset-4`}
+            className={`hover:underline hover:underline-offset-4 ${activeSection === index + 1 ? 'underline underline-offset-4' : ''}`}
           >
             {`${el.slug}`}
           </a>
