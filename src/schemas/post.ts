@@ -22,7 +22,7 @@ export default defineType({
       options: {
         collapsible: true,
         collapsed: true,
-        modal: { type: 'popover' },  
+        modal: { type: 'popover' },
       },
     },
   ],
@@ -51,11 +51,11 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
 
-//  meta fields
+    //  meta fields
     defineField({
       name: 'seoTitle',
       title: 'Meta Title',
-      description:'Overrides main page title',
+      description: 'Overrides main page title',
       type: 'string',
       fieldset: 'seo',
     }),
@@ -123,7 +123,7 @@ export default defineType({
       name: 'date',
       type: 'date',
       options: {
-        dateFormat: 'YYYY-MM-DD'
+        dateFormat: 'YYYY-MM-DD',
       },
       validation: (Rule) => Rule.required().error('Date is required.'),
     }),
@@ -142,27 +142,23 @@ export default defineType({
           to: [{ type: 'videos' }],
         },
       ],
-      hidden: ({ parent }) =>
-        parent.contentType !== 'webinar' ,
+      hidden: ({ parent }) => parent.contentType !== 'webinar',
     }),
 
     defineField({
       name: 'htmlCode',
       title: 'Embed Code',
-      description:'paste full iframe code',
+      description: 'paste full iframe code',
       type: 'text',
-      hidden: ({ parent }) =>
-        parent.contentType !== 'podcast' ,
+      hidden: ({ parent }) => parent.contentType !== 'podcast',
     }),
-
 
     // Practice Profile Fields
     defineField({
       name: 'practiceName',
       title: 'Practice Name',
       type: 'string',
-      hidden: ({ parent }) =>
-        parent.contentType !== 'case-study',
+      hidden: ({ parent }) => parent.contentType !== 'case-study',
       fieldset: 'practiceProfile',
     }),
 
@@ -171,8 +167,7 @@ export default defineType({
       title: 'Number of Staffs',
       type: 'string',
       fieldset: 'practiceProfile',
-      hidden: ({ parent }) =>
-        parent.contentType !== 'case-study',
+      hidden: ({ parent }) => parent.contentType !== 'case-study',
     }),
 
     defineField({
@@ -180,8 +175,7 @@ export default defineType({
       title: 'Location',
       type: 'string',
       fieldset: 'practiceProfile',
-      hidden: ({ parent }) =>
-        parent.contentType !== 'case-study',
+      hidden: ({ parent }) => parent.contentType !== 'case-study',
     }),
 
     defineField({
@@ -189,8 +183,7 @@ export default defineType({
       title: 'Providers',
       type: 'string',
       fieldset: 'practiceProfile',
-      hidden: ({ parent }) =>
-        parent.contentType !== 'case-study',
+      hidden: ({ parent }) => parent.contentType !== 'case-study',
     }),
 
     defineField({
@@ -198,8 +191,7 @@ export default defineType({
       title: 'Growing Locations',
       type: 'string',
       fieldset: 'practiceProfile',
-      hidden: ({ parent }) =>
-        parent.contentType !== 'case-study',
+      hidden: ({ parent }) => parent.contentType !== 'case-study',
     }),
 
     defineField({
@@ -207,8 +199,7 @@ export default defineType({
       title: 'Facilities',
       type: 'string',
       fieldset: 'practiceProfile',
-      hidden: ({ parent }) =>
-        parent.contentType !== 'case-study',
+      hidden: ({ parent }) => parent.contentType !== 'case-study',
     }),
 
     defineField({
@@ -225,17 +216,16 @@ export default defineType({
               title: 'Number Field',
               type: 'string',
             },
-            
-            { 
-              name: 'text', 
-              title: 'Description', 
-              type: 'string' 
+
+            {
+              name: 'text',
+              title: 'Description',
+              type: 'string',
             },
           ],
         },
       ],
-      hidden: ({ parent }) =>
-        parent.contentType !== 'case-study',
+      hidden: ({ parent }) => parent.contentType !== 'case-study',
     }),
 
     defineField({
@@ -243,25 +233,25 @@ export default defineType({
       title: 'Duration',
       type: 'string',
       hidden: ({ parent }) =>
-        parent.contentType !== 'webinar' && parent.contentType !== 'ebook' && parent.contentType !== 'podcast' && parent.contentType !== 'case-study',
+        parent.contentType !== 'webinar' &&
+        parent.contentType !== 'ebook' &&
+        parent.contentType !== 'podcast' &&
+        parent.contentType !== 'case-study',
     }),
 
     // Ebook Specific Fields
-    defineField(    {
+    defineField({
       name: 'attachment',
       title: 'Ebook Attachment',
       type: 'file',
-      hidden: ({ parent }) =>
-        parent.contentType !== 'ebook',
-    },),
-    defineField(    {
+      hidden: ({ parent }) => parent.contentType !== 'ebook',
+    }),
+    defineField({
       name: 'pressReleaseUrl',
       title: 'Read More Link',
       type: 'url',
-      hidden: ({ parent }) =>
-        parent.contentType !== 'press-release',
-    },),
-
+      hidden: ({ parent }) => parent.contentType !== 'press-release',
+    }),
 
     // Common Components
     defineField({
@@ -291,9 +281,7 @@ export default defineType({
         },
       ],
       validation: (Rule) => [
-        Rule.required()
-          .min(1)
-          .error('At least one author is required'),
+        Rule.required().min(1).error('At least one author is required'),
       ],
     }),
     // Tags Field
@@ -316,10 +304,10 @@ export default defineType({
       author: 'author.name',
       media: 'mainImage',
       tag: 'tag',
-      date:'date',
+      date: 'date',
     },
     prepare(selection) {
-      const { title, contentType, author, tag,date } = selection
+      const { title, contentType, author, tag, date } = selection
       return {
         title,
         subtitle: `${selection.contentType.toUpperCase()} . ${date} `,

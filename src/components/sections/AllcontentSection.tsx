@@ -1,28 +1,33 @@
-import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
-import { ArrowTopRightIcon } from '@sanity/icons';
-import siteConfig from 'config/siteConfig';
-import Wrapper from '~/layout/Wrapper';
-import Card from '../Card';
-import Section from '../Section';
-import H2Large from '../typography/H2Large';
-import { useBaseUrl } from '../Context/UrlContext';
-import { usePathname } from 'next/navigation';
-import { useRouter } from 'next/router';
-import { removeUnwantedCharacters } from '~/utils/common';
+import React, { useEffect, useState } from 'react'
+import Link from 'next/link'
+import { ArrowTopRightIcon } from '@sanity/icons'
+import siteConfig from 'config/siteConfig'
+import Wrapper from '~/layout/Wrapper'
+import Card from '../Card'
+import Section from '../Section'
+import H2Large from '../typography/H2Large'
+import { useBaseUrl } from '../Context/UrlContext'
+import { usePathname } from 'next/navigation'
+import { useRouter } from 'next/router'
+import { removeUnwantedCharacters } from '~/utils/common'
 
 interface LatestBlogsProps {
-  allContent: any[];
-  hideHeader?: boolean;
-  className?: string;
-  cardType?: 'podcast-card' | 'ebook-card' | 'featured' | 'top-image-smallCard' | "left-image-card";
-  redirect?: boolean;
-  itemsPerPage?: number;
-  customBrowseContent?: any;
+  allContent: any[]
+  hideHeader?: boolean
+  className?: string
+  cardType?:
+    | 'podcast-card'
+    | 'ebook-card'
+    | 'featured'
+    | 'top-image-smallCard'
+    | 'left-image-card'
+  redirect?: boolean
+  itemsPerPage?: number
+  customBrowseContent?: any
   allItemCount?: any
   contentType?: string
-  authorName ?: string
-  showCount ?: boolean
+  authorName?: string
+  showCount?: boolean
 }
 
 const AllcontentSection: React.FC<LatestBlogsProps> = ({
@@ -36,47 +41,53 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
   contentType,
   allItemCount,
   authorName,
-  showCount = false
+  showCount = false,
 }) => {
-  const postsToShow = itemsPerPage || siteConfig.pagination.childItemsPerPage;
-  const [selectedTag, setSelectedTag] = useState('');
+  const postsToShow = itemsPerPage || siteConfig.pagination.childItemsPerPage
+  const [selectedTag, setSelectedTag] = useState('')
   const pathname = usePathname()
-  const router = useRouter();
+  const router = useRouter()
 
-  const baseUrl = useBaseUrl();
+  const baseUrl = useBaseUrl()
 
-  const totalCount = allItemCount ? allItemCount : allContent.length;
+  const totalCount = allItemCount ? allItemCount : allContent.length
 
   let contentHeading =
-     contentType === 'podcast'
+    contentType === 'podcast'
       ? 'Keep Listening'
       : contentType === 'webinar'
         ? 'Keep Watching'
-        : 'Keep Reading';
+        : 'Keep Reading'
 
-  let browseHeading = contentType ? contentHeading : authorName ? `Posts By ${authorName}`  : 'Explore All';
+  let browseHeading = contentType
+    ? contentHeading
+    : authorName
+      ? `Posts By ${authorName}`
+      : 'Explore All'
 
   useEffect(() => {
     const updateSelectedTag = () => {
-      const isBrowsePath = router.pathname.includes('/browse/');
+      const isBrowsePath = router.pathname.includes('/browse/')
 
       if (isBrowsePath) {
-        const pathParts = router.asPath.split('/');
-        const isPageRoute = pathParts.includes('page');
+        const pathParts = router.asPath.split('/')
+        const isPageRoute = pathParts.includes('page')
 
         if (isPageRoute) {
           const storedTag = window.localStorage.getItem('selectedTag')
           if (storedTag && storedTag !== 'null' && storedTag !== 'undefined') {
             const cleanTag = storedTag
               .split('-')
-              .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-              .join(' ');
-            setSelectedTag(cleanTag);
+              .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+              .join(' ')
+            setSelectedTag(cleanTag)
           } else {
-            setSelectedTag('');
+            setSelectedTag('')
           }
         } else {
-          const tagFromUrl = removeUnwantedCharacters(pathParts[pathParts.length - 1])
+          const tagFromUrl = removeUnwantedCharacters(
+            pathParts[pathParts.length - 1],
+          )
           if (tagFromUrl && tagFromUrl !== 'browse') {
             const cleanTag = tagFromUrl
               .split('-')
@@ -97,22 +108,23 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
   }, [router.pathname, router.asPath])
 
   if (!allContent) {
-    return null;
+    return null
   }
 
   const renderPosts = () => {
-    const posts = [];
-    const slicedContent = allContent.slice(0, postsToShow);
-    const isHomePage =  pathname === `${siteConfig.pageURLs.home}`
+    const posts = []
+    const slicedContent = allContent.slice(0, postsToShow)
+    const isHomePage = pathname === `${siteConfig.pageURLs.home}`
 
     slicedContent.forEach((post, index) => {
-      const isVaryingIndex = (index === 3) && cardType !== 'left-image-card' && isHomePage;
-      
-      const shouldUseCustomContent = isVaryingIndex && customBrowseContent;
+      const isVaryingIndex =
+        index === 3 && cardType !== 'left-image-card' && isHomePage
+
+      const shouldUseCustomContent = isVaryingIndex && customBrowseContent
       if (isVaryingIndex && !customBrowseContent) {
-        return;
+        return
       }
-      const postContent = shouldUseCustomContent  ? customBrowseContent : post;
+      const postContent = shouldUseCustomContent ? customBrowseContent : post
 
       posts.push(
         <div
@@ -123,17 +135,17 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
           <Card
             varyingIndex={isVaryingIndex}
             cardType={cardType}
-            cardColor='white'
+            cardColor="white"
             post={postContent}
-            className=''
+            className=""
             baseUrl={baseUrl}
           />
-        </div>
-      );
-    });
+        </div>,
+      )
+    })
 
-    return posts;
-  };
+    return posts
+  }
 
   return (
     <Section className={`justify-center md:pb-0 md:pt-24 ${className}`}>
@@ -144,7 +156,10 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
               {`${selectedTag ? selectedTag : browseHeading} `}
             </H2Large>
             {redirect ? (
-              <Link href={`/${siteConfig.paginationBaseUrls.base}`} className='shrink-0'>
+              <Link
+                href={`/${siteConfig.paginationBaseUrls.base}`}
+                className="shrink-0"
+              >
                 <div className="flex items-center gap-3 transform group duration-300 cursor-pointer">
                   <span className="text-base font-medium">{`Browse All`}</span>
                   <span className="text-xl">
@@ -157,7 +172,9 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
                 </div>
               </Link>
             ) : (
-               !showCount && <div className="text-zinc-700 font-normal text-base shrink-0">{`${totalCount} ${totalCount > 1 ? 'results' : 'result'}`}</div>
+              !showCount && (
+                <div className="text-zinc-700 font-normal text-base shrink-0">{`${totalCount} ${totalCount > 1 ? 'results' : 'result'}`}</div>
+              )
             )}
           </div>
         )}
@@ -185,6 +202,6 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
       </Wrapper>
     </Section>
   )
-};
+}
 
-export default AllcontentSection;
+export default AllcontentSection

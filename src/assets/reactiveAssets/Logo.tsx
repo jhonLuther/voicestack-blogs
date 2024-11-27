@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react'
 const Logo = (props) => (
   <svg
     width={175}
@@ -114,5 +114,5 @@ const Logo = (props) => (
       </linearGradient>
     </defs>
   </svg>
-);
-export default Logo;
+)
+export default Logo

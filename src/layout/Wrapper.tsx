@@ -1,15 +1,14 @@
-import React from "react";
+import React from 'react'
 
 interface LayoutProps {
-  children?: React.ReactNode;
-  extended?: boolean;
-  display?: "hidden";
-  position?: string;
-  background?: string;
-  className?:any
+  children?: React.ReactNode
+  extended?: boolean
+  display?: 'hidden'
+  position?: string
+  background?: string
+  className?: any
   fullWidth?: boolean
   removePadding?: boolean
-
 }
 
 const Wrapper: React.FunctionComponent<LayoutProps> = ({
@@ -22,15 +21,7 @@ const Wrapper: React.FunctionComponent<LayoutProps> = ({
   fullWidth = false,
   removePadding = false,
 }) => {
+  return <div className={` flex w-full max-w-7xl ${className}`}>{children}</div>
+}
 
-  
-  return (
-    <div
-      className={` flex w-full max-w-7xl ${className}`}
-    >
-      {children}
-    </div>
-  );
-};
-
-export default Wrapper;
+export default Wrapper

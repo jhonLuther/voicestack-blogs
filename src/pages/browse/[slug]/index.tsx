@@ -11,6 +11,7 @@ import {
   getPodcastsCount,
   getWebinarsCount,
   getSiteSettings,
+  getHomeSettings,
 } from '~/lib/sanity.queries'
 import Layout from '~/components/Layout'
 import Wrapper from '~/layout/Wrapper'
@@ -25,6 +26,7 @@ import { useRef } from 'react'
 import { BaseUrlProvider } from '~/components/Context/UrlContext'
 import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection'
 import { defaultMetaTag } from '~/utils/customHead'
+import { GlobalDataProvider } from '~/components/Context/GlobalDataContext'
 
 interface Query {
   slug: string
@@ -39,6 +41,7 @@ export const getStaticProps: GetStaticProps<
     contentCount: any
     totalPostCount: any[]
     siteSettings: any[]
+    homeSettings: any
   }
 > = async ({ params }) => {
   const client = getClient()
@@ -62,6 +65,7 @@ export const getStaticProps: GetStaticProps<
   const totalArticles = await getArticlesCount(client)
   const totalEbooks = await getEbooksCount(client)
   const siteSettings = await getSiteSettings(client)
+  const homeSettings = await getHomeSettings(client)
 
   return {
     props: {
@@ -79,6 +83,7 @@ export const getStaticProps: GetStaticProps<
         ebooks: totalEbooks,
       },
       siteSettings,
+      homeSettings,
     },
   }
 }
@@ -101,6 +106,7 @@ export default function TagPage({
   contentCount,
   totalPostCount,
   siteSettings,
+  homeSettings,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const handlePageChange = (page: number) => {
     console.log(`Navigating to page: ${page}`)
@@ -111,27 +117,29 @@ export default function TagPage({
   const siteSettingWithImage = siteSettings?.find((e: any) => e?.openGraphImage)
 
   return (
-    <BaseUrlProvider baseUrl={baseUrl}>
-      <Layout>
-        {siteSettingWithImage ? defaultMetaTag(siteSettingWithImage) : <></>}
-        <ContentHub contentCount={contentCount} />
-        <TagSelect
-          tags={allTags}
-          tagLimit={5}
-          showTags={true}
-          className="mt-12"
-        />
-        <AllcontentSection allItemCount={totalPostCount} allContent={posts} />
-        <Pagination
-          totalPages={totalPages}
-          // baseUrl={`/${siteConfig.paginationBaseUrls.base}/${tag?.slug?.current}`}
-          onPageChange={handlePageChange}
-          currentPage={1}
-          enablePageSlug={true}
-          content={posts}
-        />
-        <BannerSubscribeSection />
-      </Layout>
-    </BaseUrlProvider>
+    <GlobalDataProvider data={allTags} featuredTags={homeSettings.featuredTags}>
+      <BaseUrlProvider baseUrl={baseUrl}>
+        <Layout>
+          {siteSettingWithImage ? defaultMetaTag(siteSettingWithImage) : <></>}
+          <ContentHub contentCount={contentCount} />
+          <TagSelect
+            tags={allTags}
+            tagLimit={5}
+            showTags={true}
+            className="mt-12"
+          />
+          <AllcontentSection allItemCount={totalPostCount} allContent={posts} />
+          <Pagination
+            totalPages={totalPages}
+            // baseUrl={`/${siteConfig.paginationBaseUrls.base}/${tag?.slug?.current}`}
+            onPageChange={handlePageChange}
+            currentPage={1}
+            enablePageSlug={true}
+            content={posts}
+          />
+          <BannerSubscribeSection />
+        </Layout>
+      </BaseUrlProvider>
+    </GlobalDataProvider>
   )
 }

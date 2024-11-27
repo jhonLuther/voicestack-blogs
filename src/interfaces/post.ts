@@ -1,4 +1,4 @@
-import { ImageAsset, PortableTextBlock, Slug } from "sanity"
+import { ImageAsset, PortableTextBlock, Slug } from 'sanity'
 
 export interface Post {
   relatedArticles: any
@@ -10,67 +10,71 @@ export interface Post {
   date: any
   headings?: Headings
   relatedPosts: any[]
-	duration: string
-    map(arg0: (blog: any, index: any) => import("react").JSX.Element): import("react").ReactNode | Iterable<import("react").ReactNode>
+  duration: string
+  map(
+    arg0: (blog: any, index: any) => import('react').JSX.Element,
+  ): import('react').ReactNode | Iterable<import('react').ReactNode>
   desc: string
   image: any
   ebookFields: any
   contentType: any
   contentTypes: any[]
   tagName: any
-    _type: 'post'
-    _id: string
-    _createdAt: string
-    title?: string
-    slug: Slug
-    excerpt?: string
-    mainImage?: ImageAsset
-    mainImageV1?: ImageAsset
-    body: PortableTextBlock[]
-    dynamicComponents: any
-    estimatedReadingTime?: string
-    estimatedWordCount?: string 
-    numberOfCharacters ?: number
-    
-    seoTitle?: string
-    seoDescription?: string
-    seoRobots?: string
-    seoKeywords?: string
-    seoCanonical?: string
-    seoJSONLD?: string
+  _type: 'post'
+  _id: string
+  _createdAt: string
+  title?: string
+  slug: Slug
+  excerpt?: string
+  mainImage?: ImageAsset
+  mainImageV1?: ImageAsset
+  body: PortableTextBlock[]
+  dynamicComponents: any
+  estimatedReadingTime?: string
+  estimatedWordCount?: string
+  numberOfCharacters?: number
 
-      author?: {
-			length: number
-      name: string
-      _ref: string
-      _type: 'reference'
-    }
-  
-    tags?: Array<{
-      [key: string]: any
-    }>
-  }
+  seoTitle?: string
+  seoDescription?: string
+  seoRobots?: string
+  seoKeywords?: string
+  seoCanonical?: string
+  seoJSONLD?: string
 
-  export interface Author{
-    picture: any
-    _id: string,
-    name: string,
-    slug: Slug,
-    role:any,
-    bio:any,
-  }
-  export interface Tag{
+  author?: {
+    length: number
     name: string
-    _id: string,
-    tagName: string,
-    slug: Slug,
+    _ref: string
+    _type: 'reference'
   }
+
+  tags?: Array<{
+    [key: string]: any
+  }>
+}
+
+export interface Author {
+  picture: any
+  _id: string
+  name: string
+  slug: Slug
+  role: any
+  bio: any
+}
+export interface Tag {
+  name: string
+  _id: string
+  tagName: string
+  slug: Slug
+}
 // interfaces/post.ts
 // Example of Testimonial interface
 export interface Testimonial {
   videos: any
   hasVideo: any
-  rating(rating: any): import("react").ReactNode | Iterable<import("react").ReactNode>
+  rating(
+    rating: any,
+  ): import('react').ReactNode | Iterable<import('react').ReactNode>
   headings: Headings
   seoTitle: string
   seoDescription: string
@@ -84,12 +88,12 @@ export interface Testimonial {
   practiceName: any
   mainImage: any
   title: string
-  _id: string;
-  testimonialName: string; 
-  slug: Slug;
-  excerpt?: string; 
-  summary?: string; 
-  image?: string;
+  _id: string
+  testimonialName: string
+  slug: Slug
+  excerpt?: string
+  summary?: string
+  image?: string
 }
 export interface Podcasts {
   headings: Headings
@@ -111,12 +115,12 @@ export interface Podcasts {
   body: any
   mainImage: any
   title: string
-  _id: string;
-  testimonialName: string; 
-  slug: Slug;
-  excerpt?: string; 
-  summary?: string; 
-  image?: string;
+  _id: string
+  testimonialName: string
+  slug: Slug
+  excerpt?: string
+  summary?: string
+  image?: string
 }
 export interface Articles {
   headings: any
@@ -133,12 +137,12 @@ export interface Articles {
   body: any
   mainImage: any
   title: string
-  _id: string;
-  testimonialName: string; 
-  slug: Slug;
-  excerpt?: string; 
-  summary?: string; 
-  image?: string;
+  _id: string
+  testimonialName: string
+  slug: Slug
+  excerpt?: string
+  summary?: string
+  image?: string
   author?: {
     length: number
     name: string
@@ -173,12 +177,12 @@ export interface CaseStudies {
   body: any
   mainImage: any
   title: string
-  _id: string;
-  testimonialName: string; 
-  slug: Slug;
-  excerpt?: string; 
-  summary?: string; 
-  image?: string;
+  _id: string
+  testimonialName: string
+  slug: Slug
+  excerpt?: string
+  summary?: string
+  image?: string
 }
 export interface Webinars {
   practiceName: any
@@ -187,12 +191,12 @@ export interface Webinars {
   body: any
   mainImage: any
   title: string
-  _id: string;
-  testimonialName: string; 
-  slug: Slug;
-  excerpt?: string; 
-  summary?: string; 
-  image?: string;
+  _id: string
+  testimonialName: string
+  slug: Slug
+  excerpt?: string
+  summary?: string
+  image?: string
 }
 export interface Ebooks {
   seoTitle: string
@@ -210,14 +214,14 @@ export interface Ebooks {
   body: any
   mainImage: any
   title: string
-  _id: string;
-  testimonialName: string; 
-  slug: Slug;
-  excerpt?: string; 
-  summary?: string; 
-  image?: string;
+  _id: string
+  testimonialName: string
+  slug: Slug
+  excerpt?: string
+  summary?: string
+  image?: string
 }
-export interface  PressRelease {
+export interface PressRelease {
   headings: Headings
   seoTitle: string
   seoDescription: string
@@ -233,13 +237,13 @@ export interface  PressRelease {
   body: any
   mainImage: any
   title: string
-  _id: string;
-  testimonialName: string; 
-  slug: Slug;
-  excerpt?: string; 
-  summary?: string; 
-  image?: string;
-  pressReleaseUrl?: string;
+  _id: string
+  testimonialName: string
+  slug: Slug
+  excerpt?: string
+  summary?: string
+  image?: string
+  pressReleaseUrl?: string
 }
 
 type Headings = any

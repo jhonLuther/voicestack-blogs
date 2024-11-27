@@ -38,7 +38,7 @@ export default async function preview(
   try {
     const document = await authClient.fetch(
       `*[slug.current == $slug][0]{ _type, contentType, slug }`,
-      { slug }
+      { slug },
     )
 
     if (document) {
@@ -56,7 +56,9 @@ export default async function preview(
       }
     }
 
-    res.status(404).send('Requested slug not found please check with siteconfig urls')
+    res
+      .status(404)
+      .send('Requested slug not found please check with siteconfig urls')
   } catch (error) {
     console.error('Error in preview function:', error)
     res.status(500).send('Internal Server Error')

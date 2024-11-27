@@ -1,70 +1,74 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react'
 
 export default function useBoundingWidth() {
-  let windowObj = typeof window !== "undefined" ? window : null;  
+  let windowObj = typeof window !== 'undefined' ? window : null
   const [device, setDevice] = useState(() => {
-
-    const storedDevice = windowObj?.localStorage.getItem("currentDevice");
+    const storedDevice = windowObj?.localStorage.getItem('currentDevice')
     if (storedDevice) {
-      return storedDevice;
+      return storedDevice
     }
 
-    const newInnerWidth = windowObj?.innerWidth;
+    const newInnerWidth = windowObj?.innerWidth
     if (newInnerWidth >= 0 && newInnerWidth <= 480) {
-      return "smallMobile";
+      return 'smallMobile'
     } else if (newInnerWidth > 480 && newInnerWidth <= 767) {
-      return "largeMobile";
+      return 'largeMobile'
     } else if (newInnerWidth > 768 && newInnerWidth <= 1200) {
-      return "tab";
+      return 'tab'
     } else {
-      return "largerDevice";
+      return 'largerDevice'
     }
-  });
+  })
 
   useEffect(() => {
     const handleResize = () => {
-      let newInnerWidth = windowObj?.innerWidth;
-      let newDevice;
+      let newInnerWidth = windowObj?.innerWidth
+      let newDevice
 
       if (newInnerWidth >= 0 && newInnerWidth <= 480) {
-        newDevice = "smallMobile";
+        newDevice = 'smallMobile'
       } else if (newInnerWidth > 480 && newInnerWidth <= 767) {
-        newDevice = "largeMobile";
+        newDevice = 'largeMobile'
       } else if (newInnerWidth > 768 && newInnerWidth <= 1200) {
-        newDevice = "tab";
+        newDevice = 'tab'
       } else {
-        newDevice = "largerDevice";
+        newDevice = 'largerDevice'
       }
 
       setDevice((prevDevice) => {
         if (prevDevice !== newDevice) {
-            windowObj?.localStorage.setItem("currentDevice", newDevice);
+          windowObj?.localStorage.setItem('currentDevice', newDevice)
         }
-        return newDevice;
-      });
-    };
+        return newDevice
+      })
+    }
 
-    const handleResizeDebounced = debounce(handleResize, 800);
+    const handleResizeDebounced = debounce(handleResize, 800)
 
-    handleResize();
-    windowObj?.addEventListener("resize", handleResizeDebounced);
+    handleResize()
+    windowObj?.addEventListener('resize', handleResizeDebounced)
 
     return () => {
-    windowObj?.removeEventListener("resize", handleResizeDebounced);
-    };
-  }, [windowObj]);
+      windowObj?.removeEventListener('resize', handleResizeDebounced)
+    }
+  }, [windowObj])
 
-  return device;
+  return device
 }
 
 function debounce(callback, delay) {
-  let timeoutId;
+  let timeoutId
   return function () {
-    clearTimeout(timeoutId);
+    clearTimeout(timeoutId)
     timeoutId = setTimeout(() => {
-      callback.apply(this, arguments);
-    }, delay);
-  };
+      callback.apply(this, arguments)
+    }, delay)
+  }
 }
 
-export type DeviceType = 'smallMobile' | 'largeMobile' | 'tab' | 'largerDevice' | null;
+export type DeviceType =
+  | 'smallMobile'
+  | 'largeMobile'
+  | 'tab'
+  | 'largerDevice'
+  | null

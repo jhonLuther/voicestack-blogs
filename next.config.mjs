@@ -7,11 +7,8 @@ const config = {
         source: '/sitemap.xml',
         destination: '/api/sitemap',
       },
-    ];
+    ]
   },
 }
 
-
 export default config
-
-

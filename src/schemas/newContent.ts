@@ -25,7 +25,7 @@ export default defineType({
         pageSize: 10,
       },
     },
-    
+
     defineArrayMember(htmlCode),
     defineArrayMember(dynamicComponent),
     defineArrayMember({

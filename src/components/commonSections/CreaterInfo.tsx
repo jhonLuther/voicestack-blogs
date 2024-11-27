@@ -1,18 +1,17 @@
-import Link from 'next/link';
-import Image from 'next/image';
-import { urlForImage } from '~/lib/sanity.image';
-import SpeakerIcon from '~/assets/reactiveAssets/SoundIcon';
-
+import Link from 'next/link'
+import Image from 'next/image'
+import { urlForImage } from '~/lib/sanity.image'
+import SpeakerIcon from '~/assets/reactiveAssets/SoundIcon'
 
 interface CreaterInfoProps {
-  creater?: any;
-  duration?: string;
-  className?: string;
+  creater?: any
+  duration?: string
+  className?: string
 }
 
 const CreaterInfo = ({ creater, duration }: CreaterInfoProps) => {
   if (!creater.length) {
-    return null;
+    return null
   }
 
   return (
@@ -20,13 +19,12 @@ const CreaterInfo = ({ creater, duration }: CreaterInfoProps) => {
       {creater.map((item, index) => (
         <div key={index}>{`by ${item.name}`}</div>
       ))}
-      <div className='flex gap-2 items-center'>
+      <div className="flex gap-2 items-center">
         <SpeakerIcon className="hidden md:block" />
-        <span className='shrink-0'>{duration}</span>
+        <span className="shrink-0">{duration}</span>
       </div>
-
     </div>
-  );
-};
+  )
+}
 
-export default CreaterInfo;
+export default CreaterInfo

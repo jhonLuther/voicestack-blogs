@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react'
 const SoundIcon = (props) => (
   <svg
     width={20}
@@ -17,5 +17,5 @@ const SoundIcon = (props) => (
       fill="#71717A"
     />
   </svg>
-);
-export default SoundIcon;
+)
+export default SoundIcon

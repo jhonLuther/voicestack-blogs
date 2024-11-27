@@ -1,6 +1,9 @@
-import { NextRouter } from 'next/router';
+import { NextRouter } from 'next/router'
 
-export const getBasePath = (router: NextRouter, contentType: string): string => {
+export const getBasePath = (
+  router: NextRouter,
+  contentType: string,
+): string => {
   const basePaths = {
     podcast: 'podcast',
     article: 'article',
@@ -8,7 +11,7 @@ export const getBasePath = (router: NextRouter, contentType: string): string => 
     'press-release': 'press-release',
     ebook: 'ebook',
     'case-study': 'case-study',
-  };
+  }
 
-  return basePaths[contentType] || '';
-};
+  return basePaths[contentType] || ''
+}

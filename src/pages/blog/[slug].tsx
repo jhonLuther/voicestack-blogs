@@ -5,26 +5,24 @@ import { useLiveQuery } from 'next-sanity/preview'
 import Layout from '~/components/Layout'
 import { readToken } from '~/lib/sanity.api'
 import { getClient } from '~/lib/sanity.client'
-import { urlForImage } from '~/lib/sanity.image'
 import {
+  getHomeSettings,
   getPost,
   getPosts,
   getRelatedContents,
+  getTags,
   postBySlugQuery,
   postSlugsQuery,
   postsQuery,
 } from '~/lib/sanity.queries'
 import type { SharedPageProps } from '~/pages/_app'
-import SEOHead from '~/layout/SeoHead'
 import { Post } from '~/interfaces/post'
-import { generateJSONLD } from '~/utils/generateJSONLD'
-import AuthorInfo from '~/components/commonSections/AuthorInfo'
 import Wrapper from '~/layout/Wrapper'
 import RelatedFeaturesSection from '~/components/RelatedFeaturesSection'
 import MainImageSection from '~/components/MainImageSection'
 import SanityPortableText from '~/components/blockEditor/sanityBlockEditor'
-import { Toc } from '~/contentUtils/sanity-toc'
-import ShareableLinks from '~/components/commonSections/ShareableLinks'
+import { GlobalDataProvider } from '~/components/Context/GlobalDataContext'
+import homeSettings from '~/schemas/homeSettings'
 
 interface Query {
   [key: string]: string
@@ -38,8 +36,10 @@ export const getStaticProps: GetStaticProps<
 > = async ({ draftMode = false, params = {} }) => {
   const client = getClient(draftMode ? { token: readToken } : undefined)
   const post = await getPost(client, params.slug)
-  const allPosts = await getPosts(client);
-  const relatedContents = await getRelatedContents(client, params?.slug);
+  const allPosts = await getPosts(client)
+  const relatedContents = await getRelatedContents(client, params?.slug)
+  const tags = await getTags(client)
+  const homeSettings = await getHomeSettings(client)
 
   if (!post) {
     return {
@@ -53,78 +53,64 @@ export const getStaticProps: GetStaticProps<
       token: draftMode ? readToken : '',
       post,
       allPosts,
-      relatedContents
+      relatedContents,
+      tags,
+      homeSettings,
     },
   }
 }
 
 export default function ProjectSlugRoute(
-  props: InferGetStaticPropsType<typeof getStaticProps> & { allPosts: Post[] ,relatedContents: Post[]},
+  props: InferGetStaticPropsType<typeof getStaticProps> & {
+    tags: any
+    homeSettings: any
+    allPosts: Post[]
+    relatedContents: Post[]
+  },
 ) {
   const [post] = useLiveQuery(props.post, postBySlugQuery, {
     slug: props.post?.slug?.current,
   })
 
-  const [allPosts] = useLiveQuery(props.allPosts, postsQuery);
+  const [allPosts] = useLiveQuery(props.allPosts, postsQuery)
 
   if (!post) {
     return <div>Loading...</div>
   }
 
-  const seoTitle = post.seoTitle || post.title;
-  const seoDescription = post.seoDescription || post.excerpt;
-  const seoKeywords = post.seoKeywords || '';
-  const seoRobots = post.seoRobots || 'index,follow';
-  const seoCanonical = post.seoCanonical || `https://carestack.com/post/${post.slug.current}`;
-  const authorInfo = post?.author
-  const jsonLD: any = generateJSONLD(post);  
-
   return (
     <>
-      <SEOHead
-        title={seoTitle}
-        description={seoDescription}
-        keywords={seoKeywords}
-        robots={seoRobots}
-        canonical={seoCanonical}
-        jsonLD={jsonLD}
-        ogImage={urlForImage(post?.mainImage)}
-        contentType={post?.contentType} />
-      <Layout >
-        <MainImageSection post={post} />
-        <section >
-          <div className="post__container">
-            <Wrapper>
-              <div className="flex md:flex-row flex-col gap-6 md:gap-12 justify-between">
-                <div className="md:mt-12 flex-1 flex md:flex-col flex-col-reverse md:w-2/3 w-full md:max-w-[710px]">
-                  <div className='post__content w-full '>
-                  <SanityPortableText
-                      content={post.body}
-                      draftMode={props.draftMode}
-                      token={props.token}
-                    />
-                  </div>
-                  <div className='md:hidden block'>
-                    {authorInfo && <AuthorInfo author={authorInfo} />}
+      <GlobalDataProvider
+        data={props.tags}
+        featuredTags={props?.homeSettings.featuredTags}
+      >
+        <Layout>
+          <MainImageSection post={post} />
+          <section>
+            <div className="post__container">
+              <Wrapper>
+                <div className="flex md:flex-row flex-col gap-6 md:gap-12 justify-between">
+                  <div className="md:mt-12 flex-1 flex md:flex-col flex-col-reverse md:w-2/3 w-full md:max-w-[710px]">
+                    <div className="post__content w-full ">
+                      <SanityPortableText
+                        content={post.body}
+                        draftMode={props.draftMode}
+                        token={props.token}
+                      />
+                    </div>
                   </div>
                 </div>
-                <div className='flex flex-col gap-8 md:mt-12 bg-red relative md:w-1/3 md:max-w-[410px] w-full'>
-                  <div className='sticky top-24 flex flex-col gap-8'>
-                  <Toc headings={ post?.headings} title="Contents" />
-                    {authorInfo &&
-                      <div className=''>
-                        <AuthorInfo author={authorInfo} />
-                      </div>
-                    }
-                    <ShareableLinks props={post?.title} />
-                  </div>
-                </div>
-              </div>
-              {post?.relatedPosts && <RelatedFeaturesSection  contentType={post.contentType} allPosts={post?.relatedPosts} />}
-            </Wrapper>
-          </div>
-        </section>
-      </Layout>
+                {post?.relatedPosts && (
+                  <RelatedFeaturesSection
+                    contentType={post.contentType}
+                    allPosts={post?.relatedPosts}
+                  />
+                )}
+              </Wrapper>
+            </div>
+          </section>
+        </Layout>
+      </GlobalDataProvider>
     </>
   )
 }

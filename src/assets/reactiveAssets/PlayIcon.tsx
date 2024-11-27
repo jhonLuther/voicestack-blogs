@@ -1,6 +1,6 @@
-import * as React from "react";
+import * as React from 'react'
 
-const PlayIcon = ({ color = "white" }) => (
+const PlayIcon = ({ color = 'white' }) => (
   <svg
     width={30}
     height={30}
@@ -13,9 +13,9 @@ const PlayIcon = ({ color = "white" }) => (
       fillRule="evenodd"
       clipRule="evenodd"
       d="M11.325 11.2976C11.325 10.4652 12.2169 9.93846 12.9461 10.3392L19.6778 14.0416C20.4332 14.457 20.4332 15.5425 19.6778 15.9585L12.9467 19.6609C12.2175 20.0616 11.3256 19.5343 11.3256 18.7025L11.325 11.2976Z"
-      fill={color === "black" ? "white" : "#18181B"} 
+      fill={color === 'black' ? 'white' : '#18181B'}
     />
   </svg>
-);
+)
 
-export default PlayIcon;
+export default PlayIcon

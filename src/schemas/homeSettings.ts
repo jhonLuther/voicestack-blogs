@@ -1,4 +1,5 @@
 import { HomeIcon, DocumentIcon, TagIcon } from '@sanity/icons';
+import { uniqueTestimonialsValidation } from '~/utils/customValidation';
 export default {
   name: 'homeSettings',
   title: 'Home Settings',
@@ -19,6 +20,27 @@ export default {
     },
   ],
   fields: [
+    {
+      name: 'featuredTags',
+      title: 'Featured Tags',
+      type: 'array',
+      of: [
+        {
+          type: 'reference',
+          to: [{ type: 'tag' }],
+        },
+      ],
+      group: 'popularBlogs',
+      validation: (rule) => rule.max(5).unique(),
+    },
+    {
+      name: 'featuredEvent',
+      description:'This Event Will be featured in the Home Page',
+      title: 'Featured Event',
+      type: 'reference',
+      to: [{ type: 'eventCard' }],
+      group: 'popularBlogs',
+    },
     {
       name: 'testimonial',  
       title: 'Testimonials',
@@ -140,6 +162,7 @@ export default {
       group: 'popularBlogs',
     },
     
+    
     {
       name: 'featuredPressRelease',
       description: 'This content will be featured as a press release in the article landing page',
@@ -152,18 +175,24 @@ export default {
       },
       group: 'popularBlogs',
     },
-
+    {
+      name: 'demoBanner',
+      title: 'Demo Banner',
+      type: 'boolean',
+      description: 'Enable this to Display a call to action banner on the home page',
+    },
     {
       name: 'featuredReviews',
-      description:'This content will be displayed in the reviews section',
+      description: 'This content will be displayed in the reviews section',
       title: 'Featured Reviews',
       type: 'array',
       of: [{ type: 'reference', to: [{ type: 'testimonial' }] }],
-      options: {
-        disableNew: true,
-      },
+      validation: Rule => Rule
+        .unique()
+        .custom(uniqueTestimonialsValidation)
+        .min(6),
       group: 'popularBlogs',
-    },
+    }
 
   ],
   preview: {

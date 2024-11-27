@@ -3,7 +3,6 @@ import { fetchAuthor } from './common'
 import { urlForImage } from '~/lib/sanity.image'
 
 export function generateJSONLD(post: any) {
-
   const {
     author = null,
     estimatedReadingTime = null,
@@ -13,7 +12,7 @@ export function generateJSONLD(post: any) {
   } = post || {}
 
   const contentType = post?.contentType
-  
+
   if (contentType) {
     switch (contentType) {
       case 'blog':
@@ -104,7 +103,11 @@ export function generateJSONLD(post: any) {
             },
           ],
           startDate: new Date(),
-          description: post.author ?? post?.author?.map((e)=>{return e.bio}),
+          description:
+            post.author ??
+            post?.author?.map((e) => {
+              return e.bio
+            }),
           creator: 'CareStack',
           inLanguage: ['en_us', 'en-GB'],
           sameAs: 'https://carestack.com/',
@@ -188,8 +191,7 @@ export function indexPageJsonLd(params: any) {
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: params?.title || '',
-    articleBody:
-      params?.posts?.map((e: any) => e?.title).join(', ') || '',
+    articleBody: params?.posts?.map((e: any) => e?.title).join(', ') || '',
     copyrightHolder: {
       '@type': 'Organization',
       '@id': 'https://carestack.com/#organization',
@@ -197,9 +199,8 @@ export function indexPageJsonLd(params: any) {
     name: params?.title || '',
     datePublished: params?._createdAt || '',
     description: params?.excerpt || '',
-  };
+  }
 }
-
 
 export function breadCrumbJsonLd(
   breadCrumbList: { breadcrumb: string; url?: string }[],
@@ -216,7 +217,7 @@ export function breadCrumbJsonLd(
           position: 1,
           item: {
             '@id': `${baseUrl}${item?.href}`,
-            "name": item?.label ?? "",
+            name: item?.label ?? '',
           },
         },
       ],
@@ -224,4 +225,3 @@ export function breadCrumbJsonLd(
   })
   return itemListElement
 }
-

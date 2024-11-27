@@ -14,7 +14,7 @@ import {
 } from 'sanity-plugin-iframe-pane'
 import { previewUrl } from 'sanity-plugin-iframe-pane/preview-url'
 import { table } from '@sanity/table'
-import {CogIcon,DesktopIcon,HomeIcon} from '@sanity/icons'
+import { CogIcon, ControlsIcon, DesktopIcon, HomeIcon } from '@sanity/icons'
 // see https://www.sanity.io/docs/api-versioning for how versioning works
 import {
   apiVersion,
@@ -28,7 +28,7 @@ import siteConfig from 'config/siteConfig'
 const iframeOptions = {
   url: defineUrlResolver({
     base: '/api/draft',
-    requiresSlug: Object.values(siteConfig.pageURLs).map(url => url.slice(1)),
+    requiresSlug: Object.values(siteConfig.pageURLs).map((url) => url.slice(1)),
   }),
   urlSecretId: previewSecretId,
   reload: { button: true },
@@ -118,29 +118,27 @@ export default defineConfig({
                   .schemaType('homeSettings')
                   .documentId('homeSettings'),
               ),
-              S.documentTypeListItem('post').title('All Content'),
-              S.documentTypeListItem('author').title('Authors'),
-              S.documentTypeListItem('tag').title('Tags'),
-              S.documentTypeListItem('customer').title('Customer'),
-              S.documentTypeListItem('testimonial').title('Testimonial'),
-              S.documentTypeListItem('videos').title('Video'),
-              S.listItem()
+            S.documentTypeListItem('post').title('All Content'),
+            S.documentTypeListItem('author').title('Author'),
+            S.documentTypeListItem('tag').title('Tags'),
+            S.documentTypeListItem('customer').title('Customer'),
+            S.documentTypeListItem('testimonial').title('Testimonial'),
+            S.documentTypeListItem('videos').title('Video'),
+            S.documentTypeListItem('eventCard').title('Events Card'),
+            S.listItem()
               .title('Site Configuration')
-              .icon(DesktopIcon)
+              .icon(ControlsIcon)
               .child(
                 S.document()
                   .schemaType('siteSetting')
                   .documentId('siteSetting'),
               ),
-              S.documentTypeListItem('customContent').title('Custom Content'),
-              // S.documentTypeListItem('testimonial').title('Testimonial'),
+            S.documentTypeListItem('customContent').title('Custom Content'),
+            // S.documentTypeListItem('testimonial').title('Testimonial'),
             // ...S.documentTypeListItems().filter(
             //   (listItem) => !['homeSettings'].includes(listItem.getId()) && !['globalSettings'].includes(listItem.getId())&& !['post'].includes(listItem.getId()),
             // )
-          
-
-
-          ])         
+          ]),
     }),
 
     media({
@@ -177,7 +175,9 @@ export default defineConfig({
     // Add the "Open preview" action
     previewUrl({
       base: '/api/draft',
-      requiresSlug: Object.values(siteConfig.pageURLs).map(url => url.slice(1)),
+      requiresSlug: Object.values(siteConfig.pageURLs).map((url) =>
+        url.slice(1),
+      ),
       urlSecretId: previewSecretId,
     }),
     // Vision lets you query your content with GROQ in the studio

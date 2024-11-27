@@ -1,12 +1,14 @@
 import React from 'react'
 
 interface XSMediumProps {
-    className ?:string;
-    children?:any
+  className?: string
+  children?: any
 }
-function XSMedium({className,children}:XSMediumProps) {
+function XSMedium({ className, children }: XSMediumProps) {
   return (
-    <span className={`text-white text-xs font-medium ${className}`}>{children}</span>
+    <span className={`text-white text-xs font-medium ${className}`}>
+      {children}
+    </span>
   )
 }
 

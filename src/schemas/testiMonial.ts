@@ -1,8 +1,9 @@
 import { defineField, defineType } from 'sanity'
-
+import {DashboardIcon} from '@sanity/icons'
 export default defineType({
   name: 'testimonial',
   title: 'Testimonial',
+  icon: DashboardIcon,
   type: 'document',
   fields: [
     defineField({
@@ -37,11 +38,11 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-        name: 'layoutSwitcher',
-        title: 'Layout Switcher',
-        type: 'boolean',
-        description: 'Toggle to switch between layouts',
-      }),
+      name: 'layoutSwitcher',
+      title: 'Layout Switcher',
+      type: 'boolean',
+      description: 'Toggle to switch between layouts',
+    }),
     defineField({
       name: 'hasVideo',
       title: 'Has Video',
@@ -60,7 +61,7 @@ export default defineType({
       ],
     }),
 
-        // Tags Field
+    // Tags Field
     defineField({
       name: 'tags',
       title: 'Tags',

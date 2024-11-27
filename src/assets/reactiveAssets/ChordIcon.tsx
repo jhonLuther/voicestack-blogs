@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react'
 const ChordIcon = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -13,5 +13,5 @@ const ChordIcon = (props) => (
       fill="#E4E4E7"
     />
   </svg>
-);
-export default ChordIcon;
+)
+export default ChordIcon
