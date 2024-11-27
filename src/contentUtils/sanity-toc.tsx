@@ -161,7 +161,7 @@ export function RenderToc({
       {elements.map((el, index) => (
         <li
           key={el.text}
-          className={` ${level > 1 ? '[&:first-child]:mt-2' : ''} ${activeSection === index + 1 ? 'text-zinc-600 font-medium' : ''}`}
+          className={` ${level > 1 ? '[&:first-child]:mt-2' : ''} ${activeSection === index + 1 ? 'text-zinc-600 font-medium underline underline-offset-4' : ''}`}
         >
           <a
             href={`#${el.slug}`}
