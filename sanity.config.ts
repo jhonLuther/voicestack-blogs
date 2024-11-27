@@ -119,7 +119,7 @@ export default defineConfig({
                   .documentId('homeSettings'),
               ),
             S.documentTypeListItem('post').title('All Content'),
-            S.documentTypeListItem('author').title('Authors'),
+            S.documentTypeListItem('author').title('Author'),
             S.documentTypeListItem('tag').title('Tags'),
             S.documentTypeListItem('customer').title('Customer'),
             S.documentTypeListItem('testimonial').title('Testimonial'),

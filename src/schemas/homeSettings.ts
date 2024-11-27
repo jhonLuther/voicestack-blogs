@@ -1,4 +1,5 @@
 import { HomeIcon, DocumentIcon, TagIcon } from '@sanity/icons';
+import { uniqueTestimonialsValidation } from '~/utils/customValidation';
 export default {
   name: 'homeSettings',
   title: 'Home Settings',
@@ -187,26 +188,11 @@ export default {
       type: 'array',
       of: [{ type: 'reference', to: [{ type: 'testimonial' }] }],
       validation: Rule => Rule
-      .unique()
-      .custom((refs) => {
-        if (!refs || !Array.isArray(refs)) return true;
-        const uniqueIds = new Set();
-        const duplicates = refs.some(ref => {
-          if (!ref || !ref._ref) return false;
-          if (uniqueIds.has(ref._ref)) {
-            return true;
-          }
-          uniqueIds.add(ref._ref);
-          return false;
-        });
-        
-        return duplicates 
-          ? 'Duplicate testimonials are not allowed. Please select unique testimonials.'
-          : true;
-      })
-      .min(6),
+        .unique()
+        .custom(uniqueTestimonialsValidation)
+        .min(6),
       group: 'popularBlogs',
-    },
+    }
 
   ],
   preview: {

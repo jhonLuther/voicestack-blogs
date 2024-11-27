@@ -26,7 +26,6 @@ function BannerSubscribeSection({ isSmall }: BannerSubscribeSectionProps) {
       })
       const data = await response.json()
       setIsSubmitted(true)
-      console.log(data)
     } catch (error) {
       console.error('Error:', error)
     }

@@ -1,6 +1,7 @@
 import slugify from 'slugify'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import React from 'react'
 
 // Define the type for the Table of Contents (ToC)
 type Headings = Array<{
@@ -119,6 +120,40 @@ export function RenderToc({
   elements: TreeNode[]
   level?: number
 }) {
+
+  const [activeSection, setActiveSection] = React.useState<number | null>(null);
+  let scrollTimeout: ReturnType<typeof setTimeout> | null = null;
+
+  React.useEffect(() => {
+    const handleScroll = () => {
+      if (scrollTimeout) {
+        clearTimeout(scrollTimeout);
+      }
+      scrollTimeout = setTimeout(() => {
+        const sections = document.querySelectorAll('h2[id]');
+        for (let i = 0; i < sections.length; i++) {
+          const section = sections[i];
+          const rect = section.getBoundingClientRect();
+
+          if (rect.top >= 0 && rect.top <= window.innerHeight) {
+            setActiveSection(i + 1);
+            break;
+          }
+          else {
+            setActiveSection(null);
+          }
+
+        }
+      }, 50);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      clearTimeout(scrollTimeout as ReturnType<typeof setTimeout>);
+    };
+  }, []);
   return (
     <ol
       className={` list-decimal list-inside flex flex-col gap-3 text-sm lg:text-base  text-zinc-600`}
@@ -126,11 +161,11 @@ export function RenderToc({
       {elements.map((el, index) => (
         <li
           key={el.text}
-          className={` ${level > 1 ? '[&:first-child]:mt-2' : ''}`}
+          className={` ${level > 1 ? '[&:first-child]:mt-2' : ''} ${activeSection === index + 1 ? 'text-zinc-600 font-medium' : ''}`}
         >
           <a
             href={`#${el.slug}`}
-            className="hover:underline hover:underline-offset-4"
+            className={`hover:underline hover:underline-offset-4`}
           >
             {`${el.slug}`}
           </a>
