@@ -55,7 +55,7 @@ const LatestBlogs: React.FC<LatestBlogsProps> = ({
           className={`md:flex-row flex-col ${reverse ? 'md:flex-row-reverse' : ''} gap-8 md:gap-12 xl:gap-36`}
         >
           <div className="flex flex-col gap-9 xl:w-5/12 w-full flex-1">
-            <H2Large className="select-none">
+            <H2Large className="select-none ">
               {reverse ? displayName : `Latest`}
             </H2Large>
             <div className="flex flex-col gap-8 ">

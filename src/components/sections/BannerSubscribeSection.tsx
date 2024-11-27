@@ -4,6 +4,7 @@ import Section from '../Section'
 import Wrapper from '~/layout/Wrapper'
 import H3XL from '../typography/H3XL'
 import Link from 'next/link'
+import H34XL from '../typography/H34XL'
 
 interface BannerSubscribeSectionProps {
   isSmall?: boolean
@@ -36,16 +37,16 @@ function BannerSubscribeSection({ isSmall }: BannerSubscribeSectionProps) {
       <Wrapper className={`flex-col`}>
         <div className={`bg-white flex gap-3`}>
           <div className="flex flex-col gap-6 flex-1">
-            <div className="flex gap-1 justify-between items-start md:flex-row flex-col">
-              <H3XL
-                className={`text-zinc-900 md:text-5xl text-2xl font-monrope tracking-[-0.96px] font-manrope font-extrabold`}
+            <div className="flex gap-3 justify-between items-start md:flex-row flex-col">
+              <H34XL
+                className={`text-zinc-900  font-monrope tracking-[-0.96px] font-manrope font-extrabold`}
               >
                 Subscribe to
                 <br />{' '}
                 <span className=" bg-gradient-text2 bg-clip-text text-transparent ">
                   CS GrowthClub
                 </span>
-              </H3XL>
+              </H34XL>
               <p className="md:text-lg text-base font-medium md:max-w-[392px] md:self-end text-zinc-700">
                 Get the best, coolest, and latest in the dental industry
                 delivered to your inbox each week.

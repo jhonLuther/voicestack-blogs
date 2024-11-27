@@ -58,7 +58,7 @@ export const getStaticProps: GetStaticProps<
       webinars,
       allEventCards,
     ] = await Promise.all([
-      getPosts(client, 4),
+      getPosts(client, 5),
       getPosts(client),
       getTags(client),
       getTagsByOrder(client),

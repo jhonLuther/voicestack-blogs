@@ -13,7 +13,7 @@ import H4Large from './typography/H4Large';
 import { formatDateShort } from '~/utils/formateDate';
 import Button from './commonSections/Button';
 
-const EventCarousel = ({ allEventCards }: { allEventCards?: any; homeSettings?: any }) => {
+const EventCarousel = ({ allEventCards,bgColor }: { allEventCards?: any; homeSettings?: any, bgColor?: string }) => {
   const swiperRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -26,7 +26,7 @@ const EventCarousel = ({ allEventCards }: { allEventCards?: any; homeSettings?: 
   if(!allEventCards) return null
 
   return (
-    <Section className='justify-center bg-zinc-900  px-4'>
+    <Section className={`justify-center ${bgColor ? bgColor : 'bg-zinc-900 '}  px-4`}>
       <Wrapper className='w-full relative '>
         <Swiper
           className='w-full h-full'
@@ -49,7 +49,7 @@ const EventCarousel = ({ allEventCards }: { allEventCards?: any; homeSettings?: 
               key={events._id}
               className='!flex items-center justify-center '
             >
-              <div className='w-full bg-zinc-900  '>
+              <div className={`w-full ${bgColor ? bgColor : 'bg-zinc-900 '} `}>
                 <div
                   style={{ backgroundColor: `${events.bgColor ? events.bgColor : '#000000'}` }}
                   className={`flex flex-col md:flex-row gap-3 xl:gap-6 relative group hover:transition duration-500 rounded-lg overflow-hidden`}
@@ -64,13 +64,13 @@ const EventCarousel = ({ allEventCards }: { allEventCards?: any; homeSettings?: 
                   )}
                   <div className="flex flex-col flex-1 gap-4 self-center w-full p-4 md:p-0 md:py-5">
                     <div className='border-b border-[#33333333] pb-4'>
-                      <H4Large className={`group-hover: group-hover: line-clamp-3 text-ellipsis overflow-hidden`}>
+                      <H4Large className={`group-hover: group-hover: line-clamp-3 text-ellipsis overflow-hidden  xl:!text-xl`}>
                         {events.eventDescription}
                       </H4Large>
                     </div>
-                    <div className='flex xl:flex-row gap-x-6 gap-y-3 flex-col justify-between items-start xl:items-center '>
+                    <div className=' flex xl:flex-row gap-x-6 gap-y-3 flex-col justify-between items-start xl:items-center '>
                       <div className='flex items-start md:items-center gap-3 xl:gap-6 flex-col md:flex-row '>
-                        <div className='flex flex-shrink-0 pt-[7px] pb-[7px] pl-[10px] pr-[10px] justify-center items-center gap-3 rounded-full bg-gray-900 bg-opacity-20 '>
+                        <div className={`!bg-[#18181B33] flex flex-shrink-0 pt-[7px] pb-[7px] pl-[10px] pr-[10px] justify-center items-center gap-3 rounded-full  bg-opacity-20 `}>
                           <SubText className='!text-white'>
                             {events.evenTtype == "Online Event" ? "Live Event" : events.evenTtype}
                           </SubText>
@@ -81,7 +81,7 @@ const EventCarousel = ({ allEventCards }: { allEventCards?: any; homeSettings?: 
                           <span className='text-sm xl:text-base'>{events.eventLocation}</span>
                         </div>
                       </div>
-                      <div className='self-center md:self-auto'>
+                      <div className='self-auto'>
                         <div className='self-start md:self-center flex justify-center'>
                           <Button className='bg-zinc-900  hover:bg-zinc-700 !no-underline ' link={events?.registrationLink ? events?.registrationLink : 'https://carestack.com/demo'}>
                             <span className='text-base font-medium'>{events.registerBtnTxt ? events.registerBtnTxt : 'Register Now'}</span>

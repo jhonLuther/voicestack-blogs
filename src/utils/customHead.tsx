@@ -512,7 +512,6 @@ export function CustomHead({
     }
     return head(metaData, randomId)
   } else if (props && type === 'podcast') {
-    debugger
     const metaData = {
       '@context': 'https://schema.org',
       '@type': 'Event',

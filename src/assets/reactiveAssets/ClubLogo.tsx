@@ -1,7 +1,7 @@
 import * as React from 'react'
 const ClubLogo = (props) => (
   <svg
-    width="241"
+    width={`md:241 w-full`}
     height="37"
     viewBox="0 0 241 37"
     fill="none"

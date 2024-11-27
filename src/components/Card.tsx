@@ -21,6 +21,7 @@ import H3Medium from './typography/H3Medium'
 import ChordIcon from '~/assets/reactiveAssets/ChordIcon'
 import CreaterInfo from './commonSections/CreaterInfo'
 import { usePathname } from 'next/navigation'
+import H4Medium from './typography/H4Medium'
 
 interface CardProps {
   post: Post
@@ -158,9 +159,9 @@ export default function Card({
                 <SubText className="!text-white">
                   {isPageUrl ? tag?.tagName : post.contentType}
                 </SubText>
-                <H3XL className="group-hover:underline underline-offset-4">
+                <H3Large className="group-hover:underline underline-offset-4">
                   {post.title}
-                </H3XL>
+                </H3Large>
                 <DescriptionText className="text-opacity-70 line-clamp-3 overflow-hidden text-ellipsis">
                   {post.desc ? post.desc : post.excerpt}
                 </DescriptionText>
@@ -177,7 +178,7 @@ export default function Card({
           </div>
         </Link>
       ) : cardType === 'left-image-card' ? (
-        <Link href={linkUrl}>
+        <Link href={linkUrl} className='w-full'>
           <div
             className={`flex flex-col md:flex-row gap-3 xl:gap-6 relative group hover:transition duration-500 ${className}`}
           >
@@ -222,7 +223,7 @@ export default function Card({
                     : post.contentType}
               </SubText>
               <H4Large
-                className={`group-hover: group-hover:underline underline-offset-4 line-clamp-3 text-ellipsis overflow-hidden`}
+                className={`xl:text-xl group-hover: group-hover:underline underline-offset-4 line-clamp-3 text-ellipsis overflow-hidden`}
               >
                 {post.title}
               </H4Large>
@@ -252,11 +253,11 @@ export default function Card({
               {post.contentType && (
                 <SubText>{isPageUrl ? tag?.tagName : post.contentType}</SubText>
               )}
-              <H3Large
+              <H3Medium
                 className={`group-hover: group-hover:underline underline-offset-4 tracking-[-0.72px]`}
               >
                 {post.title}
-              </H3Large>
+              </H3Medium>
               {isPageUrl && post.contentType === 'podcast' && (
                 <CreaterInfo creater={post?.author} duration={post?.duration} />
               )}
@@ -410,11 +411,11 @@ export default function Card({
                         {post.contentType}
                       </span>
                     )}
-                    <H4Large
+                    <H4Medium
                       className={`group-hover: group-hover:underline underline-offset-4`}
                     >
                       {post.title}
-                    </H4Large>
+                    </H4Medium>
                   </div>
                   {/* {post.author && post.author.length > 0 && (
                               <span className='text-[12px] font-medium'>{`by ${post.author[0].name ? post.author[0].name : ''}`}</span>
@@ -479,9 +480,9 @@ export default function Card({
                         : post.contentType}
                     </SubText>
                   )}
-                  <H4Large className="group-hover:group-hover:underline underline-offset-4 line-clamp-3 text-ellipsis overflow-hidden">
+                  <H4Medium className="group-hover:group-hover:underline underline-offset-4 line-clamp-3 text-ellipsis overflow-hidden">
                     {post.title}
-                  </H4Large>
+                  </H4Medium>
                 </div>
 
                 {varyingIndex ? (

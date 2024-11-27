@@ -16,6 +16,7 @@ import { PodcastsIcon } from '~/assets/reactiveAssets/svgs';
 import { EbooksIcon } from '~/assets/reactiveAssets/svgs';
 import { WebinarsIcon } from '~/assets/reactiveAssets/svgs';
 import { PressIcon } from '~/assets/reactiveAssets/svgs';
+import { usePathname } from 'next/navigation'
 
 
 export const navigationLinks = [
@@ -35,6 +36,8 @@ const Header = () => {
   }
   const [showMenu, setShowMenu] = useState(false);
   const [headerFixed, setHeaderFixed] = useState(false);
+  const router = useRouter();
+  const pathname = usePathname()
 
   const closeMenu = () => {
     setShowMenu(false);
@@ -63,9 +66,6 @@ const Header = () => {
     }
   });
 
-  console.log(featuredTags, 'featuredTags');
-
-  const router = useRouter();
   const before = "before:content-[''] before:h-[100px] before:absolute before:left-0 before:right-0 before:top-full before:bg-zinc-900";
   return (
     <>
@@ -104,7 +104,7 @@ const Header = () => {
                           <Link
                             key={link.slug?.current}
                             href={`/browse/${link.slug?.current}`}
-                            className={`hover:text-zinc-300 text-sm ${router.pathname.startsWith(link.href) ? 'text-zinc-300' : 'text-zinc-500'}`}
+                            className={`hover:text-zinc-300 text-sm ${pathname.includes(link.slug?.current) ? 'text-zinc-300' : 'text-zinc-500'}`}
                           >
                             {link.tagName}
                           </Link>

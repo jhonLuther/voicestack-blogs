@@ -4,6 +4,7 @@ import Wrapper from './Wrapper'
 import Image from 'next/image'
 import CsLogo from '../assets/carestack-logo-white.svg'
 import ClubLogo from '~/assets/reactiveAssets/ClubLogo'
+import GrowthClubLogo from '~/assets/reactiveAssets/GrowthClubLogo'
 
 const Footer = ({ className }) => {
   const terms = [
@@ -128,7 +129,7 @@ const Footer = ({ className }) => {
               href="/"
               className="text-[30px] font-extrabold bg-gradient-text bg-clip-text text-transparent font-monrope tracking-tighterText max-w-[170px] leading-[1.16] block"
             >
-              <ClubLogo />
+             <GrowthClubLogo />
             </Link>
 
             {/* Social media   */}
