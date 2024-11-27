@@ -58,7 +58,7 @@ const SanityPortableText: React.FC<SanityPortableTextProps> = ({
         // `value` is the single Portable Text block for this header
         const slug = slugify(toPlainText(value))
         return (
-          <h2 className="scroll-my-8" id={slug}>
+          <h2 className="scroll-my-24" id={slug}>
             {children}
           </h2>
         )

@@ -61,7 +61,7 @@ export const NavPopover = ({ className = '', showMenu, setShowMenu }: NavProps) 
   }
 
   return (
-    <section className={`pt-[10px] px-[10px] pb-[20px] lg:rounded-[12px] bg-white shadow-custom 
+    <section className={`pt-[10px] px-4 lg:px-[10px] pb-[20px] lg:rounded-[12px] bg-white shadow-custom 
     justify-center bg-transparent fixed lg:absolute lg:top-0 left-0 w-full h-[100vh] lg:h-auto 
     lg:overflow-hidden top-0 transition-transform duration-300 linear z-20 lg:z-10 ${
     showMenu ? 'flex lg:translate-y-0 opacity-100 visible' : 'lg:-translate-y-3 opacity-0 invisible'}`}>
@@ -133,7 +133,7 @@ export const NavPopover = ({ className = '', showMenu, setShowMenu }: NavProps) 
           </div>
           {/* this duplicate is for mobile only */}
           {/* {showTags && ( */}
-            <div className={`px-[10px] py-6 lg:p-6 lg:hidden block absolute top-[56px] h-full left-0 w-full overflow-auto transition-all duration-300 ease  ${showTags ? 'translate-x-0' : 'translate-x-full'}`}>
+            <div className={`px-4 lg:px-[10px] py-6 lg:p-6 lg:hidden block absolute top-[56px] h-full left-0 w-full overflow-auto transition-all duration-300 ease  ${showTags ? 'translate-x-0' : 'translate-x-full'}`}>
               <div className="columns-2 gap-6">
                 {tagData && tagData.map((tag, index) => (
                   <div className='break-inside-avoid' key={index}>

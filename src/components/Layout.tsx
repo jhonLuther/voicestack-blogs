@@ -19,7 +19,7 @@ export default function Layout({
 
   return (
     <div
-      className={`flex flex-col w-full items-center ${homeSettings?.demoBanner ? 'lg:pt-[138px] pt-[110px]' :'lg:pt-[80px] pt-[50px] ' }`}
+      className={`flex flex-col w-full items-center ${homeSettings?.demoBanner ? 'lg:pt-[138px] pt-[100px]' :'lg:pt-[85px] pt-[55px] ' }`}
     >
       <Header />
       <main className="w-full flex flex-col">{children}</main>

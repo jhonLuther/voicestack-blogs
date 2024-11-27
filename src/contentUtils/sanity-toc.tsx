@@ -121,22 +121,22 @@ export function RenderToc({
 }) {
   return (
     <ol
-      className={` list-decimal list-inside flex flex-col gap-3 text-base  text-zinc-600`}
+      className={` list-decimal list-inside flex flex-col gap-3 text-sm lg:text-base  text-zinc-600`}
     >
       {elements.map((el, index) => (
         <li
           key={el.text}
           className={` ${level > 1 ? '[&:first-child]:mt-2' : ''}`}
         >
-          <Link
+          <a
             href={`#${el.slug}`}
             className="hover:underline hover:underline-offset-4"
           >
-            {`${el.text}`}
-          </Link>
-          {el.children && (
+            {`${el.slug}`}
+          </a>
+          {/* {el.children && (
             <RenderToc elements={el.children} level={level + 1} />
-          )}
+          )} */}
         </li>
       ))}
     </ol>
@@ -155,7 +155,7 @@ export function Toc({
     headings &&
     headings.length > 0 && (
       <section className="flex w-full flex-col p-6 bg-zinc-50 gap-6">
-        <h2 className="z-0 pb-3 font-semibold md:sticky md:top-0 text-base border-b  border-zinc-200 text-zinc-900">
+        <h2 className="z-0 pb-3 font-semibold md:top-0 text-base border-b  border-zinc-200 text-zinc-900">
           {title ?? 'Content'}
         </h2>
         <nav className="flex gap-4">
