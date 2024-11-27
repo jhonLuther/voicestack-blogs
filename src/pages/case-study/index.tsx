@@ -94,8 +94,6 @@ const CaseStudiesPage = ({
   const featuredReviews = homeSettings?.featuredReviews || []
   const featuredCaseStudy = homeSettings?.featuredCasestudy || []
 
-  console.log(featuredReviews, 'featuredReviews')
-
   const reviews = [...featuredReviews, ...testimonials].slice(0, 6) || []
 
   const uniqueReviews = getUniqueData(reviews)
