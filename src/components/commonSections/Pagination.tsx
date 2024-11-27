@@ -134,7 +134,7 @@ const Pagination = ({
     totalPages > 1 && (
       <Section className="justify-center md:pb-12 md:pt-16">
         <Wrapper className="justify-center">
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-2 flex-wrap">
             <Link
               href={getPageUrl(currentPage, 'previous')}
               onClick={() => handlePageChange(currentPage - 1)}

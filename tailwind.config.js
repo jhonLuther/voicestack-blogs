@@ -54,6 +54,7 @@ module.exports = {
 
       fontSize: {
         h1: '3.5rem',
+        h2:'2.5rem'
       },
 
       letterSpacing: {

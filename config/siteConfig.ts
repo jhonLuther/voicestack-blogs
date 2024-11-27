@@ -1,6 +1,6 @@
 const siteConfig = {
   pagination: {
-    itemsHomePage: 11,
+    itemsHomePage: 8,
     childItemsPerPage: 12,
     currentPage: 1,
     totalItems: 100, // static value

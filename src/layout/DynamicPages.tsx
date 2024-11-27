@@ -82,7 +82,8 @@ const DynamicPages = ({
           itemsPerPage={siteConfig.pagination.itemsHomePage}
           redirect={true}
         />
-        <ShortBannerSection />
+        <EventCarousel bgColor={'white'} allEventCards={uniqueEventCards} />
+        {/* <ShortBannerSection /> */}
       </BaseUrlProvider>
     </>
   )

@@ -57,7 +57,7 @@ const MainImageSection = ({
                     {post?.tagName ? post?.tagName : ''}
                   </SubText>
                 )}
-                <h1 className="text-white font-manrope leading-tight lg:text-5xl text-2xl font-bold  mb-[10px]">
+                <h1 className="text-white font-manrope leading-tight lg:text-4xl text-2xl font-bold  mb-[10px]">
                   {post.title ? post.title : 'Post Title'}
                 </h1>
                 {enableDate && (
