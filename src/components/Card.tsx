@@ -254,7 +254,7 @@ export default function Card({
                 <SubText>{isPageUrl ? tag?.tagName : post.contentType}</SubText>
               )}
               <H3Medium
-                className={`group-hover: group-hover:underline underline-offset-4 tracking-[-0.72px]`}
+                className={`group-hover: group-hover:underline underline-offset-4 tracking-[-0.72px] md:!text-[1.8rem]`}
               >
                 {post.title}
               </H3Medium>
