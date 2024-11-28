@@ -10,10 +10,24 @@ interface BannerSubscribeSectionProps {
   isSmall?: boolean
 }
 function BannerSubscribeSection({ isSmall }: BannerSubscribeSectionProps) {
-  const [email, setEmail] = useState('')
-  const [isSubmitted, setIsSubmitted] = useState(false)
+  const [email, setEmail] = useState('');
+  const [error, setError] = useState("");
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
 
   const handleSubmit = async (event) => {
+    if (!email) {
+      setError("Please enter your email address");
+      return;
+    }
+    if (!validateEmail(email)) {
+      setError("Please enter a valid email address.");
+      return;
+    }
     event.preventDefault()
     try {
       const response = await fetch('/api/subscribe', {
@@ -55,20 +69,26 @@ function BannerSubscribeSection({ isSmall }: BannerSubscribeSectionProps) {
 
             {!isSubmitted && (
               <div
-                className={`flex md:flex-row flex-col gap-3 items-centerjustify-between relative`}
+                className={`flex md:flex-row flex-col gap-5 md:gap-3 items-centerjustify-between relative`}
               >
-                <input
-                  id="default-search"
-                  type="email"
-                  placeholder="Enter your email address"
-                  value={email}
-                  onChange={(event) => setEmail(event.target.value)}
-                  className="block flex-1 w-full rounded-[5px] md:rounded-[10px] border py-3 md:py-4 pl-3 md:pl-6 pr-3 md:pr-4 border-zinc-300
-                 text-zinc-400 font-medium text-sm md:text-2xl h-[53px] md:h-[84px] bg-transparent focus:ring-blue-500 focus:border-blue-500 
-                 dark:bg-transparent focus:outline-none dark:placeholder-zinc-400 dark:text-zinc-600 dark:focus:border-blue-500 
-                 placeholder-zinc-300"
-                  required
-                />
+                <div className='flex-1 relative'>
+
+                  <input
+                    id="default-search"
+                    type="email"
+                    placeholder="Enter your email address"
+                    value={email}
+                    onChange={(event) =>{ setEmail(event.target.value); setError("")}}
+                    className={`block w-full rounded-[5px] md:rounded-[10px] border py-3 md:py-4 pl-3 md:pl-6 pr-3 md:pr-4 border-zinc-300
+                  text-zinc-400 font-medium text-sm md:text-2xl h-[53px] md:h-[84px] bg-transparent focus:ring-blue-500 focus:border-blue-500 
+                  dark:bg-transparent focus:outline-none dark:placeholder-zinc-400 dark:text-zinc-600 dark:focus:border-blue-500 
+                  placeholder-zinc-300 ${ error ? "border-red-500 focus:border-red-500" : ""}`}
+                    required
+                  />
+                  {error &&(
+                    <p className="text-xs lg:text-sm text-red-500 absolute bottom-[-17px] md:bottom-[-21px] left-0">{error}</p>
+                  )}
+                </div>
 
                 <Button
                   className="bg-zinc-900 !px-12 hover:bg-zinc-700 md:absolute md:translate-y-[-50%] top-[50%] right-[16px] self-start"
