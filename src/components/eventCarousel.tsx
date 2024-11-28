@@ -91,7 +91,7 @@ const EventCarousel = ({ allEventCards,bgColor }: { allEventCards?: any; homeSet
                     </div>
                   </div>
                   <div className="flex flex-row md:flex-col items-center justify-center gap-2 md:gap-4 z-50 p-6 pt-0 md:pb-0">
-                    {allEventCards && allEventCards.map((_, index) => (
+                    {allEventCards && allEventCards.length > 1 && allEventCards.map((_, index) => (
                       <button
                         key={index}
                         onClick={() => swiperRef.current?.slideTo(index)}
