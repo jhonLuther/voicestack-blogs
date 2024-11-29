@@ -65,7 +65,7 @@ const Pagination = ({
           : `${baseUrl}/${page}`
       }
 
-      if (page == 0) {
+      if ( (page == 0) || (page == 1)) {
         return baseUrl
       } else {
         return enablePageSlug ? `${baseUrl}/page/${page}` : `${baseUrl}/${page}`

@@ -197,3 +197,22 @@ export const getUniqueData = (data) => {
     return acc
   }, [])
 }
+
+export function capitalizeFirst(str) {
+  const minorWords = ["and", "or", "but", "of", "to", "in", "on", "for", "at", "by", "with", "a", "an", "the","is","if"];
+  
+  return str
+    .toLowerCase()
+    .split(" ")
+    .map((word, index) => {
+      if (
+        index === 0 || 
+        index === str.split(" ").length - 1 || 
+        !minorWords.includes(word)
+      ) {
+        return word.charAt(0).toUpperCase() + word.slice(1);
+      }
+      return word; 
+    })
+    .join(" ");
+}

@@ -8,6 +8,7 @@ import Link from 'next/link'
 import useMediaQuery from '~/utils/useMediaQueryHook'
 import Section from '../Section'
 import ImageLoader from '../commonSections/ImageLoader'
+import { capitalizeFirst } from '~/utils/common'
 
 interface TestimonialSectionProps {
   testimonials: {
@@ -50,7 +51,7 @@ const TestimonialSection = ({ testimonials }: TestimonialSectionProps) => {
                     </svg>
                     <div>
                       <p className="text-zinc-900 text-xl lg:text-3xl font-bold leading-[1.1] tracking-[-0.72px] font-manrope">
-                        {testimonialItem.testimonialName}
+                        {capitalizeFirst(testimonialItem.testimonialName)}
                       </p>
                       <p className="mt-4 text-zinc-700 text-base lg:text-xl leading-[1.6] md:leading-[1.4]">
                         {`${testimonialItem.excerpt ? testimonialItem.excerpt : 'Duis aute irure dolor in reprehenderit in voluptate pariatur.'}`}
