@@ -88,7 +88,7 @@ const PaginatedPressReleasePage = ({
   totalPages: number
 }) => {
   const router = useRouter()
-  const baseUrl = useRef(`/${siteConfig.pageURLs.pressRelease}`).current
+  const baseUrl = `/${siteConfig.pageURLs.pressRelease}`;
 
   const handlePageChange = (page: number) => {
     if (page === 1) {

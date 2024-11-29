@@ -26,19 +26,20 @@ import TagSelect from '~/contentUtils/TagSelector'
 import { mergeAndRemoveDuplicates } from '~/utils/common'
 import { GlobalDataProvider } from '~/components/Context/GlobalDataContext'
 
-export const getStaticProps: GetStaticProps<
-  SharedPageProps & { podcasts: Podcasts[]; totalPages: number }
-> = async (context) => {
+export const getStaticProps: GetStaticProps<SharedPageProps & {}> = async (context) => {
   const draftMode = context.preview || false
   const client = getClient(draftMode ? { token: readToken } : undefined)
   const itemsPerPage = siteConfig.pagination.childItemsPerPage
 
-  const podcasts: any = await getPodcasts(client, 0, itemsPerPage)
-  const latestPodcasts: any = await getPodcasts(client, 0, 5)
-  const totalPodcasts = await getPodcastsCount(client)
+  const [podcasts, latestPodcasts, totalPodcasts, tags, homeSettings] = await Promise.all([
+    getPodcasts(client, 0, itemsPerPage),
+    getPodcasts(client, 0, 5),
+    getPodcastsCount(client),
+    getTags(client),
+    getHomeSettings(client),
+  ])
+
   const totalPages = Math.ceil(totalPodcasts / itemsPerPage)
-  const tags = await getTags(client)
-  const homeSettings = await getHomeSettings(client)
 
   return {
     props: {
@@ -52,6 +53,7 @@ export const getStaticProps: GetStaticProps<
     },
   }
 }
+
 
 const PodcastsPage = ({
   podcasts,
@@ -67,7 +69,7 @@ const PodcastsPage = ({
   homeSettings: any
 }) => {
   const router = useRouter()
-  const baseUrl = useRef(`/${siteConfig.pageURLs.podcast}`).current
+  const baseUrl = `/${siteConfig.pageURLs.podcast}`;
   if (!podcasts) return null
 
   const featuredPodcast = homeSettings?.featuredPodcast || []

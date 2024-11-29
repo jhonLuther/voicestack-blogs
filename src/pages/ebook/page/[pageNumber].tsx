@@ -82,7 +82,7 @@ const PaginatedEbookPage = ({
   totalPages: number
 }) => {
   const router = useRouter()
-  const baseUrl = useRef(`/${siteConfig.pageURLs.ebook}`).current
+  const baseUrl = `/${siteConfig.pageURLs.ebook}`
 
   const handlePageChange = (page: number) => {
     if (page === 1) {

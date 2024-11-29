@@ -64,7 +64,7 @@ const PressReleasePage = ({
   homeSettings: any
 }) => {
   const router = useRouter()
-  const baseUrl = useRef(`/${siteConfig.pageURLs.pressRelease}`).current
+  const baseUrl = `/${siteConfig.pageURLs.pressRelease}`;
   if (!pressReleases) return null
 
   const featuredPressRelease = homeSettings?.featuredPressRelease || []

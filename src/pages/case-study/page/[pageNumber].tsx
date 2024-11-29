@@ -84,7 +84,7 @@ const PaginatedCaseStudyPage = ({
   totalPages: number
 }) => {
   const router = useRouter()
-  const baseUrl = useRef(`/${siteConfig.pageURLs.caseStudy}`).current
+  const baseUrl = `/${siteConfig.pageURLs.caseStudy}`
 
   const handlePageChange = (page: number) => {
     if (page === 1) {

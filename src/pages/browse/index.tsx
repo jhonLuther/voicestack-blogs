@@ -100,7 +100,7 @@ export default function ProjectSlugRoute(
   } = props
   const totalCount: any = totalPosts.length ?? 0
 
-  const baseUrl = useRef(`/${siteConfig.paginationBaseUrls.base}`).current
+  const baseUrl = `/${siteConfig.paginationBaseUrls.base}`
 
   const handlePageChange = (page: number) => {
     //   if (page === 1) {

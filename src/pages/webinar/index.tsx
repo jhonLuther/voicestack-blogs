@@ -25,18 +25,21 @@ import { mergeAndRemoveDuplicates } from '~/utils/common'
 import { GlobalDataProvider } from '~/components/Context/GlobalDataContext'
 
 export const getStaticProps: GetStaticProps<
-  SharedPageProps & { webinars: Webinars[]; totalPages: number }
+  SharedPageProps & { }
 > = async (context) => {
   const draftMode = context.preview || false
   const client = getClient(draftMode ? { token: readToken } : undefined)
   const itemsPerPage = siteConfig.pagination.childItemsPerPage
 
-  const webinars: any = await getWebinars(client, 0, itemsPerPage)
-  const latestWebinars: any = await getWebinars(client, 0, 5)
-  const totalWebinars = await getWebinarsCount(client)
+  const [webinars, latestWebinars, totalWebinars, tags, homeSettings] = await Promise.all([
+    getWebinars(client, 0, itemsPerPage),
+    getWebinars(client, 0, 5),
+    getWebinarsCount(client),
+    getTags(client),
+    getHomeSettings(client),
+  ])
+
   const totalPages = Math.ceil(totalWebinars / itemsPerPage)
-  const tags = await getTags(client)
-  const homeSettings = await getHomeSettings(client)
 
   return {
     props: {
@@ -50,6 +53,7 @@ export const getStaticProps: GetStaticProps<
     },
   }
 }
+
 
 const WebinarsPage = ({
   webinars,
@@ -65,7 +69,7 @@ const WebinarsPage = ({
   homeSettings: any
 }) => {
   const router = useRouter()
-  const baseUrl = useRef(`/${siteConfig.pageURLs.webinar}`).current
+  const baseUrl = `/${siteConfig.pageURLs.webinar}`
   if (!webinars) return null
 
   const featuredWebinar = homeSettings?.featuredWebinar || []

@@ -111,9 +111,8 @@ export default function TagPage({
   const handlePageChange = (page: number) => {
     console.log(`Navigating to page: ${page}`)
   }
-  const baseUrl = useRef(
-    `/${siteConfig.paginationBaseUrls.base}/${tag?.slug?.current}`,
-  ).current
+  const baseUrl =
+    `/${siteConfig.paginationBaseUrls.base}/${tag?.slug?.current}`;
   const siteSettingWithImage = siteSettings?.find((e: any) => e?.openGraphImage)
 
   return (

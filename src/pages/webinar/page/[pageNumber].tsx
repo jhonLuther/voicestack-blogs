@@ -82,7 +82,7 @@ const PaginatedWebinarsPage = ({
   totalPages: number
 }) => {
   const router = useRouter()
-  const baseUrl = useRef(`/${siteConfig.pageURLs.webinar}`).current
+  const baseUrl = `/${siteConfig.pageURLs.webinar}`
 
   const handlePageChange = (page: number) => {
     if (page === 1) {
