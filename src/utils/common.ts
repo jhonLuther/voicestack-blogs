@@ -199,7 +199,7 @@ export const getUniqueData = (data) => {
 }
 
 export function capitalizeFirst(str) {
-  const minorWords = ["and", "or", "but", "of", "to", "in", "on", "for", "at", "by", "with", "a", "an", "the","is"];
+  const minorWords = ["and", "or", "but", "of", "to", "in", "on", "for", "at", "by", "with", "a", "an", "the","is","if"];
   
   return str
     .toLowerCase()

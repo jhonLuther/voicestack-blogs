@@ -143,7 +143,7 @@ export const NavPopover = ({ className = '', showMenu, setShowMenu }: NavProps) 
               <div className='px-[10px] py-6 lg:p-6 lg:block hidden'>
                 <div className='text-zinc-400 pb-6 font-medium text-sm uppercase'>Browse By Key Topics</div>
                 <div className="lg:columns-4 gap-6">
-                  {tagData && tagData.map((tag, index) => (
+                  {tagData && tagData.length > 0 && tagData.map((tag, index) => (
                     <div className='break-inside-avoid pb-[14px]' key={index}>
                       <Link
                         href={`/browse/${tag?.slug?.current}`}
@@ -168,7 +168,7 @@ export const NavPopover = ({ className = '', showMenu, setShowMenu }: NavProps) 
           {/* {showTags && ( */}
             <div className={`px-4 lg:px-[10px] py-6 lg:p-6 lg:hidden block absolute top-[56px] h-full left-0 w-full overflow-auto transition-all duration-300 ease  ${showTags ? 'translate-x-0' : 'translate-x-full'}`}>
               <div className="columns-2 gap-6">
-                {tagData && tagData.map((tag, index) => (
+                {tagData && tagData.length > 0 && tagData.map((tag, index) => (
                   <div className='break-inside-avoid' key={index}>
                     <Link
                       href={`/browse/${tag?.slug?.current}`}
