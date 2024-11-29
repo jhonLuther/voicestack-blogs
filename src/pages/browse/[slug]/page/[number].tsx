@@ -127,9 +127,9 @@ export default function TagPagePaginated({
     console.log(`Navigating to page: ${page}`)
   }
 
-  const baseUrl = useRef(
-    `/${siteConfig.paginationBaseUrls.base}/${tag?.slug?.current}`,
-  ).current
+  const baseUrl = 
+    `/${siteConfig.paginationBaseUrls.base}/${tag?.slug?.current}`;
+
 
   return (
     <GlobalDataProvider data={allTags} featuredTags={homeSettings.featuredTags}>

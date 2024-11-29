@@ -85,7 +85,7 @@ export default function AuthorPage({
   tags,
   homeSettings,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  const baseUrl = useRef(`/${siteConfig.pageURLs.author}`).current
+  const baseUrl = `/${siteConfig.pageURLs.author}`
 
   return (
     <GlobalDataProvider data={tags} featuredTags={homeSettings.featuredTags}>

@@ -68,7 +68,7 @@ const ArticlesPage = ({
   homeSettings?: any
 }) => {
   const router = useRouter()
-  const baseUrl = useRef(`/${siteConfig.pageURLs.article}`).current
+  const baseUrl = `/${siteConfig.pageURLs.article}`
 
   const featuredArticles = homeSettings?.featuredArticle || []
 

@@ -72,7 +72,7 @@ const CaseStudiesPage = ({
   homeSettings: any
 }) => {
   const router = useRouter()
-  const baseUrl = useRef(`/${siteConfig.pageURLs.caseStudy}`).current
+  const baseUrl = `/${siteConfig.pageURLs.caseStudy}`
 
   const heroData = {
     tagName: 'CUSTOMER STORIES',

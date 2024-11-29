@@ -95,7 +95,7 @@ const PaginatedArticlesPage = ({
   totalPages: number
 }) => {
   const router = useRouter()
-  const baseUrl = useRef(`/${siteConfig.pageURLs.article}`).current
+  const baseUrl = `/${siteConfig.pageURLs.article}`
 
   const handlePageChange = (page: number) => {
     if (page === 1) {
