@@ -14,6 +14,8 @@ function BannerSubscribeSection({ isSmall }: BannerSubscribeSectionProps) {
   const [error, setError] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
 
+  const [hideBanner, setHideBanner] = useState(true);
+
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
@@ -47,6 +49,9 @@ function BannerSubscribeSection({ isSmall }: BannerSubscribeSectionProps) {
   }
 
   return (
+    hideBanner ? (
+      <></>
+    ):(
     <Section className="justify-center">
       <Wrapper className={`flex-col`}>
         <div className={`bg-white flex gap-3`}>
@@ -115,6 +120,7 @@ function BannerSubscribeSection({ isSmall }: BannerSubscribeSectionProps) {
         </p>
       </Wrapper>
     </Section>
+    )
   )
 }
 
