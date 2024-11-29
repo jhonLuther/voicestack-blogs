@@ -8,19 +8,19 @@ import GrowthClubLogo from '~/assets/reactiveAssets/GrowthClubLogo'
 
 const Footer = ({ className }) => {
   const terms = [
-    { title: 'Terms of use', url: '#' },
-    { title: 'Privacy policy', url: '#' },
-    { title: 'Do not sell my information', url: '#' },
+    { title: 'Terms of use', url: 'https://carestack.com/legal/2020-1/termsofuse', external: true },
+    { title: 'Privacy policy', url: 'https://carestack.com/legal/2024-1/privacypolicy', external: true },
+    { title: 'Do not sell my information', url: 'https://carestack.com/legal/2020-1/optoutrequest', external: true },
   ]
 
   const sections = [
-    {
-      title: 'Help',
-      links: [
-        { name: 'Help Center', url: '#', external: false },
-        { name: 'Help Forum', url: '#', external: false },
-      ],
-    },
+    // {
+    //   title: 'Help',
+    //   links: [
+    //     { name: 'Help Center', url: '#', external: false },
+    //     { name: 'Help Forum', url: '#', external: false },
+    //   ],
+    // },
 
     {
       title: 'Quick Links',
