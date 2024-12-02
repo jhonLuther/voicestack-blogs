@@ -1,4 +1,2 @@
 User-agent: *
-Disallow: /studio
-
-Sitemap: https://blog.carestack.com/sitemap.xml
+Disallow: /
