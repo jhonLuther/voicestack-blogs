@@ -213,7 +213,7 @@ export const NavPopover = ({
           <div
             className={`px-4 lg:px-[10px] py-6 lg:p-6 lg:hidden block absolute top-[56px] h-full left-0 w-full overflow-auto transition-all duration-300 ease  ${showTags ? 'translate-x-0' : 'translate-x-full'}`}
           >
-            <div className="columns-2 gap-6">
+            <div className="columns-1 gap-6">
               {tagData &&
                 tagData.length > 0 &&
                 tagData.map((tag, index) => (
