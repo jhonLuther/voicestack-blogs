@@ -90,28 +90,28 @@ export function generateJSONLD(post: any) {
           eventAttendanceMode: 'https://schema.org/OnlineEventAttendanceMode',
           eventStatus: 'https://schema.org/EventScheduled',
         })
-      case 'case-study':
-        return JSON.stringify({
-          '@type': 'NewsArticle',
-          '@context': 'https://schema.org',
-          headline: post.excerpt || '',
-          image: urlForImage(post?.mainImage),
-          author: [
-            {
-              '@type': 'Person',
-              // name: 'Patrick Coombe',
-            },
-          ],
-          startDate: new Date(),
-          description:
-            post.author ??
-            post?.author?.map((e) => {
-              return e.bio
-            }),
-          creator: 'CareStack',
-          inLanguage: ['en_us', 'en-GB'],
-          sameAs: 'https://carestack.com/',
-        })
+      // case 'case-study':
+      //   return JSON.stringify({
+      //     '@type': 'NewsArticle',
+      //     '@context': 'https://schema.org',
+      //     headline: post.excerpt || '',
+      //     image: urlForImage(post?.mainImage),
+      //     author: [
+      //       {
+      //         '@type': 'Person',
+      //         // name: 'Patrick Coombe',
+      //       },
+      //     ],
+      //     startDate: new Date(),
+      //     description:
+      //       post.author ??
+      //       post?.author?.map((e) => {
+      //         return e.bio
+      //       }),
+      //     creator: 'CareStack',
+      //     inLanguage: ['en_us', 'en-GB'],
+      //     sameAs: 'https://carestack.com/',
+      //   })
       case 'podcast':
         return JSON.stringify({
           '@context': 'https://schema.org',
@@ -205,23 +205,31 @@ export function indexPageJsonLd(params: any) {
 export function breadCrumbJsonLd(
   breadCrumbList: { breadcrumb: string; url?: string }[],
 ) {
-  const baseUrl = `https://carestack.com`
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
+  const home = {
+    '@type': 'ListItem',
+    position: 1,
+    item: {
+      '@id': `${baseUrl}`,
+      name: 'home',
+    },
+  }
+  const JsonLdItems = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
 
-  const itemListElement = breadCrumbList.map((item: any) => {
-    return {
-      '@context': 'https://schema.org',
-      '@type': 'BreadcrumbList',
-      itemListElement: [
-        {
-          '@type': 'ListItem',
-          position: 1,
-          item: {
-            '@id': `${baseUrl}${item?.href}`,
-            name: item?.label ?? '',
-          },
+    itemListElement: breadCrumbList.map((e: any, i: number) => {
+      return {
+        '@type': 'ListItem',
+        position: i + 2,
+        item: {
+          '@id': `${baseUrl}${e?.href}`,
+          name: e?.label ?? '',
         },
-      ],
-    }
-  })
-  return itemListElement
+      }
+    }),
+  }
+
+  JsonLdItems.itemListElement.unshift(home)
+  return JsonLdItems;
 }
