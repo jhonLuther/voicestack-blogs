@@ -178,7 +178,7 @@ export const NavPopover = ({
                 <div className="text-zinc-400 pb-6 font-medium text-sm uppercase">
                   Browse By Key Topics
                 </div>
-                <div className="lg:columns-4 gap-6">
+                <div className="lg:columns-3 gap-6">
                   {tagData &&
                     tagData.length > 0 &&
                     tagData.map((tag, index) => (

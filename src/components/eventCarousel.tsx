@@ -38,7 +38,7 @@ const EventCarousel = ({ allEventCards,bgColor }: { allEventCards?: any; homeSet
           }}
           speed={800}
           slidesPerView={1}
-          loop={true}
+          loop={allEventCards.length > 1}
           onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
           onSwiper={(swiper) => {
             swiperRef.current = swiper;
@@ -59,6 +59,10 @@ const EventCarousel = ({ allEventCards,bgColor }: { allEventCards?: any; homeSet
                       <ImageLoader
                         className='transform h-full w-full duration-300  min-h-[156px] md:min-h-[156px]'
                         image={events?.mainImage}
+                        priority={true}
+                        sizes="(max-width: 768px) 100vw,
+                        (max-width: 1200px) 50vw,
+                        33vw"
                       />
                     </div>
                   )}

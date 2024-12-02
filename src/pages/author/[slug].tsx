@@ -99,6 +99,7 @@ export default function AuthorPage({
                     <ImageLoader
                       className="object-cover h-full w-full "
                       image={author.picture}
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     />
                   )}
                 </div>
