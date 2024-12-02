@@ -32,6 +32,7 @@ interface ButtonProps {
   alter?: 'bgWhite' | 'borderWhite' | 'disabled' | 'default'
   children?: React.ReactNode
   link?: any
+  target?: '_blank' | '_self' | '_parent' | '_top' | '';
   isDemo?: boolean
   [x: string]: any
   className?: string
@@ -43,6 +44,7 @@ const Button: React.FunctionComponent<ButtonProps> = ({
   children,
   link,
   isDemo,
+  target,
   className,
   ...rest
 }) => {
@@ -50,7 +52,7 @@ const Button: React.FunctionComponent<ButtonProps> = ({
 
   if (link) {
     return (
-      <Link href={link} className={baseClasses} {...rest}>
+      <Link href={link} className={baseClasses} target={target} {...rest}>
         {children}
       </Link>
     )

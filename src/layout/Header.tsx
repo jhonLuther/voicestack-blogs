@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import ProgressBar from '~/utils/progressBar/progressBar';
-import { ArrowRightIcon } from '@sanity/icons'
+import { ArrowRightIcon, UlistIcon } from '@sanity/icons'
 import { useRouter } from 'next/router';
 import { CloseIcon } from '@sanity/icons'
 import useMediaQuery from '~/utils/useMediaQueryHook';
