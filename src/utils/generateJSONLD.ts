@@ -209,10 +209,8 @@ export function breadCrumbJsonLd(
   const home = {
     '@type': 'ListItem',
     position: 1,
-    item: {
-      '@id': `${baseUrl}`,
-      name: 'home',
-    },
+    name: 'home',
+    item: `${baseUrl}`,
   }
   const JsonLdItems = {
     '@context': 'https://schema.org',
@@ -222,10 +220,8 @@ export function breadCrumbJsonLd(
       return {
         '@type': 'ListItem',
         position: i + 2,
-        item: {
-          '@id': `${baseUrl}${e?.href}`,
-          name: e?.label ?? '',
-        },
+        name: e?.label ?? '',
+        item:  `${baseUrl}${e?.href}`
       }
     }),
   }
