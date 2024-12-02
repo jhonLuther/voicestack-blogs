@@ -110,8 +110,6 @@ export default function IndexPage(props: IndexPageProps) {
   const siteSettings = props?.siteSettings
   const eventCards = props?.allEventCards
 
-  // console.log(props, 'props')
-
   return (
     <GlobalDataProvider
       data={props?.tags}

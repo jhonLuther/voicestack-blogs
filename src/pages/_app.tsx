@@ -20,8 +20,8 @@ export default function App({
 }: AppProps<SharedPageProps>) {
   const { draftMode, token } = pageProps
   const pathname:any = usePathname()
-  const currentWindow =pathname.split('/')
-  const index = pathname?.split('/').length-1
+  const currentWindow =pathname && pathname?.split('/') || []
+  const index = pathname?.split('/').length-1 || 0
   const result = slugToCapitalized(currentWindow[index])
 
   return (
