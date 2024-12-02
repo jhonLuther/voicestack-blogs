@@ -11,7 +11,7 @@ function generateSiteMap(posts: any[]) {
     `${BASE_URL}/${siteConfig.pageURLs.caseStudy}`,
     `${BASE_URL}/${siteConfig.pageURLs.article}`,
     `${BASE_URL}/${siteConfig.pageURLs.podcast}`,
-    `${BASE_URL}${siteConfig.pageURLs.ebook}`,
+    `${BASE_URL}/${siteConfig.pageURLs.ebook}`,
     `${BASE_URL}/${siteConfig.pageURLs.webinar}`,
     `${BASE_URL}/${siteConfig.pageURLs.pressRelease}`,
   ]
@@ -31,7 +31,7 @@ function generateSiteMap(posts: any[]) {
         .map((url) => {
           return `
             <url>
-              <loc>${url}</loc>
+              <loc>${url}11</loc>
             </url>
           `
         })
