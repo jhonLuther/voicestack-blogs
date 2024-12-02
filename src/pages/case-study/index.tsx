@@ -108,8 +108,6 @@ const CaseStudiesPage = ({
       <BaseUrlProvider baseUrl={baseUrl}>
         <Layout>
           <TagSelect tags={tags} tagLimit={7} showTags={true} />
-          {customMetaTag('caseStudy')}
-          <CustomHead props={caseStudies} />
           <MainImageSection landing={true} post={heroData} />
           {caseStudies?.map((e, i) => {
             return <CustomHead props={e} type="caseStudy" key={i} />

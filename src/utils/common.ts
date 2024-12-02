@@ -216,3 +216,11 @@ export function capitalizeFirst(str) {
     })
     .join(" ");
 }
+
+export function slugToCapitalized(slug) {
+  return slug
+    .split('-')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ')
+}
+

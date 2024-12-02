@@ -3,6 +3,7 @@ import { breadCrumbJsonLd, generateJSONLD } from './generateJSONLD'
 import Head from 'next/head'
 import { urlForImage } from '~/lib/sanity.image'
 import { getIframeUrl } from '~/components/commonSections/VideoModal'
+import { slugToCapitalized } from './common'
 
 const organizationSchema = {
   '@context': 'https://schema.org',
@@ -145,16 +146,19 @@ const organizationSchema = {
   ],
 }
 
-const head = (data: any, i: string) => {
+const head = (data: any, i: string, id: string = "") => {
   return (
     <Head key={i}>
       <script
+        id={id+i}
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
       ></script>
     </Head>
   )
 }
+
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 const siteLink = {
   '@context': 'https://schema.org/',
@@ -172,11 +176,12 @@ export const orgSchema = () => {
   return head(
     organizationSchema,
     Math.log10(Math.random()).toString() + 'randomId',
+    'organizationSchema'
   )
 }
 
 export const siteLinkSchema = () => {
-  return head(siteLink, Math.log10(Math.random()).toString() + 'randomId1')
+  return head(siteLink, Math.log10(Math.random()).toString() + 'randomId1', 'siteLinkSchema')
 }
 
 const ogMetaData = {
@@ -259,7 +264,7 @@ export const defaultMetaTag = (params: any) => {
     <Head key={params?._id}>
       <meta property="og:type" content="website" />
       <meta property="og:url" content="www.carestack.com" />
-      {params?.siteTitle ? <title>{params.siteTitle?.trim()}</title> : <></>}
+      {params?.siteTitle ? <title>{slugToCapitalized(params.siteTitle?.trim())}</title> : <></>}
       {params?.siteDescription ? (
         <meta property="og:description" content={params.siteDescription}></meta>
       ) : (
@@ -325,12 +330,13 @@ export function CustomHead({
   paginationType = '',
 }: any) {
   const randomId = useId() + Math.log(Math.random())
-  const url = process?.env?.NEXT_PUBLIC_BASE_URL
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 
-  const head = (data: any, i: string) => {
+  const head = (data: any, i: string, id: string = "") => {
     return (
       <Head key={i}>
         <script
+          id={id+randomId}
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
         ></script>
@@ -343,6 +349,7 @@ export function CustomHead({
     return (
       <Head>
         <script
+          id={'breadcrumb'+randomId}
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(metadata) }}
         ></script>
@@ -355,10 +362,18 @@ export function CustomHead({
       const data = generateJSONLD(e)
       return head(e, i)
     })
-  } else if (props && type == 'caseStudy') {
+  } else if (props && type == 'caseStudy') { 
     const metaData = {
+      
       '@context': 'https://schema.org',
       '@type': 'BlogPosting',
+      mainEntityOfPage: {
+        "@type": "WebPage",
+        "@id": `${baseUrl}/case-study/${props?.slug?.current}`,
+        isPartOf: {
+          "@id": baseUrl,
+        },
+      },
       headline: [props?.title],
       image: urlForImage(props?.mainImage?._id),
       author: {
@@ -370,7 +385,7 @@ export function CustomHead({
         ],
         url: 'https://carestack.com',
       },
-      dateCreated: new Date(),
+      dateCreated: props?.date,
       inLanguage: 'en-US',
       copyrightHolder: {
         '@id': 'https://carestack.com/#organization',
@@ -381,12 +396,21 @@ export function CustomHead({
         url: 'https://carestack.com',
       },
     }
-    return head(metaData, randomId)
+    return head(metaData, randomId, type+randomId)
   } else if (props && type === 'articleExpanded' && props?.title) {
+
     /* for url if author url available add field , for now  url:"www.carestack.com" */
+    const url = baseUrl ?? 'www.blog.carestack.com'
     const metaData = {
       '@context': 'https://schema.org',
       '@type': 'Article',
+      mainEntityOfPage: {
+        "@type": "WebPage",
+        "@id": `${baseUrl}/article/${props?.slug?.current}`,
+        isPartOf: {
+          "@id": baseUrl,
+        },
+      },
       headline: props?.title ?? '',
       image: [urlForImage(props?.mainImage?._id)],
       author: [
@@ -394,7 +418,7 @@ export function CustomHead({
           return {
             '@type': 'Person',
             name: e.name,
-            url: 'www.carestack.com',
+            url: `${url}/author/${e.slug?.current}`,
           }
         }) || null,
       ],
@@ -408,41 +432,43 @@ export function CustomHead({
         url: 'https://carestack.com',
       },
     }
-    return head(metaData, randomId)
-  } else if (props && type === 'eBook') {
-    const metaData = {
-      '@context': 'https://schema.org',
-      '@type': 'WebPage',
-      breadcrumb: `HOME > EBOOK > ${props.slug?.current}`,
-      mainEntity: {
-        '@type': 'Book',
-        author: {
-          '@type': 'Person',
-          name: props?.author?.map((e) => {
-            return e.name
-          }),
-          abstract: props?.excerpt,
-        },
-        bookFormat: 'http://schema.org/EBook',
-        datePublished: props?.publishedAt ?? null,
-        image: urlForImage(props?.mainImage),
-        inLanguage: 'English',
-        isbn: '00000000',
-        numberOfPages: '1234',
-        publisher: 'CareStack',
-        name: props?.title,
-        ratingValue: 5,
-        aggregateRating: {
-          '@type': 'AggregateRating',
-          reviewCount: '5',
-          name: props?.title,
-          ratingValue: 5,
-        },
-        url: props?.attachment?.asset?.url,
-      },
-    }
-    return head(metaData, randomId)
-  } else if (props && type === 'webinar') {
+    return head(metaData, randomId, type+randomId)
+  }
+  //  else if (props && type === 'eBook') {
+  //   const metaData = {
+  //     '@context': 'https://schema.org',
+  //     '@type': 'WebPage',
+  //     breadcrumb: `HOME > EBOOK > ${props.slug?.current}`,
+  //     mainEntity: {
+  //       '@type': 'Book',
+  //       author: {
+  //         '@type': 'Person',
+  //         name: props?.author?.map((e) => {
+  //           return e.name
+  //         }),
+  //         abstract: props?.excerpt,
+  //       },
+  //       bookFormat: 'http://schema.org/EBook',
+  //       datePublished: props?.publishedAt ?? null,
+  //       image: urlForImage(props?.mainImage),
+  //       inLanguage: 'English',
+  //       isbn: '00000000',
+  //       numberOfPages: '1234',
+  //       publisher: 'CareStack',
+  //       name: props?.title,
+  //       ratingValue: 5,
+  //       aggregateRating: {
+  //         '@type': 'AggregateRating',
+  //         reviewCount: '5',
+  //         name: props?.title,
+  //         ratingValue: 5,
+  //       },
+  //       url: props?.attachment?.asset?.url,
+  //     },
+  //   }
+  //   return head(metaData, randomId, type+randomId)
+  // }
+   else if (props && type === 'webinar') {
     const metaData = {
       '@context': 'https://schema.org',
       '@type': 'Event',
@@ -481,6 +507,7 @@ export function CustomHead({
         availability: 'https://schema.org/InStock',
       },
     }
+    head(metaData, randomId, type+randomId)
   } else if (props && type === 'breadCrumbs') {
     return breadCrumbJson(props)
   } else if (props && type === 'pagination') {
@@ -510,7 +537,7 @@ export function CustomHead({
       numberOfItems: 3,
       name: paginationType,
     }
-    return head(metaData, randomId)
+    return head(metaData, randomId, type+randomId)
   } else if (props && type === 'podcast') {
     const metaData = {
       '@context': 'https://schema.org',
@@ -531,7 +558,7 @@ export function CustomHead({
         image: e?.picture,
       })),
     }
-    return head(metaData, randomId)
+    return head(metaData, randomId, type+randomId)
   } else if (props && type === 'pressRelease') {
     const metaData = {
       '@context': 'https://schema.org',
@@ -560,6 +587,6 @@ export function CustomHead({
       },
       description: props?.excerpt,
     }
-    return head(metaData, randomId)
+    return head(metaData, randomId, type+randomId)
   }
 }

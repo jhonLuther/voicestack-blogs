@@ -27,6 +27,7 @@ import { BaseUrlProvider } from '~/components/Context/UrlContext'
 import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection'
 import { defaultMetaTag } from '~/utils/customHead'
 import { GlobalDataProvider } from '~/components/Context/GlobalDataContext'
+import { slugToCapitalized } from '~/utils/common'
 
 interface Query {
   slug: string
@@ -113,7 +114,9 @@ export default function TagPage({
   }
   const baseUrl =
     `/${siteConfig.paginationBaseUrls.base}/${tag?.slug?.current}`;
-  const siteSettingWithImage = siteSettings?.find((e: any) => e?.openGraphImage)
+  let siteSettingWithImage = siteSettings?.find((e: any) => e?.openGraphImage)
+  siteSettingWithImage.siteTitle = slugToCapitalized(tag?.slug?.current)
+
 
   return (
     <GlobalDataProvider data={allTags} featuredTags={homeSettings.featuredTags}>
