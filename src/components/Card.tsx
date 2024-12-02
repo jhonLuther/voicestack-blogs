@@ -142,11 +142,17 @@ export default function Card({
                   image={post?.mainImage}
                   onColorExtracted={handleColorExtracted}
                   fixed={true}
+                  sizes="(max-width: 768px) 100vw,
+                  (max-width: 1200px) 50vw,
+                  33vw"
                 />
               ) : (
                 <ImageLoader
                   image={siteConfig.placeHolder.podcastCover}
                   useClientWidth={true}
+                  sizes="(max-width: 768px) 100vw,
+                  (max-width: 1200px) 50vw,
+                  33vw"
                 />
               )}
             </div>
@@ -192,6 +198,7 @@ export default function Card({
                   height={154}
                   // useDefaultSize={true}
                   imageClassName="w-full h-full"
+                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
                 {
                   <div className="absolute bottom-0 right-0 w-full bg-gradient-to-t from-zinc-900/25  to-transparent  h-full ">
@@ -322,6 +329,7 @@ export default function Card({
             <ImageLoader
               image={post.mainImage}
               className="rounded-lg object-cover w-full"
+               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
           )}
           <div className="mt-6">
@@ -340,6 +348,7 @@ export default function Card({
                   className="transform  rounded-lg  duration-300 group-hover:scale-105"
                   image={post?.mainImage}
                   fixed={true}
+                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
                 <div className="">
                   {post.contentType === 'podcast' ? (
@@ -399,6 +408,7 @@ export default function Card({
                     alt={post.title || 'Blog Image'}
                     // useClientWidth={true}
                     imageClassName="h-full w-full group-hover:scale-105 transition-transform duration-300"
+                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
                 </div>
               )}
@@ -443,6 +453,7 @@ export default function Card({
                 <ImageLoader
                   className="h-full"
                   imageClassName="group-hover:scale-105 transition-transform duration-300 w-full h-full inline"
+                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   image={
                     varyingIndex && post?.customImage
                       ? post?.customImage
