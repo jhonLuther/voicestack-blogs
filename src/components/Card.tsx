@@ -161,7 +161,7 @@ export default function Card({
                   {isPageUrl ? tag?.tagName : post.contentType}
                 </SubText>
                 <H3Large className="group-hover:underline underline-offset-4">
-                  {capitalizeFirst(post.title)}
+                  {post.title}
                 </H3Large>
                 <DescriptionText className="text-opacity-70 line-clamp-3 overflow-hidden text-ellipsis">
                   {post.desc ? post.desc : post.excerpt}
@@ -257,7 +257,7 @@ export default function Card({
               <H3Medium
                 className={`group-hover: group-hover:underline underline-offset-4 tracking-[-0.72px] md:!text-[1.8rem]`}
               >
-                {capitalizeFirst(post.title)}
+                {post.title}
               </H3Medium>
               {isPageUrl && post.contentType === 'podcast' && (
                 <CreaterInfo creater={post?.author} duration={post?.duration} />
@@ -415,7 +415,7 @@ export default function Card({
                     <H4Medium
                       className={`group-hover: group-hover:underline underline-offset-4`}
                     >
-                      {capitalizeFirst(post.title)}
+                      {post.title}
                     </H4Medium>
                   </div>
                   {/* {post.author && post.author.length > 0 && (
@@ -482,7 +482,7 @@ export default function Card({
                     </SubText>
                   )}
                   <H4Medium className="group-hover:group-hover:underline underline-offset-4 line-clamp-3 text-ellipsis overflow-hidden">
-                  {capitalizeFirst(post.title)}
+                  {post.title}
                   </H4Medium>
                 </div>
 
