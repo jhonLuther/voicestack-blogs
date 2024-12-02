@@ -31,7 +31,7 @@ function generateSiteMap(posts: any[]) {
         .map((url) => {
           return `
             <url>
-              <loc>${url}</loc>
+              <loc>${url}11</loc>
             </url>
           `
         })
