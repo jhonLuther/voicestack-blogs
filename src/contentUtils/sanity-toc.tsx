@@ -167,7 +167,7 @@ export function RenderToc({
             href={`#${el.slug}`}
             className={`hover:underline hover:underline-offset-4 ${activeSection === index + 1 ? 'underline underline-offset-4' : ''}`}
           >
-            {`${el.slug}`}
+            {`${el.text}`}
           </a>
           {/* {el.children && (
             <RenderToc elements={el.children} level={level + 1} />

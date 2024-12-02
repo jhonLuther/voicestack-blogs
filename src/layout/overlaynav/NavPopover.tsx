@@ -1,64 +1,75 @@
-import React, { useState, useRef, useEffect } from 'react';
-import Wrapper from '../Wrapper';
-import Section from '~/components/Section';
-import { useGlobalData } from '~/components/Context/GlobalDataContext';
-import Link from 'next/link';
-import { CloseIcon, TruncateIcon, ChevronRightIcon, ChevronLeftIcon } from '@sanity/icons'
-import { navigationLinks } from '../Header';
-import { useRouter } from 'next/router';
-import GrowthClubLogo from '~/assets/reactiveAssets/GrowthClubLogo';
+import React, { useState, useRef, useEffect } from 'react'
+import Wrapper from '../Wrapper'
+import Section from '~/components/Section'
+import { useGlobalData } from '~/components/Context/GlobalDataContext'
+import Link from 'next/link'
+import {
+  CloseIcon,
+  TruncateIcon,
+  ChevronRightIcon,
+  ChevronLeftIcon,
+  ArrowTopRightIcon,
+} from '@sanity/icons'
+import { navigationLinks } from '../Header'
+import { useRouter } from 'next/router'
+import GrowthClubLogo from '~/assets/reactiveAssets/GrowthClubLogo'
+import siteConfig from 'config/siteConfig'
 
 interface NavProps {
-  className?: string;
-  showMenu?: boolean;
-  setShowMenu: React.Dispatch<React.SetStateAction<boolean>>;
+  className?: string
+  showMenu?: boolean
+  setShowMenu: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export const NavPopover = ({ className = '', showMenu, setShowMenu }: NavProps) => {
-  const { data, featuredTags } = useGlobalData();
-  const [active, setActive] = useState(false);
-  const [showTags, setShowTags] = useState(false);
-  const [tagData, setTagData] = useState(null);
-  const [contentHeight, setContentHeight] = useState(0);
-  const contentRef = useRef(null);
-  const buttonRef = useRef(null);
-  const navPopoverRef = useRef(null);
-  const router = useRouter();
+export const NavPopover = ({
+  className = '',
+  showMenu,
+  setShowMenu,
+}: NavProps) => {
+  const { data, featuredTags } = useGlobalData()
+  const [active, setActive] = useState(false)
+  const [showTags, setShowTags] = useState(false)
+  const [tagData, setTagData] = useState(null)
+  const [contentHeight, setContentHeight] = useState(0)
+  const contentRef = useRef(null)
+  const buttonRef = useRef(null)
+  const navPopoverRef = useRef(null)
+  const router = useRouter()
 
   useEffect(() => {
     const handleRouteChange = () => {
       if (showMenu) {
-        setShowMenu(false);
-        setShowTags(false);
+        setShowMenu(false)
+        setShowTags(false)
       }
-    };
+    }
 
-    router.events.on('routeChangeStart', handleRouteChange);
+    router.events.on('routeChangeStart', handleRouteChange)
 
     return () => {
-      router.events.off('routeChangeStart', handleRouteChange);
-    };
-  }, [router, showMenu, setShowMenu]);
+      router.events.off('routeChangeStart', handleRouteChange)
+    }
+  }, [router, showMenu, setShowMenu])
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
-        showMenu && 
-        navPopoverRef.current && 
+        showMenu &&
+        navPopoverRef.current &&
         !navPopoverRef.current.contains(event.target as Node)
       ) {
-        setShowMenu(false);
-        setShowTags(false);
+        setShowMenu(false)
+        setShowTags(false)
       }
-    };
+    }
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside)
     // document.addEventListener('scroll',handleClickOutside) // can be used if needed
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside)
       // document.removeEventListener('scroll',handleClickOutside)
-    };
-  }, [showMenu, setShowMenu]);
+    }
+  }, [showMenu, setShowMenu])
 
   useEffect(() => {
     if (active && contentRef.current) {
@@ -73,17 +84,17 @@ export const NavPopover = ({ className = '', showMenu, setShowMenu }: NavProps) 
   }, [tagData, data])
 
   const closeMenu = () => {
-    setShowMenu(false);
-    setShowTags(false);
-  };
+    setShowMenu(false)
+    setShowTags(false)
+  }
 
   const showTagsMob = () => {
-    setShowTags(true);
-  };
+    setShowTags(true)
+  }
 
   const hideTagsMob = () => {
-    setShowTags(false);
-  };
+    setShowTags(false)
+  }
 
   const handleMouseLeave = (event) => {
     const rect = buttonRef.current.getBoundingClientRect()
@@ -94,14 +105,18 @@ export const NavPopover = ({ className = '', showMenu, setShowMenu }: NavProps) 
     }
   }
   return (
-    <section ref={navPopoverRef} className={`pt-[10px] px-4 lg:px-[10px] pb-[20px] lg:rounded-[12px] bg-white shadow-custom 
+    <section
+      ref={navPopoverRef}
+      className={`pt-[10px] px-4 lg:px-[10px] pb-[20px] lg:rounded-[12px] bg-white shadow-custom 
     justify-center bg-transparent fixed lg:absolute lg:top-0 left-0 w-full h-[100vh] lg:h-auto 
     lg:overflow-hidden top-0 transition-transform duration-300 linear z-20 lg:z-10 ${
-    showMenu ? 'flex lg:translate-y-0 opacity-100 visible' : 'lg:-translate-y-3 opacity-0 invisible'}`} >
+      showMenu
+        ? 'flex lg:translate-y-0 opacity-100 visible'
+        : 'lg:-translate-y-3 opacity-0 invisible'
+    }`}
+    >
       <Wrapper>
-        <div
-          className={`${className} w-full lg:pt-0 pt-14`}  
-        >
+        <div className={`${className} w-full lg:pt-0 pt-14`}>
           {/* <button
             ref={buttonRef}
             className="px-4 py-3 text-sm font-medium  hover:bg-zinc-300 rounded-md"
@@ -109,25 +124,44 @@ export const NavPopover = ({ className = '', showMenu, setShowMenu }: NavProps) 
           >
             <TruncateIcon width={40} height={40} />
           </button> */}
-          <div className={`lg:hidden flex fixed top-0 left-0 w-full py-4 px-4 z-20 bg-zinc-900 h-[56px] items-center justify-between`}>
+          <div
+            className={`lg:hidden flex fixed top-0 left-0 w-full py-4 px-4 z-20 bg-zinc-900 h-[56px] items-center justify-between`}
+          >
             {showTags ? (
-              <div className='flex items-center gap-0'>
-                <ChevronLeftIcon width={25} height={25} className='text-white'/>
-                <span onClick={hideTagsMob} className='text-white text-base'>Back</span>
+              <div className="flex items-center gap-0">
+                <ChevronLeftIcon
+                  width={25}
+                  height={25}
+                  className="text-white"
+                />
+                <span onClick={hideTagsMob} className="text-white text-base">
+                  Back
+                </span>
               </div>
-            ):(
-
-              <Link href="/" className="text-2xl font-extrabold bg-gradient-text bg-clip-text text-transparent font-monrope tracking-tighterText">
+            ) : (
+              <Link
+                href="/"
+                className="text-2xl font-extrabold bg-gradient-text bg-clip-text text-transparent font-monrope tracking-tighterText"
+              >
                 {/* <ClubLogo/>  */}
-                <GrowthClubLogo/>
+                <GrowthClubLogo />
               </Link>
             )}
-            <CloseIcon width={40} height={40} onClick={closeMenu} className='text-white'/>
+            <CloseIcon
+              width={40}
+              height={40}
+              onClick={closeMenu}
+              className="text-white"
+            />
           </div>
 
-          <div className={`transition-all duration-300 ease ${showTags && '-translate-x-[105%]'} lg:translate-x-0`}>
-            <div ref={contentRef} className={`w-full transform transition-all duration-200}`}>
-
+          <div
+            className={`transition-all duration-300 ease ${showTags && '-translate-x-[105%]'} lg:translate-x-0`}
+          >
+            <div
+              ref={contentRef}
+              className={`w-full transform transition-all duration-200}`}
+            >
               <nav className="flex flex-col lg:flex-row gap-y-6 gap-x-6 lg:gap-x-10 flex-wrap rounded-[6px] py-[17px] lg:px-[20px] lg:bg-zinc-100">
                 {navigationLinks?.map((link, i) => (
                   <Link
@@ -140,36 +174,50 @@ export const NavPopover = ({ className = '', showMenu, setShowMenu }: NavProps) 
                   </Link>
                 ))}
               </nav>
-              <div className='px-[10px] py-6 lg:p-6 lg:block hidden'>
-                <div className='text-zinc-400 pb-6 font-medium text-sm uppercase'>Browse By Key Topics</div>
+              <div className="px-[10px] py-6 lg:p-6 lg:block hidden">
+                <div className="text-zinc-400 pb-6 font-medium text-sm uppercase">
+                  Browse By Key Topics
+                </div>
                 <div className="lg:columns-4 gap-6">
-                  {tagData && tagData.length > 0 && tagData.map((tag, index) => (
-                    <div className='break-inside-avoid pb-[14px]' key={index}>
-                      <Link
-                        href={`/browse/${tag?.slug?.current}`}
-                        scroll={false}
-                        className="text-zinc-500 font-medium text-sm hover:text-zinc-600 transition-colors inlin-flex underline underline-offset-2"
-                      >
-                        <span>{tag?.tagName}</span>
-                      </Link>
-                    </div>
-                  ))}
+                  {tagData &&
+                    tagData.length > 0 &&
+                    tagData.map((tag, index) => (
+                      <div className="break-inside-avoid pb-[14px]" key={index}>
+                        <Link
+                          href={`/browse/${tag?.slug?.current}`}
+                          scroll={false}
+                          className="text-zinc-500 font-medium text-sm hover:text-zinc-600 transition-colors inlin-flex underline underline-offset-2"
+                        >
+                          <span>{tag?.tagName}</span>
+                        </Link>
+                      </div>
+                    ))}
                 </div>
               </div>
 
-              <div className='text-zinc-400 pt-3 font-medium text-sm uppercase lg:hidden flex items-center gap-1' onClick={showTagsMob}>
+              <div
+                className="text-zinc-400 pt-3 font-medium text-sm uppercase lg:hidden flex items-center gap-1"
+                onClick={showTagsMob}
+              >
                 Browse By Key Topics
-                <ChevronRightIcon width={25} height={25} className='text-zinc-400'/>
+                <ChevronRightIcon
+                  width={25}
+                  height={25}
+                  className="text-zinc-400"
+                />
               </div>
-
             </div>
           </div>
           {/* this duplicate is for mobile only */}
           {/* {showTags && ( */}
-            <div className={`px-4 lg:px-[10px] py-6 lg:p-6 lg:hidden block absolute top-[56px] h-full left-0 w-full overflow-auto transition-all duration-300 ease  ${showTags ? 'translate-x-0' : 'translate-x-full'}`}>
-              <div className="columns-2 gap-6">
-                {tagData && tagData.length > 0 && tagData.map((tag, index) => (
-                  <div className='break-inside-avoid' key={index}>
+          <div
+            className={`px-4 lg:px-[10px] py-6 lg:p-6 lg:hidden block absolute top-[56px] h-full left-0 w-full overflow-auto transition-all duration-300 ease  ${showTags ? 'translate-x-0' : 'translate-x-full'}`}
+          >
+            <div className="columns-2 gap-6">
+              {tagData &&
+                tagData.length > 0 &&
+                tagData.map((tag, index) => (
+                  <div className="break-inside-avoid" key={index}>
                     <Link
                       href={`/browse/${tag?.slug?.current}`}
                       scroll={false}
@@ -179,10 +227,20 @@ export const NavPopover = ({ className = '', showMenu, setShowMenu }: NavProps) 
                     </Link>
                   </div>
                 ))}
-              </div>
             </div>
+          </div>
           {/* )} */}
           {/* ./ this is for mobile only */}
+
+          <Link
+            href={`/${siteConfig.paginationBaseUrls.base}`}
+            className="hidden lg:flex text-[14px] group font-medium leading-[1.5] justify-center text-zinc-500 flex items-center gap-x-1 hover:text-zinc-300 group"
+          >
+            <span className="text-[14px] md:text-[16px] cursor-pointer text-zinc-500 font-medium text-sm hover:text-zinc-600 inline-flex items-center gap-1">
+              {'Browse All'}
+              <ArrowTopRightIcon className="group-hover:translate-y-[-2px] transition-transform duration-300" height={20} width={20} />
+            </span>
+          </Link>
         </div>
       </Wrapper>
     </section>
