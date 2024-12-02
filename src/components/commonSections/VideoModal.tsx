@@ -61,7 +61,7 @@ export const VideoModal: React.FC<VideoProps> = ({
 
   return (
     <div
-      onClick={isPopup && onClose}
+    onClick={isPopup ? onClose : undefined}
       className={`${
         isPopup
           ? 'fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50'

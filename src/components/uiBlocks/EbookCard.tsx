@@ -12,6 +12,7 @@ const EbookCard = ({ ebook }) => {
             height={350}
             width={700}
             alt={ebook.title || 'Blog Image'}
+             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         )}
       </div>

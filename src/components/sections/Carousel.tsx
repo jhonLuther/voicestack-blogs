@@ -29,6 +29,7 @@ const Carousel: React.FC<CarouselProps> = ({ items }) => {
         modules={[Navigation, Pagination]}
         spaceBetween={30}
         slidesPerView={1}
+        slidesPerGroup={1}
         // pagination={{ clickable: true }}
         navigation={{
           nextEl: '.ebook-next',
@@ -49,8 +50,9 @@ const Carousel: React.FC<CarouselProps> = ({ items }) => {
           swiperRef.current = swiper
         }}
       >
+        
         {items.map((item, index) => (
-          <SwiperSlide key={item._id} className="!h-auto">
+          <SwiperSlide key={item._id+index} className="!h-auto">
             <Card cardType="ebook-card" post={item} index={index} />
           </SwiperSlide>
         ))}

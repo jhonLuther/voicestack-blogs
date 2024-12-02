@@ -191,7 +191,7 @@ const ogMetaData = {
       'carestack articles, carestack blog articles, carestack educational articles, dental articles, articles for dentists',
     'og:description':
       'Read some of the CareStack® Articles—perspectives from industry experts & the CareStack team on gaining growth & optimizing performance at your dental office.',
-    'og:url': 'https://carestack.com/support/resources/articles',
+    'og:url': 'https://blog.carestack.com/article',
     author: 'CareStack®',
   },
   ebook: {
@@ -200,7 +200,7 @@ const ogMetaData = {
       'carestack ebooks, downloadable carestack ebooks, carestack educational ebooks, dental ebooks, ebooks for dentists',
     'og:description':
       'Read some of the CareStack® e-Books—a collection of playbooks created by industry experts to help you build the right kind of practice management systems.',
-    'og:url': 'https://carestack.com/support/resources/e-books',
+    'og:url': 'https://blog.carestack.com/ebook',
     author: 'CareStack®',
   },
   podcast: {
@@ -209,7 +209,7 @@ const ogMetaData = {
       'carestack podcasts, carestack audio podcasts, carestack educational podcasts, dental software, podcasts, podcasts for dentists',
     'og:description':
       'Listen to some of the CareStack® Podcasts—an audio series from practice owners on how they navigated the change and successfully transitioned to CareStack.',
-    'og:url': 'https://carestack.com/support/resources/podcasts',
+    'og:url': 'https://blog.carestack.com/podcast',
     author: 'CareStack®',
   },
   webinar: {
@@ -218,7 +218,7 @@ const ogMetaData = {
       'carestack webinars, carestack webinar recordings, carestack educational webinars, dental software webinars',
     'og:description':
       'Watch CareStack® Webinars—steamable recordings from practice owners, industry leaders, & CareStack team members discussing trending topics & best practices.',
-    'og:url': 'https://carestack.com/support/resources/webinars',
+    'og:url': 'https://blog.carestack.com/webinar',
     author: 'CareStack®',
   },
   caseStudy: {
@@ -227,7 +227,7 @@ const ogMetaData = {
       'carestack case studies, carestack customer experiences, carestack client experiences, dental office outcomes',
     'og:description':
       'Read first-hand, in-depth accounts of practices that have faced a challenge, found a solution, and achieved success transitioning to CareStack.',
-    'og:url': 'https://carestack.com/dental-software/case-studies',
+    'og:url': 'https://blog.carestack.com/case-study',
     author: 'CareStack®',
   },
   pressRelease: {
@@ -236,7 +236,7 @@ const ogMetaData = {
       'carestack press kit, carestack in the press, press about carestack, carestack in the news, news about carestack',
     'og:description':
       'CareStack® frequently makes waves in the news media. View some of our recent headlines, download our press kit, or contact our corporate press representative.',
-    'og:url': 'https://carestack.com/company/press',
+    'og:url': 'https://blog.carestack.com/press-release',
     author: 'CareStack®',
   },
 }
@@ -263,7 +263,7 @@ export const defaultMetaTag = (params: any) => {
   return (
     <Head key={params?._id}>
       <meta property="og:type" content="website" />
-      <meta property="og:url" content="www.carestack.com" />
+      <meta property="og:url" content="https://blog.carestack.com" />
       {params?.siteTitle ? <title>{slugToCapitalized(params.siteTitle?.trim())}</title> : <></>}
       {params?.siteDescription ? (
         <meta property="og:description" content={params.siteDescription}></meta>

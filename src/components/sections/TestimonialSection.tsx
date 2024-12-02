@@ -65,6 +65,7 @@ const TestimonialSection = ({ testimonials }: TestimonialSectionProps) => {
                               image={testimonialItem.customer.picture}
                               alt={testimonialItem.customer.picture.alt || ''}
                               className="rounded-full object-cover "
+                               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                             />
                           )}
                       </div>
@@ -86,6 +87,7 @@ const TestimonialSection = ({ testimonials }: TestimonialSectionProps) => {
                         image={testimonialItem.customer.picture}
                         alt={testimonialItem.customer.picture.alt || ''}
                         className=" object-cover md:min-w-[390px] md:h-full min-h-[390px]"
+                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       />
                     )}
                 </div>

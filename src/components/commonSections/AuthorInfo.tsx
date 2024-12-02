@@ -40,6 +40,9 @@ const AuthorInfo = ({
                       image={authors.picture}
                       height={48}
                       width={48}
+                      sizes="(max-width: 768px) 100vw,
+                      (max-width: 1200px) 50vw,
+                      33vw"
                     />
                   )}
                 </div>
@@ -74,6 +77,7 @@ const AuthorInfo = ({
                       image={authors.picture}
                       height={48}
                       width={48}
+                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     />
                   )}
                 </div>
