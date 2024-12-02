@@ -73,7 +73,7 @@ const DynamicPages = ({
           featuredBlog={featuredBlog}
           popularBlogs={featuredContents}
         />
-        <BannerSubscribeSection />
+        {/* <BannerSubscribeSection /> */}
         <SliderSection items={reorderedCarouselItems} />
         <TestimonialSection testimonials={testimonialList} />
         <AllcontentSection
