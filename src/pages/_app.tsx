@@ -3,6 +3,8 @@ import type { AppProps } from 'next/app'
 import { lazy } from 'react'
 import Head from 'next/head'
 import { orgSchema, siteLinkSchema } from '~/utils/customHead'
+import { usePathname } from 'next/navigation'
+import { slugToCapitalized } from '~/utils/common'
 
 export interface SharedPageProps {
   draftMode: boolean
@@ -11,11 +13,16 @@ export interface SharedPageProps {
 
 const PreviewProvider = lazy(() => import('~/components/PreviewProvider'))
 
+
 export default function App({
   Component,
   pageProps,
 }: AppProps<SharedPageProps>) {
   const { draftMode, token } = pageProps
+  const pathname:any = usePathname()
+  const currentWindow =pathname.split('/')
+  const index = pathname?.split('/').length-1
+  const result = slugToCapitalized(currentWindow[index])
 
   return (
     <>
@@ -33,7 +40,7 @@ export default function App({
           type="image/png"
         />
         <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-        <title>CS GrowthClub</title>
+        <title>{result}</title>
       </Head>
       {orgSchema()}
       {siteLinkSchema()}

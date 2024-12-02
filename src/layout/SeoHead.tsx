@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import Script from 'next/script'
+import { slugToCapitalized } from '~/utils/common'
 
 interface SEOHeadProps {
   title: string
@@ -28,7 +29,7 @@ export default function SEOHead({
   return (
     <>
       <Head>
-        <title key="title">{title}</title>
+        <title key="title">{slugToCapitalized(title)}</title>
         <meta name="description" content={description} key="description" />
         <meta name="keywords" content={keywords} key="keywords" />
         <meta name="robots" content={robots} key="robots" />

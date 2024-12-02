@@ -123,7 +123,7 @@ export default function IndexPage(props: IndexPageProps) {
           return defaultMetaTag(e)
         })}
         <Head>
-          <script type="application/ld+json">
+          <script type="application/ld+json" id='indexPageSchema'>
             {JSON.stringify(indexPageJsonLd(props))}
           </script>
         </Head>
