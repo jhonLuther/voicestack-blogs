@@ -25,6 +25,9 @@ import Button from '~/components/commonSections/Button'
 import { DocumentTextIcon } from '@sanity/icons'
 import { CustomHead, generateMetaData } from '~/utils/customHead'
 import { GlobalDataProvider } from '~/components/Context/GlobalDataContext'
+import SEOHead from '~/layout/SeoHead'
+import { generateJSONLD } from '~/utils/generateJSONLD'
+import siteConfig from 'config/siteConfig'
 
 interface Props {
   pressRelease: PressRelease
@@ -99,10 +102,33 @@ const PressReleasePage = ({
   draftMode,
   token,
 }: Props) => {
+
+  if(!pressRelease) return null
+
+  const prodUrl = process.env.NEXT_PUBLIC_VERCEL_URL || 'https://blog.carestack.com'
+
+  const seoTitle = pressRelease.seoTitle || pressRelease.title
+  const seoDescription = pressRelease.seoDescription || pressRelease.excerpt
+  const seoKeywords = pressRelease.seoKeywords || ''
+  const seoRobots = pressRelease.seoRobots || 'index,follow'
+  const seoCanonical =
+    pressRelease.seoCanonical ||
+    `${prodUrl}/${siteConfig.pageURLs.pressRelease}/${pressRelease.slug.current}`
+  const jsonLD: any = generateJSONLD(pressRelease)
+
   return (
     <>
       {generateMetaData(pressRelease)}
       <CustomHead props={pressRelease} type="pressRelease" />
+      <SEOHead
+          title={seoTitle}
+          description={seoDescription}
+          keywords={seoKeywords}
+          robots={seoRobots}
+          canonical={seoCanonical}
+          jsonLD={jsonLD}
+          contentType={pressRelease?.contentType}
+        />
       <GlobalDataProvider data={tags} featuredTags={homeSettings.featuredTags}>
         <Layout>
           <MainImageSection enableDate={true} post={pressRelease} />

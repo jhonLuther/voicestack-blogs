@@ -1,25 +1,15 @@
 import { GetStaticProps, GetStaticPaths } from 'next'
-import { useRouter } from 'next/router'
 import { getClient } from '~/lib/sanity.client'
 import {
   ebookSlugsQuery,
   getEbook,
-  getEbooks,
   getHomeSettings,
-  getPodcast,
-  getPodcasts,
-  getRelatedContents,
   getTagRelatedContents,
   getTags,
-  getWebinar,
-  getWebinars,
-  podcastSlugsQuery,
-  webinarSlugsQuery,
 } from '~/lib/sanity.queries'
-import { Ebooks, Podcasts } from '~/interfaces/post'
+import { Ebooks } from '~/interfaces/post'
 import Wrapper from '~/layout/Wrapper'
 import { readToken } from '~/lib/sanity.api'
-import { urlForImage } from '~/lib/sanity.image'
 import SanityPortableText from '~/components/blockEditor/sanityBlockEditor'
 import Layout from '~/components/Layout'
 import MainImageSection from '~/components/MainImageSection'
@@ -30,12 +20,10 @@ import { generateJSONLD } from '~/utils/generateJSONLD'
 import EbookCard from '~/components/uiBlocks/EbookCard'
 import Section from '~/components/Section'
 import { CustomHead, generateMetaData } from '~/utils/customHead'
-import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection'
-import AuthorInfo from '~/components/commonSections/AuthorInfo'
 import SidebarTitle from '~/components/typography/SidebarTitle'
 import ShareableLinks from '~/components/commonSections/ShareableLinks'
 import { GlobalDataProvider } from '~/components/Context/GlobalDataContext'
-import homeSettings from '~/schemas/homeSettings'
+import siteConfig from 'config/siteConfig'
 
 interface Props {
   ebook: Ebooks
@@ -103,9 +91,30 @@ const EbookPage = ({
   draftMode,
   token,
 }: Props) => {
+  if(!ebook) return null
+  const prodUrl = process.env.NEXT_PUBLIC_VERCEL_URL || 'https://blog.carestack.com'
+
+  const seoTitle = ebook.seoTitle || ebook.title
+  const seoDescription = ebook.seoDescription || ebook.excerpt
+  const seoKeywords = ebook.seoKeywords || ''
+  const seoRobots = ebook.seoRobots || 'index,follow'
+  const seoCanonical =
+    ebook.seoCanonical ||
+    `${prodUrl}/${siteConfig.pageURLs.ebook}/${ebook.slug.current}`
+  const jsonLD: any = generateJSONLD(ebook)
+
   return (
     <>
       <GlobalDataProvider data={tags} featuredTags={homeSettings.featuredTags}>
+        <SEOHead
+          title={seoTitle}
+          description={seoDescription}
+          keywords={seoKeywords}
+          robots={seoRobots}
+          canonical={seoCanonical}
+          jsonLD={jsonLD}
+          contentType={ebook?.contentType}
+        />
         <CustomHead props={ebook} type="eBook" />
         {generateMetaData(ebook)}
         <Layout>
