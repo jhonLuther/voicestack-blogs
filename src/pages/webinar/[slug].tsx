@@ -64,7 +64,13 @@ export const getStaticProps: GetStaticProps<Props> = async ({
   params = {},
 }) => {
   const client = getClient(draftMode ? { token: readToken } : undefined)
-  const webinar = await getWebinar(client, params.slug as string)
+  const webinar = await getWebinar(client, params.slug as string);
+  if (!webinar) {
+    return {
+      notFound: true,
+      revalidate: 60,
+    }
+  }
   const allWebinars = await getWebinars(client)
   const tagIds = webinar.tags?.map((tag: any) => tag?._id) || []
   const relatedContents = await getTagRelatedContents(

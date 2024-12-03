@@ -54,7 +54,12 @@ export const getStaticProps: GetStaticProps<Props> = async ({
   params = {},
 }) => {
   const client = getClient(draftMode ? { token: readToken } : undefined)
-  const articles = await getArticle(client, params.slug as string)
+  const articles = await getArticle(client, params.slug as string);
+  if (!articles) {
+    return {
+      notFound: true, // Triggers 404
+    };
+  }
   const tagIds = articles?.tags?.map((tag: any) => tag?._id) || []
   const relatedContents = await getTagRelatedContents(
     client,
@@ -64,6 +69,8 @@ export const getStaticProps: GetStaticProps<Props> = async ({
   )
   const tags = await getTags(client)
   const homeSettings = await getHomeSettings(client)
+
+  
 
   return {
     props: {

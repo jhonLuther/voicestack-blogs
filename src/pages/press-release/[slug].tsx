@@ -55,7 +55,13 @@ export const getStaticProps: GetStaticProps<Props> = async ({
   params = {},
 }) => {
   const client = getClient(draftMode ? { token: readToken } : undefined)
-  const pressRelease = await getPressRelease(client, params.slug as string)
+  const pressRelease = await getPressRelease(client, params.slug as string);
+  if (!pressRelease) {
+    return {
+      notFound: true,
+      revalidate: 60,
+    }
+  }
   const tagIds = pressRelease.tags?.map((tag: any) => tag?._id) || []
   const relatedContents = await getTagRelatedContents(
     client,

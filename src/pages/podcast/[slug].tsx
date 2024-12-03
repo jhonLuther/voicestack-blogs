@@ -63,6 +63,12 @@ export const getStaticProps: GetStaticProps<Props> = async ({
 }) => {
   const client = getClient(draftMode ? { token: readToken } : undefined)
   const podcast = await getPodcast(client, params.slug as string)
+  if (!podcast) {
+    return {
+      notFound: true,
+      revalidate: 60,
+    }
+  }
   const currentSlug: any = params?.slug
   const { current, totalPodcasts, previous, next } = await getAllPodcastSlugs(
     client,
