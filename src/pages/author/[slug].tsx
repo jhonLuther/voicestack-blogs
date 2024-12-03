@@ -39,18 +39,19 @@ export const getStaticProps: GetStaticProps<
 > = async ({ draftMode = false, params = {} }) => {
   const client = getClient(draftMode ? { token: readToken } : undefined)
   const author = await getAuthor(client, params.slug)
-  const authorId = author?._id
-  const tags = await getTags(client)
-  const homeSettings = await getHomeSettings(client)
-
-  const relatedContents = await getauthorRelatedContents(client, authorId)
-
   if (!author) {
     return {
       notFound: true,
       revalidate: 60,
     }
   }
+  const authorId = author?._id
+  const tags = await getTags(client)
+  const homeSettings = await getHomeSettings(client)
+
+  const relatedContents = await getauthorRelatedContents(client, authorId)
+
+ 
 
   return {
     props: {
