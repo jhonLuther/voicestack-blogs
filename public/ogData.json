@@ -5,7 +5,7 @@
     "og:description": "Read some of the CareStack® Articles—perspectives from industry experts & the CareStack team on gaining growth & optimizing performance at your dental office.",
     "og:url": "https://blog.carestack.com/article",
     "author": "CareStack®",
-    "image": "https://cdn.sanity.io/images/bbmnn1wc/production/023aea218ace0f01daad56e4a4985df5015317e2-2400x1260.png"
+    "og:image": "https://cdn.sanity.io/images/bbmnn1wc/production/023aea218ace0f01daad56e4a4985df5015317e2-2400x1260.png"
   },
   "ebook": {
     "title": "Official CareStack® eBook Series, Read Now",
@@ -13,7 +13,7 @@
     "og:description": "Read some of the CareStack® e-Books—a collection of playbooks created by industry experts to help you build the right kind of practice management systems.",
     "og:url": "https://blog.carestack.com/ebook",
     "author": "CareStack®",
-    "image": "https://cdn.sanity.io/images/bbmnn1wc/production/023aea218ace0f01daad56e4a4985df5015317e2-2400x1260.png"
+    "og:image": "https://cdn.sanity.io/images/bbmnn1wc/production/023aea218ace0f01daad56e4a4985df5015317e2-2400x1260.png"
   },
   "podcast": {
     "title": "Podcasts | Official CareStack® Podcast Series, Listen Now",
@@ -21,7 +21,7 @@
     "og:description": "Listen to some of the CareStack® Podcasts—an audio series from practice owners on how they navigated the change and successfully transitioned to CareStack.",
     "og:url": "https://blog.carestack.com/podcast",
     "author": "CareStack®",
-    "image": "https://cdn.sanity.io/images/bbmnn1wc/production/023aea218ace0f01daad56e4a4985df5015317e2-2400x1260.png"
+    "og:image": "https://cdn.sanity.io/images/bbmnn1wc/production/023aea218ace0f01daad56e4a4985df5015317e2-2400x1260.png"
   },
   "webinar": {
     "title": "Webinars | Official CareStack® Webinar Series, Watch Now",
@@ -29,7 +29,7 @@
     "og:description": "Watch CareStack® Webinars—steamable recordings from practice owners, industry leaders, & CareStack team members discussing trending topics & best practices.",
     "og:url": "https://blog.carestack.com/webinar",
     "author": "CareStack®",
-    "image": "https://cdn.sanity.io/images/bbmnn1wc/production/023aea218ace0f01daad56e4a4985df5015317e2-2400x1260.png"
+    "og:image": "https://cdn.sanity.io/images/bbmnn1wc/production/023aea218ace0f01daad56e4a4985df5015317e2-2400x1260.png"
   },
   "caseStudy": {
     "title": "In-Depth Case Studies | Achieving Success With CareStack®",
@@ -37,7 +37,7 @@
     "og:description": "Read first-hand, in-depth accounts of practices that have faced a challenge, found a solution, and achieved success transitioning to CareStack.",
     "og:url": "https://blog.carestack.com/case-study",
     "author": "CareStack®",
-    "image": "https://cdn.sanity.io/images/bbmnn1wc/production/023aea218ace0f01daad56e4a4985df5015317e2-2400x1260.png"
+    "og:image": "https://cdn.sanity.io/images/bbmnn1wc/production/023aea218ace0f01daad56e4a4985df5015317e2-2400x1260.png"
   },
   "pressRelease": {
     "title": "Press | CareStack® Press & News | Downloadable Press Kit",
@@ -45,6 +45,6 @@
     "og:description": "CareStack® frequently makes waves in the news media. View some of our recent headlines, download our press kit, or contact our corporate press representative.",
     "og:url": "https://blog.carestack.com/press-release",
     "author": "CareStack®",
-    "image": "https://cdn.sanity.io/images/bbmnn1wc/production/023aea218ace0f01daad56e4a4985df5015317e2-2400x1260.png"
+    "og:image": "https://cdn.sanity.io/images/bbmnn1wc/production/023aea218ace0f01daad56e4a4985df5015317e2-2400x1260.png"
   }
 }

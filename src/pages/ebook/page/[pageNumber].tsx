@@ -22,7 +22,7 @@ import React, { useRef } from 'react'
 import Pagination from '~/components/commonSections/Pagination'
 import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection'
 import { BaseUrlProvider } from '~/components/Context/UrlContext'
-import { CustomHead } from '~/utils/customHead'
+import { CustomHead, customMetaTag } from '~/utils/customHead'
 import { GlobalDataProvider } from '~/components/Context/GlobalDataContext'
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -99,6 +99,7 @@ const PaginatedEbookPage = ({
           {ebooks?.map((e, i) => {
             return <CustomHead props={e} type="eBook" key={i} />
           })}
+          {customMetaTag('ebook')}
           <AllcontentSection
             className={'pb-9'}
             allContent={ebooks}

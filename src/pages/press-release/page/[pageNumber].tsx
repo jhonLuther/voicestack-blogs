@@ -24,7 +24,7 @@ import {
 } from '~/lib/sanity.queries'
 import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection'
 import { BaseUrlProvider } from '~/components/Context/UrlContext'
-import { CustomHead } from '~/utils/customHead'
+import { CustomHead, customMetaTag } from '~/utils/customHead'
 import { GlobalDataProvider } from '~/components/Context/GlobalDataContext'
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -88,7 +88,7 @@ const PaginatedPressReleasePage = ({
   totalPages: number
 }) => {
   const router = useRouter()
-  const baseUrl = `/${siteConfig.pageURLs.pressRelease}`;
+  const baseUrl = `/${siteConfig.pageURLs.pressRelease}`
 
   const handlePageChange = (page: number) => {
     if (page === 1) {
@@ -105,6 +105,7 @@ const PaginatedPressReleasePage = ({
           {pressReleases?.map((e, i) => {
             return <CustomHead props={e} type="pressRelease" key={i} />
           })}
+          {customMetaTag('pressRelease')}
           <AllcontentSection
             className={'pb-9'}
             allContent={pressReleases}

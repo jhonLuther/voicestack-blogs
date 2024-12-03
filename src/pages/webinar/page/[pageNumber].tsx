@@ -1,7 +1,6 @@
 import { GetStaticProps, GetStaticPaths } from 'next'
 import { useRouter } from 'next/router'
 import Layout from '~/components/Layout'
-import Wrapper from '~/layout/Wrapper'
 import AllcontentSection from '~/components/sections/AllcontentSection'
 import { getClient } from '~/lib/sanity.client'
 import { readToken } from '~/lib/sanity.api'
@@ -18,7 +17,7 @@ import {
 } from '~/lib/sanity.queries'
 import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection'
 import { BaseUrlProvider } from '~/components/Context/UrlContext'
-import { CustomHead } from '~/utils/customHead'
+import { CustomHead, customMetaTag } from '~/utils/customHead'
 import { GlobalDataProvider } from '~/components/Context/GlobalDataContext'
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -99,6 +98,7 @@ const PaginatedWebinarsPage = ({
           {webinars?.map((e, i) => {
             return <CustomHead props={e} key={i} type="webinar" />
           })}
+          {customMetaTag('webinar')}
           <AllcontentSection
             className={'pb-9'}
             allContent={webinars}
