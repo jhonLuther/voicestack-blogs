@@ -85,6 +85,7 @@ export default function AuthorPage({
   tags,
   homeSettings,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
+  if(!author) return null
   const baseUrl = `/${siteConfig.pageURLs.author}`
 
   return (
