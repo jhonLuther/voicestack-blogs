@@ -24,10 +24,11 @@ import SanityPortableText from '~/components/blockEditor/sanityBlockEditor'
 import { Toc } from '~/contentUtils/sanity-toc'
 import ShareableLinks from '~/components/commonSections/ShareableLinks'
 import Section from '~/components/Section'
-import { CustomHead, generateMetaData } from '~/utils/customHead'
+import { CustomHead, customMetaTag } from '~/utils/customHead'
 import AuthorInfo from '~/components/commonSections/AuthorInfo'
 import { GlobalDataProvider } from '~/components/Context/GlobalDataContext'
 import homeSettings from '~/schemas/homeSettings'
+import siteConfig from 'config/siteConfig'
 
 interface Props {
   caseStudy: CaseStudies
@@ -101,13 +102,14 @@ const CaseStudyPage = ({
     return null
   }
 
+  const prodUrl = process.env.NEXT_PUBLIC_VERCEL_URL || 'https://blog.carestack.com'
   const seoTitle = caseStudy.seoTitle || caseStudy.title
   const seoDescription = caseStudy.seoDescription || caseStudy.excerpt
   const seoKeywords = caseStudy.seoKeywords || ''
   const seoRobots = caseStudy.seoRobots || 'index,follow'
   const seoCanonical =
     caseStudy.seoCanonical ||
-    `https://carestack.com/caseStudy/${caseStudy.slug.current}`
+    `${prodUrl}/${siteConfig.pageURLs.caseStudy}/${caseStudy.slug.current}`
   const jsonLD: any = generateJSONLD(caseStudy)
 
   return (
@@ -123,7 +125,7 @@ const CaseStudyPage = ({
           ogImage={urlForImage(caseStudy?.mainImage?._id)}
           contentType={caseStudy?.contentType}
         />
-        {generateMetaData(caseStudy)}
+        {customMetaTag('caseStudy')}
         <Layout>
           <MainImageSection
             isAuthor={true}

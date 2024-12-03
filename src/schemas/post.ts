@@ -1,6 +1,5 @@
 import { defineField, defineType } from 'sanity'
-import { DocumentVideoIcon, MasterDetailIcon } from '@sanity/icons'
-import htmlCode from './htmlCode'
+
 
 export default defineType({
   name: 'post',
@@ -91,6 +90,12 @@ export default defineType({
             return 'Invalid JSON format'
           }
         }),
+    }),
+    defineField({
+      name: 'seoCanonical',
+      title: 'Canonical URL',
+      type: 'url',
+      fieldset: 'seo',
     }),
 
     // Common Fields

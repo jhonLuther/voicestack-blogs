@@ -7,6 +7,7 @@ import {
   getArticles,
   getArticlesCount,
   getHomeSettings,
+  getSiteSettings,
   getTags,
 } from '~/lib/sanity.queries'
 import { readToken } from '~/lib/sanity.api'
@@ -17,7 +18,7 @@ import React, { useContext, useRef } from 'react'
 import Pagination from '~/components/commonSections/Pagination'
 import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection'
 import { BaseUrlProvider } from '~/components/Context/UrlContext'
-import { CustomHead } from '~/utils/customHead'
+import { CustomHead, customMetaTag, defaultMetaTag } from '~/utils/customHead'
 import { GlobalDataProvider } from '~/components/Context/GlobalDataContext'
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -45,11 +46,12 @@ export const getStaticProps: GetStaticProps<SharedPageProps & {}> = async (
   const skip = (pageNumber - 1) * itemsPerPage
 
   try {
-    const [articles, totalArticles, tags, homeSettings] = await Promise.all([
+    const [articles, totalArticles, tags, homeSettings,siteSettings] = await Promise.all([
       getArticles(client, skip, itemsPerPage),
       getArticlesCount(client),
       getTags(client),
       getHomeSettings(client),
+      getSiteSettings(client),
     ])
 
     const totalPages = Math.ceil(totalArticles / itemsPerPage)
@@ -63,6 +65,7 @@ export const getStaticProps: GetStaticProps<SharedPageProps & {}> = async (
         totalPages,
         tags,
         homeSettings,
+        siteSettings
       },
     }
   } catch (error) {
@@ -76,6 +79,7 @@ export const getStaticProps: GetStaticProps<SharedPageProps & {}> = async (
         totalPages: 1,
         tags: [],
         homeSettings: [],
+        siteSettings:[]
       },
     }
   }
@@ -87,15 +91,19 @@ const PaginatedArticlesPage = ({
   homeSettings,
   pageNumber,
   totalPages,
+  siteSettings
 }: {
   articles: Articles[]
   tags: any
   homeSettings: any
   pageNumber: number
   totalPages: number
+  siteSettings: any
 }) => {
   const router = useRouter()
   const baseUrl = `/${siteConfig.pageURLs.article}`
+  const siteSettingWithImage = siteSettings?.find((e: any) => e?.openGraphImage)
+  console.log(siteSettingWithImage)
 
   const handlePageChange = (page: number) => {
     if (page === 1) {
@@ -109,9 +117,11 @@ const PaginatedArticlesPage = ({
     <GlobalDataProvider data={tags} featuredTags={homeSettings.featuredTags}>
       <BaseUrlProvider baseUrl={baseUrl}>
         <Layout>
+          {customMetaTag('article')}
           {articles?.map((e, i) => {
             return <CustomHead props={e} key={i} type="articleExpanded" />
           })}
+          {/* {siteSettingWithImage ? defaultMetaTag(siteSettingWithImage):<></>} */}
           <AllcontentSection
             className={'pb-9'}
             allContent={articles}

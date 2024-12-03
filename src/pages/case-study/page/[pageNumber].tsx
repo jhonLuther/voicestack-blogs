@@ -20,7 +20,7 @@ import React, { useRef } from 'react'
 import Pagination from '~/components/commonSections/Pagination'
 import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection'
 import { BaseUrlProvider } from '~/components/Context/UrlContext'
-import { CustomHead } from '~/utils/customHead'
+import { CustomHead, customMetaTag } from '~/utils/customHead'
 import { GlobalDataProvider } from '~/components/Context/GlobalDataContext'
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -98,6 +98,7 @@ const PaginatedCaseStudyPage = ({
     <GlobalDataProvider data={tags} featuredTags={homeSettings?.featuredTags}>
       <BaseUrlProvider baseUrl={baseUrl}>
         <Layout>
+          {customMetaTag('caseStudy')}
           {caseStudies?.map((e, i) => {
             return <CustomHead props={e} type="caseStudy" key={i} />
           })}

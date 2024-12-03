@@ -28,6 +28,7 @@ import Section from '~/components/Section'
 import { CustomHead, generateMetaData } from '~/utils/customHead'
 import SidebarTitle from '~/components/typography/SidebarTitle'
 import { GlobalDataProvider } from '~/components/Context/GlobalDataContext'
+import siteConfig from 'config/siteConfig'
 
 interface Props {
   podcast: Podcasts
@@ -117,13 +118,15 @@ const PodcastPage = ({
     return <div>Podcast not found</div>
   }
 
+  const prodUrl = process.env.NEXT_PUBLIC_VERCEL_URL || 'https://blog.carestack.com/'
+
   const seoTitle = podcast.seoTitle || podcast.title
   const seoDescription = podcast.seoDescription || podcast.excerpt
   const seoKeywords = podcast.seoKeywords || ''
   const seoRobots = podcast.seoRobots || 'index,follow'
   const seoCanonical =
     podcast.seoCanonical ||
-    `https://carestack.com/podcast/${podcast.slug.current}`
+    `${prodUrl}/${siteConfig.pageURLs.podcast}/${podcast.slug.current}`
   const jsonLD: any = generateJSONLD(podcast)
 
   return (

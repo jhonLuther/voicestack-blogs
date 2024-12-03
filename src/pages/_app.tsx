@@ -40,7 +40,6 @@ export default function App({
           type="image/png"
         />
         <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-        <title>{result}</title>
       </Head>
       {orgSchema()}
       {siteLinkSchema()}

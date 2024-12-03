@@ -11,8 +11,6 @@ import {
 } from '~/lib/sanity.queries'
 import { SharedPageProps } from '../_app'
 import Layout from '~/components/Layout'
-import Wrapper from '~/layout/Wrapper'
-import LatestBlogs from '~/components/sections/LatestBlogSection'
 import AllcontentSection from '~/components/sections/AllcontentSection'
 import { useRouter } from 'next/router'
 import siteConfig from '../../../config/siteConfig'
@@ -112,6 +110,7 @@ const CaseStudiesPage = ({
           {caseStudies?.map((e, i) => {
             return <CustomHead props={e} type="caseStudy" key={i} />
           })}
+          {customMetaTag('caseStudy')}
           <AllcontentSection
             className={'!pb-12'}
             allContent={caseStudies}
