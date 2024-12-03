@@ -59,6 +59,12 @@ export const getStaticProps: GetStaticProps<Props> = async ({
 }) => {
   const client = getClient(draftMode ? { token: readToken } : undefined)
   const caseStudy = await getCaseStudy(client, params.slug as string)
+  if (!caseStudy) {
+    return {
+      notFound: true,
+      revalidate: 60,
+    }
+  }
   const tagIds = caseStudy.tags?.map((tag: any) => tag?._id) || []
   const relatedContents = await getTagRelatedContents(
     client,
@@ -69,12 +75,7 @@ export const getStaticProps: GetStaticProps<Props> = async ({
   const tags = await getTags(client)
   const homeSettings = await getHomeSettings(client)
 
-  if (!caseStudy) {
-    return {
-      notFound: true,
-      revalidate: 60,
-    }
-  }
+  
 
   return {
     props: {
