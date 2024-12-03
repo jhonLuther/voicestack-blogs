@@ -24,6 +24,9 @@ import { CustomHead, generateMetaData } from '~/utils/customHead'
 import Section from '~/components/Section'
 import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection'
 import { GlobalDataProvider } from '~/components/Context/GlobalDataContext'
+import { generateJSONLD } from '~/utils/generateJSONLD'
+import SEOHead from '~/layout/SeoHead'
+import siteConfig from 'config/siteConfig'
 
 interface Props {
   articles: Articles
@@ -95,10 +98,28 @@ const ArticlePage = ({
   if (!articles) {
     return
   }
+  const prodUrl = process.env.NEXT_PUBLIC_VERCEL_URL || 'https://blog.carestack.com'
+  const seoTitle = articles.seoTitle || articles.title
+  const seoDescription = articles.seoDescription || articles.excerpt
+  const seoKeywords = articles.seoKeywords || ''
+  const seoRobots = articles.seoRobots || 'index,follow'
+  const seoCanonical =
+    articles.seoCanonical ||
+    `${prodUrl}/${siteConfig.pageURLs.article}/${articles.slug.current}`
+  const jsonLD: any = generateJSONLD(articles)
 
   return (
     <>
       <GlobalDataProvider data={tags} featuredTags={homeSettings.featuredTags}>
+      <SEOHead
+          title={seoTitle}
+          description={seoDescription}
+          keywords={seoKeywords}
+          robots={seoRobots}
+          canonical={seoCanonical}
+          jsonLD={jsonLD}
+          contentType={articles?.contentType}
+        />
         <CustomHead props={articles} type="articleExpanded" />
         {generateMetaData(articles)}
 

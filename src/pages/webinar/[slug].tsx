@@ -34,6 +34,7 @@ import AuthorInfo from '~/components/commonSections/AuthorInfo'
 import ShareableLinks from '~/components/commonSections/ShareableLinks'
 import SidebarTitle from '~/components/typography/SidebarTitle'
 import { GlobalDataProvider } from '~/components/Context/GlobalDataContext'
+import siteConfig from 'config/siteConfig'
 
 interface Props {
   webinar: Podcasts
@@ -103,18 +104,33 @@ const WebinarPage = ({
   homeSettings,
   token,
 }: Props) => {
+  if(!webinar) {
+    return null 
+  }
+
+  const prodUrl = process.env.NEXT_PUBLIC_VERCEL_URL || 'https://blog.carestack.com'
+
   const seoTitle = webinar.seoTitle || webinar.title
   const seoDescription = webinar.seoDescription || webinar.excerpt
   const seoKeywords = webinar.seoKeywords || ''
   const seoRobots = webinar.seoRobots || 'index,follow'
   const seoCanonical =
     webinar.seoCanonical ||
-    `https://carestack.com/webinar/${webinar.slug.current}`
+    `${prodUrl}/${siteConfig.pageURLs.webinar}/${webinar.slug.current}`
   const jsonLD: any = generateJSONLD(webinar)
 
   return (
     <>
       <CustomHead props={webinar} type="webinar" />
+      <SEOHead
+          title={seoTitle}
+          description={seoDescription}
+          keywords={seoKeywords}
+          robots={seoRobots}
+          canonical={seoCanonical}
+          jsonLD={jsonLD}
+          contentType={webinar?.contentType}
+        />
       {generateMetaData(webinar)}
       <GlobalDataProvider data={tags} featuredTags={homeSettings.featuredTags}>
         <Layout>
