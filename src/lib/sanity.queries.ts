@@ -1252,7 +1252,7 @@ export async function getauthorRelatedContents(
 ): Promise<any> {
   let relatedAuthors = authorRelatedContentQuery
 
-  if (authorId.length > 0) {
+  if (authorId && authorId?.length > 0) {
     relatedAuthors = groq`
       *[_type == "post" && "${authorId}" in author[]->_id] | order(date desc) [0...${limit}] {
         _id,
