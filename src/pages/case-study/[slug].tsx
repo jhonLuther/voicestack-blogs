@@ -24,7 +24,7 @@ import SanityPortableText from '~/components/blockEditor/sanityBlockEditor'
 import { Toc } from '~/contentUtils/sanity-toc'
 import ShareableLinks from '~/components/commonSections/ShareableLinks'
 import Section from '~/components/Section'
-import { CustomHead, generateMetaData } from '~/utils/customHead'
+import { CustomHead, customMetaTag } from '~/utils/customHead'
 import AuthorInfo from '~/components/commonSections/AuthorInfo'
 import { GlobalDataProvider } from '~/components/Context/GlobalDataContext'
 import homeSettings from '~/schemas/homeSettings'
@@ -125,7 +125,7 @@ const CaseStudyPage = ({
           ogImage={urlForImage(caseStudy?.mainImage?._id)}
           contentType={caseStudy?.contentType}
         />
-        {generateMetaData(caseStudy)}
+        {customMetaTag('caseStudy')}
         <Layout>
           <MainImageSection
             isAuthor={true}
