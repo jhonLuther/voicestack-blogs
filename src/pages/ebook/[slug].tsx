@@ -66,7 +66,13 @@ export const getStaticProps: GetStaticProps<Props> = async ({
   params = {},
 }) => {
   const client = getClient(draftMode ? { token: readToken } : undefined)
-  const ebook = await getEbook(client, params.slug as string)
+  const ebook = await getEbook(client, params.slug as string);
+  if (!ebook) {
+    return {
+      notFound: true,
+      revalidate: 60,
+    }
+  }
   const tagIds = ebook.tags?.map((tag: any) => tag?._id) || []
   const relatedContents = await getTagRelatedContents(
     client,
