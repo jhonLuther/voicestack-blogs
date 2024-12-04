@@ -81,6 +81,8 @@ const PaginatedEbookPage = ({
 }) => {
   const router = useRouter()
   const baseUrl = `/${siteConfig.pageURLs.podcast}`
+  const url = process.env.NEXT_PUBLIC_BASE_URL;
+  const currentPageUrl =`${url}${baseUrl}/page/${pageNumber}`
 
   const handlePageChange = (page: number) => {
     if (page === 1) {
@@ -97,7 +99,7 @@ const PaginatedEbookPage = ({
           {podcasts?.map((e, i) => {
             return <CustomHead props={e} key={i} type="podcast" />
           })}
-          {customMetaTag('podcast')}
+          {customMetaTag('podcast', false, currentPageUrl)}
           <AllcontentSection
             className={'pb-9'}
             allContent={podcasts}

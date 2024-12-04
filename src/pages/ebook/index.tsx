@@ -87,7 +87,7 @@ const EbooksPage = ({
             return <CustomHead prpos={e} type="eBook" key={i} />
           })}
           <TagSelect tags={tags} tagLimit={7} showTags={true} />
-          {customMetaTag('ebook')}
+          {customMetaTag('ebook', true)}
           <LatestBlogs
             className={'pt-11 pr-9 pb-16 pl-9'}
             reverse={true}
