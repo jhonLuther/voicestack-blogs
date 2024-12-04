@@ -397,7 +397,6 @@ export function CustomHead({
     }
     return head(metaData, randomId, type + randomId)
   } else if (props && type === 'eBook') {
-    debugger
     const metaData = {
       '@context': 'https://schema.org',
       '@type': 'WebPage',
