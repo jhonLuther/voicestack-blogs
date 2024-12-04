@@ -116,7 +116,7 @@ const EbookPage = ({
           contentType={ebook?.contentType}
         />
         <CustomHead props={ebook} type="eBook" />
-        {generateMetaData(ebook)}
+        {generateMetaData(ebook,seoCanonical)}
         <Layout>
           <MainImageSection post={ebook} enableDate={true} />
           <Section className="flex justify-center">

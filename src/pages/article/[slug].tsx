@@ -121,7 +121,7 @@ const ArticlePage = ({
           contentType={articles?.contentType}
         /> */}
         <CustomHead props={articles} type="articleExpanded" />
-        {generateMetaData(articles)}
+        {generateMetaData(articles,seoCanonical)}
 
         <Layout>
           <MainImageSection enableDate={true} post={articles} />
