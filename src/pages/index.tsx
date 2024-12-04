@@ -1,7 +1,6 @@
 import { useRef, useState, useEffect } from 'react'
 import type { GetStaticProps, InferGetStaticPropsType } from 'next'
 import Layout from '~/components/Layout'
-import Section from '~/components/Section'
 import { readToken } from '~/lib/sanity.api'
 import {
   getEbooks,
