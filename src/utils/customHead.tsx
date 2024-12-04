@@ -4,16 +4,14 @@ import Head from 'next/head'
 import { urlForImage } from '~/lib/sanity.image'
 import { getIframeUrl } from '~/components/commonSections/VideoModal'
 import { slugToCapitalized } from './common'
-import ogMetaData   from '../../public/ogData.json'
+import ogMetaData from '../../public/ogData.json'
 import organizationSchema from '../../public/organizationSchema.json'
 
-
-
-const head = (data: any, i: string, id: string = "") => {
+const head = (data: any, i: string, id: string = '') => {
   return (
     <Head key={i}>
       <script
-        id={id+i}
+        id={id + i}
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
       ></script>
@@ -21,7 +19,7 @@ const head = (data: any, i: string, id: string = "") => {
   )
 }
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 
 const siteLink = {
   '@context': 'https://schema.org/',
@@ -39,43 +37,130 @@ export const orgSchema = () => {
   return head(
     organizationSchema,
     Math.log10(Math.random()).toString() + 'randomId',
-    'organizationSchema'
+    'organizationSchema',
   )
 }
 
 export const siteLinkSchema = () => {
-  return head(siteLink, Math.log10(Math.random()).toString() + 'randomId1', 'siteLinkSchema')
+  return head(
+    siteLink,
+    Math.log10(Math.random()).toString() + 'randomId1',
+    'siteLinkSchema',
+  )
 }
 
+const canonicalTag = (type: string) => {
+  const url = process.env.NEXT_PUBLIC_BASE_URL
+  if (type == 'article') {
+    return (
+      <>
+        <link rel="canonical" href={`${url}/article`} key="canonical" />
+        <link rel="alternate" href={`${url}/article`} hrefLang="x-default" />
+        <link rel="alternate" href={`${url}/article`} hrefLang="en-US" />{' '}
+      </>
+    )
+  } else if (type == 'ebook') {
+    return (
+      <>
+        <link rel="alternate" href={`${url}/ebook`} hrefLang="x-default" />
+        <link rel="alternate" href={`${url}/ebook`} hrefLang="en-US" />
+        <link rel="canonical" href={`${url}/ebook`} key="canonical" />
+      </>
+    )
+  } else if (type == 'podcast') {
+    return (
+      <>
+        <link rel="alternate" href={`${url}/podcast`} hrefLang="x-default" />
+        <link rel="alternate" href={`${url}/podcast`} hrefLang="en-US" />
+        <link rel="canonical" href={`${url}/podcast`} key="canonical" />
+      </>
+    )
+  } else if (type == 'caseStudy') {
+    return (
+      <>
+        <link rel="alternate" href={`${url}/case-study`} hrefLang="x-default" />
+        <link rel="alternate" href={`${url}/case-study`} hrefLang="en-US" />
+        <link rel="canonical" href={`${url}/case-study`} key="canonical" />
+      </>
+    )
+  } else if (type == 'pressRelease') {
+    return (
+      <>
+        <link
+          rel="alternate"
+          href={`${url}/press-release`}
+          hrefLang="x-default"
+        />
+        <link rel="alternate" href={`${url}/press-release`} hrefLang="en-US" />
+        <link rel="canonical" href={`${url}/press-release`} key="canonical" />
+      </>
+    )
+  } else if (type == 'webinar') {
+    return (
+      <>
+        <link rel="alternate" href={`${url}/webinar`} hrefLang="x-default" />
+        <link rel="alternate" href={`${url}/webinar`} hrefLang="en-US" />
+        <link rel="canonical" href={`${url}/webinar`} key="canonical" />
+      </>
+    )
+  }
+}
 
 /******* custom meta tag  to show og image og url  which ha s no specific data ********** */
-export const customMetaTag = (type: string) => {
+export const customMetaTag = (
+  type: string,
+  showCanonical: boolean = false,
+  isPaginatedPage: string = '',
+) => {
   if (type) {
     const metaData = ogMetaData[type]
-    console.log(metaData,'metaData')
     if (metaData) {
-      return Object.keys(metaData).map((key, i) => (
-        <Head key={i}>
-          {key === 'title' ? (
-            <title> {metaData[key]}</title>
-          ) : (
-            <meta property={key} content={metaData[key]} key={key} />
+      return (
+        <Head>
+          {showCanonical && canonicalTag(type)}
+          {isPaginatedPage?.length && (
+            <>
+              <link rel="canonical" href={isPaginatedPage} />
+              <link
+                rel="alternate"
+                href={isPaginatedPage}
+                hrefLang="x-default"
+              />
+              <link rel="alternate" href={isPaginatedPage} hrefLang="en-US" />
+            </>
           )}
+          {Object.keys(metaData).map((key) => (
+            <meta property={key} content={metaData[key]} key={key} />
+          ))}
         </Head>
-      ))
+      )
     }
   }
   return null
 }
 
-export const defaultMetaTag = (params: any) => { debugger
+export const defaultMetaTag = (params: any) => {
+  debugger
   return (
     <Head key={params?._id}>
       <meta property="og:type" content="website" />
       <meta property="og:url" content="https://blog.carestack.com" />
-      {params?.siteTitle ? <title>{slugToCapitalized(params.siteTitle?.trim())}</title> : <></>}
+      {params?.siteTitle ? (
+        <>
+          <meta name="title" content={params.siteTitle?.trim()}></meta>
+          <title>{slugToCapitalized(params.siteTitle?.trim())}</title>
+        </>
+      ) : (
+        <></>
+      )}
       {params?.siteDescription ? (
-        <meta property="og:description" content={params.siteDescription}></meta>
+        <>
+          <meta name="description" content={params.siteDescription}></meta>
+          <meta
+            property="og:description"
+            content={params.siteDescription}
+          ></meta>
+        </>
       ) : (
         <></>
       )}
@@ -101,13 +186,14 @@ export const defaultMetaTag = (params: any) => { debugger
   )
 }
 
-export const generateMetaData = (params: any, type?: string) => { debugger
-  if (type) {
-    customMetaTag(type)
-  }
+export const generateMetaData = (params: any, canonicalLink?: string) => {
+  debugger
   if (params) {
     return (
       <Head>
+        <link rel="canonical" href={canonicalLink} key="canonical" />
+        <link rel="alternate" href={canonicalLink} hrefLang="x-default" />
+        <link rel="alternate" href={canonicalLink} hrefLang="en-US" />
         <meta property="og:type" content="website" />
         {params?.mainImage ? (
           <meta
@@ -118,8 +204,8 @@ export const generateMetaData = (params: any, type?: string) => { debugger
 
         {params?.title ? (
           <>
-           <meta property="og:title" content={params?.title}></meta>
-           <title>{params.title}</title>
+            <meta property="og:title" content={params?.title}></meta>
+            <title>{params.title}</title>
           </>
         ) : (
           <></>
@@ -144,11 +230,11 @@ export function CustomHead({
   const randomId = useId() + Math.log(Math.random())
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 
-  const head = (data: any, i: string, id: string = "") => {
+  const head = (data: any, i: string, id: string = '') => {
     return (
       <Head key={i}>
         <script
-          id={id+randomId}
+          id={id + randomId}
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
         ></script>
@@ -161,7 +247,7 @@ export function CustomHead({
     return (
       <Head>
         <script
-          id={'breadcrumb'+randomId}
+          id={'breadcrumb' + randomId}
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(metadata) }}
         ></script>
@@ -174,16 +260,15 @@ export function CustomHead({
       const data = generateJSONLD(e)
       return head(e, i)
     })
-  } else if (props && type == 'caseStudy') { 
+  } else if (props && type == 'caseStudy') {
     const metaData = {
-      
       '@context': 'https://schema.org',
       '@type': 'BlogPosting',
       mainEntityOfPage: {
-        "@type": "WebPage",
-        "@id": `${baseUrl}/case-study/${props?.slug?.current}`,
+        '@type': 'WebPage',
+        '@id': `${baseUrl}/case-study/${props?.slug?.current}`,
         isPartOf: {
-          "@id": baseUrl,
+          '@id': baseUrl,
         },
       },
       headline: [props?.title],
@@ -208,19 +293,18 @@ export function CustomHead({
         url: 'https://carestack.com',
       },
     }
-    return head(metaData, randomId, type+randomId)
+    return head(metaData, randomId, type + randomId)
   } else if (props && type === 'articleExpanded' && props?.title) {
-
     /* for url if author url available add field , for now  url:"www.carestack.com" */
     const url = baseUrl ?? 'www.blog.carestack.com'
     const metaData = {
       '@context': 'https://schema.org',
       '@type': 'Article',
       mainEntityOfPage: {
-        "@type": "WebPage",
-        "@id": `${baseUrl}/article/${props?.slug?.current}`,
+        '@type': 'WebPage',
+        '@id': `${baseUrl}/article/${props?.slug?.current}`,
         isPartOf: {
-          "@id": baseUrl,
+          '@id': baseUrl,
         },
       },
       headline: props?.title ?? '',
@@ -244,7 +328,7 @@ export function CustomHead({
         url: 'https://carestack.com',
       },
     }
-    return head(metaData, randomId, type+randomId)
+    return head(metaData, randomId, type + randomId)
   }
   //  else if (props && type === 'eBook') {
   //   const metaData = {
@@ -280,7 +364,7 @@ export function CustomHead({
   //   }
   //   return head(metaData, randomId, type+randomId)
   // }
-   else if (props && type === 'webinar') {
+  else if (props && type === 'webinar') {
     const metaData = {
       '@context': 'https://schema.org',
       '@type': 'Event',
@@ -319,7 +403,7 @@ export function CustomHead({
         availability: 'https://schema.org/InStock',
       },
     }
-    head(metaData, randomId, type+randomId)
+    head(metaData, randomId, type + randomId)
   } else if (props && type === 'breadCrumbs') {
     return breadCrumbJson(props)
   } else if (props && type === 'pagination') {
@@ -342,14 +426,14 @@ export function CustomHead({
           position: pageNumber ?? 1,
           url:
             props && props[0]
-              ? `www.carestack.com/${props[0]?.contentType}/page/${pageNumber}`
-              : 'www.carestack.com',
+              ? `www.blog.carestack.com/${props[0]?.contentType}/page/${pageNumber}`
+              : 'wwww.blog.carestack.com',
         },
       ],
       numberOfItems: 3,
       name: paginationType,
     }
-    return head(metaData, randomId, type+randomId)
+    return head(metaData, randomId, type + randomId)
   } else if (props && type === 'podcast') {
     const metaData = {
       '@context': 'https://schema.org',
@@ -370,7 +454,7 @@ export function CustomHead({
         image: e?.picture,
       })),
     }
-    return head(metaData, randomId, type+randomId)
+    return head(metaData, randomId, type + randomId)
   } else if (props && type === 'pressRelease') {
     const metaData = {
       '@context': 'https://schema.org',
@@ -399,6 +483,6 @@ export function CustomHead({
       },
       description: props?.excerpt,
     }
-    return head(metaData, randomId, type+randomId)
+    return head(metaData, randomId, type + randomId)
   }
 }
