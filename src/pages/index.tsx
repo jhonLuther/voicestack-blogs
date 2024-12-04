@@ -108,6 +108,7 @@ export default function IndexPage(props: IndexPageProps) {
   const latestPosts = props?.latestPosts
   const siteSettings = props?.siteSettings
   const eventCards = props?.allEventCards
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 
   return (
     <GlobalDataProvider
@@ -120,7 +121,10 @@ export default function IndexPage(props: IndexPageProps) {
           return defaultMetaTag(e)
         })}
         <Head>
-          <script type="application/ld+json" id='indexPageSchema'>
+          <link rel="canonical" href={baseUrl} key="canonical" />
+          <link rel="alternate" href={baseUrl} hrefLang="x-default" />
+          <link rel="alternate" href={baseUrl} hrefLang="en-US" />
+          <script type="application/ld+json" id="indexPageSchema">
             {JSON.stringify(indexPageJsonLd(props))}
           </script>
         </Head>
