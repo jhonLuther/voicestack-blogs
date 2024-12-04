@@ -23,6 +23,7 @@ import { BaseUrlProvider } from '~/components/Context/UrlContext'
 import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection'
 import ImageLoader from '~/components/commonSections/ImageLoader'
 import { GlobalDataProvider } from '~/components/Context/GlobalDataContext'
+import { CustomHead, metaTagDataForAuthor } from '~/utils/customHead'
 
 interface Query {
   [key: string]: string
@@ -88,11 +89,14 @@ export default function AuthorPage({
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   if(!author) return null
   const baseUrl = `/${siteConfig.pageURLs.author}`
+  const url = process.env.NEXT_PUBLIC_BASE_URL + baseUrl
 
   return (
     <GlobalDataProvider data={tags} featuredTags={homeSettings.featuredTags}>
       <BaseUrlProvider baseUrl={baseUrl}>
         <Layout>
+          <CustomHead props={author} type="author" />
+          {metaTagDataForAuthor(author, url)}
           <Section className="justify-center">
             <Wrapper className={`flex-col`}>
               <div className="flex md:flex-row justify-between flex-col gap-8 md:gap-16">
