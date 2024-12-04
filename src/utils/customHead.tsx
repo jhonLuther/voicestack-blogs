@@ -110,15 +110,15 @@ const canonicalTag = (type: string) => {
 export const customMetaTag = (
   type: string,
   showCanonical: boolean = false,
-  isPaginatedPage: string = '',
+  isPaginatedPage: string = ''
 ) => {
   if (type) {
-    const metaData = ogMetaData[type]
+    const metaData = ogMetaData[type];
     if (metaData) {
       return (
         <Head>
           {showCanonical && canonicalTag(type)}
-          {isPaginatedPage?.length && (
+          {isPaginatedPage && (
             <>
               <link rel="canonical" href={isPaginatedPage} />
               <link
@@ -129,15 +129,23 @@ export const customMetaTag = (
               <link rel="alternate" href={isPaginatedPage} hrefLang="en-US" />
             </>
           )}
-          {Object.keys(metaData).map((key) => (
-            <meta property={key} content={metaData[key]} key={key} />
-          ))}
+          {Object.keys(metaData).map((key) =>
+            key === 'title' ? (
+              <React.Fragment key={key}>
+                <title>{metaData[key]}</title>
+                <meta property={key} content={metaData[key]} />
+              </React.Fragment>
+            ) : (
+              <meta property={key} content={metaData[key]} key={key} />
+            )
+          )}
         </Head>
-      )
+      );
     }
   }
-  return null
-}
+  return null;
+};
+
 
 export const defaultMetaTag = (params: any) => {
   debugger
