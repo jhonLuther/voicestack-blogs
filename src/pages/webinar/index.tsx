@@ -92,7 +92,7 @@ const WebinarsPage = ({
         <Layout>
           <CustomHead props={webinars} type="webinar" />
           <TagSelect tags={tags} tagLimit={7} showTags={true} />
-          {customMetaTag('webinar')}
+          {customMetaTag('webinar', true)}
           <LatestBlogs
             contentType="webinar"
             className={'pt-11 pr-9 pb-16 pl-9'}

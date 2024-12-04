@@ -93,7 +93,7 @@ const PodcastsPage = ({
             return <CustomHead props={e} key={i} type="podcast" />
           })}
           <TagSelect tags={tags} tagLimit={7} showTags={true} />
-          {customMetaTag('podcast')}
+          {customMetaTag('podcast', true)}
           <LatestBlogs
             className={'pt-11 pr-9 pb-16 pl-9'}
             reverse={true}
