@@ -117,7 +117,7 @@ const PaginatedArticlesPage = ({
     <GlobalDataProvider data={tags} featuredTags={homeSettings.featuredTags}>
       <BaseUrlProvider baseUrl={baseUrl}>
         <Layout>
-          {customMetaTag('article', false, currentPageUrl)}
+        {customMetaTag('article', false, currentPageUrl)}
           {articles?.map((e, i) => {
             return <CustomHead props={e} key={i} type="articleExpanded" />
           })}
