@@ -186,7 +186,7 @@ export const siteLinkSchema = () => {
 }
 
 
-
+/******* custom meta tag  to show og image og url  which ha s no specific data ********** */
 export const customMetaTag = (type: string) => {
   if (type) {
     const metaData = ogMetaData[type]
@@ -206,7 +206,7 @@ export const customMetaTag = (type: string) => {
   return null
 }
 
-export const defaultMetaTag = (params: any) => {
+export const defaultMetaTag = (params: any) => { debugger
   return (
     <Head key={params?._id}>
       <meta property="og:type" content="website" />
@@ -255,7 +255,10 @@ export const generateMetaData = (params: any, type?: string) => {
         ) : null}
 
         {params?.title ? (
-          <meta property="og:title" content={params?.title}></meta>
+          <>
+           <meta property="og:title" content={params?.title}></meta>
+           <title>{params.title}</title>
+          </>
         ) : (
           <></>
         )}
