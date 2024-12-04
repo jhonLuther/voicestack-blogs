@@ -29,7 +29,6 @@ export default function SEOHead({
   return (
     <>
       <Head>
-        <title key="title">{slugToCapitalized(title)}</title>
         <meta name="description" content={description} key="description" />
         <meta name="keywords" content={keywords} key="keywords" />
         <meta name="robots" content={robots} key="robots" />

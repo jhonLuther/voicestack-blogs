@@ -111,7 +111,7 @@ const ArticlePage = ({
   return (
     <>
       <GlobalDataProvider data={tags} featuredTags={homeSettings.featuredTags}>
-      <SEOHead
+     {/* <SEOHead
           title={seoTitle}
           description={seoDescription}
           keywords={seoKeywords}
@@ -119,7 +119,7 @@ const ArticlePage = ({
           canonical={seoCanonical}
           jsonLD={jsonLD}
           contentType={articles?.contentType}
-        />
+        /> */}
         <CustomHead props={articles} type="articleExpanded" />
         {generateMetaData(articles)}
 
