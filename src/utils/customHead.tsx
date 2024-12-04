@@ -140,6 +140,7 @@ export const customMetaTag = (
 }
 
 export const defaultMetaTag = (params: any) => {
+  debugger
   return (
     <Head key={params?._id}>
       <meta property="og:type" content="website" />
