@@ -126,7 +126,7 @@ const CaseStudyPage = ({
           contentType={caseStudy?.contentType}
         />
         {/* {customMetaTag('caseStudy')} */}
-        {generateMetaData(caseStudy)}
+        {generateMetaData(caseStudy,seoCanonical)}
         <Layout>
           <MainImageSection
             isAuthor={true}
