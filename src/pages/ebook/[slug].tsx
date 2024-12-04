@@ -115,7 +115,8 @@ const EbookPage = ({
           jsonLD={jsonLD}
           contentType={ebook?.contentType}
         />
-        <CustomHead props={ebook} type="eBook" />
+        
+        <CustomHead props={ebook} type="articleExpanded" />
         {generateMetaData(ebook,seoCanonical)}
         <Layout>
           <MainImageSection post={ebook} enableDate={true} />

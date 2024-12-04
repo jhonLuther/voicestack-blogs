@@ -137,7 +137,7 @@ export const customMetaTag = (
               </React.Fragment>
             ) : (
               <meta property={key} content={metaData[key]} key={key} />
-            )
+            ),
           )}
           {Object.keys(metaData).map((key) => (
             <meta property={key} content={metaData[key]} key={key} />
@@ -149,15 +149,24 @@ export const customMetaTag = (
   return null;
 };
 
-export const defaultMetaTag = (params: any) => {
-  debugger
+export const defaultMetaTag = (params: any, pageUrl?: string) => {
   return (
     <Head key={params?._id}>
+      {pageUrl?.length && (
+        <>
+          <link rel="canonical" href={pageUrl}></link>
+          <link rel="alternate" href={pageUrl} hrefLang="x-default" />
+          <link rel="alternate" href={pageUrl} hrefLang="en-US" />
+        </>
+      )}
+      <meta property="twitter:card" content="summary_large_image" />
       <meta property="og:type" content="website" />
       <meta property="og:url" content="https://blog.carestack.com" />
+      <meta property="twitter:url" content="https://blog.carestack.com" />
       {params?.siteTitle ? (
         <>
           <meta name="title" content={params.siteTitle?.trim()}></meta>
+          <meta property="twitter:title" content={params.siteTitle?.trim()} />
           <title>{slugToCapitalized(params.siteTitle?.trim())}</title>
         </>
       ) : (
@@ -167,9 +176,14 @@ export const defaultMetaTag = (params: any) => {
         <>
           <meta name="description" content={params.siteDescription}></meta>
           <meta
+            property="twitter:description"
+            content={params.siteDescription}
+          />
+          <meta
             property="og:description"
             content={params.siteDescription}
           ></meta>
+          <meta property="twitter:image" content={params.siteDescription} />
         </>
       ) : (
         <></>
@@ -196,8 +210,50 @@ export const defaultMetaTag = (params: any) => {
   )
 }
 
+export const metaTagDataForAuthor = (props: any, pageUrl: string) => {
+  return (
+    <Head>
+      {props?.bio && (
+        <>
+          <meta property="og:description" content={props?.bio}></meta>
+          <meta name="description" content={props?.bio}></meta>
+          <meta property="twitter:description" content={props?.bio} />
+        </>
+      )}
+      {pageUrl && (
+        <>
+          <link rel="canonical" href={pageUrl} key="canonical" />
+          <link rel="alternate" href={pageUrl} hrefLang="x-default" />
+          <link rel="alternate" href={pageUrl} hrefLang="en-US" />
+          <meta property="twitter:url" content={pageUrl} />
+        </>
+      )}
+      {props?.name && (
+        <>
+          <meta property="og:title" content={props.name}></meta>
+          <title>{props.name}</title>
+          <meta property="twitter:title" content={props?.name} />
+        </>
+      )}
+      {props?.picture && (
+        <>
+          {' '}
+          <meta
+            property="og:image"
+            content={urlForImage(props?.picture?._id)}
+          ></meta>
+          <meta
+            property="twitter:image"
+            content={urlForImage(props?.picture?._id)}
+          />
+        </>
+      )}
+      <meta property="twitter:card" content="summary_large_image" />
+    </Head>
+  )
+}
+
 export const generateMetaData = (params: any, canonicalLink?: string) => {
-  debugger
   if (params) {
     return (
       <Head>
@@ -305,11 +361,12 @@ export function CustomHead({
     }
     return head(metaData, randomId, type + randomId)
   } else if (props && type === 'articleExpanded' && props?.title) {
-    /* for url if author url available add field , for now  url:"www.carestack.com" */
     const url = baseUrl ?? 'www.blog.carestack.com'
     const metaData = {
       '@context': 'https://schema.org',
       '@type': 'Article',
+      wordcount: props?.estimatedWordCount,
+      timeRequired: props?.estimatedReadingTime || props?.duration,
       mainEntityOfPage: {
         '@type': 'WebPage',
         '@id': `${baseUrl}/article/${props?.slug?.current}`,
@@ -339,42 +396,40 @@ export function CustomHead({
       },
     }
     return head(metaData, randomId, type + randomId)
-  }
-  //  else if (props && type === 'eBook') {
-  //   const metaData = {
-  //     '@context': 'https://schema.org',
-  //     '@type': 'WebPage',
-  //     breadcrumb: `HOME > EBOOK > ${props.slug?.current}`,
-  //     mainEntity: {
-  //       '@type': 'Book',
-  //       author: {
-  //         '@type': 'Person',
-  //         name: props?.author?.map((e) => {
-  //           return e.name
-  //         }),
-  //         abstract: props?.excerpt,
-  //       },
-  //       bookFormat: 'http://schema.org/EBook',
-  //       datePublished: props?.publishedAt ?? null,
-  //       image: urlForImage(props?.mainImage),
-  //       inLanguage: 'English',
-  //       isbn: '00000000',
-  //       numberOfPages: '1234',
-  //       publisher: 'CareStack',
-  //       name: props?.title,
-  //       ratingValue: 5,
-  //       aggregateRating: {
-  //         '@type': 'AggregateRating',
-  //         reviewCount: '5',
-  //         name: props?.title,
-  //         ratingValue: 5,
-  //       },
-  //       url: props?.attachment?.asset?.url,
-  //     },
-  //   }
-  //   return head(metaData, randomId, type+randomId)
-  // }
-  else if (props && type === 'webinar') {
+  } else if (props && type === 'eBook') {
+    const metaData = {
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      breadcrumb: `HOME > EBOOK > ${props.slug?.current}`,
+      mainEntity: {
+        '@type': 'Book',
+        author: {
+          '@type': 'Person',
+          name: props?.author?.map((e) => {
+            return e.name
+          }),
+          abstract: props?.excerpt,
+        },
+        bookFormat: 'http://schema.org/EBook',
+        datePublished: props?.publishedAt ?? null,
+        image: urlForImage(props?.mainImage),
+        inLanguage: 'English',
+        isbn: '00000000',
+        numberOfPages: '1234',
+        publisher: 'CareStack',
+        name: props?.title,
+        ratingValue: 5,
+        aggregateRating: {
+          '@type': 'AggregateRating',
+          reviewCount: '5',
+          name: props?.title,
+          ratingValue: 5,
+        },
+        url: props?.attachment?.asset?.url,
+      },
+    }
+    return head(metaData, randomId, type + randomId)
+  } else if (props && type === 'webinar') {
     const metaData = {
       '@context': 'https://schema.org',
       '@type': 'Event',
@@ -492,6 +547,18 @@ export function CustomHead({
         },
       },
       description: props?.excerpt,
+    }
+    return head(metaData, randomId, type + randomId)
+  } else if (props && type == 'author') {
+    const metaData = {
+      '@context': 'https://schema.org',
+      '@type': 'Person',
+      image: urlForImage(props?.picture?._id) || '',
+      jobTitle: props?.role || '',
+      name: props?.name || '',
+      url: 'https://blogs.carestack.com',
+
+      description: props?.bio || '',
     }
     return head(metaData, randomId, type + randomId)
   }

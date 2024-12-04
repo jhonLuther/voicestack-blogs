@@ -99,7 +99,7 @@ const PaginatedEbookPage = ({
       <BaseUrlProvider baseUrl={baseUrl}>
         <Layout>
           {ebooks?.map((e, i) => {
-            return <CustomHead props={e} type="eBook" key={i} />
+            return <CustomHead props={e} type="articleExpanded" key={i} />
           })}
           {customMetaTag('ebook', false, currentPageUrl)}
           <AllcontentSection

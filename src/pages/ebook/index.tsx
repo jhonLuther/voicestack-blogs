@@ -84,7 +84,7 @@ const EbooksPage = ({
       <BaseUrlProvider baseUrl={baseUrl}>
         <Layout>
           {ebooks?.map((e, i) => {
-            return <CustomHead prpos={e} type="eBook" key={i} />
+            return <CustomHead props={e} type="articleExpanded" key={i} />
           })}
           <TagSelect tags={tags} tagLimit={7} showTags={true} />
           {customMetaTag('ebook', true)}

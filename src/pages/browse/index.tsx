@@ -17,8 +17,7 @@ import Pagination from '~/components/commonSections/Pagination'
 import siteConfig from 'config/siteConfig'
 import TagSelect from '~/contentUtils/TagSelector'
 import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection'
-import { useRef } from 'react'
-import router, { useRouter } from 'next/router'
+import { useRouter } from 'next/router'
 import ContentHub from '~/contentUtils/ContentHub'
 import { BaseUrlProvider } from '~/components/Context/UrlContext'
 import { defaultMetaTag } from '~/utils/customHead'
@@ -101,6 +100,7 @@ export default function ProjectSlugRoute(
   const totalCount: any = totalPosts.length ?? 0
 
   const baseUrl = `/${siteConfig.paginationBaseUrls.base}`
+  const Url:string = process.env.NEXT_PUBLIC_BASE_URL+baseUrl
 
   const handlePageChange = (page: number) => {
     //   if (page === 1) {
@@ -117,7 +117,7 @@ export default function ProjectSlugRoute(
         <BaseUrlProvider baseUrl={baseUrl}>
           <Layout>
             {siteSettingWithImage ? (
-              defaultMetaTag(siteSettingWithImage)
+              defaultMetaTag(siteSettingWithImage,Url)
             ) : (
               <></>
             )}
