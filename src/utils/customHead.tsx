@@ -110,10 +110,10 @@ const canonicalTag = (type: string) => {
 export const customMetaTag = (
   type: string,
   showCanonical: boolean = false,
-  isPaginatedPage: string = '',
+  isPaginatedPage: string = ''
 ) => {
   if (type) {
-    const metaData = ogMetaData[type]
+    const metaData = ogMetaData[type];
     if (metaData) {
       return (
         <Head>
@@ -143,11 +143,11 @@ export const customMetaTag = (
             <meta property={key} content={metaData[key]} key={key} />
           ))}
         </Head>
-      )
+      );
     }
   }
-  return null
-}
+  return null;
+};
 
 export const defaultMetaTag = (params: any, pageUrl?: string) => {
   return (
