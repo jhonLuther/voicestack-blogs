@@ -89,6 +89,8 @@ const PaginatedPressReleasePage = ({
 }) => {
   const router = useRouter()
   const baseUrl = `/${siteConfig.pageURLs.pressRelease}`
+  const url = process.env.NEXT_PUBLIC_BASE_URL
+  const currentPageUrl =`${url}${baseUrl}/page/${pageNumber}`
 
   const handlePageChange = (page: number) => {
     if (page === 1) {
@@ -105,7 +107,7 @@ const PaginatedPressReleasePage = ({
           {pressReleases?.map((e, i) => {
             return <CustomHead props={e} type="pressRelease" key={i} />
           })}
-          {customMetaTag('pressRelease')}
+          {customMetaTag('pressRelease', false, currentPageUrl)}
           <AllcontentSection
             className={'pb-9'}
             allContent={pressReleases}
