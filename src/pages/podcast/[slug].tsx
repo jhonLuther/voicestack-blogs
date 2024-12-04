@@ -141,7 +141,7 @@ const PodcastPage = ({
         ogImage={urlForImage(podcast?.mainImage)}
         contentType={podcast?.contentType}
       />
-      {generateMetaData(podcast)}
+      {generateMetaData(podcast,seoCanonical)}
       <GlobalDataProvider data={tags} featuredTags={homeSettings.featuredTags}>
         <Layout>
           <MainImageSection

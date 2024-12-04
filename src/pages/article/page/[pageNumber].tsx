@@ -18,7 +18,7 @@ import React, { useContext, useRef } from 'react'
 import Pagination from '~/components/commonSections/Pagination'
 import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection'
 import { BaseUrlProvider } from '~/components/Context/UrlContext'
-import { CustomHead, customMetaTag, defaultMetaTag } from '~/utils/customHead'
+import { CustomHead, customMetaTag } from '~/utils/customHead'
 import { GlobalDataProvider } from '~/components/Context/GlobalDataContext'
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -102,8 +102,8 @@ const PaginatedArticlesPage = ({
 }) => {
   const router = useRouter()
   const baseUrl = `/${siteConfig.pageURLs.article}`
-  const siteSettingWithImage = siteSettings?.find((e: any) => e?.openGraphImage)
-  console.log(siteSettingWithImage)
+  const url = process.env.NEXT_PUBLIC_BASE_URL
+    const currentPageUrl =`${url}${baseUrl}/page/${pageNumber}`
 
   const handlePageChange = (page: number) => {
     if (page === 1) {
@@ -117,7 +117,7 @@ const PaginatedArticlesPage = ({
     <GlobalDataProvider data={tags} featuredTags={homeSettings.featuredTags}>
       <BaseUrlProvider baseUrl={baseUrl}>
         <Layout>
-          {customMetaTag('article')}
+          {customMetaTag('article', false, currentPageUrl)}
           {articles?.map((e, i) => {
             return <CustomHead props={e} key={i} type="articleExpanded" />
           })}

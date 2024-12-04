@@ -85,6 +85,8 @@ const PaginatedCaseStudyPage = ({
 }) => {
   const router = useRouter()
   const baseUrl = `/${siteConfig.pageURLs.caseStudy}`
+  const url = process.env.NEXT_PUBLIC_BASE_URL
+  const currentPageUrl =`${url}${baseUrl}/page/${pageNumber}`
 
   const handlePageChange = (page: number) => {
     if (page === 1) {
@@ -98,7 +100,7 @@ const PaginatedCaseStudyPage = ({
     <GlobalDataProvider data={tags} featuredTags={homeSettings?.featuredTags}>
       <BaseUrlProvider baseUrl={baseUrl}>
         <Layout>
-          {customMetaTag('caseStudy')}
+          {customMetaTag('caseStudy', false, currentPageUrl)}
           {caseStudies?.map((e, i) => {
             return <CustomHead props={e} type="caseStudy" key={i} />
           })}

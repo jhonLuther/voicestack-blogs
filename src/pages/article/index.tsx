@@ -91,7 +91,7 @@ const ArticlesPage = ({
         <Layout>
           <CustomHead props={articles} type="articleExpanded" />
           <TagSelect tags={tags} tagLimit={7} showTags={true} />
-          {customMetaTag('article')}
+          {customMetaTag('article', true)}
           <LatestBlogs
             className={'pt-11 pr-9 pb-16 pl-9'}
             reverse={true}
