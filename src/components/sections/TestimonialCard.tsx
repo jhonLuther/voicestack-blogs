@@ -23,8 +23,8 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({ ...props }: any) => {
             {props?.testimonialCard?.testimonial.excerpt}
           </DescriptionText>
         </div>
-        <div className="pt-6 border-t-2 border-zinc-200">
-          <AuthorInfo author={[customerDetails]} />
+        <div className="pt-6 border-t-2 border-zinc-200 pointer-events-none">
+          <AuthorInfo isParentLink={true} author={[customerDetails]} />
         </div>
       </div>
     </div>
