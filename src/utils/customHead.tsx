@@ -55,51 +55,42 @@ const canonicalTag = (type: string) => {
     return (
       <>
         <link rel="canonical" href={`${url}/article`} key="canonical" />
-        <link rel="alternate" href={`${url}/article`} hrefLang="x-default" />
-        <link rel="alternate" href={`${url}/article`} hrefLang="en-US" />{' '}
       </>
     )
   } else if (type == 'ebook') {
     return (
       <>
-        <link rel="alternate" href={`${url}/ebook`} hrefLang="x-default" />
-        <link rel="alternate" href={`${url}/ebook`} hrefLang="en-US" />
         <link rel="canonical" href={`${url}/ebook`} key="canonical" />
       </>
     )
   } else if (type == 'podcast') {
     return (
       <>
-        <link rel="alternate" href={`${url}/podcast`} hrefLang="x-default" />
-        <link rel="alternate" href={`${url}/podcast`} hrefLang="en-US" />
         <link rel="canonical" href={`${url}/podcast`} key="canonical" />
       </>
     )
   } else if (type == 'caseStudy') {
     return (
       <>
-        <link rel="alternate" href={`${url}/case-study`} hrefLang="x-default" />
-        <link rel="alternate" href={`${url}/case-study`} hrefLang="en-US" />
         <link rel="canonical" href={`${url}/case-study`} key="canonical" />
       </>
     )
   } else if (type == 'pressRelease') {
     return (
       <>
-        <link
+        {/* <link
           rel="alternate"
           href={`${url}/press-release`}
           hrefLang="x-default"
-        />
-        <link rel="alternate" href={`${url}/press-release`} hrefLang="en-US" />
+        /> */}
         <link rel="canonical" href={`${url}/press-release`} key="canonical" />
       </>
     )
   } else if (type == 'webinar') {
     return (
       <>
-        <link rel="alternate" href={`${url}/webinar`} hrefLang="x-default" />
-        <link rel="alternate" href={`${url}/webinar`} hrefLang="en-US" />
+        {/* <link rel="alternate" href={`${url}/webinar`} hrefLang="x-default" />
+        <link rel="alternate" href={`${url}/webinar`} hrefLang="en-US" /> */}
         <link rel="canonical" href={`${url}/webinar`} key="canonical" />
       </>
     )
@@ -121,19 +112,18 @@ export const customMetaTag = (
           {isPaginatedPage && (
             <>
               <link rel="canonical" href={isPaginatedPage} />
-              <link
+              {/* <link
                 rel="alternate"
                 href={isPaginatedPage}
                 hrefLang="x-default"
               />
-              <link rel="alternate" href={isPaginatedPage} hrefLang="en-US" />
+              <link rel="alternate" href={isPaginatedPage} hrefLang="en-US" /> */}
             </>
           )}
           {Object.keys(metaData).map((key) =>
             key === 'title' ? (
               <React.Fragment key={key}>
                 <title>{metaData[key]}</title>
-                <meta property={key} content={metaData[key]} />
               </React.Fragment>
             ) : (
               <meta property={key} content={metaData[key]} key={key} />
@@ -165,7 +155,7 @@ export const defaultMetaTag = (params: any, pageUrl?: string) => {
       <meta property="twitter:url" content="https://blog.carestack.com" />
       {params?.siteTitle ? (
         <>
-          <meta name="title" content={params.siteTitle?.trim()}></meta>
+          {/* <meta name="title" content={params.siteTitle?.trim()}></meta> */}
           <meta property="twitter:title" content={params.siteTitle?.trim()} />
           <title>{slugToCapitalized(params.siteTitle?.trim())}</title>
         </>
@@ -183,7 +173,7 @@ export const defaultMetaTag = (params: any, pageUrl?: string) => {
             property="og:description"
             content={params.siteDescription}
           ></meta>
-          <meta property="twitter:image" content={params.siteDescription} />
+          <meta property="twitter:image" content={params.openGraphImage?.asset?._ref} />
         </>
       ) : (
         <></>
@@ -210,6 +200,9 @@ export const defaultMetaTag = (params: any, pageUrl?: string) => {
   )
 }
 
+
+
+
 export const metaTagDataForAuthor = (props: any, pageUrl: string) => {
   return (
     <Head>
@@ -223,8 +216,8 @@ export const metaTagDataForAuthor = (props: any, pageUrl: string) => {
       {pageUrl && (
         <>
           <link rel="canonical" href={pageUrl} key="canonical" />
-          <link rel="alternate" href={pageUrl} hrefLang="x-default" />
-          <link rel="alternate" href={pageUrl} hrefLang="en-US" />
+          {/* <link rel="alternate" href={pageUrl} hrefLang="x-default" />
+          <link rel="alternate" href={pageUrl} hrefLang="en-US" /> */}
           <meta property="twitter:url" content={pageUrl} />
         </>
       )}
@@ -258,8 +251,8 @@ export const generateMetaData = (params: any, canonicalLink?: string) => {
     return (
       <Head>
         <link rel="canonical" href={canonicalLink} key="canonical" />
-        <link rel="alternate" href={canonicalLink} hrefLang="x-default" />
-        <link rel="alternate" href={canonicalLink} hrefLang="en-US" />
+        {/* <link rel="alternate" href={canonicalLink} hrefLang="x-default" />
+        <link rel="alternate" href={canonicalLink} hrefLang="en-US" /> */}
         <meta property="og:type" content="website" />
         {params?.mainImage ? (
           <meta
@@ -277,8 +270,11 @@ export const generateMetaData = (params: any, canonicalLink?: string) => {
           <></>
         )}
 
-        {params?.excerpt ? (
+        {params?.excerpt ? (<>
           <meta property="og:description" content={params?.excerpt}></meta>
+          <meta name="description" content={params?.excerpt}></meta>
+        </>
+        
         ) : (
           <></>
         )}
@@ -306,6 +302,27 @@ export function CustomHead({
         ></script>
       </Head>
     )
+  }
+
+  const videoObjectJson =(props:any)=>{ 
+    const metadata ={
+      "@context": "http://schema.org",
+      "@type": "VideoObject",
+      "name": props?.title,
+      "description": props?.excerpt,
+      "thumbnailUrl": urlForImage(props?.mainImage?._id),
+      "uploadDate": props?.date + "T00:00:00Z",
+      "duration": props?.duration,
+      // "embedUrl": props?.videos?.map((video:any) => {
+      //   return getIframeUrl(video?.platform, video?.videoId)
+      // }),
+      "contentUrl": props?.videos?.map((video:any) => {
+        return getIframeUrl(video?.platform, video?.videoId)
+      }),
+  
+    }
+    return metadata
+    
   }
 
   const breadCrumbJson = (data: any) => {
@@ -430,19 +447,21 @@ export function CustomHead({
     }
     return head(metaData, randomId, type + randomId)
   } else if (props && type === 'webinar') {
-    const metaData = {
+    
+    const metaData = [{
       '@context': 'https://schema.org',
       '@type': 'Event',
       name: props.title,
       description: props.excerpt,
       eventStatus: 'https://schema.org/EventScheduled',
       eventAttendanceMode: 'https://schema.org/OnlineEventAttendanceMode',
-      startDate: '2024-11-10T14:00:00+00:00',
-      endDate: '2024-11-10T15:30:00+00:00',
+      startDate: props?.date,
+      endDate: props?.date,
+
       url: props?.videos?.map((video) => {
         return getIframeUrl(video?.platform, video?.videoId)
       }),
-      image: urlForImage(props.mainImage),
+      image: urlForImage(props.mainImage?._id),
       location: {
         '@type': 'VirtualLocation',
         url: props?.videos?.map((video) => {
@@ -467,8 +486,12 @@ export function CustomHead({
         }),
         availability: 'https://schema.org/InStock',
       },
-    }
-    head(metaData, randomId, type + randomId)
+     
+    },
+    videoObjectJson(props)
+  ]
+ 
+    return head(metaData, randomId, type + randomId)
   } else if (props && type === 'breadCrumbs') {
     return breadCrumbJson(props)
   } else if (props && type === 'pagination') {
