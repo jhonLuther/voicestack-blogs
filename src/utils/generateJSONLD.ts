@@ -189,7 +189,6 @@ export function indexPageJsonLd(params: any) {
       '@id': 'https://carestack.com/#organization',
     },
     '@context': 'https://schema.org',
-    '@type': 'Article',
     headline: params?.title || '',
     articleBody: params?.posts?.map((e: any) => e?.title).join(', ') || '',
     copyrightHolder: {

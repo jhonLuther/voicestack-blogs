@@ -122,11 +122,11 @@ export default function IndexPage(props: IndexPageProps) {
         })}
         <Head>
           <link rel="canonical" href={baseUrl} key="canonical" />
-          <link rel="alternate" href={baseUrl} hrefLang="x-default" />
-          <link rel="alternate" href={baseUrl} hrefLang="en-US" />
-          <script type="application/ld+json" id="indexPageSchema">
+          {/* <link rel="alternate" href={baseUrl} hrefLang="x-default" />
+          <link rel="alternate" href={baseUrl} hrefLang="en-US" /> */}
+          {/* <script type="application/ld+json" id="indexPageSchema">
             {JSON.stringify(indexPageJsonLd(props))}
-          </script>
+          </script> */}
         </Head>
         <DynamicPages
           posts={props.posts}

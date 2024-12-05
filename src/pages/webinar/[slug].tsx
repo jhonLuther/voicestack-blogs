@@ -122,7 +122,7 @@ const WebinarPage = ({
   return (
     <>
       <CustomHead props={webinar} type="webinar" />
-      <SEOHead
+      {/* <SEOHead
           title={seoTitle}
           description={seoDescription}
           keywords={seoKeywords}
@@ -130,7 +130,8 @@ const WebinarPage = ({
           canonical={seoCanonical}
           jsonLD={jsonLD}
           contentType={webinar?.contentType}
-        />
+        /> */}
+        {/* {CustomHead} */}
       {generateMetaData(webinar,seoCanonical)}
       <GlobalDataProvider data={tags} featuredTags={homeSettings.featuredTags}>
         <Layout>
