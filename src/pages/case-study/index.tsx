@@ -110,7 +110,7 @@ const CaseStudiesPage = ({
           {caseStudies?.map((e, i) => {
             return <CustomHead props={e} type="caseStudy" key={i} />
           })}
-          {customMetaTag('caseStudy')}
+          {customMetaTag('caseStudy', true)}
           <AllcontentSection
             className={'!pb-12'}
             allContent={caseStudies}

@@ -4,154 +4,14 @@ import Head from 'next/head'
 import { urlForImage } from '~/lib/sanity.image'
 import { getIframeUrl } from '~/components/commonSections/VideoModal'
 import { slugToCapitalized } from './common'
-import ogMetaData   from '../../public/ogData.json'
+import ogMetaData from '../../public/ogData.json'
+import organizationSchema from '../../public/organizationSchema.json'
 
-const organizationSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'Corporation',
-  name: 'CareStack',
-  legalName: 'Good Methods Global, Inc.',
-  image:
-    'https://a.storyblok.com/f/144863/1200x1200/db11368ff8/carestack-logo-1200x1200.jpg',
-  logo: 'https://a.storyblok.com/f/144863/1200x1200/db11368ff8/carestack-logo-1200x1200.jpg',
-  url: 'https://carestack.com',
-  email: 'hello@carestack.com',
-  numberOfEmployees: '600',
-  description:
-    'CareStack is an award-winning, cloud dental practice management software trusted by thousands of dentists & dental practices.',
-  slogan: "The last dental software you'll ever need.",
-  mainEntityOfPage: 'https://carestack.com',
-  areaServed: [
-    {
-      '@type': 'Country',
-      name: 'United States',
-    },
-    {
-      '@type': 'Country',
-      name: 'United Kingdom',
-    },
-  ],
-  keywords:
-    'carestack, dental software, carestack dental software, top dental software, best dental software, cloud dental practice management software, dental practice management software',
-  knowsAbout: [
-    'Dental Software',
-    'Cloud Dental Software',
-    'Dental Practice Management Software',
-  ],
-  foundingDate: '2015-01-07',
-  founders: [
-    {
-      '@type': 'Person',
-      name: 'Abhi Krishna',
-      jobTitle: 'Co-Founder & CEO',
-    },
-    {
-      '@type': 'Person',
-      name: 'Varun Nelson',
-      jobTitle: 'Co-Founder & VP Product Opearations',
-    },
-    {
-      '@type': 'Person',
-      name: 'Kevin Cook',
-      jobTitle: 'Co-Founder & VP, Customer Experience',
-    },
-  ],
-  awards: [
-    '2022 Software Advice FrontRunner',
-    '2022 Software Suggest Trending',
-    '2022 GetApp Category Leader',
-    '2021 G2 High Performer',
-    '2021 SoftwarePundit SMB10',
-    'G2 Best Meets Requirements - Summer 2024',
-    'G2 Best Meets Requirements (Small Business) - Summer 2024',
-    'G2 Best Relationship (Small Business) - Summer 2024',
-    'G2 Best Relationship - Summer 2024',
-    'G2 Best Results - Summer 2024',
-    'G2 Best Support - Summer 2024',
-    'G2 Best Usability (Small Business) - Summer 2024',
-    'G2 Best Usability - Summer 2024',
-    'G2 Highest User Adoption (Small Business) - Summer 2024',
-    'G2 Leader - Summer 2024',
-    'G2 Leader (Small Business) - Summer 2024',
-    'G2 Momentum Leader - Summer 2024',
-    'MarketsandMarkets Emerging Leader',
-  ],
-  sameAs: [
-    'https://carestack.com',
-    'https://www.facebook.com/CareStackSystem/',
-    'https://twitter.com/CareStackSystem/',
-    'https://www.instagram.com/carestack_/',
-    'https://www.youtube.com/@CareStack',
-    'https://www.linkedin.com/company/carestack/',
-    'https://vimeo.com/user14264510',
-  ],
-  address: [
-    {
-      '@type': 'PostalAddress',
-      streetAddress: '2954 Mallory Cir #209',
-      addressLocality: 'Kissimmee',
-      addressRegion: 'FL',
-      postalCode: '34747',
-      addressCountry: 'US',
-    },
-    {
-      '@type': 'PostalAddress',
-      streetAddress: '10th Yamuna, Technopark Phase III Main Rd',
-      addressLocality: 'Thiruvananthapuram',
-      addressRegion: 'KL',
-      postalCode: '695583',
-      addressCountry: 'IN',
-    },
-  ],
-  '@logo': [
-    {
-      '@type': 'ImageObject',
-      '@id':
-        'https://a.storyblok.com/f/144863/1200x1200/db11368ff8/carestack-logo-1200x1200.jpg',
-      url: 'https://a.storyblok.com/f/144863/1200x1200/db11368ff8/carestack-logo-1200x1200.jpg',
-      contentUrl:
-        'https://a.storyblok.com/f/144863/1200x1200/db11368ff8/carestack-logo-1200x1200.jpg',
-      caption: 'CareStack logo',
-      inLanguage: ['en-US', 'en-GB'],
-      width: 1200,
-      height: 1200,
-    },
-  ],
-  '@icon': [
-    {
-      '@type': 'ImageObject',
-      '@id':
-        'https://a.storyblok.com/f/144863/1201x1201/a1d1cbd61c/carestack-favicon-1200x1200.png',
-      url: 'https://a.storyblok.com/f/144863/1201x1201/a1d1cbd61c/carestack-favicon-1200x1200.png',
-      contentUrl:
-        'https://a.storyblok.com/f/144863/1201x1201/a1d1cbd61c/carestack-favicon-1200x1200.png',
-      caption: 'CareStack icon',
-      inLanguage: ['en-US', 'en-GB'],
-      width: 1200,
-      height: 1200,
-    },
-  ],
-  contactPoint: [
-    {
-      '@type': 'ContactPoint',
-      contactType: 'Customer Service',
-      telephone: '+1 (407) 833-6123',
-      email: 'support@carestack.com',
-    },
-    {
-      '@type': 'ContactPoint',
-      contactType: 'Sales',
-      telephone: '+1 (407) 833-6123',
-      email: 'sales@carestack.com',
-    },
-  ],
-}
-
-const head = (data: any, i: string, id: string = "") => {
+const head = (data: any, i: string, id: string = '') => {
   return (
     <Head key={i}>
       <script
-        id={id+i}
+        id={id + i}
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
       ></script>
@@ -159,7 +19,7 @@ const head = (data: any, i: string, id: string = "") => {
   )
 }
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 
 const siteLink = {
   '@context': 'https://schema.org/',
@@ -177,43 +37,154 @@ export const orgSchema = () => {
   return head(
     organizationSchema,
     Math.log10(Math.random()).toString() + 'randomId',
-    'organizationSchema'
+    'organizationSchema',
   )
 }
 
 export const siteLinkSchema = () => {
-  return head(siteLink, Math.log10(Math.random()).toString() + 'randomId1', 'siteLinkSchema')
+  return head(
+    siteLink,
+    Math.log10(Math.random()).toString() + 'randomId1',
+    'siteLinkSchema',
+  )
 }
 
+const canonicalTag = (type: string) => {
+  const url = process.env.NEXT_PUBLIC_BASE_URL
+  if (type == 'article') {
+    return (
+      <>
+        <link rel="canonical" href={`${url}/article`} key="canonical" />
+        <link rel="alternate" href={`${url}/article`} hrefLang="x-default" />
+        <link rel="alternate" href={`${url}/article`} hrefLang="en-US" />{' '}
+      </>
+    )
+  } else if (type == 'ebook') {
+    return (
+      <>
+        <link rel="alternate" href={`${url}/ebook`} hrefLang="x-default" />
+        <link rel="alternate" href={`${url}/ebook`} hrefLang="en-US" />
+        <link rel="canonical" href={`${url}/ebook`} key="canonical" />
+      </>
+    )
+  } else if (type == 'podcast') {
+    return (
+      <>
+        <link rel="alternate" href={`${url}/podcast`} hrefLang="x-default" />
+        <link rel="alternate" href={`${url}/podcast`} hrefLang="en-US" />
+        <link rel="canonical" href={`${url}/podcast`} key="canonical" />
+      </>
+    )
+  } else if (type == 'caseStudy') {
+    return (
+      <>
+        <link rel="alternate" href={`${url}/case-study`} hrefLang="x-default" />
+        <link rel="alternate" href={`${url}/case-study`} hrefLang="en-US" />
+        <link rel="canonical" href={`${url}/case-study`} key="canonical" />
+      </>
+    )
+  } else if (type == 'pressRelease') {
+    return (
+      <>
+        <link
+          rel="alternate"
+          href={`${url}/press-release`}
+          hrefLang="x-default"
+        />
+        <link rel="alternate" href={`${url}/press-release`} hrefLang="en-US" />
+        <link rel="canonical" href={`${url}/press-release`} key="canonical" />
+      </>
+    )
+  } else if (type == 'webinar') {
+    return (
+      <>
+        <link rel="alternate" href={`${url}/webinar`} hrefLang="x-default" />
+        <link rel="alternate" href={`${url}/webinar`} hrefLang="en-US" />
+        <link rel="canonical" href={`${url}/webinar`} key="canonical" />
+      </>
+    )
+  }
+}
 
-
-export const customMetaTag = (type: string) => {
+/******* custom meta tag  to show og image og url  which ha s no specific data ********** */
+export const customMetaTag = (
+  type: string,
+  showCanonical: boolean = false,
+  isPaginatedPage: string = ''
+) => {
   if (type) {
-    const metaData = ogMetaData[type]
-    console.log(metaData,'metaData')
+    const metaData = ogMetaData[type];
     if (metaData) {
-      return Object.keys(metaData).map((key, i) => (
-        <Head key={i}>
-          {key === 'title' ? (
-            <title> {metaData[key]}</title>
-          ) : (
-            <meta property={key} content={metaData[key]} key={key} />
+      return (
+        <Head>
+          {showCanonical && canonicalTag(type)}
+          {isPaginatedPage && (
+            <>
+              <link rel="canonical" href={isPaginatedPage} />
+              <link
+                rel="alternate"
+                href={isPaginatedPage}
+                hrefLang="x-default"
+              />
+              <link rel="alternate" href={isPaginatedPage} hrefLang="en-US" />
+            </>
           )}
+          {Object.keys(metaData).map((key) =>
+            key === 'title' ? (
+              <React.Fragment key={key}>
+                <title>{metaData[key]}</title>
+                <meta property={key} content={metaData[key]} />
+              </React.Fragment>
+            ) : (
+              <meta property={key} content={metaData[key]} key={key} />
+            ),
+          )}
+          {Object.keys(metaData).map((key) => (
+            <meta property={key} content={metaData[key]} key={key} />
+          ))}
         </Head>
-      ))
+      );
     }
   }
-  return null
-}
+  return null;
+};
 
-export const defaultMetaTag = (params: any) => {
+export const defaultMetaTag = (params: any, pageUrl?: string) => {
   return (
     <Head key={params?._id}>
+      {pageUrl?.length && (
+        <>
+          <link rel="canonical" href={pageUrl}></link>
+          <link rel="alternate" href={pageUrl} hrefLang="x-default" />
+          <link rel="alternate" href={pageUrl} hrefLang="en-US" />
+        </>
+      )}
+      <meta property="twitter:card" content="summary_large_image" />
       <meta property="og:type" content="website" />
       <meta property="og:url" content="https://blog.carestack.com" />
-      {params?.siteTitle ? <title>{slugToCapitalized(params.siteTitle?.trim())}</title> : <></>}
+      <meta property="twitter:url" content="https://blog.carestack.com" />
+      {params?.siteTitle ? (
+        <>
+          <meta name="title" content={params.siteTitle?.trim()}></meta>
+          <meta property="twitter:title" content={params.siteTitle?.trim()} />
+          <title>{slugToCapitalized(params.siteTitle?.trim())}</title>
+        </>
+      ) : (
+        <></>
+      )}
       {params?.siteDescription ? (
-        <meta property="og:description" content={params.siteDescription}></meta>
+        <>
+          <meta name="description" content={params.siteDescription}></meta>
+          <meta
+            property="twitter:description"
+            content={params.siteDescription}
+          />
+          <meta
+            property="og:description"
+            content={params.siteDescription}
+          ></meta>
+          <meta property="twitter:image" content={params.siteDescription} />
+        </>
       ) : (
         <></>
       )}
@@ -239,13 +210,56 @@ export const defaultMetaTag = (params: any) => {
   )
 }
 
-export const generateMetaData = (params: any, type?: string) => {
-  if (type) {
-    customMetaTag(type)
-  }
+export const metaTagDataForAuthor = (props: any, pageUrl: string) => {
+  return (
+    <Head>
+      {props?.bio && (
+        <>
+          <meta property="og:description" content={props?.bio}></meta>
+          <meta name="description" content={props?.bio}></meta>
+          <meta property="twitter:description" content={props?.bio} />
+        </>
+      )}
+      {pageUrl && (
+        <>
+          <link rel="canonical" href={pageUrl} key="canonical" />
+          <link rel="alternate" href={pageUrl} hrefLang="x-default" />
+          <link rel="alternate" href={pageUrl} hrefLang="en-US" />
+          <meta property="twitter:url" content={pageUrl} />
+        </>
+      )}
+      {props?.name && (
+        <>
+          <meta property="og:title" content={props.name}></meta>
+          <title>{props.name}</title>
+          <meta property="twitter:title" content={props?.name} />
+        </>
+      )}
+      {props?.picture && (
+        <>
+          {' '}
+          <meta
+            property="og:image"
+            content={urlForImage(props?.picture?._id)}
+          ></meta>
+          <meta
+            property="twitter:image"
+            content={urlForImage(props?.picture?._id)}
+          />
+        </>
+      )}
+      <meta property="twitter:card" content="summary_large_image" />
+    </Head>
+  )
+}
+
+export const generateMetaData = (params: any, canonicalLink?: string) => {
   if (params) {
     return (
       <Head>
+        <link rel="canonical" href={canonicalLink} key="canonical" />
+        <link rel="alternate" href={canonicalLink} hrefLang="x-default" />
+        <link rel="alternate" href={canonicalLink} hrefLang="en-US" />
         <meta property="og:type" content="website" />
         {params?.mainImage ? (
           <meta
@@ -255,7 +269,10 @@ export const generateMetaData = (params: any, type?: string) => {
         ) : null}
 
         {params?.title ? (
-          <meta property="og:title" content={params?.title}></meta>
+          <>
+            <meta property="og:title" content={params?.title}></meta>
+            <title>{params.title}</title>
+          </>
         ) : (
           <></>
         )}
@@ -279,11 +296,11 @@ export function CustomHead({
   const randomId = useId() + Math.log(Math.random())
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 
-  const head = (data: any, i: string, id: string = "") => {
+  const head = (data: any, i: string, id: string = '') => {
     return (
       <Head key={i}>
         <script
-          id={id+randomId}
+          id={id + randomId}
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
         ></script>
@@ -296,7 +313,7 @@ export function CustomHead({
     return (
       <Head>
         <script
-          id={'breadcrumb'+randomId}
+          id={'breadcrumb' + randomId}
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(metadata) }}
         ></script>
@@ -309,16 +326,15 @@ export function CustomHead({
       const data = generateJSONLD(e)
       return head(e, i)
     })
-  } else if (props && type == 'caseStudy') { 
+  } else if (props && type == 'caseStudy') {
     const metaData = {
-      
       '@context': 'https://schema.org',
       '@type': 'BlogPosting',
       mainEntityOfPage: {
-        "@type": "WebPage",
-        "@id": `${baseUrl}/case-study/${props?.slug?.current}`,
+        '@type': 'WebPage',
+        '@id': `${baseUrl}/case-study/${props?.slug?.current}`,
         isPartOf: {
-          "@id": baseUrl,
+          '@id': baseUrl,
         },
       },
       headline: [props?.title],
@@ -343,19 +359,19 @@ export function CustomHead({
         url: 'https://carestack.com',
       },
     }
-    return head(metaData, randomId, type+randomId)
+    return head(metaData, randomId, type + randomId)
   } else if (props && type === 'articleExpanded' && props?.title) {
-
-    /* for url if author url available add field , for now  url:"www.carestack.com" */
     const url = baseUrl ?? 'www.blog.carestack.com'
     const metaData = {
       '@context': 'https://schema.org',
       '@type': 'Article',
+      wordcount: props?.estimatedWordCount,
+      timeRequired: props?.estimatedReadingTime || props?.duration,
       mainEntityOfPage: {
-        "@type": "WebPage",
-        "@id": `${baseUrl}/article/${props?.slug?.current}`,
+        '@type': 'WebPage',
+        '@id': `${baseUrl}/article/${props?.slug?.current}`,
         isPartOf: {
-          "@id": baseUrl,
+          '@id': baseUrl,
         },
       },
       headline: props?.title ?? '',
@@ -379,43 +395,41 @@ export function CustomHead({
         url: 'https://carestack.com',
       },
     }
-    return head(metaData, randomId, type+randomId)
-  }
-  //  else if (props && type === 'eBook') {
-  //   const metaData = {
-  //     '@context': 'https://schema.org',
-  //     '@type': 'WebPage',
-  //     breadcrumb: `HOME > EBOOK > ${props.slug?.current}`,
-  //     mainEntity: {
-  //       '@type': 'Book',
-  //       author: {
-  //         '@type': 'Person',
-  //         name: props?.author?.map((e) => {
-  //           return e.name
-  //         }),
-  //         abstract: props?.excerpt,
-  //       },
-  //       bookFormat: 'http://schema.org/EBook',
-  //       datePublished: props?.publishedAt ?? null,
-  //       image: urlForImage(props?.mainImage),
-  //       inLanguage: 'English',
-  //       isbn: '00000000',
-  //       numberOfPages: '1234',
-  //       publisher: 'CareStack',
-  //       name: props?.title,
-  //       ratingValue: 5,
-  //       aggregateRating: {
-  //         '@type': 'AggregateRating',
-  //         reviewCount: '5',
-  //         name: props?.title,
-  //         ratingValue: 5,
-  //       },
-  //       url: props?.attachment?.asset?.url,
-  //     },
-  //   }
-  //   return head(metaData, randomId, type+randomId)
-  // }
-   else if (props && type === 'webinar') {
+    return head(metaData, randomId, type + randomId)
+  } else if (props && type === 'eBook') {
+    const metaData = {
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      breadcrumb: `HOME > EBOOK > ${props.slug?.current}`,
+      mainEntity: {
+        '@type': 'Book',
+        author: {
+          '@type': 'Person',
+          name: props?.author?.map((e) => {
+            return e.name
+          }),
+          abstract: props?.excerpt,
+        },
+        bookFormat: 'http://schema.org/EBook',
+        datePublished: props?.publishedAt ?? null,
+        image: urlForImage(props?.mainImage),
+        inLanguage: 'English',
+        isbn: '00000000',
+        numberOfPages: '1234',
+        publisher: 'CareStack',
+        name: props?.title,
+        ratingValue: 5,
+        aggregateRating: {
+          '@type': 'AggregateRating',
+          reviewCount: '5',
+          name: props?.title,
+          ratingValue: 5,
+        },
+        url: props?.attachment?.asset?.url,
+      },
+    }
+    return head(metaData, randomId, type + randomId)
+  } else if (props && type === 'webinar') {
     const metaData = {
       '@context': 'https://schema.org',
       '@type': 'Event',
@@ -454,7 +468,7 @@ export function CustomHead({
         availability: 'https://schema.org/InStock',
       },
     }
-    head(metaData, randomId, type+randomId)
+    head(metaData, randomId, type + randomId)
   } else if (props && type === 'breadCrumbs') {
     return breadCrumbJson(props)
   } else if (props && type === 'pagination') {
@@ -477,14 +491,14 @@ export function CustomHead({
           position: pageNumber ?? 1,
           url:
             props && props[0]
-              ? `www.carestack.com/${props[0]?.contentType}/page/${pageNumber}`
-              : 'www.carestack.com',
+              ? `www.blog.carestack.com/${props[0]?.contentType}/page/${pageNumber}`
+              : 'wwww.blog.carestack.com',
         },
       ],
       numberOfItems: 3,
       name: paginationType,
     }
-    return head(metaData, randomId, type+randomId)
+    return head(metaData, randomId, type + randomId)
   } else if (props && type === 'podcast') {
     const metaData = {
       '@context': 'https://schema.org',
@@ -505,7 +519,7 @@ export function CustomHead({
         image: e?.picture,
       })),
     }
-    return head(metaData, randomId, type+randomId)
+    return head(metaData, randomId, type + randomId)
   } else if (props && type === 'pressRelease') {
     const metaData = {
       '@context': 'https://schema.org',
@@ -534,6 +548,18 @@ export function CustomHead({
       },
       description: props?.excerpt,
     }
-    return head(metaData, randomId, type+randomId)
+    return head(metaData, randomId, type + randomId)
+  } else if (props && type == 'author') {
+    const metaData = {
+      '@context': 'https://schema.org',
+      '@type': 'Person',
+      image: urlForImage(props?.picture?._id) || '',
+      jobTitle: props?.role || '',
+      name: props?.name || '',
+      url: 'https://blogs.carestack.com',
+
+      description: props?.bio || '',
+    }
+    return head(metaData, randomId, type + randomId)
   }
 }

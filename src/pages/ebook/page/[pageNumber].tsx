@@ -83,6 +83,8 @@ const PaginatedEbookPage = ({
 }) => {
   const router = useRouter()
   const baseUrl = `/${siteConfig.pageURLs.ebook}`
+  const url = process.env.NEXT_PUBLIC_BASE_URL
+  const currentPageUrl =`${url}${baseUrl}/page/${pageNumber}`
 
   const handlePageChange = (page: number) => {
     if (page === 1) {
@@ -97,9 +99,9 @@ const PaginatedEbookPage = ({
       <BaseUrlProvider baseUrl={baseUrl}>
         <Layout>
           {ebooks?.map((e, i) => {
-            return <CustomHead props={e} type="eBook" key={i} />
+            return <CustomHead props={e} type="articleExpanded" key={i} />
           })}
-          {customMetaTag('ebook')}
+          {customMetaTag('ebook', false, currentPageUrl)}
           <AllcontentSection
             className={'pb-9'}
             allContent={ebooks}

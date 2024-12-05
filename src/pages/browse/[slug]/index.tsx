@@ -117,12 +117,13 @@ export default function TagPage({
   let siteSettingWithImage = siteSettings?.find((e: any) => e?.openGraphImage)
   siteSettingWithImage.siteTitle = slugToCapitalized(tag?.slug?.current)
 
+  const pageUrl = process.env.NEXT_PUBLIC_BASE_URL+baseUrl
 
   return (
     <GlobalDataProvider data={allTags} featuredTags={homeSettings.featuredTags}>
       <BaseUrlProvider baseUrl={baseUrl}>
         <Layout>
-          {siteSettingWithImage ? defaultMetaTag(siteSettingWithImage) : <></>}
+          {siteSettingWithImage ? defaultMetaTag(siteSettingWithImage,pageUrl) : <></>}
           <ContentHub contentCount={contentCount} />
           <TagSelect
             tags={allTags}

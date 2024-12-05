@@ -82,6 +82,8 @@ const PaginatedWebinarsPage = ({
 }) => {
   const router = useRouter()
   const baseUrl = `/${siteConfig.pageURLs.webinar}`
+  const url = process.env.NEXT_PUBLIC_BASE_URL
+  const currentPageUrl =`${url}${baseUrl}/page/${pageNumber}`
 
   const handlePageChange = (page: number) => {
     if (page === 1) {
@@ -98,7 +100,7 @@ const PaginatedWebinarsPage = ({
           {webinars?.map((e, i) => {
             return <CustomHead props={e} key={i} type="webinar" />
           })}
-          {customMetaTag('webinar')}
+          {customMetaTag('webinar',false,currentPageUrl)}
           <AllcontentSection
             className={'pb-9'}
             allContent={webinars}

@@ -131,7 +131,7 @@ const WebinarPage = ({
           jsonLD={jsonLD}
           contentType={webinar?.contentType}
         />
-      {generateMetaData(webinar)}
+      {generateMetaData(webinar,seoCanonical)}
       <GlobalDataProvider data={tags} featuredTags={homeSettings.featuredTags}>
         <Layout>
           <MainImageSection
