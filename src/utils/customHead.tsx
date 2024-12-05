@@ -246,42 +246,54 @@ export const metaTagDataForAuthor = (props: any, pageUrl: string) => {
   )
 }
 
+
 export const generateMetaData = (params: any, canonicalLink?: string) => {
   if (params) {
     return (
       <Head>
         <link rel="canonical" href={canonicalLink} key="canonical" />
-        {/* <link rel="alternate" href={canonicalLink} hrefLang="x-default" />
-        <link rel="alternate" href={canonicalLink} hrefLang="en-US" /> */}
+        <link rel="alternate" href={canonicalLink} hrefLang="x-default" />
+        <link rel="alternate" href={canonicalLink} hrefLang="en-US" />
+        <meta property="twitter:url" content={canonicalLink}></meta>
         <meta property="og:type" content="website" />
+        <meta property="twitter:card" content="summary_large_image" />
         {params?.mainImage ? (
-          <meta
-            property="og:image"
-            content={urlForImage(params?.mainImage?._id)}
-          ></meta>
+          <>
+            <meta
+              property="og:image"
+              content={urlForImage(params?.mainImage?._id)}
+            ></meta>
+            <meta
+              property="twitter:image"
+              content={urlForImage(params?.mainImage?._id)}
+            />
+          </>
         ) : null}
 
         {params?.title ? (
           <>
             <meta property="og:title" content={params?.title}></meta>
+            <meta property="twitter:title" content={params?.title}></meta>
             <title>{params.title}</title>
           </>
         ) : (
           <></>
         )}
 
-        {params?.excerpt ? (<>
-          <meta property="og:description" content={params?.excerpt}></meta>
-          <meta name="description" content={params?.excerpt}></meta>
-        </>
-        
+        {params?.excerpt ? (
+          <>
+            <meta property="twitter:description" content={params?.excerpt}>
+             
+            </meta>
+            <meta property="og:description" content={params?.excerpt}></meta>
+          </>
         ) : (
           <></>
         )}
       </Head>
     )
   }
-}
+} 
 
 export function CustomHead({
   props,
