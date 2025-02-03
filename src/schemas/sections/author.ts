@@ -37,6 +37,12 @@ export default defineType({
       title: 'Picture',
       type: 'image',
     }),
+    defineField({
+      name: 'language',
+      type: 'string',
+      readOnly: true,
+      hidden: true,
+    }),
   ],
   preview: {
     select: {

@@ -1,6 +1,5 @@
 import { defineField, defineType } from 'sanity'
 import { DocumentVideoIcon } from '@sanity/icons'
-import { DatabaseIcon } from '@sanity/icons'
 
 export default defineType({
   name: 'videos',
@@ -31,14 +30,19 @@ export default defineType({
       description: 'Paste the ID of the video',
       type: 'string',
     }),
+    defineField({
+      name: 'language',
+      type: 'string',
+    }),
   ],
   preview: {
     select: {
       title: 'title',
       platform: 'platform',
+      language: 'language',
     },
     prepare(selection) {
-      const { title, platform } = selection
+      const { title, platform, language } = selection
       const platformName = {
         youtube: 'YouTube',
         vimeo: 'Vimeo',
@@ -46,7 +50,7 @@ export default defineType({
       }[platform]
       return {
         title: title,
-        subtitle: `${platformName} video`,
+        subtitle: `${platformName} video - ${language}`,
         media: DocumentVideoIcon,
       }
     },

@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import ImageLoader from './ImageLoader'
+import { useRouter } from 'next/router'
 
 interface AuthorProps {
   author?: any
@@ -16,6 +17,8 @@ const AuthorInfo = ({
   showNameOnly = false,
   isParentLink = false,
 }: AuthorProps) => {
+  const router = useRouter();
+  const { locale } = router.query; 
   if (!author) {
     return null
   }

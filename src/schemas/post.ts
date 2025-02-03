@@ -1,5 +1,5 @@
 import { defineField, defineType } from 'sanity'
-
+import { isUniqueAcrossAllDocuments } from '~/lib/sanity'
 
 export default defineType({
   name: 'post',
@@ -99,16 +99,15 @@ export default defineType({
     }),
 
     // Common Fields
-
     defineField({
       name: 'slug',
       title: 'Page Path',
       type: 'slug',
       validation: (Rule) => Rule.required(),
       options: {
-        source: 'title',
-        maxLength: 96,
-      },
+        source: 'title', 
+        isUnique: isUniqueAcrossAllDocuments
+      }
     }),
     defineField({
       name: 'region',
@@ -301,6 +300,19 @@ export default defineType({
         },
       ],
     }),
+    defineField({
+      name: 'category',
+      description: 'Choose a category',
+      title: 'Category',
+      type: 'reference',
+      to: [{ type: 'category' }],
+    }),
+    defineField({
+      name: 'language',
+      type: 'string',
+      readOnly: true,
+      hidden: true,
+    }),
   ],
   preview: {
     select: {
@@ -310,13 +322,15 @@ export default defineType({
       media: 'mainImage',
       tag: 'tag',
       date: 'date',
+      language: 'language',
     },
     prepare(selection) {
-      const { title, contentType, author, tag, date } = selection
+      const { title, contentType, author, tag, date,language } = selection
       return {
         title,
-        subtitle: `${selection.contentType.toUpperCase()} . ${date} `,
+        subtitle: `${selection.contentType.toUpperCase()} - ${language} `,
         media: selection.media,
+        
       }
     },
   },

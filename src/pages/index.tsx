@@ -1,8 +1,9 @@
 import { useRef, useState, useEffect } from 'react'
-import type { GetStaticProps, InferGetStaticPropsType } from 'next'
+import type { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
 import Layout from '~/components/Layout'
 import { readToken } from '~/lib/sanity.api'
 import {
+  getCategories,
   getEbooks,
   getEventCards,
   getHomeSettings,
@@ -23,6 +24,7 @@ import { defaultMetaTag } from '~/utils/customHead'
 import { GlobalDataProvider } from '~/components/Context/GlobalDataContext'
 
 interface IndexPageProps {
+  categories: any
   allEventCards: any
   tagsByOrder: any
   webinars: any
@@ -44,6 +46,7 @@ export const getStaticProps: GetStaticProps<
 > = async ({ draftMode = false }) => {
   const client = getClient(draftMode ? { token: readToken } : undefined)
 
+
   try {
     const [
       latestPosts,
@@ -56,6 +59,7 @@ export const getStaticProps: GetStaticProps<
       ebooks,
       webinars,
       allEventCards,
+      categories,
     ] = await Promise.all([
       getPosts(client, 5),
       getPosts(client),
@@ -67,6 +71,7 @@ export const getStaticProps: GetStaticProps<
       getEbooks(client),
       getWebinars(client),
       getEventCards(client),
+      getCategories(client)
     ])
 
     return {
@@ -83,6 +88,7 @@ export const getStaticProps: GetStaticProps<
         ebooks,
         webinars,
         allEventCards,
+        categories
       },
     }
   } catch (error) {
@@ -112,7 +118,7 @@ export default function IndexPage(props: IndexPageProps) {
 
   return (
     <GlobalDataProvider
-      data={props?.tags}
+      data={props?.categories}
       featuredTags={homeSettings.featuredTags}
       homeSettings={homeSettings}
     >
@@ -122,11 +128,10 @@ export default function IndexPage(props: IndexPageProps) {
         })}
         <Head>
           <link rel="canonical" href={baseUrl} key="canonical" />
-          {/* <link rel="alternate" href={baseUrl} hrefLang="x-default" />
-          <link rel="alternate" href={baseUrl} hrefLang="en-US" /> */}
-          {/* <script type="application/ld+json" id="indexPageSchema">
-            {JSON.stringify(indexPageJsonLd(props))}
-          </script> */}
+          <link rel="alternate" href={baseUrl} hrefLang="x-default" />
+          <link rel="alternate" href={baseUrl + '/en'} hrefLang="en-US" /> 
+          <link rel="alternate" href={baseUrl + '/en-GB'} hrefLang="en-GB" /> 
+          <link rel="alternate" href={baseUrl + '/en-AU'} hrefLang="en-AU" /> 
         </Head>
         <DynamicPages
           posts={props.posts}

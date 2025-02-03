@@ -47,7 +47,7 @@ const DynamicPages = ({
   const featuredEvent =
     (homeSettings?.featuredEvent && [homeSettings?.featuredEvent]) || []
 
-  const eventCardData = [...featuredEvent, ...eventCards]
+  const eventCardData = eventCards &&  [...featuredEvent, ...eventCards]
 
   const uniqueEventCards = getUniqueData(eventCardData)
 
@@ -62,11 +62,12 @@ const DynamicPages = ({
     : testimonials.slice(0, 1)
 
   const baseUrl = `/${siteConfig.pageURLs.home}`
+  
 
   return (
     <>
       <BaseUrlProvider baseUrl={baseUrl}>
-        <TagSelect tags={tags} tagLimit={7} showTags={true} />
+        <TagSelect tags={tags} tagLimit={7} />
         <EventCarousel allEventCards={uniqueEventCards} />
         <LatestBlogs contents={latestPosts} />
         <FeaturedAndPopularBlogs

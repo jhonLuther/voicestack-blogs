@@ -73,17 +73,25 @@ export default defineType({
         },
       ],
     }),
+    defineField({
+      name: 'language',
+      type: 'string',
+      readOnly: true,
+      hidden: true,
+    }),
   ],
   preview: {
     select: {
       title: 'testimonialName',
       media: 'image',
+      language: 'language',
+      customer: 'customer.name',
     },
     prepare(selection) {
-      const { title, media } = selection
+      const { title, media,language,customer } = selection
       return {
         title,
-        subtitle: 'Testimonial',
+        subtitle: `${customer} - ${language}`,
         media,
       }
     },

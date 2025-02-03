@@ -20,6 +20,7 @@ import videos from './videos'
 import siteSetting from './siteSetting'
 import customContent from './customContent'
 import eventCard from './eventCard'
+import category from './category'
 
 export const schemaTypes = [
   post,
@@ -43,6 +44,7 @@ export const schemaTypes = [
   siteSetting,
   customContent,
   eventCard,
+  category
 ]
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -67,5 +69,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     siteSetting,
     customContent,
     eventCard,
+    category
   ],
 }

@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useRef, useEffect, useMemo } from 'react'
 import { Post } from '~/interfaces/post'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Pagination } from 'swiper/modules'
@@ -8,6 +8,9 @@ import 'swiper/css/pagination'
 import Link from 'next/link'
 import { ChevronLeftIcon } from '@sanity/icons'
 import { ChevronRightIcon } from '@sanity/icons'
+import { useRouter } from 'next/router'
+import siteConfig from 'config/siteConfig'
+import { generateHref } from '~/utils/common'
 
 interface TagsCarouselProps {
   tags: Array<any>
@@ -21,21 +24,65 @@ const TagsCarousel: React.FC<TagsCarouselProps> = ({
   onTagChanges,
 }) => {
   const swiperRef = useRef(null)
+  const [isBeginning, setIsBeginning] = React.useState(true)
+  const [isEnd, setIsEnd] = React.useState(false)
+  const router = useRouter();
+  const { locale } = router.query; 
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  const sortedTags = useMemo(() => {
+    if (!tags?.length) return []
+    
+    return [...tags].sort((a, b) => {
+      const nameA = (a?.tagName ?? '').toLowerCase().trim()
+      const nameB = (b?.tagName ?? '').toLowerCase().trim()
+      
+      return nameA.localeCompare(nameB, 'en', { numeric: true, sensitivity: 'base' })
+    })
+  }, [tags])
+  
+
   useEffect(() => {
     if (swiperRef.current) {
       swiperRef.current.navigation.update()
+      swiperRef.current.on('slideChange', () => {
+        setIsBeginning(swiperRef.current.isBeginning)
+        setIsEnd(swiperRef.current.isEnd)
+      })
     }
   }, [swiperRef])
+
+  useEffect(() => {
+    const container = containerRef.current
+    if (!container) return
+
+    const handleWheel = (e: WheelEvent) => {
+      e.preventDefault()
+      if (!swiperRef.current) return
+
+      if (e.deltaY > 0 && !isEnd) {
+        swiperRef.current.slideNext()
+      } else if (e.deltaY < 0 && !isBeginning) {
+        swiperRef.current.slidePrev()
+      }
+    }
+
+    container.addEventListener('wheel', handleWheel, { passive: false })
+
+    return () => {
+      container.removeEventListener('wheel', handleWheel)
+    }
+  }, [isBeginning, isEnd])
 
   if (!tags) return null
 
   return (
-    <>
+    <div className=' flex items-center justify-center w-full overflow-hidden' ref={containerRef}>
       <Swiper
         modules={[Navigation, Pagination]}
         // spaceBetween={30}
         slidesPerView="auto"
-        loop={true}
+        loop={false} 
         navigation={{
           nextEl: '.swiper-next',
           prevEl: '.swiper-prev',
@@ -58,8 +105,9 @@ const TagsCarousel: React.FC<TagsCarouselProps> = ({
           swiperRef.current = swiper
         }}
       >
-        <></>
-        {tags.map((tag) => (
+        {sortedTags && sortedTags?.map((tag,i) => {
+          let hrefTemplate = `/${siteConfig.paginationBaseUrls.base}/${tag?.slug?.current}`
+          return(
           <SwiperSlide
             key={tag._id}
             className="!flex items-center justify-center px-2 md:px-3"
@@ -69,24 +117,34 @@ const TagsCarousel: React.FC<TagsCarouselProps> = ({
               className={`flex py-1 text-[14px] font-medium leading-[1.5] text-center cursor-pointer justify-center
                 ${
                   selectedTag === tag?.slug?.current
-                    ? 'text-zinc-300'
+                    ? 'text-zinc-200'
                     : 'text-zinc-400 hover:text-zinc-300'
                 }`}
             >
-              <Link href={`/browse/${tag?.slug?.current}`} scroll={false}>
+              <Link   href={generateHref(locale as string, hrefTemplate)}scroll={false}>
                 <span>{tag?.tagName}</span>
-              </Link>
+              </Link> 
             </span>
           </SwiperSlide>
-        ))}
+        )})}
       </Swiper>
-      <div className="swiper-prev absolute left-0 cursor-pointer top-[50%] translate-y-[-50%] select-none">
+      <button
+        disabled={isBeginning}
+        className={`swiper-prev absolute left-0 top-[50%] translate-y-[-50%] select-none ${
+          isBeginning ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'
+        }`}
+      >
         <ChevronLeftIcon className="text-zinc-200 w-6 h-6 hover:text-white" />
-      </div>
-      <div className="swiper-next absolute right-0 cursor-pointer top-[50%] translate-y-[-50%] select-none">
+      </button>
+      <button
+        disabled={isEnd}
+        className={`swiper-next absolute right-0 top-[50%] translate-y-[-50%] select-none ${
+          isEnd ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'
+        }`}
+      >
         <ChevronRightIcon className="text-zinc-200 w-6 h-6 hover:text-white" />
-      </div>
-    </>
+      </button>
+    </div>
   )
 }
 

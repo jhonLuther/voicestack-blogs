@@ -6,6 +6,7 @@ import { getIframeUrl } from '~/components/commonSections/VideoModal'
 import { slugToCapitalized } from './common'
 import ogMetaData from '../../public/ogData.json'
 import organizationSchema from '../../public/organizationSchema.json'
+import siteConfig from 'config/siteConfig'
 
 const head = (data: any, i: string, id: string = '') => {
   return (
@@ -54,25 +55,41 @@ const canonicalTag = (type: string) => {
   if (type == 'article') {
     return (
       <>
-        <link rel="canonical" href={`${url}/article`} key="canonical" />
+        <link rel="canonical" href={`${url}/${siteConfig.pageURLs.article}`} id="canonical" />
+        <link rel="alternate" href={`${url}/${siteConfig.pageURLs.article}`} hrefLang="en-us" />
+        <link rel="alternate" href={`${url}/en-GB/${siteConfig.pageURLs.article}`} hrefLang="en-gb" />
+        <link rel="alternate" href={`${url}/en-AU/${siteConfig.pageURLs.article}`} hrefLang="en-au" />
+        <link rel="alternate" hrefLang="x-default" href={`${url}/${siteConfig.pageURLs.article}`} />
       </>
     )
   } else if (type == 'ebook') {
     return (
       <>
-        <link rel="canonical" href={`${url}/ebook`} key="canonical" />
+        <link rel="canonical" href={`${url}/${siteConfig.pageURLs.ebook}`} key="canonical" />
+        <link rel="alternate" href={`${url}/${siteConfig.pageURLs.ebook}`} hrefLang="en-us" />
+        <link rel="alternate" href={`${url}/en-GB/${siteConfig.pageURLs.ebook}`} hrefLang="en-gb" />
+        <link rel="alternate" href={`${url}/en-AU/${siteConfig.pageURLs.ebook}`} hrefLang="en-au" />
+        <link rel="alternate" hrefLang="x-default" href={`${url}/${siteConfig.pageURLs.ebook}`} />
       </>
     )
   } else if (type == 'podcast') {
     return (
       <>
-        <link rel="canonical" href={`${url}/podcast`} key="canonical" />
+        <link rel="canonical" href={`${url}/${siteConfig.pageURLs.podcast}`} key="canonical" />
+        <link rel="alternate" href={`${url}/${siteConfig.pageURLs.podcast}`} hrefLang="en-us" />
+        <link rel="alternate" href={`${url}/en-GB/${siteConfig.pageURLs.podcast}`} hrefLang="en-gb" />
+        <link rel="alternate" href={`${url}/en-AU/${siteConfig.pageURLs.podcast}`} hrefLang="en-au" />
+        <link rel="alternate" hrefLang="x-default" href={`${url}/${siteConfig.pageURLs.podcast}`} />
       </>
     )
   } else if (type == 'caseStudy') {
     return (
       <>
-        <link rel="canonical" href={`${url}/case-study`} key="canonical" />
+     <link rel="canonical" href={`${url}/${siteConfig.pageURLs.caseStudy}`} key="canonical" />
+        <link rel="alternate" href={`${url}/${siteConfig.pageURLs.caseStudy}`} hrefLang="en-us" />
+        <link rel="alternate" href={`${url}/en-GB/${siteConfig.pageURLs.caseStudy}`} hrefLang="en-gb" />
+        <link rel="alternate" href={`${url}/en-AU/${siteConfig.pageURLs.caseStudy}`} hrefLang="en-au" />
+        <link rel="alternate" hrefLang="x-default" href={`${url}/${siteConfig.pageURLs.caseStudy}`} />
       </>
     )
   } else if (type == 'pressRelease') {
@@ -83,7 +100,11 @@ const canonicalTag = (type: string) => {
           href={`${url}/press-release`}
           hrefLang="x-default"
         /> */}
-        <link rel="canonical" href={`${url}/press-release`} key="canonical" />
+        <link rel="canonical" href={`${url}/${siteConfig.pageURLs.pressRelease}`} key="canonical" />
+        <link rel="alternate" href={`${url}/${siteConfig.pageURLs.pressRelease}`} hrefLang="en-us" />
+        <link rel="alternate" href={`${url}/en-GB/${siteConfig.pageURLs.pressRelease}`} hrefLang="en-gb" />
+        <link rel="alternate" href={`${url}/en-AU/${siteConfig.pageURLs.pressRelease}`} hrefLang="en-au" />
+        <link rel="alternate" hrefLang="x-default" href={`${url}/${siteConfig.pageURLs.pressRelease}`} />
       </>
     )
   } else if (type == 'webinar') {
@@ -91,7 +112,11 @@ const canonicalTag = (type: string) => {
       <>
         {/* <link rel="alternate" href={`${url}/webinar`} hrefLang="x-default" />
         <link rel="alternate" href={`${url}/webinar`} hrefLang="en-US" /> */}
-        <link rel="canonical" href={`${url}/webinar`} key="canonical" />
+        <link rel="canonical" href={`${url}/${siteConfig.pageURLs.webinar}`} key="canonical" />
+        <link rel="alternate" href={`${url}/${siteConfig.pageURLs.webinar}`} hrefLang="en-us" />
+        <link rel="alternate" href={`${url}/en-GB/${siteConfig.pageURLs.webinar}`} hrefLang="en-gb" />
+        <link rel="alternate" href={`${url}/en-AU/${siteConfig.pageURLs.webinar}`} hrefLang="en-au" />
+        <link rel="alternate" hrefLang="x-default" href={`${url}/${siteConfig.pageURLs.webinar}`} />
       </>
     )
   }
@@ -139,14 +164,16 @@ export const customMetaTag = (
   return null;
 };
 
-export const defaultMetaTag = (params: any, pageUrl?: string) => {
+export const defaultMetaTag = (params: any, pageUrl?: string) => {  
   return (
     <Head key={params?._id}>
       {pageUrl?.length && (
         <>
           <link rel="canonical" href={pageUrl}></link>
-          <link rel="alternate" href={pageUrl} hrefLang="x-default" />
-          <link rel="alternate" href={pageUrl} hrefLang="en-US" />
+          <link rel="alternate" href={pageUrl} hrefLang="x-default" ></link>
+          <link rel="alternate" href={pageUrl} hrefLang="en-US" ></link>
+          <link rel="alternate" href={pageUrl + '/en-GB'} hrefLang="en-GB" ></link>
+          <link rel="alternate" href={pageUrl + '/en-AU'} hrefLang="en-AU" ></link>
         </>
       )}
       <meta property="twitter:card" content="summary_large_image" />
@@ -246,55 +273,66 @@ export const metaTagDataForAuthor = (props: any, pageUrl: string) => {
   )
 }
 
+const getLocaleLinks = (url: string, lang: string) => (
+  <>
+    <link rel="canonical" href={url} />
+    <link rel="alternate" href={url} hrefLang="x-default" />
+    <link rel="alternate" href={url} hrefLang={lang} />
+  </>
+);
 
 export const generateMetaData = (params: any, canonicalLink?: string) => {
-  if (params) {
-    return (
-      <Head>
-        <link rel="canonical" href={canonicalLink} key="canonical" />
-        <link rel="alternate" href={canonicalLink} hrefLang="x-default" />
-        <link rel="alternate" href={canonicalLink} hrefLang="en-US" />
-        <meta property="twitter:url" content={canonicalLink}></meta>
-        <meta property="og:type" content="website" />
-        <meta property="twitter:card" content="summary_large_image" />
-        {params?.mainImage ? (
-          <>
-            <meta
-              property="og:image"
-              content={urlForImage(params?.mainImage?._id)}
-            ></meta>
-            <meta
-              property="twitter:image"
-              content={urlForImage(params?.mainImage?._id)}
-            />
-          </>
-        ) : null}
+  if (!params || !canonicalLink) return null;
 
-        {params?.title ? (
-          <>
-            <meta property="og:title" content={params?.title}></meta>
-            <meta property="twitter:title" content={params?.title}></meta>
-            <title>{params.title}</title>
-          </>
-        ) : (
-          <></>
-        )}
+  const locales = ["en-gb", "en-au", "en"];
 
-        {params?.excerpt ? (
-          <>
-            <meta property="twitter:description" content={params?.excerpt}>
-             
-            </meta>
-            <meta property="og:description" content={params?.excerpt}></meta>
-          </>
-        ) : (
-          <></>
-        )}
-      </Head>
-    )
-  }
-} 
+  return (
+    <Head>
+      {/* Canonical Link */}
+      <link rel="canonical" href={canonicalLink} />
 
+      {locales.map((lang) => {
+        if(lang === 'en'){
+          return <link key={lang} rel="alternate" href={canonicalLink} hrefLang={'en-us'} />;
+        } 
+  
+        else{
+        }
+        const url = canonicalLink.replace("carestack.com/", `carestack.com/${lang}/`);
+        return <link key={lang} rel="alternate" href={url} hrefLang={lang} />;
+
+      })}
+      
+      <link rel="alternate" href={canonicalLink} hrefLang="x-default" />
+
+      <meta property="twitter:url" content={canonicalLink} />
+      <meta property="og:type" content="website" />
+      <meta property="twitter:card" content="summary_large_image" />
+
+      {params?.mainImage && (
+        <>
+          <meta property="og:image" content={urlForImage(params.mainImage._id)} />
+          <meta property="twitter:image" content={urlForImage(params.mainImage._id)} />
+        </>
+      )}
+
+      {params?.title && (
+        <>
+          <meta property="og:title" content={params.title} />
+          <meta property="twitter:title" content={params.title} />
+          <title>{params.title}</title>
+        </>
+      )}
+
+      {params?.excerpt && (
+        <>
+          <meta property="twitter:description" content={params.excerpt} />
+          <meta property="og:description" content={params.excerpt} />
+        </>
+      )}
+    </Head>
+  );
+};
 export function CustomHead({
   props,
   type = null,

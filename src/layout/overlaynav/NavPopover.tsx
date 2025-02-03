@@ -14,6 +14,9 @@ import { navigationLinks } from '../Header'
 import { useRouter } from 'next/router'
 import GrowthClubLogo from '~/assets/reactiveAssets/GrowthClubLogo'
 import siteConfig from 'config/siteConfig'
+import { generateHref, normalizePath } from '~/utils/common'
+import ImageLoader from '~/components/commonSections/ImageLoader'
+import { regions } from '~/components/RegionSwitcher'
 
 interface NavProps {
   className?: string
@@ -35,6 +38,19 @@ export const NavPopover = ({
   const buttonRef = useRef(null)
   const navPopoverRef = useRef(null)
   const router = useRouter()
+  const matchedRegion = regions.find((region) => {
+    return(
+      region.locale === router.locale || 
+      region.locale === router.query.locale || 
+      (region.url ===  router.pathname  && 'en' )
+    )
+   }
+   );
+   const [currentRegion, setCurrentRegion] = useState(null);
+
+   useEffect(()=>{
+    setCurrentRegion(router.locale || router.query.locale);  
+  },[router?.locale,router?.query.locale])
 
   useEffect(() => {
     const handleRouteChange = () => {
@@ -63,25 +79,26 @@ export const NavPopover = ({
       }
     }
 
-    document.addEventListener('mousedown', handleClickOutside)
+    // document.addEventListener('mousedown', handleClickOutside)
     // document.addEventListener('scroll',handleClickOutside) // can be used if needed
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
+      // document.removeEventListener('mousedown', handleClickOutside)
       // document.removeEventListener('scroll',handleClickOutside)
     }
   }, [showMenu, setShowMenu])
 
-  useEffect(() => {
-    if (active && contentRef.current) {
-      setContentHeight(contentRef.current.scrollHeight)
-    } else {
-      setContentHeight(0)
-    }
-  }, [active])
+  // useEffect(() => {
+  //   if (active && contentRef.current) {
+  //     setContentHeight(contentRef.current.scrollHeight)
+  //   } else {
+  //     setContentHeight(0)
+  //   }
+  // }, [active])
 
   useEffect(() => {
     if (data) setTagData(data)
   }, [tagData, data])
+
 
   const closeMenu = () => {
     setShowMenu(false)
@@ -109,11 +126,10 @@ export const NavPopover = ({
       ref={navPopoverRef}
       className={`pt-[10px] px-4 lg:px-[10px] pb-[20px] lg:rounded-[12px] bg-white shadow-custom 
     justify-center bg-transparent fixed lg:absolute lg:top-0 left-0 w-full h-[100vh] lg:h-auto 
-    lg:overflow-hidden top-0 transition-transform duration-300 linear z-20 lg:z-10 ${
-      showMenu
-        ? 'flex lg:translate-y-0 opacity-100 visible'
-        : 'lg:-translate-y-3 opacity-0 invisible'
-    }`}
+    lg:overflow-hidden top-0 transition-transform duration-300 linear z-20 lg:z-10 ${showMenu
+          ? 'flex lg:translate-y-0 opacity-100 visible'
+          : 'lg:-translate-y-3 opacity-0 invisible'
+        }`}
     >
       <Wrapper>
         <div className={`${className} w-full lg:pt-0 pt-14`}>
@@ -154,8 +170,9 @@ export const NavPopover = ({
               className="text-white"
             />
           </div>
-
-          <div
+          <div className='flex flex-col h-full gap-40 flex-shrink-0'>
+          
+          <div id='mob-content'
             className={`transition-all duration-300 ease ${showTags && '-translate-x-[105%]'} lg:translate-x-0`}
           >
             <div
@@ -163,35 +180,38 @@ export const NavPopover = ({
               className={`w-full transform transition-all duration-200}`}
             >
               <nav className="flex flex-col lg:flex-row gap-y-6 gap-x-6 lg:gap-x-10 flex-wrap rounded-[6px] py-[17px] lg:px-[20px] lg:bg-zinc-100">
-                {navigationLinks?.map((link, i) => (
+                {navigationLinks?.map((link, i) => {
+                  return(
                   <Link
                     key={link.href}
-                    href={link.href}
+                    href={generateHref(router.query.locale, link.href)}
                     className={`hover:text-zinc-500 self-start font-medium text-base lg:text-sm flex items-center gap-2 ${router.pathname.startsWith(link.href) ? 'text-zinc-600' : 'text-zinc-600'}`}
                   >
                     {link.icon && <link.icon />}
                     {link.label}
                   </Link>
-                ))}
+                )})}
               </nav>
               <div className="px-[10px] py-6 lg:p-6 lg:block hidden">
                 <div className="text-zinc-400 pb-6 font-medium text-sm uppercase">
-                  Browse By Key Topics
+                  Browse  Topics
                 </div>
                 <div className="lg:columns-3 gap-6">
                   {tagData &&
                     tagData.length > 0 &&
-                    tagData.map((tag, index) => (
-                      <div className="break-inside-avoid pb-[14px]" key={index}>
+                    tagData.map((tag, index) => {
+                      const basePath = `${siteConfig.categoryBaseUrls.base}/${tag?.slug?.current || ''}`;
+                      return(
+                      <div className="break-inside-avoid pb-[14px]" key={tag?.slug?.current}>
                         <Link
-                          href={`/browse/${tag?.slug?.current}`}
+                          href={generateHref(router.query.locale, basePath)}
                           scroll={false}
                           className="text-zinc-500 font-medium text-sm hover:text-zinc-600 transition-colors inlin-flex underline underline-offset-2"
                         >
-                          <span>{tag?.tagName}</span>
+                          <span>{tag?.categoryName}</span>
                         </Link>
                       </div>
-                    ))}
+                    )})}
                 </div>
               </div>
 
@@ -199,7 +219,7 @@ export const NavPopover = ({
                 className="text-zinc-400 pt-3 font-medium text-sm uppercase lg:hidden flex items-center gap-1"
                 onClick={showTagsMob}
               >
-                Browse By Key Topics
+                Browse Topics
                 <ChevronRightIcon
                   width={25}
                   height={25}
@@ -208,31 +228,80 @@ export const NavPopover = ({
               </div>
             </div>
           </div>
+          {/* mob region switcher */}
+          <div id='mob-region' className={`bg-white flex gap-5 justify-center items-center lg:hidden`}>
+            {regions.map((region: any, index: number) => {
+              return (
+                currentRegion == region.locale ? (
+                  <div className='flex gap-2 items-center' key={region.locale}>
+                    <ImageLoader
+                      image={region.flag.url}
+                      alt={region.flag.title}
+                      title={region.flag.title}
+                      width={32}
+                      height={32}
+                      className='border-2 rounded-full border-black/20 !w-[23px] !h-[23px]'
+                    >
+                    </ImageLoader>
+                  </div>
+                ) : (
+
+                  <Link key={region.locale} href={region.url} className='flex gap-2 items-center' onClick={closeMenu}>
+                    <ImageLoader
+                      image={region.flag.url}
+                      alt={region.flag.title}
+                      title={region.flag.title}
+                      width={32}
+                      height={32}
+                      className='border-2 rounded-full border-white !w-[23px] !h-[23px]'
+                    >
+                    </ImageLoader>
+                  </Link>
+                )
+              )
+            })}
+          </div>
+          </div>
           {/* this duplicate is for mobile only */}
           {/* {showTags && ( */}
           <div
-            className={`px-4 lg:px-[10px] py-6 lg:p-6 lg:hidden block absolute top-[56px] h-full left-0 w-full overflow-auto transition-all duration-300 ease  ${showTags ? 'translate-x-0' : 'translate-x-full'}`}
+            className={`px-4 lg:px-[10px] flex flex-col gap-9  py-6 lg:p-6 lg:hidden block absolute top-[56px] h-full left-0 w-full overflow-auto transition-all duration-300 ease  ${showTags ? 'translate-x-0' : 'translate-x-full'}`}
           >
             <div className="columns-1 gap-6">
               {tagData &&
                 tagData.length > 0 &&
-                tagData.map((tag, index) => (
-                  <div className="break-inside-avoid" key={index}>
-                    <Link
-                      href={`/browse/${tag?.slug?.current}`}
-                      scroll={false}
-                      className="text-zinc-500 pb-[14px] font-medium text-sm flex hover:text-zinc-600 transition-colors"
-                    >
-                      <span>{tag?.tagName}</span>
-                    </Link>
-                  </div>
-                ))}
+                tagData.map((tag, index) => {
+                  const basePath = `${siteConfig.categoryBaseUrls.base}/${tag?.slug?.current || ''}`;
+                  const cleanHref = normalizePath(basePath)
+                  return (
+                    <div className="break-inside-avoid" key={cleanHref}>
+                      <Link
+                        href={generateHref(router.query.locale, cleanHref)}
+                        scroll={false}
+                        className="text-zinc-500 pb-[14px] font-medium text-sm flex hover:text-zinc-600 transition-colors"
+                      >
+                        <span>{tag?.categoryName}</span>
+                      </Link>
+                    </div>
+                  )
+                })}
             </div>
+            <Link
+              href={generateHref(router.query.locale, siteConfig.paginationBaseUrls.base)}
+              className=" lg:flex text-[14px] group font-medium leading-[1.5] justify-center text-zinc-500 flex items-center gap-x-1 hover:text-zinc-300 group"
+            >
+              <span className="text-[14px] md:text-[16px] cursor-pointer text-zinc-500 font-medium text-sm hover:text-zinc-600 inline-flex items-center gap-1">
+                {'Browse All'}
+                <ArrowTopRightIcon className="group-hover:translate-y-[-2px] transition-transform duration-300" height={20} width={20} />
+              </span>
+            </Link>
+
           </div>
+
           {/* )} */}
           {/* ./ this is for mobile only */}
 
-          <Link
+          {/* <Link
             href={`/${siteConfig.paginationBaseUrls.base}`}
             className="hidden lg:flex text-[14px] group font-medium leading-[1.5] justify-center text-zinc-500 flex items-center gap-x-1 hover:text-zinc-300 group"
           >
@@ -240,7 +309,7 @@ export const NavPopover = ({
               {'Browse All'}
               <ArrowTopRightIcon className="group-hover:translate-y-[-2px] transition-transform duration-300" height={20} width={20} />
             </span>
-          </Link>
+          </Link> */}
         </div>
       </Wrapper>
     </section>

@@ -3,7 +3,7 @@ const siteConfig = {
     itemsHomePage: 8,
     childItemsPerPage: 12,
     currentPage: 1,
-    totalItems: 100, // static value
+    totalItems: 100, // static value for testing
   },
   pageURLs: {
     home: '/',
@@ -21,6 +21,9 @@ const siteConfig = {
   paginationBaseUrls: {
     base: 'browse',
   },
+  categoryBaseUrls: {
+    base: 'topic',
+  },
   externalLinks: {
     reviews: 'https://carestack.com/dental-software/reviews',
   },
@@ -34,6 +37,7 @@ const siteConfig = {
     podcastHeroCover:
       'https://cdn.sanity.io/images/bbmnn1wc/production/cfc2c520a6ab1da036ded9f234c066d7166d05ef-6000x4000.jpg',
   },
+  locales: ['en','en-GB','en-AU']
 }
 
 export default siteConfig

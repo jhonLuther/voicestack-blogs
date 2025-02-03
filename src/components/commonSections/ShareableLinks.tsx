@@ -4,8 +4,10 @@ import React from 'react'
 import XSMedium from '../typography/XSMedium'
 
 function ShareableLinks({ props }) {
-  const { asPath: route } = useRouter()
-  const encodedUrl = encodeURIComponent(`https://blog.carestack.com${route}`)
+  const router = useRouter()
+  const { asPath } = router
+  const { locale } = router.query; 
+  const encodedUrl = encodeURIComponent(`https://blog.carestack.com/${locale}/${asPath}`)
 
   return (
     <div className="flex flex-col gap-3">

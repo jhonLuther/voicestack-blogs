@@ -24,6 +24,8 @@ import {
 } from '~/lib/sanity.api'
 import { schema } from '~/schemas'
 import siteConfig from 'config/siteConfig'
+import { documentInternationalization } from '@sanity/document-internationalization'
+import { richDate } from '@sanity/rich-date-input'
 
 const iframeOptions = {
   url: defineUrlResolver({
@@ -56,6 +58,35 @@ export default defineConfig({
   schema,
   plugins: [
     table(),
+    richDate(),
+    documentInternationalization({
+      supportedLanguages: [
+        { id: 'en', title: 'US English' },
+        { id: 'en-GB', title: 'UK English' },
+        { id: 'en-AU', title: 'Australia English' },
+      ],
+      schemaTypes: [
+        "post",
+            "newContent",
+            "tag",
+            "dynamicComponent",
+            "demoBannerBlock",
+            "author",
+            "homeSettings",
+            "customer",
+            "link",
+            "globalSettings",
+            "table",
+            "asideBannerBlock",
+            "testimonialCard",
+            "videos",
+            "siteSetting",
+            "customContent",
+            "eventCard",
+            "category",
+            'testimonial',
+      ],
+    }),
 
     // structureTool({
     //   // `defaultDocumentNode` is responsible for adding a “Preview” tab to the document pane
@@ -110,21 +141,23 @@ export default defineConfig({
         S.list()
           .title('Base')
           .items([
-            S.listItem()
-              .title('Home Page')
-              .icon(HomeIcon)
-              .child(
-                S.document()
-                  .schemaType('homeSettings')
-                  .documentId('homeSettings'),
-              ),
+            // S.listItem()
+            //   .title('Home Page')
+            //   .icon(HomeIcon)
+            //   .child(
+            //     S.document()
+            //       .schemaType('homeSettings')
+            //       .documentId('homeSettings'),
+            //   ),
             S.documentTypeListItem('post').title('All Content'),
             S.documentTypeListItem('author').title('Author'),
-            S.documentTypeListItem('tag').title('Tags'),
+            S.documentTypeListItem('tag').title('Tag'),
+            S.documentTypeListItem('category').title('Category'),
             S.documentTypeListItem('customer').title('Customer'),
             S.documentTypeListItem('testimonial').title('Testimonial'),
             S.documentTypeListItem('videos').title('Video'),
             S.documentTypeListItem('eventCard').title('Events Card'),
+            S.documentTypeListItem('homeSettings').title('Home Page').icon(HomeIcon),
             S.listItem()
               .title('Site Configuration')
               .icon(ControlsIcon)

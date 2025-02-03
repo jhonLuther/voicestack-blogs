@@ -169,5 +169,11 @@ export default defineType({
       type: 'string',
       description: 'Text to appear in the footer of the site.',
     },
+    defineField({
+      name: 'language',
+      type: 'string',
+      readOnly: true,
+      hidden: true,
+    }),
   ],
 })

@@ -5,8 +5,12 @@ import Image from 'next/image'
 import CsLogo from '../assets/carestack-logo-white.svg'
 import ClubLogo from '~/assets/reactiveAssets/ClubLogo'
 import GrowthClubLogo from '~/assets/reactiveAssets/GrowthClubLogo'
+import { generateHref } from '~/utils/common'
+import { useRouter } from 'next/router'
 
 const Footer = ({ className }) => {
+    const router = useRouter();
+    const { locale } = router.query; 
   const terms = [
     { title: 'Terms of use', url: 'https://carestack.com/legal/2020-1/termsofuse', external: true },
     { title: 'Privacy policy', url: 'https://carestack.com/legal/2024-1/privacypolicy', external: true },
@@ -337,11 +341,12 @@ const Footer = ({ className }) => {
               <div key={index} className="max-w-[204px]">
                 <h3 className="text-lg font-semibold mb-4">{section.title}</h3>
                 <ul>
-                  {section.links.map((link, linkIndex) => (
+                  {section.links.map((link, linkIndex) => {
+                    return(
                     <li key={linkIndex} className="mb-2">
                       <Link
                         target={link.external ? '_blank' : '_self'}
-                        href={link.url}
+                        href={section.title === 'Quick Links' ? generateHref(locale, link.url) : link.url}
                         className="hover:text-zinc-300 text-zinc-500 text-[15px] leading-[1.62]"
                       >
                         {link.name}{' '}
@@ -350,7 +355,7 @@ const Footer = ({ className }) => {
                         )} */}
                       </Link>
                     </li>
-                  ))}
+                  )})}
                 </ul>
               </div>
             ))}
