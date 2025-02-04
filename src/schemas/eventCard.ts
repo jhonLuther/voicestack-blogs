@@ -48,18 +48,18 @@ export default defineType({
     defineField({
       title: 'Event Start Date',
       name: 'eventStartDate',
-      type: 'date',
+      type: 'richDate',
       options: {
-        dateFormat: 'YYYY-MM-DD',
+        timeStep: 30,
       },
       validation: (Rule) => Rule.required().error('Date is required.'),
     }),
     defineField({
       title: 'Event End Date',
       name: 'eventEndDate',
-      type: 'date',
+      type: 'richDate',
       options: {
-        dateFormat: 'YYYY-MM-DD',
+        timeStep: 30,
       },
       validation: (Rule) => Rule.required().error('Date is required.'),
     }),
@@ -79,6 +79,12 @@ export default defineType({
       name: 'registerBtnTxt',
       title: 'Register Button Text',
       type: 'string',
+    }),
+    defineField({
+      name: 'language',
+      type: 'string',
+      readOnly: true,
+      hidden: true,
     }),
   ],
   preview: {

@@ -50,7 +50,7 @@ export default function TagSelect({
   return (
     <Section className="bg-zinc-900 justify-center !py-0">
       <Wrapper>
-        {showTags && !hideTags && (
+        {showTags && (
           <div className="flex flex-col md:flex-row gap-2 md:gap-6 pt-6 md:pt-6 pb-6 w-full md:items-center">
             {/* {showHeading && selectedTag && (
             <h2 className="md:text-5xl text-xl text-center font-manrope font-extrabold text-cs-zinc-900">
@@ -58,13 +58,13 @@ export default function TagSelect({
             </h2>
           )} */}
 
-            <Link
+            {/* <Link
               href={`/browse`}
               className="text-[14px] font-medium leading-[1.5] text-zinc-500 flex items-center gap-x-1 hover:text-zinc-300 group"
             >
               <UlistIcon width={25} height={25} />
               All Topics
-            </Link>
+            </Link> */}
 
             <div className="flex-1 overflow-hidden max-w-full">
               <div

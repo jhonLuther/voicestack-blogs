@@ -93,7 +93,7 @@ const authorImageFragment = `
 `
 
 export const postsQuery = groq`
-*[_type == "post" && defined(slug.current) && defined(date)] | order(date desc) {
+*[_type == "post" && language == $region && defined(slug.current) && defined(date)] | order(date desc) {
  ${imageFragment},
  title,
  slug,
@@ -122,9 +122,9 @@ export const iframesQuery = groq`*[_type == "iframes" && defined(slug.current)] 
 
 export const authorsQuery = groq`*[_type == "author" && defined(slug.current)] | order(date desc)`
 
-export const tagsQuery = groq`*[_type == "tag"]  | order(tagName asc)`
-
-export const tagsByOrderQuery = groq`*[_type == "tag"] | order(tagName asc) {_id, slug, tagName}`
+export const tagsQuery = groq`*[_type == "tag"] | order(tagName asc)`
+export const categoriesQuery = groq`*[_type == "category" ]  | order(categoryName asc)`
+export const tagsByOrderQuery = groq`*[_type == "tag" ] | order(tagName asc) {_id, slug, tagName}`
 
 export const eventCardQuery = groq`
   *[_type == "eventCard"] | order(eventStartDate desc) {
@@ -143,7 +143,7 @@ export const eventCardQuery = groq`
 `
 // combined query testimonials with associated customer names
 export const testiMonialsQuery = groq`
-  *[_type == "testimonial" && defined(slug.current)] | order(date desc) {
+  *[_type == "testimonial" && language == $region && defined(slug.current)] | order(date desc) {
     _id,
     testimonialName,
     slug,
@@ -170,7 +170,7 @@ export const testiMonialsQuery = groq`
 `
 
 export const homeSettingsQuery = groq`
-  *[_type == "homeSettings"] | order(date desc) {
+  *[_type == "homeSettings" && language == $region] | order(date desc) {
     _id,
     _createdAt,
     "latestBlogs": *[_type == "post" && contentType == "article" && defined(slug.current)] | order(date desc) {
@@ -402,6 +402,7 @@ export const homeSettingsQuery = groq`
       },
     },
     demoBanner,
+    topicDescription,
     featuredPressRelease->{
       _id,
       slug,
@@ -473,7 +474,7 @@ export const homeSettingsQuery = groq`
   }[0]
 `
 
-const siteSettingsQuery = groq`*[_type == "siteSetting"] | order(date desc) {
+const siteSettingsQuery = groq`*[_type == "siteSetting" && language == $region] | order(date desc) {
 ...,
 
 }`
@@ -481,18 +482,20 @@ const siteSettingsQuery = groq`*[_type == "siteSetting"] | order(date desc) {
 export async function getPosts(
   client: SanityClient,
   limit?: number,
+  region: any = 'en',
 ): Promise<Post[]> {
   let newPostsQuery = postsQuery
   if (limit > 0) {
     newPostsQuery = postsQuery + `[0...${limit}]`
   }
-  return await client.fetch(newPostsQuery)
+  return await client.fetch(newPostsQuery,{region:region})
 }
 export async function getPostsByLimit(
   client: SanityClient,
   startLimit?: number,
   endLimit?: number,
   selectedTag?: string,
+  region: any = 'en',
 ): Promise<Post[]> {
   let newPostsQuery = postsQuery + `[${startLimit}...${endLimit}]`
 
@@ -500,7 +503,7 @@ export async function getPostsByLimit(
     newPostsQuery += ` && tags[]->slug.current == "${selectedTag}"`
   }
 
-  return await client.fetch(newPostsQuery)
+  return await client.fetch(newPostsQuery,{region:region})
 }
 export async function getIframes(client: SanityClient): Promise<Post[]> {
   return await client.fetch(iframesQuery)
@@ -510,6 +513,9 @@ export async function getAuthors(client: SanityClient): Promise<Author[]> {
 }
 export async function getTags(client: SanityClient): Promise<Tag[]> {
   return await client.fetch(tagsQuery)
+}
+export async function getCategories(client: SanityClient,): Promise<Tag[]> {
+  return await client.fetch(categoriesQuery,)
 }
 export async function getTagsByOrder(client: SanityClient): Promise<Tag[]> {
   return await client.fetch(tagsByOrderQuery)
@@ -523,9 +529,10 @@ export async function getPostsByTagAndLimit(
   tagId: string,
   start: number,
   end: number,
+  region: string = 'en',
 ) {
   return client.fetch(
-    groq`*[_type == "post" && references($tagId)] | order(date desc) [$start...$end] {
+    groq`*[_type == "post" && language == $region && references($tagId)] | order(date desc) [$start...$end] {
       title,
       contentType,
       ${imageFragment},
@@ -537,7 +544,36 @@ export async function getPostsByTagAndLimit(
       ${bodyFragment},
       "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180),
     }`,
-    { tagId, start, end },
+    { tagId, start, end,region },
+  )
+}
+export async function getPostsByCategoryAndLimit(
+  client: SanityClient,
+  catId: string,//FYI Category ID
+  start: number,
+  end: number,
+  region: string = 'en',
+) {
+  return client.fetch(
+    groq`*[_type == "post" && references($catId) && language == $region] | order(date desc) [$start...$end] {
+      title,
+      contentType,
+      ${imageFragment},
+      blogColor,
+      excerpt,
+      slug,
+      duration,
+      date,
+      ${bodyFragment},
+      "category": category->{
+        _id,
+        categoryName,
+        categoryDescription,
+        slug,
+      },
+      "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180),
+    }`, 
+    { catId, start, end ,region},
   )
 }
 
@@ -545,6 +581,7 @@ export async function getTestiMonials(
   client: SanityClient,
   skip: number = 0,
   limit?: number,
+  region: string = 'en',
 ): Promise<Post[]> {
   let newTestiMonialsQuery = testiMonialsQuery
 
@@ -552,7 +589,7 @@ export async function getTestiMonials(
     newTestiMonialsQuery += `[${skip}...${skip + limit}]`
   }
 
-  return await client.fetch(newTestiMonialsQuery)
+  return await client.fetch(newTestiMonialsQuery,{region:region})
 }
 
 export async function getTestiMonialsCount(
@@ -565,22 +602,24 @@ export async function getPodcasts(
   client: SanityClient,
   skip: number = 0,
   limit?: number,
+  region: string = 'en',
 ): Promise<Post[]> {
   let newPodCastQuery = podcastsQuery
   if (limit !== undefined) {
     newPodCastQuery += `[${skip}...${skip + limit}]`
   }
-  return await client.fetch(newPodCastQuery)
+  return await client.fetch(newPodCastQuery,{region:region})
 }
 
-export async function getPodcastsCount(client: SanityClient): Promise<number> {
+export async function getPodcastsCount(client: SanityClient,region: any = 'en'): Promise<number> {
   const countQuery = groq`count(${podcastsQuery})`
-  return await client.fetch(countQuery)
+  return await client.fetch(countQuery,{region:region})
 }
 export async function getWebinars(
   client: SanityClient,
   skip: number = 0,
   limit?: number,
+  region: string = 'en',
 ): Promise<Post[]> {
   let newWebinarQuery = webinarsQuery
 
@@ -588,17 +627,18 @@ export async function getWebinars(
     newWebinarQuery += `[${skip}...${skip + limit}]`
   }
 
-  return await client.fetch(newWebinarQuery)
+  return await client.fetch(newWebinarQuery,{region:region})
 }
 
-export async function getWebinarsCount(client: SanityClient): Promise<number> {
+export async function getWebinarsCount(client: SanityClient,region: string = 'en'): Promise<number> {
   const countQuery = groq`count(${webinarsQuery})`
-  return await client.fetch(countQuery)
+  return await client.fetch(countQuery,{region:region})
 }
 export async function getEbooks(
   client: SanityClient,
   skip: number = 0,
   limit?: number,
+  region: string = 'en',
 ): Promise<Post[]> {
   let newEbooksQuery = ebooksQuery
 
@@ -606,18 +646,19 @@ export async function getEbooks(
     newEbooksQuery += `[${skip}...${skip + limit}]`
   }
 
-  return await client.fetch(newEbooksQuery)
+  return await client.fetch(newEbooksQuery,{region:region})
 }
 
-export async function getEbooksCount(client: SanityClient): Promise<number> {
+export async function getEbooksCount(client: SanityClient,region: string = 'en'): Promise<number> {
   const countQuery = groq`count(${ebooksQuery})`
-  return await client.fetch(countQuery)
+  return await client.fetch(countQuery,{region:region})
 }
 
 export async function getArticles(
   client: SanityClient,
   skip: number = 0,
   limit?: number,
+  region: string = 'en'
 ): Promise<Post[]> {
   let query = artilclesQuery
 
@@ -625,17 +666,18 @@ export async function getArticles(
     query += `[${skip}..${limit ? skip + limit : ''}]`
   }
 
-  return await client.fetch(query)
+  return await client.fetch(query,{region:region})
 }
 
-export async function getArticlesCount(client: SanityClient): Promise<number> {
+export async function getArticlesCount(client: SanityClient,region: string = 'en'): Promise<number> {
   const countQuery = groq`count(${artilclesQuery})`
-  return await client.fetch(countQuery)
+  return await client.fetch(countQuery,{region:region})
 }
 export async function getCaseStudies(
   client: SanityClient,
   skip: number = 0,
   limit?: number,
+  region: string = 'en',
 ): Promise<Post[]> {
   let newCaseStudyQuery = caseStudiesQuery
 
@@ -643,31 +685,34 @@ export async function getCaseStudies(
     newCaseStudyQuery += `[${skip}...${limit !== undefined ? skip + limit : ''}]`
   }
 
-  return await client.fetch(newCaseStudyQuery)
+  return await client.fetch(newCaseStudyQuery,{region:region})
 }
 export async function getCaseStudiesCount(
   client: SanityClient,
+  region: string = 'en',
 ): Promise<number> {
   const countQuery = groq`count(${caseStudiesQuery})`
-  return await client.fetch(countQuery)
+  return await client.fetch(countQuery,{region:region})
 }
 export async function getPressReleases(
   client: SanityClient,
   skip: number = 0,
   limit?: number,
+  region: string = 'en',
 ): Promise<Post[]> {
   let newPressReleaseQuery = pressReleasesQuery
   if (limit !== undefined) {
     newPressReleaseQuery += `[${skip}...${skip + limit}]`
   }
-  return await client.fetch(newPressReleaseQuery)
+  return await client.fetch(newPressReleaseQuery,{region:region})
 }
 
 export async function getPressReleasesCount(
   client: SanityClient,
+  region: string = 'en',
 ): Promise<number> {
   const countQuery = groq`count(${pressReleasesQuery})`
-  return await client.fetch(countQuery)
+  return await client.fetch(countQuery,{region:region})
 }
 
 export async function getPostsBySlug(
@@ -704,7 +749,7 @@ export async function getPostsBySlug(
 }
 
 export const podcastsQuery = groq`
-*[_type == "post" && contentType == "podcast" && defined(slug.current) && defined(date)] |  order(date desc){
+*[_type == "post" && language == $region && contentType == "podcast" && defined(slug.current) && defined(date)] |  order(date desc){
   _id,
   title,
   slug,
@@ -729,7 +774,7 @@ export const podcastsQuery = groq`
 }
 `
 export const webinarsQuery = groq`
-*[_type == "post" && contentType == "webinar" && defined(slug.current) && defined(date)] |  order(date desc){
+*[_type == "post" && language == $region && contentType == "webinar" && defined(slug.current) && defined(date)] |  order(date desc){
   _id,
   title,
   slug,
@@ -758,7 +803,7 @@ export const webinarsQuery = groq`
 }
 `
 export const ebooksQuery = groq`
-*[_type == "post" && contentType == "ebook" && defined(slug.current) && defined(date)] |  order(date desc){
+*[_type == "post" && language == $region && contentType == "ebook" && defined(slug.current) && defined(date)] |  order(date desc){
   _id,
   title,
   slug,
@@ -788,7 +833,7 @@ export const ebooksQuery = groq`
 }
 `
 export const pressReleasesQuery = groq`
-*[_type == "post" && contentType == "press-release" && defined(slug.current) && defined(date)] |  order(date desc){
+*[_type == "post" && contentType == "press-release" && language == $region  && defined(slug.current) && defined(date)] |  order(date desc){
   _id,
   title,
   slug,
@@ -819,8 +864,13 @@ export const pressReleasesQuery = groq`
   }
 }
 `
-export const artilclesQuery = groq`
-*[_type == "post" && contentType == "article" && defined(slug.current) && defined(date)] |  order(date desc){
+export const artilclesQuery =  groq`
+*[_type == "post"
+ && contentType == "article"
+  && defined(slug.current) 
+  && language == $region
+  && defined(date)] |  order(date desc)
+  {
   _id,
   title,
   slug,
@@ -851,7 +901,7 @@ export const artilclesQuery = groq`
 `
 
 export const caseStudiesQuery = groq`
-*[_type == "post" && contentType == "case-study" && defined(slug.current) && defined(date)] |  order(date desc){
+*[_type == "post" && language == $region && contentType == "case-study" && defined(slug.current) && defined(date)] |  order(date desc){
   _id,
   title,
   slug,
@@ -898,12 +948,12 @@ export const authorRelatedContentQuery = groq`
   }
 `
 
-export async function getHomeSettings(client: SanityClient): Promise<Post[]> {
-  return await client.fetch(homeSettingsQuery)
+export async function getHomeSettings(client: SanityClient,region: string = 'en'): Promise<Post[]> {
+  return await client.fetch(homeSettingsQuery,{region:region})
 }
 
-export async function getSiteSettings(client: SanityClient): Promise<any> {
-  return await client.fetch(siteSettingsQuery)
+export async function getSiteSettings(client: SanityClient,region: string = 'en'): Promise<any> {
+  return await client.fetch(siteSettingsQuery,{region:region})
 }
 
 export const postBySlugQuery = groq`
@@ -942,7 +992,7 @@ export const postBySlugQuery = groq`
 `
 
 export const authorBySlugQuery = groq`
-  *[_type == "author" && slug.current == $slug][0] {
+  *[_type == "author" && language == $region && slug.current == $slug][0] {
     _id,
     name,
     role,
@@ -983,11 +1033,16 @@ export const testiMonialBySlugQuery = groq`
   }
 `
 export const podcastBySlugQuery = groq`
-*[_type == "post" && contentType == "podcast" && slug.current == $slug][0] {
+*[_type == "post" && language == $region && contentType == "podcast" && slug.current == $slug][0] {
   _id,
   title,
   slug,
   contentType,
+  seoTitle,
+  seoDescription,
+  seoKeywords,
+  seoCanonical,
+  seoRobots,
   htmlCode, 
   duration,
   publishedAt,
@@ -1007,16 +1062,22 @@ export const podcastBySlugQuery = groq`
   },
   "tags": tags[]-> {
     _id,
-    tagName
+    tagName,
+    slug
   }
 }
 `
 export const ebookBySlugQuery = groq`
-  *[_type == "post" && contentType == "ebook" && slug.current == $slug][0] {
+  *[_type == "post" && language== $region && contentType == "ebook" && slug.current == $slug][0] {
     _id,
     title,
     slug,
     contentType,
+    seoTitle,
+    seoDescription,
+    seoKeywords,
+    seoCanonical,
+    seoRobots,
     duration,
     publishedAt,
     excerpt,
@@ -1049,11 +1110,16 @@ export const ebookBySlugQuery = groq`
   }
 `
 export const webinarBySlugQuery = groq`
-  *[_type == "post" && contentType == "webinar" && slug.current == $slug][0] {
+  *[_type == "post" && contentType == "webinar" && language == $region && slug.current == $slug][0] {
     _id,
     title,
     slug,
     contentType,
+    seoTitle,
+    seoDescription,
+    seoKeywords,
+    seoCanonical,
+    seoRobots,
     "videos": videos[]-> {
       _id,
       title,
@@ -1087,11 +1153,16 @@ export const webinarBySlugQuery = groq`
   }
 `
 export const pressReleaseBySlugQuery = groq`
-  *[_type == "post" && contentType == "press-release" && slug.current == $slug][0] {
+  *[_type == "post" && language == $region && contentType == "press-release" && slug.current == $slug][0] {
     _id,
     title,
     slug,
     contentType,
+    seoTitle,
+    seoDescription,
+    seoKeywords,
+    seoCanonical,
+    seoRobots,
     "audioFile": Video.link,
     "platform": Video.platform,
     "htmlCode": Video.htmlCode, 
@@ -1123,7 +1194,7 @@ export const pressReleaseBySlugQuery = groq`
   }
 `
 export const articleBySlugQuery = groq`
-  *[_type == "post" && contentType == "article" && slug.current == $slug][0] {
+  *[_type == "post" && contentType == "article" && language == $region  && slug.current == $slug][0] {
     _id,
     title,
     slug,
@@ -1131,6 +1202,11 @@ export const articleBySlugQuery = groq`
     duration,
     publishedAt,
     excerpt,
+    seoTitle,
+    seoDescription,
+    seoKeywords,
+    seoCanonical,
+    seoRobots,
    ${imageFragment},
     ${bodyFragment},
     ${tocFragment},
@@ -1156,11 +1232,16 @@ export const articleBySlugQuery = groq`
 `
 
 export const caseStudyBySlugQuery = groq`
-  *[_type == "post" && contentType == "case-study" && slug.current == $slug][0] {
+  *[_type == "post" && language == $region && contentType == "case-study" && slug.current == $slug][0] {
     _id,
     title,
     slug,
     contentType,
+    seoTitle,
+    seoDescription,
+    seoKeywords,
+    seoCanonical,
+    seoRobots,
     "audioFile": Video.link,
     "platform": Video.platform,
     duration,
@@ -1199,9 +1280,17 @@ export const caseStudyBySlugQuery = groq`
 `
 
 export const tagBySlugQuery = groq`
-  *[_type == "tag" && slug.current == $slug][0] {
+  *[_type == "tag"  && slug.current == $slug][0] {
     _id,
     tagName,
+    slug,
+  }
+`
+export const getCategoryBySlugQuery = groq`
+  *[_type == "category"  && slug.current == $slug][0] {
+    _id,
+    categoryName,
+    categoryDescription,
     slug,
   }
 `
@@ -1239,9 +1328,11 @@ export async function getIframe(
 export async function getAuthor(
   client: SanityClient,
   slug: string,
+  region: string = 'en',
 ): Promise<any> {
   return await client.fetch(authorBySlugQuery, {
     slug,
+    region
   })
 }
 
@@ -1249,12 +1340,13 @@ export async function getauthorRelatedContents(
   client: SanityClient,
   authorId: string,
   limit: number = 6,
+  region: any = 'en',
 ): Promise<any> {
   let relatedAuthors = authorRelatedContentQuery
 
   if (authorId && authorId?.length > 0) {
     relatedAuthors = groq`
-      *[_type == "post" && "${authorId}" in author[]->_id] | order(date desc) [0...${limit}] {
+      *[_type == "post" && language == $region && "${authorId}" in author[]->_id] | order(date desc) [0...${limit}] {
         _id,
         title,
         slug,
@@ -1271,7 +1363,7 @@ export async function getauthorRelatedContents(
   }
 
   return await client.fetch(relatedAuthors, {
-    authorId,
+    authorId,region
   })
 }
 
@@ -1281,11 +1373,12 @@ export async function getTagRelatedContents(
   tagId: string,
   contentType: string = '',
   limit: number = 4,
+  region: any = 'en',
 ): Promise<any> {
   if (!tagId) return []
 
   const query = groq`
-    *[_type == "post"  && slug.current !="${currentSlug}" && contentType == "${contentType}" && "${tagId}" in tags[]->_id] 
+    *[_type == "post" && language == $region  && slug.current !="${currentSlug}" && contentType == "${contentType}" && "${tagId}" in tags[]->_id] 
     | order(date desc)  [0...${limit}]  {
       _id,
       title,
@@ -1306,19 +1399,24 @@ export async function getTagRelatedContents(
     }
   `
 
-  return await client.fetch(query)
+  return await client.fetch(query,{region})
 }
 
-export async function getTag(client: SanityClient, slug: string): Promise<any> {
+export async function getTag(client: SanityClient, slug: string,): Promise<any> {
   return await client.fetch(tagBySlugQuery, {
-    slug,
+    slug
+  })
+}
+export async function getCategory(client: SanityClient, slug: string): Promise<any> {
+  return await client.fetch(getCategoryBySlugQuery, {
+    slug
   })
 }
 
-export const getPostsByTag = (client: SanityClient, tagId) => {
+export const getPostsByTag = (client: SanityClient, tagId,region: string = 'en') => {
   return client.fetch(
     groq`
-    *[_type == "post" && references($tagId)] {
+    *[_type == "post" && language == $region && references($tagId)] {
       title,
       slug,
       contentType,
@@ -1326,14 +1424,15 @@ export const getPostsByTag = (client: SanityClient, tagId) => {
       _createdAt
     }
   `,
-    { tagId },
+    { tagId ,region},
   )
 }
 export async function getCaseStudy(
   client: SanityClient,
   slug: string,
+  region: string = 'en'
 ): Promise<any> {
-  const caseStudy = await client.fetch(caseStudyBySlugQuery, { slug })
+  const caseStudy = await client.fetch(caseStudyBySlugQuery, { slug,region })
   if (!caseStudy) {
     null
   }
@@ -1422,7 +1521,8 @@ export const relatedPostComponents = groq`
 export const siteMapQuery = groq`*[_type == "post" && defined(slug.current)]{
   "url": slug.current,
   contentType,
-  _updatedAt
+  _updatedAt,
+  language
 } `
 
 export const tagQuery = groq`*[_type == "tag" && defined(slug.current)]{
@@ -1490,8 +1590,9 @@ export async function getRelatedPosts(
 export async function getPodcast(
   client: SanityClient,
   slug: string,
+  region: string = 'en',
 ): Promise<any> {
-  const podcast = await client.fetch(podcastBySlugQuery, { slug })
+  const podcast = await client.fetch(podcastBySlugQuery, { slug,region })
   if (!podcast) {
     null
   }
@@ -1501,6 +1602,7 @@ export async function getPodcast(
 export const getAllPodcastSlugs = async (
   client: any,
   currentSlug: string,
+  region: string = 'en'
 ): Promise<{
   current: { slug: string; number: number }
   previous: string
@@ -1508,12 +1610,12 @@ export const getAllPodcastSlugs = async (
   totalPodcasts: number
 }> => {
   const query = `
-    *[_type == "post" && contentType == "podcast"] | order(_updatedAt desc) {
+    *[_type == "post" && language == $region && contentType == "podcast"] | order(_updatedAt desc) {
       "slug": slug.current
     }
   `
 
-  const result = await client.fetch(query)
+  const result = await client.fetch(query, { region })
   const slugs = result?.map((item: { slug: string }) => item.slug)
 
   const currentIndex = slugs?.indexOf(currentSlug)
@@ -1538,8 +1640,9 @@ export const getAllPodcastSlugs = async (
 export async function getArticle(
   client: SanityClient,
   slug: string,
+  region: string = 'en'
 ): Promise<any> {
-  const article = await client.fetch(articleBySlugQuery, { slug })
+  const article = await client.fetch(articleBySlugQuery, { slug, region })
   if (!article) {
     null
   }
@@ -1548,8 +1651,9 @@ export async function getArticle(
 export async function getWebinar(
   client: SanityClient,
   slug: string,
+  region: string = 'en',
 ): Promise<any> {
-  const webinar = await client.fetch(webinarBySlugQuery, { slug })
+  const webinar = await client.fetch(webinarBySlugQuery, { slug ,region})
   if (!webinar) {
     null
   }
@@ -1558,8 +1662,9 @@ export async function getWebinar(
 export async function getEbook(
   client: SanityClient,
   slug: string,
+  region: string = 'en',
 ): Promise<any> {
-  const ebook = await client.fetch(ebookBySlugQuery, { slug })
+  const ebook = await client.fetch(ebookBySlugQuery, { slug ,region})
   if (!ebook) {
     null
   }
@@ -1568,8 +1673,9 @@ export async function getEbook(
 export async function getPressRelease(
   client: SanityClient,
   slug: string,
+  region: string = 'en',
 ): Promise<any> {
-  const pressRelease = await client.fetch(pressReleaseBySlugQuery, { slug })
+  const pressRelease = await client.fetch(pressReleaseBySlugQuery, { slug,region })
   if (!pressRelease) {
     null
   }
@@ -1590,38 +1696,70 @@ export async function getSitemapData(client: SanityClient): Promise<Post[]> {
 
 // queries for static path generation **
 export const postSlugsQuery = groq`
-*[_type == "post" && defined(slug.current)][].slug.current
-
+*[_type == "post" && language == $locale &&  defined(slug.current)]{
+      "slug": slug.current,
+      "locale": language
+    }
 `
 export const iframeSlugsQuery = groq`
 *[_type == "iframes" && defined(slug.current)][].slug.current
 `
 export const authorSlugsQuery = groq`
-  *[_type == "author" && defined(slug.current)][].slug.current
+  *[_type == "author" && language == $locale && defined(slug.current)]{
+      "slug": slug.current,
+      "locale": language
+    }
 `
 export const tagsSlugsQuery = groq`
-  *[_type == "tag" && defined(slug.current)][].slug.current
+  *[_type == "tag" && language == $locale && defined(slug.current)] {
+      "slug": slug.current,
+      "locale": language
+    }
+`
+export const catsSlugsQuery = groq`
+  *[_type == "category" && language == $locale && defined(slug.current)] {
+      "slug": slug.current,
+      "locale": language
+    }
 `
 export const testimonialSlugsQuery = groq`
   *[_type == "testimonial" && defined(slug.current)][].slug.current
 `
 export const podcastSlugsQuery = groq`
-  *[_type == "post" && contentType == "podcast" && defined(slug.current)][].slug.current
+  *[_type == "post" && contentType == "podcast" && language == $locale && defined(slug.current)]{
+      "slug": slug.current,
+      "locale": language
+    }
 `
 export const articleSlugsQuery = groq`
-  *[_type == "post" && contentType == "article" && defined(slug.current)][].slug.current
+  *[_type == "post" && contentType == "article" && language == $locale && defined(slug.current)] {
+      "slug": slug.current,
+      "locale": language
+    }
 `
 export const webinarSlugsQuery = groq`
-  *[_type == "post" && contentType == "webinar" && defined(slug.current)][].slug.current
+  *[_type == "post" && contentType == "webinar" && language == $locale   && defined(slug.current)]{
+      "slug": slug.current,
+      "locale": language
+    }
 `
 export const pressReleaseSlugsQuery = groq`
-  *[_type == "post" && contentType == "press-release" && defined(slug.current)][].slug.current
+  *[_type == "post" && language == $locale && contentType == "press-release" && defined(slug.current)]{
+      "slug": slug.current,
+      "locale": language
+    }
 `
 export const caseStudySlugsQuery = groq`
-  *[_type == "post" && contentType == "case-study" && defined(slug.current)][].slug.current
+  *[_type == "post" &&  contentType == "case-study" &&  language == $locale   && defined(slug.current)] {
+      "slug": slug.current,
+      "locale": language
+    }
 `
 export const ebookSlugsQuery = groq`
-  *[_type == "post" && contentType == "ebook" && defined(slug.current)][].slug.current
+  *[_type == "post" && language == $locale && contentType == "ebook" && defined(slug.current)] {
+      "slug": slug.current,
+      "locale": language
+    }
 `
 
 export interface Iframe {

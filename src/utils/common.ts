@@ -1,3 +1,4 @@
+import siteConfig from 'config/siteConfig'
 import { Post } from '~/interfaces/post'
 import post from '~/schemas/post'
 import { average, prominent } from '~/utils/color'
@@ -53,7 +54,6 @@ export function getRelatedFeatures(
   allPosts: Post[],
 ): Post[] {
   const currentTags = new Set(currentPost.tags?.map((tag) => tag.tagName) || [])
-
   const relatedPosts = allPosts
     .filter((post) => post._id !== currentPost._id)
     .map((post) => ({
@@ -225,3 +225,21 @@ export function slugToCapitalized(slug) {
     .join(' ')
 }
 
+export const normalizePath = (path) => path && path.replace(/\/+/g, '/').replace(/^\//, '/');
+
+
+export function generateHref(locale: any, linkHref: string): string {
+  const isValidHref = locale && locale !== 'en' && siteConfig.locales.includes(locale);
+
+  const cleanPath = normalizePath(linkHref).replace(/^\/+/, '');
+
+  if (!cleanPath || cleanPath === '') {
+    return '/';
+  }
+
+  if (locale === 'en' || !isValidHref) {
+    return `/${cleanPath}`;
+  }
+
+  return `/${locale}/${cleanPath}`;
+}

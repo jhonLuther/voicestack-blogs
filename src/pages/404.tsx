@@ -5,6 +5,7 @@ import { GlobalDataProvider } from '~/components/Context/GlobalDataContext';
 import Footer from '~/layout/Footer';
 import { readToken } from '~/lib/sanity.api'
 import {
+  getCategories,
   getHomeSettings,
   getSiteSettings,
   getTags,
@@ -20,6 +21,7 @@ import Layout from '~/components/Layout';
 import Button from '~/components/commonSections/Button';
 
 interface IndexPageProps {
+  categories: any;
   tags: Array<any>
   homeSettings: any
 }
@@ -35,11 +37,13 @@ export const getStaticProps: GetStaticProps<
       tagsByOrder,
       homeSettings,
       siteSettings,
+      categories
     ] = await Promise.all([
       getTags(client),
       getTagsByOrder(client),
       getHomeSettings(client),
       getSiteSettings(client),
+      getCategories(client)
     ])
 
     return {
@@ -50,6 +54,7 @@ export const getStaticProps: GetStaticProps<
         tagsByOrder,
         homeSettings,
         siteSettings,
+        categories
       },
     }
   } catch (error) {
@@ -70,10 +75,11 @@ export const getStaticProps: GetStaticProps<
 const Custom404 = (props: IndexPageProps) => {
   const homeSettings = props?.homeSettings
   
+  
 
    return (
     <GlobalDataProvider
-      data={props?.tags}
+      data={props?.categories}
       featuredTags={homeSettings.featuredTags}
       homeSettings={homeSettings}
     >

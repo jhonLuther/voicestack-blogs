@@ -22,7 +22,6 @@ interface TestimonialSectionProps {
 }
 
 const TestimonialSection = ({ testimonials }: TestimonialSectionProps) => {
-  const isMobile: any = useMediaQuery(767)
 
   return (
     <Section className="bg-zinc-100 justify-center">

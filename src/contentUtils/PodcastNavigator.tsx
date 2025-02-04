@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { ArrowRightIcon, ArrowLeftIcon } from '@sanity/icons'
 import Section from '~/components/Section'
 import Wrapper from '~/layout/Wrapper'
+import siteConfig from 'config/siteConfig'
 
 interface PodcastNavigatorProps {
   nextSlug: string
@@ -31,7 +32,7 @@ export default function PodcastNavigator({
         <div
           className={` ${className} md:flex-row  flex justify-between items-center w-full border-b py-6 border-zinc-200  text-zinc-500 font-medium text-sm md:text-base`}
         >
-          <Link href={`/podcast/${prevSlug}`}>
+          <Link href={`/${siteConfig.pageURLs.podcast}/${prevSlug}`}>
             <div className="flex items-center ">
               <ArrowLeftIcon
                 style={{ strokeWidth: 2 }}
@@ -43,7 +44,7 @@ export default function PodcastNavigator({
               </span>
             </div>
           </Link>
-          <Link href={`/podcast/${nextSlug}`}>
+          <Link href={`/${siteConfig.pageURLs.podcast}/${nextSlug}`}>
             <div className="flex items-center">
               <span className="mr-1 ">
                 PODCAST {nextNumber.toString().padStart(2, '0')}

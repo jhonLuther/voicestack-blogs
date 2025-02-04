@@ -16,6 +16,7 @@ const Breadcrumb = ({ className }: BreadCrumbProps) => {
   const pathSegments = useRef(
     router.asPath.split('/').filter((segment) => segment !== ''),
   )
+  const excludedSegments = useMemo(() => ['en', 'en-GB', 'en-AU'], []);
 
   const breadcrumbLabels = useMemo(
     () => ({
@@ -28,14 +29,19 @@ const Breadcrumb = ({ className }: BreadCrumbProps) => {
   )
 
   useEffect(() => {
-    const breadcrumbList = pathSegments?.current.map((segment, index) => {
-      const href = `/${pathSegments?.current.slice(0, index + 1).join('/')}`
-      const label = (breadcrumbLabels[segment] || segment).replace(/-/g, ' ')
-      return { href, label }
-    })
-    setBreadcrumbs(breadcrumbList)
-  }, [router.asPath, breadcrumbLabels, pathSegments])
+    pathSegments.current = router.asPath.split('/').filter((segment) => segment !== '')
+  }, [router.asPath])
 
+  useEffect(() => {
+    const breadcrumbList = pathSegments?.current
+      .filter((segment) => !excludedSegments.includes(segment)) 
+      .map((segment, index) => {
+        const href = `/${pathSegments?.current.slice(0, index + 1).join('/')}`
+        const label = (breadcrumbLabels[segment] || segment).replace(/-/g, ' ')
+        return { href, label }
+      })
+    setBreadcrumbs(breadcrumbList)
+  }, [router.asPath, breadcrumbLabels, pathSegments, excludedSegments])
   const breadcrumbLd = breadCrumbJsonLd(breadcrumbs)
 
   return (

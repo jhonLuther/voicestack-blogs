@@ -7,8 +7,9 @@ import { usePathname } from 'next/navigation'
 import { slugToCapitalized } from '~/utils/common'
 
 export interface SharedPageProps {
-  draftMode: boolean
-  token: string
+  draftMode?: boolean
+  token?: string
+  locale?: string
 }
 
 const PreviewProvider = lazy(() => import('~/components/PreviewProvider'))

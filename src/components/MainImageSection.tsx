@@ -2,12 +2,15 @@ import Breadcrumb from './commonSections/BreadCrumb'
 import ImageLoader from './commonSections/ImageLoader'
 import { getClient } from '~/lib/sanity.client'
 import Wrapper from '../layout/Wrapper'
-import useMediaQuery from '~/utils/useMediaQueryHook'
 import DurationSection from './commonSections/DurationSection'
 import Section from './Section'
 import { useMemo } from 'react'
 import SubText from './typography/SubText'
 import React from 'react'
+import Link from 'next/link'
+import siteConfig from 'config/siteConfig'
+import { generateHref } from '~/utils/common'
+import { useRouter } from 'next/router'
 
 interface Props {
   post?: any
@@ -26,17 +29,20 @@ const MainImageSection = ({
   contentType,
   landing = false,
 }: Props) => {
+  const router = useRouter();
+  const { locale } = router.query; 
   const tag = useMemo(
     () => post?.tags?.find((tag) => tag) || null,
     [post?.tags],
   )
 
-  const isMobile: any = useMediaQuery(767)
   const client = getClient()
 
   if (!post) {
     return null
   }
+
+ let hrefTemplate = tag?.slug?.current ? `/${siteConfig.paginationBaseUrls.base}/${tag?.slug?.current} `: ''
 
   return (
     <div className="w-full flex gap-1 items-center bg-zinc-900 relative overflow-hidden">
@@ -49,11 +55,13 @@ const MainImageSection = ({
               {!landing && <Breadcrumb />}
               <div>
                 {!landing ? (
-                  <SubText className="!text-sky-500 mb-3 block">
+                  <Link href={generateHref(locale as string, hrefTemplate)}>
+                  <SubText className="!text-sky-500 mb-3 block hover:!text-sky-400">
                     {tag?.tagName ? tag?.tagName : ''}
                   </SubText>
+                  </Link>
                 ) : (
-                  <SubText className="!text-yellow-500 mb-3 block">
+                  <SubText className="!text-yellow-500 mb-3  block">
                     {post?.tagName ? post?.tagName : ''}
                   </SubText>
                 )}

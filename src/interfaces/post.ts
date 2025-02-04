@@ -96,6 +96,7 @@ export interface Testimonial {
   image?: string
 }
 export interface Podcasts {
+  tags: any
   headings: Headings
   videos: any
   seoTitle: string
@@ -155,6 +156,7 @@ export interface Articles {
   }>
 }
 export interface CaseStudies {
+  tags: any
   facilities: any
   asideBookFreeDemoBanner: any
   growingLocations: any
@@ -199,6 +201,7 @@ export interface Webinars {
   image?: string
 }
 export interface Ebooks {
+  tags: any
   seoTitle: string
   seoDescription: string
   seoKeywords: string
@@ -222,6 +225,7 @@ export interface Ebooks {
   image?: string
 }
 export interface PressRelease {
+  tags: any
   headings: Headings
   seoTitle: string
   seoDescription: string

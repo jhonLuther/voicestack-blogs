@@ -23,6 +23,8 @@ import CreaterInfo from './commonSections/CreaterInfo'
 import { usePathname } from 'next/navigation'
 import H4Medium from './typography/H4Medium'
 import { capitalizeFirst } from '~/utils/common'
+import AnimatingWrapper from './commonSections/AnimatingWrapper'
+import { useRouter } from 'next/router';
 
 interface CardProps {
   post: Post
@@ -72,6 +74,7 @@ export default function Card({
   const [color, setColor] = useState<string | null>(null)
   const [isPageUrl, setIsPageUrl] = useState<boolean>(false)
   const pathname = usePathname()
+  const router = useRouter();
 
   const bgImages = [
     {
@@ -105,17 +108,19 @@ export default function Card({
     const isPageUrlLink = pageURLs?.includes(normalizedBaseUrl)
     setIsPageUrl(isPageUrlLink ? isPageUrlLink : isRouterUrl)
   }, [pathname, baseUrl, pageURLs])
-
+  
   useEffect(() => {
     if (router.isReady && post?.slug) {
-      const contentTypePath = getBasePath(router, post.contentType)
+      const { locale = 'en' } = router.query; 
+      const contentTypePath = getBasePath(router, post.contentType);
+  
       const newLinkUrl = varyingIndex
-        ? `/${contentTypePath}`
-        : `/${contentTypePath}/${post.slug.current}`
-
-      setLinkUrl(newLinkUrl)
+        ? `${locale === 'en' ? '' : `/${locale}`}/${contentTypePath}`
+        : `${locale === 'en' ? '' : `/${locale}`}/${contentTypePath}/${post.slug.current}`; 
+  
+      setLinkUrl(newLinkUrl);
     }
-  }, [post?.contentType, post?.slug, varyingIndex])
+  }, [router.isReady, post?.contentType, post?.slug, varyingIndex, router.query.locale,router]);
 
   if (!post || !linkUrl) {
     return null
@@ -128,6 +133,7 @@ export default function Card({
   return (
     <React.Fragment>
       {cardType === 'top-image-card' ? (
+        <AnimatingWrapper transitionType="slide-in"  delay={0.8}>
         <Link href={linkUrl} className="h-full">
           <div
             className={`flex flex-col w-full h-full gap-1 overflow-hidden ${reverse ? 'flex-col-reverse ' : ''}  group rounded-lg text-white`}
@@ -184,7 +190,9 @@ export default function Card({
             </div>
           </div>
         </Link>
+        </AnimatingWrapper>
       ) : cardType === 'left-image-card' ? (
+        <AnimatingWrapper transitionType="slide-in"  delay={0.2}>
         <Link href={linkUrl} className='w-full'>
           <div
             className={`flex flex-col md:flex-row gap-3 xl:gap-6 relative group hover:transition duration-500 ${className}`}
@@ -250,7 +258,9 @@ export default function Card({
             </div>
           </div>
         </Link>
+        </AnimatingWrapper>
       ) : cardType === 'text-only-card' ? (
+      <AnimatingWrapper transitionType="slide-in"  delay={0.8}>
         <div
           className={`flex flex-col flex-1 w-full group hover:scale-100 transform duration-300 ${className} `}
         >
@@ -272,6 +282,7 @@ export default function Card({
             </div>
           </Link>
         </div>
+        </AnimatingWrapper>
       ) : cardType === 'review-card' ? (
         <React.Fragment>
           <div
@@ -444,6 +455,7 @@ export default function Card({
         </div>
       ) : (
         // default card
+        <AnimatingWrapper transitionType="slide-in"  delay={0.8}>
         <div className={`flex flex-col relative h-full`}>
           <Link href={linkUrl} className="flex flex-col h-full group">
             {(post.mainImage || post.customImage) && (
@@ -529,6 +541,7 @@ export default function Card({
             }
           </Link>
         </div>
+        </AnimatingWrapper>
       )}
     </React.Fragment>
   )

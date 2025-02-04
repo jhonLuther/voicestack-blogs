@@ -1,6 +1,3 @@
-import Link from 'next/link'
-import Image from 'next/image'
-import { urlForImage } from '~/lib/sanity.image'
 import SpeakerIcon from '~/assets/reactiveAssets/SoundIcon'
 
 interface CreaterInfoProps {
