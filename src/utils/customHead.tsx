@@ -629,7 +629,7 @@ export function CustomHead({
       image: urlForImage(props?.picture?._id) || '',
       jobTitle: props?.role || '',
       name: props?.name || '',
-      url: 'https://blogs.carestack.com',
+      url: process.env.NEXT_PUBLIC_BASE_URL,
 
       description: props?.bio || '',
     }
