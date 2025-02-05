@@ -92,13 +92,13 @@ const EventCarousel = ({ allEventCards,bgColor }: { allEventCards?: any; homeSet
                           <span className='text-sm xl:text-base'>{events.eventLocation}</span>
                         </div>
                       </div>
-                      <div className='self-auto'>
+                      {events?.registrationLink  && <div className='self-auto'>
                         <div className='self-start md:self-center flex justify-center'>
                           <Button className='bg-zinc-900  transition-all duration-300 ease-in-out hover:bg-zinc-700 !no-underline' target='_blank' link={events?.registrationLink ? events?.registrationLink : 'https://carestack.com/demo'}>
                             <span className='text-base font-medium'>{events.registerBtnTxt ? events.registerBtnTxt : 'Register Now'}</span>
                           </Button>
                         </div>
-                      </div>
+                      </div>}
                     </div>
                   </div>
                   <div className="flex flex-row md:flex-col items-center justify-center gap-2 md:gap-4 z-50 p-6 pt-0 md:pb-0">
