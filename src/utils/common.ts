@@ -243,3 +243,4 @@ export function generateHref(locale: any, linkHref: string): string {
 
   return `/${locale}/${cleanPath}`;
 }
+export const removeNumberPrefix = (id: any) => id.replace(/^\d+\.\s*/, '');
