@@ -20,7 +20,7 @@ const RelatedTag = ({ tags, className }: RelatedTagProps) => {
 
   return (
     <Section className={`justify-center border-t border-zinc-200  !pb-0 md:!mt-4  ${className}`}>
-      <div className='w-full  md:flex-row flex flex-col flex-wrap  gap-2'>
+      <div className='w-full  md:flex-row flex flex-col lg:flex-wrap flex-nowrap  gap-4'>
         <DescriptionText className='text-zinc-900 font-medium flex  items-center pr-[14px]'>{`Related Tags`}</DescriptionText>
         {tags && tags.length > 0 && tags.map((tag: any) => {
           // const hrefLink = `/${prefLocale}/${siteConfig.paginationBaseUrls.base}/${tag?.slug?.current ? tag?.slug?.current : ''}`cons

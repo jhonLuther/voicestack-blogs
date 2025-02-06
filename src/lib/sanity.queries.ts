@@ -1610,7 +1610,7 @@ export const getAllPodcastSlugs = async (
   totalPodcasts: number
 }> => {
   const query = `
-    *[_type == "post" && language == $region && contentType == "podcast"] | order(_updatedAt desc) {
+    *[_type == "post" && language == $region && contentType == "podcast"] |  order(date desc) {
       "slug": slug.current
     }
   `
