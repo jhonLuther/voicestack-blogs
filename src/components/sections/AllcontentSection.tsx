@@ -176,7 +176,7 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
         <div className={`md:flex-row flex-col gap-8 flex ${revampClass ? 'items-start' : 'items-center'} justify-between pb-12 `}>
           {!pathname.includes(`/${siteConfig.categoryBaseUrls.base}/`) &&  <div className='flex flex-col gap-4'>
             <H2Large className="tracking-tighterText select-none">
-              {`${selectedTag ? selectedTag : browseHeading ? browseHeading: categoryName } `}
+              {`${selectedTag ? selectedTag : revampClass ? categoryName: browseHeading } `}
             </H2Large>
             {revampClass && <DescriptionText className='text-zinc-600 md:max-w-[659px] w-full'>
               {catDescription}
