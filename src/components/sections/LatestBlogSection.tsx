@@ -1,11 +1,10 @@
 import React from 'react'
-import { Post } from '~/interfaces/post'
 import Card from '../Card'
 import Wrapper from '../../layout/Wrapper'
 import H2Large from '../typography/H2Large'
 import Section from '../Section'
 import { useBaseUrl } from '../Context/UrlContext'
-import { customMetaTag, generateMetaData } from '~/utils/customHead'
+import { useGlobalData } from '../Context/GlobalDataContext'
 
 interface LatestBlogsProps {
   contents: any[]
@@ -29,6 +28,7 @@ const LatestBlogs: React.FC<LatestBlogsProps> = ({
   showPlayIcon,
 }) => {
   const baseUrl = useBaseUrl()
+    const { homeSettings } = useGlobalData();
 
   if (!contents) {
     return null
@@ -50,7 +50,7 @@ const LatestBlogs: React.FC<LatestBlogsProps> = ({
 
   return (
     <React.Fragment>
-      <Section className="justify-center md:pt-16 md:pb-24 bg-zinc-900 text-white">
+      <Section className={`justify-center ${!homeSettings?.eventCarousel && 'md:pt-8' } md:pt-16 md:pb-24 bg-zinc-900 text-white`}>
         <Wrapper
           className={`md:flex-row flex-col ${reverse ? 'md:flex-row-reverse' : ''} gap-8 md:gap-12 xl:gap-36`}
         >
