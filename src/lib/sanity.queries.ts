@@ -92,8 +92,10 @@ const authorImageFragment = `
   }
 `
 
+export const excludeContents = `!(contentType in ["case-study", "ebook"])`;
+
 export const postsQuery = groq`
-*[_type == "post" && language == $region && defined(slug.current) && defined(date)] | order(date desc) {
+*[_type == "post" && language == $region && ${excludeContents} && defined(slug.current) && defined(date)] | order(date desc) {
  ${imageFragment},
  title,
  slug,
@@ -402,6 +404,7 @@ export const homeSettingsQuery = groq`
       },
     },
     demoBanner,
+    eventCarousel,
     topicDescription,
     featuredPressRelease->{
       _id,
@@ -532,7 +535,7 @@ export async function getPostsByTagAndLimit(
   region: string = 'en',
 ) {
   return client.fetch(
-    groq`*[_type == "post" && language == $region && references($tagId)] | order(date desc) [$start...$end] {
+    groq`*[_type == "post" &&  ${excludeContents} &&  language == $region && references($tagId)] | order(date desc) [$start...$end] {
       title,
       contentType,
       ${imageFragment},
@@ -555,7 +558,7 @@ export async function getPostsByCategoryAndLimit(
   region: string = 'en',
 ) {
   return client.fetch(
-    groq`*[_type == "post" && references($catId) && language == $region] | order(date desc) [$start...$end] {
+    groq`*[_type == "post" && references($catId) && ${excludeContents} && language == $region] | order(date desc) [$start...$end] {
       title,
       contentType,
       ${imageFragment},
@@ -957,7 +960,7 @@ export async function getSiteSettings(client: SanityClient,region: string = 'en'
 }
 
 export const postBySlugQuery = groq`
-  *[_type == "post" && slug.current == $slug][0] {
+  *[_type == "post" && ${excludeContents} && slug.current == $slug][0] {
     title,
     slug,
     excerpt,
