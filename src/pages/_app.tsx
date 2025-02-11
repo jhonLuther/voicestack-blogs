@@ -30,13 +30,13 @@ export default function App({
       <Head>
         <link
           rel="icon"
-          href="/favicon-32x32.png"
+          href="/favicon-32x32.ico"
           sizes="32x32"
           type="image/png"
         />
         <link
           rel="icon"
-          href="/favicon-16x16.png"
+          href="/favicon-16x16.ico"
           sizes="16x16"
           type="image/png"
         />
