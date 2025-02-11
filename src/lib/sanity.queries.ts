@@ -402,6 +402,7 @@ export const homeSettingsQuery = groq`
       },
     },
     demoBanner,
+    eventCarousel,
     topicDescription,
     featuredPressRelease->{
       _id,
@@ -532,7 +533,7 @@ export async function getPostsByTagAndLimit(
   region: string = 'en',
 ) {
   return client.fetch(
-    groq`*[_type == "post" && language == $region && references($tagId)] | order(date desc) [$start...$end] {
+    groq`*[_type == "post" &&  language == $region && references($tagId)] | order(date desc) [$start...$end] {
       title,
       contentType,
       ${imageFragment},

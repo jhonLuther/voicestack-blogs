@@ -66,6 +66,7 @@ const SanityPortableText: React.FC<SanityPortableTextProps> = ({
     },
     types: {
       image: ({ value }) => {
+        if (!value?.asset) return null;
         return (
           <ImageLoader
             image={value.asset}
@@ -99,6 +100,7 @@ const SanityPortableText: React.FC<SanityPortableTextProps> = ({
         )
       },
       dynamicComponent: ({ value }) => {
+        if (!value) return null;
         return (
           <DynamicComponent
             {...value}

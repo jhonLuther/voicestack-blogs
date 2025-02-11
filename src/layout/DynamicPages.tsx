@@ -65,7 +65,7 @@ const DynamicPages = ({
     <>
       <BaseUrlProvider baseUrl={baseUrl}>
         <TagSelect tags={tags} tagLimit={7} />
-        <EventCarousel allEventCards={uniqueEventCards} />
+        {homeSettings.eventCarousel && <EventCarousel allEventCards={uniqueEventCards} />}
         <LatestBlogs contents={latestPosts} />
         <FeaturedAndPopularBlogs
           featuredBlog={featuredBlog}
@@ -80,7 +80,7 @@ const DynamicPages = ({
           itemsPerPage={siteConfig.pagination.itemsHomePage}
           redirect={true}
         />
-        <EventCarousel bgColor={'white'} allEventCards={uniqueEventCards} />
+        {homeSettings.eventCarousel && <EventCarousel bgColor={'white'} allEventCards={uniqueEventCards} />}
         {/* <ShortBannerSection /> */}
       </BaseUrlProvider>
     </>

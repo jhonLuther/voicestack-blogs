@@ -11,6 +11,7 @@ import { usePathname } from 'next/navigation'
 import { useRouter } from 'next/router'
 import { generateHref, removeUnwantedCharacters } from '~/utils/common'
 import DescriptionText from '../typography/DescriptionText'
+import { useGlobalData } from '../Context/GlobalDataContext'
 
 interface LatestBlogsProps {
   allContent: any[]
@@ -55,6 +56,7 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
   const router = useRouter()
   const baseUrl = useBaseUrl()
   const { locale } = router.query; 
+  let { homeSettings } = useGlobalData()
 
 
   const totalCount = allItemCount ? allItemCount : allContent.length
@@ -170,7 +172,7 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
   }
   
   return (
-    <Section className={`justify-center md:pb-0 ${revampClass && compIndex === 0 ? 'md:pt-16' : revampClass ? 'md:pt-9' : 'md:pt-24'} ${className}`}>  
+    <Section className={`justify-center md:pb-0 ${revampClass && compIndex === 0 ? 'md:pt-16' : revampClass ? 'md:pt-9' : 'md:pt-24'} ${!homeSettings?.eventCarousel && 'md:pb-24'} ${className}`}>  
       <Wrapper className={`flex-col ${revampClass && 'bg-zinc-100 md:p-12 p-6'}`}>
       {!hideHeader && (
         <div className={`md:flex-row flex-col gap-8 flex ${revampClass ? 'items-start' : 'items-center'} justify-between pb-12 `}>
