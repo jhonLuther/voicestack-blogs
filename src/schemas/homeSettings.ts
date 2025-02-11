@@ -198,6 +198,13 @@ export default {
         'Enable this to Display a call to action banner on the home page',
     },
     {
+      name: 'eventCarousel',
+      title: 'Event Carousel',
+      type: 'boolean',
+      description:
+        'Enable this to Display Event banner on the home page',
+    },
+    {
       name: 'topicDescription',
       title: 'Topic Description',
       description: 'short description for the topic header',
