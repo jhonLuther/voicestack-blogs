@@ -1,16 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react'
 import Wrapper from '../Wrapper'
-import Section from '~/components/Section'
 import { useGlobalData } from '~/components/Context/GlobalDataContext'
 import Link from 'next/link'
 import {
   CloseIcon,
-  TruncateIcon,
   ChevronRightIcon,
   ChevronLeftIcon,
-  ArrowTopRightIcon,
 } from '@sanity/icons'
-import { navigationLinks } from '../Header'
 import { useRouter } from 'next/router'
 import GrowthClubLogo from '~/assets/reactiveAssets/GrowthClubLogo'
 import siteConfig from 'config/siteConfig'
