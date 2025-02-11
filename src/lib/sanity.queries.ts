@@ -958,7 +958,7 @@ export async function getSiteSettings(client: SanityClient,region: string = 'en'
 }
 
 export const postBySlugQuery = groq`
-  *[_type == "post" && slug.current == $slug][0] {
+  *[_type == "post"  && slug.current == $slug][0] {
     title,
     slug,
     excerpt,
