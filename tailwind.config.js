@@ -37,6 +37,7 @@ module.exports = {
         'cs-dark-500': '#202124',
         'cs-primary': '#42BA78',
         'cs-zinc': '#1a1d23',
+        
 
         background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
