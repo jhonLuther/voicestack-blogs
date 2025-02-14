@@ -30,7 +30,7 @@ export default function App({
       <Head>
         <link
           rel="icon"
-          href="/VoiceStack.svg"
+          href="/favicon-32x32.ico"
           sizes="32x32"
           type="image/png"
         />

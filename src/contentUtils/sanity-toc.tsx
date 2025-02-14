@@ -2,6 +2,7 @@ import slugify from 'slugify'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import React from 'react'
+import { removeNumberPrefix } from '~/utils/common'
 
 // Define the type for the Table of Contents (ToC)
 type Headings = Array<{
@@ -167,7 +168,7 @@ export function RenderToc({
             href={`#${el.slug}`}
             className={`hover:underline hover:underline-offset-4 ${activeSection === index + 1 ? 'underline underline-offset-2' : ''}`}
           >
-            {`${el.text}`}
+            {`${removeNumberPrefix(el.text)}`}
           </a>
           {/* {el.children && (
             <RenderToc elements={el.children} level={level + 1} />

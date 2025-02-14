@@ -1,16 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react'
 import Wrapper from '../Wrapper'
-import Section from '~/components/Section'
 import { useGlobalData } from '~/components/Context/GlobalDataContext'
 import Link from 'next/link'
 import {
   CloseIcon,
-  TruncateIcon,
   ChevronRightIcon,
   ChevronLeftIcon,
-  ArrowTopRightIcon,
 } from '@sanity/icons'
-import { navigationLinks } from '../Header'
 import { useRouter } from 'next/router'
 import GrowthClubLogo from '~/assets/reactiveAssets/GrowthClubLogo'
 import siteConfig from 'config/siteConfig'
@@ -119,7 +115,7 @@ export const ShortNavPopover = ({
         <div className={`${className} w-full lg:pt-0 pt-14`}>
 
           <div
-            className={`lg:hidden flex fixed top-0 left-0 w-full py-4 px-4 z-20 bg-cs-zinc h-[56px] items-center justify-between`}
+            className={`lg:hidden flex fixed top-0 left-0 w-full py-4 px-4 z-20 bg-zinc-900 h-[56px] items-center justify-between`}
           >
             {showTags ? (
               <div className="flex items-center gap-0">

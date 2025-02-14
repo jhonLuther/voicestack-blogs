@@ -24,10 +24,10 @@ import ImageLoader from '~/components/commonSections/ImageLoader';
 
 
 export const navigationLinks = [
-  { href: siteConfig.pageURLs.caseStudy, label: "Case Studies", icon: CaseStudiesIcon },
-  { href: siteConfig.pageURLs.article, label: "Articles", icon: ArticlesIcon },
+  // { href: siteConfig.pageURLs.caseStudy, label: "Case Studies", icon: CaseStudiesIcon },
   { href: siteConfig.pageURLs.podcast, label: "Podcasts", icon: PodcastsIcon },
-  { href: siteConfig.pageURLs.ebook, label: "Ebooks", icon: EbooksIcon },
+  { href: siteConfig.pageURLs.article, label: "Articles", icon: ArticlesIcon },
+  // { href: siteConfig.pageURLs.ebook, label: "Ebooks", icon: EbooksIcon },
   { href: siteConfig.pageURLs.webinar, label: "Webinars", icon: WebinarsIcon },
   { href: siteConfig.pageURLs.pressRelease, label: "Press", icon: PressIcon }
 ];

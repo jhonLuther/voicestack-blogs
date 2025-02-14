@@ -29,7 +29,7 @@ export function generateJSONLD(post: any) {
           headline: post.title,
           description: excerpt,
           image:
-            'https://a.storyblok.com/f/144863/1201x1201/a1d1cbd61c/carestack-favicon-1200x1200.png',
+            'https://cdn.sanity.io/images/bbmnn1wc/production/5cc4351771b60f336498e1ba2642f572ab3c8364-1201x1201.png',
           author: {
             '@type': 'Person',
             name: (author && author[0]?.name) || 'Unknown Author',
@@ -49,7 +49,7 @@ export function generateJSONLD(post: any) {
             logo: {
               '@type': 'ImageObject',
               inLanguage: 'en-US',
-              url: 'https://a.storyblok.com/f/144863/1201x1201/a1d1cbd61c/carestack-favicon-1200x1200.png',
+              url: 'https://cdn.sanity.io/images/bbmnn1wc/production/5cc4351771b60f336498e1ba2642f572ab3c8364-1201x1201.png',
               width: 1200,
               height: 1200,
             },
@@ -143,7 +143,7 @@ export function generateJSONLD(post: any) {
     headline: post.title,
     description: excerpt,
     image:
-      'https://a.storyblok.com/f/144863/1201x1201/a1d1cbd61c/carestack-favicon-1200x1200.png',
+      'https://cdn.sanity.io/images/bbmnn1wc/production/5cc4351771b60f336498e1ba2642f572ab3c8364-1201x1201.png',
     author: {
       '@type': 'Person',
       name: (author && author[0]?.name) || 'Unknown Author',
@@ -163,7 +163,7 @@ export function generateJSONLD(post: any) {
       logo: {
         '@type': 'ImageObject',
         inLanguage: 'en-US',
-        url: 'https://a.storyblok.com/f/144863/1201x1201/a1d1cbd61c/carestack-favicon-1200x1200.png',
+        url: 'https://cdn.sanity.io/images/bbmnn1wc/production/5cc4351771b60f336498e1ba2642f572ab3c8364-1201x1201.png',
         width: 1200,
         height: 1200,
       },

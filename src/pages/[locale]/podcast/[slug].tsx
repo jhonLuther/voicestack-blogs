@@ -131,7 +131,7 @@ const PodcastPage = ({
     return <div>Podcast not found</div>
   }
 
-  const prodUrl = process.env.NEXT_PUBLIC_VERCEL_URL || 'https://blog.carestack.com/'
+  const prodUrl = process.env.NEXT_PUBLIC_VERCEL_URL || 'https://resources.carestack.com/'
 
   const seoTitle = podcast.seoTitle || podcast.title
   const seoDescription = podcast.seoDescription || podcast.excerpt
