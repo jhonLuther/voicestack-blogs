@@ -50,7 +50,7 @@ function BannerSubscribeSection({ isSmall }: BannerSubscribeSectionProps) {
 
   return (
     hideBanner ? (
-      <div className='md:pt-24 p-4'></div>
+      <></>
     ):(
     <Section className="justify-center">
       <Wrapper className={`flex-col`}>
