@@ -4,9 +4,6 @@ import LatestBlogs from '~/components/sections/LatestBlogSection'
 import FeaturedAndPopularBlogs from '~/components/sections/FeaturedAndPopularBlogsSection'
 import TestimonialSection from '~/components/sections/TestimonialSection'
 import AllcontentSection from '~/components/sections/AllcontentSection'
-import ShortBannerSection from '~/components/sections/ShortBannerSection'
-import BannerSubscribeSection from '~/components/sections/BannerSubscribeSection'
-import Wrapper from '~/layout/Wrapper'
 import SliderSection from '~/components/sections/SliderSection'
 import siteConfig from 'config/siteConfig'
 import { BaseUrlProvider } from '~/components/Context/UrlContext'
@@ -40,7 +37,7 @@ const DynamicPages = ({
 }: DynamicProps) => {
   const featuredBlog = homeSettings?.FeaturedBlog || posts[0]
   const customBrowseContent = homeSettings?.customBrowseContent || posts[0]
-  const featuredBlogs = homeSettings?.popularBlogs || []
+  const featuredBlogs = homeSettings?.popularBlogs || posts
 
   const featuredContents = [...featuredBlogs, ...posts].slice(0, 4)
 
@@ -68,7 +65,7 @@ const DynamicPages = ({
     <>
       <BaseUrlProvider baseUrl={baseUrl}>
         <TagSelect tags={tags} tagLimit={7} />
-        <EventCarousel allEventCards={uniqueEventCards} />
+        {homeSettings?.eventCarousel && <EventCarousel allEventCards={uniqueEventCards} />}
         <LatestBlogs contents={latestPosts} />
         <FeaturedAndPopularBlogs
           featuredBlog={featuredBlog}
@@ -83,7 +80,7 @@ const DynamicPages = ({
           itemsPerPage={siteConfig.pagination.itemsHomePage}
           redirect={true}
         />
-        <EventCarousel bgColor={'white'} allEventCards={uniqueEventCards} />
+        {homeSettings?.eventCarousel && <EventCarousel bgColor={'white'} allEventCards={uniqueEventCards} />}
         {/* <ShortBannerSection /> */}
       </BaseUrlProvider>
     </>

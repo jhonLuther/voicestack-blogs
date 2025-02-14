@@ -50,7 +50,7 @@ function BannerSubscribeSection({ isSmall }: BannerSubscribeSectionProps) {
 
   return (
     hideBanner ? (
-      <div className='md:pt-24 p-4'></div>
+      <></>
     ):(
     <Section className="justify-center">
       <Wrapper className={`flex-col`}>
@@ -96,7 +96,7 @@ function BannerSubscribeSection({ isSmall }: BannerSubscribeSectionProps) {
                 </div>
 
                 <Button
-                  className="bg-cs-zinc !px-12 hover:bg-zinc-700 md:absolute md:translate-y-[-50%] top-[50%] right-[16px] self-start"
+                  className="bg-zinc-900 !px-12 hover:bg-zinc-700 md:absolute md:translate-y-[-50%] top-[50%] right-[16px] self-start"
                   onClick={handleSubmit}
                 >
                   <span className="text-base font-medium">{`Submit`}</span>

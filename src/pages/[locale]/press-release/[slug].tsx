@@ -121,7 +121,7 @@ const PressReleasePage = ({
 
   if(!pressRelease) return null
 
-  const prodUrl = process.env.NEXT_PUBLIC_VERCEL_URL || 'https://blog.carestack.com'
+  const prodUrl = process.env.NEXT_PUBLIC_VERCEL_URL || 'https://resources.carestack.com'
 
   const seoTitle = pressRelease.seoTitle || pressRelease.title
   const seoDescription = pressRelease.seoDescription || pressRelease.excerpt
@@ -145,7 +145,7 @@ const PressReleasePage = ({
           jsonLD={jsonLD}
           contentType={pressRelease?.contentType}
         />
-      <GlobalDataProvider data={categories} featuredTags={homeSettings?.featuredTags}>
+      <GlobalDataProvider data={categories} featuredTags={homeSettings.featuredTags}>
         <Layout>
           <MainImageSection enableDate={true} post={pressRelease} />
           <Section className="justify-center !pt-24 !pb-12">
@@ -179,7 +179,7 @@ const PressReleasePage = ({
                           <Button
                             target="_blank"
                             link={pressRelease.pressReleaseUrl}
-                            className="bg-cs-zinc gap-6 py-[14px] px-7 hover:bg-zinc-800 self-start"
+                            className="bg-zinc-900 gap-6 py-[14px] px-7 hover:bg-zinc-800 self-start"
                           >
                             <DocumentTextIcon
                               width={24}

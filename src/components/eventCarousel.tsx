@@ -31,7 +31,7 @@ const EventCarousel = ({ allEventCards,bgColor }: { allEventCards?: any; homeSet
   if(!allEventCards) return null
 
   return (
-    <Section className={`justify-center ${bgColor ? bgColor : 'bg-cs-zinc'}  px-4`}>
+    <Section className={`justify-center ${bgColor ? bgColor : 'bg-zinc-900 '}  px-4`}>
       <Wrapper className='w-full relative '>
         <Swiper
           className='w-full h-full'
@@ -55,7 +55,7 @@ const EventCarousel = ({ allEventCards,bgColor }: { allEventCards?: any; homeSet
               key={events._id}
               className='!flex items-center justify-center '
             >
-              <div className={`w-full ${bgColor ? bgColor : 'bg-cs-zinc'} `}>
+              <div className={`w-full ${bgColor ? bgColor : 'bg-zinc-900 '} `}>
                 <div
                   style={{ backgroundColor: `${events.bgColor ? events.bgColor : '#000000'}` }}
                   className={`flex flex-col md:flex-row gap-3 xl:gap-6 relative group hover:transition duration-500 rounded-lg overflow-hidden`}
@@ -92,13 +92,13 @@ const EventCarousel = ({ allEventCards,bgColor }: { allEventCards?: any; homeSet
                           <span className='text-sm xl:text-base'>{events.eventLocation}</span>
                         </div>
                       </div>
-                      <div className='self-auto'>
+                      {events?.registrationLink  && <div className='self-auto'>
                         <div className='self-start md:self-center flex justify-center'>
-                          <Button className='bg-cs-zinc transition-all duration-300 ease-in-out hover:bg-zinc-700 !no-underline' target='_blank' link={events?.registrationLink ? events?.registrationLink : 'https://carestack.com/demo'}>
+                          <Button className='bg-zinc-900  transition-all duration-300 ease-in-out hover:bg-zinc-700 !no-underline' target='_blank' link={events?.registrationLink ? events?.registrationLink : 'https://carestack.com/demo'}>
                             <span className='text-base font-medium'>{events.registerBtnTxt ? events.registerBtnTxt : 'Register Now'}</span>
                           </Button>
                         </div>
-                      </div>
+                      </div>}
                     </div>
                   </div>
                   <div className="flex flex-row md:flex-col items-center justify-center gap-2 md:gap-4 z-50 p-6 pt-0 md:pb-0">
