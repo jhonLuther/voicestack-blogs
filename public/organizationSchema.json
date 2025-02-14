@@ -3,8 +3,8 @@
   "@type": "Corporation",
   "name": "CareStack",
   "legalName": "Good Methods Global, Inc.",
-  "image": "https://a.storyblok.com/f/144863/1200x1200/db11368ff8/carestack-logo-1200x1200.jpg",
-  "logo": "https://a.storyblok.com/f/144863/1200x1200/db11368ff8/carestack-logo-1200x1200.jpg",
+  "image": "https://cdn.sanity.io/images/bbmnn1wc/production/b5665765dd8b070505dbabeb87f1fc95536b1a83-1200x1200.jpg",
+  "logo": "https://cdn.sanity.io/images/bbmnn1wc/production/b5665765dd8b070505dbabeb87f1fc95536b1a83-1200x1200.jpg",
   "url": "https://carestack.com",
   "email": "hello@carestack.com",
   "numberOfEmployees": "600",
@@ -95,9 +95,9 @@
   "@logo": [
     {
       "@type": "ImageObject",
-      "@id": "https://a.storyblok.com/f/144863/1200x1200/db11368ff8/carestack-logo-1200x1200.jpg",
-      "url": "https://a.storyblok.com/f/144863/1200x1200/db11368ff8/carestack-logo-1200x1200.jpg",
-      "contentUrl": "https://a.storyblok.com/f/144863/1200x1200/db11368ff8/carestack-logo-1200x1200.jpg",
+      "@id": "https://cdn.sanity.io/images/bbmnn1wc/production/b5665765dd8b070505dbabeb87f1fc95536b1a83-1200x1200.jpg",
+      "url": "https://cdn.sanity.io/images/bbmnn1wc/production/b5665765dd8b070505dbabeb87f1fc95536b1a83-1200x1200.jpg",
+      "contentUrl": "https://cdn.sanity.io/images/bbmnn1wc/production/b5665765dd8b070505dbabeb87f1fc95536b1a83-1200x1200.jpg",
       "caption": "CareStack logo",
       "inLanguage": ["en-US", "en-GB"],
       "width": 1200,
@@ -107,9 +107,9 @@
   "@icon": [
     {
       "@type": "ImageObject",
-      "@id": "https://a.storyblok.com/f/144863/1201x1201/a1d1cbd61c/carestack-favicon-1200x1200.png",
-      "url": "https://a.storyblok.com/f/144863/1201x1201/a1d1cbd61c/carestack-favicon-1200x1200.png",
-      "contentUrl": "https://a.storyblok.com/f/144863/1201x1201/a1d1cbd61c/carestack-favicon-1200x1200.png",
+      "@id": "https://cdn.sanity.io/images/bbmnn1wc/production/5cc4351771b60f336498e1ba2642f572ab3c8364-1201x1201.png",
+      "url": "https://cdn.sanity.io/images/bbmnn1wc/production/5cc4351771b60f336498e1ba2642f572ab3c8364-1201x1201.png",
+      "contentUrl": "https://cdn.sanity.io/images/bbmnn1wc/production/5cc4351771b60f336498e1ba2642f572ab3c8364-1201x1201.png",
       "caption": "CareStack icon",
       "inLanguage": ["en-US", "en-GB"],
       "width": 1200,
