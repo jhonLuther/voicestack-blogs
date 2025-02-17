@@ -103,7 +103,7 @@ const Header = () => {
               <div className={`flex flex-col gap-3 justify-between py-0 transition-all duration-300 ease-linear`}>
                 <div className={`flex flex-row gap-2 justify-between items-center 
                 lg:relative transition-all duration-300 ease-in-out  `}>
-                  <Link href={normalizePath(homeUrl)} className="text-42xl font-extrabold bg-gradient-text bg-clip-text text-transparent font-monrope tracking-tighterText">
+                  <Link href={normalizePath(homeUrl)} className="text-2xl h-7 font-extrabold bg-gradient-text bg-clip-text text-transparent font-monrope tracking-tighterText">
                     <VoiceStackResources/>
                   </Link>
                   <div className={`flex lg:gap-10   justify-between rounded-xl items-center`}>
