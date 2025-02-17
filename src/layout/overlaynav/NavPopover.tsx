@@ -17,6 +17,7 @@ import siteConfig from 'config/siteConfig'
 import { generateHref, normalizePath } from '~/utils/common'
 import ImageLoader from '~/components/commonSections/ImageLoader'
 import { regions } from '~/components/RegionSwitcher'
+import VoiceStackResources from '~/assets/reactiveAssets/VoiceStackResources'
 
 interface NavProps {
   className?: string
@@ -141,7 +142,7 @@ export const NavPopover = ({
             <TruncateIcon width={40} height={40} />
           </button> */}
           <div
-            className={`lg:hidden flex fixed top-0 left-0 w-full py-4 px-4 z-20 bg-zinc-900 h-[56px] items-center justify-between`}
+            className={`lg:hidden  transition-all ease-out duration-200 flex fixed top-0 left-0 w-full py-4 px-4 z-20 border-b  h-[56px] items-center justify-between`}
           >
             {showTags ? (
               <div className="flex items-center gap-0">
@@ -159,15 +160,14 @@ export const NavPopover = ({
                 href="/"
                 className="text-2xl font-extrabold bg-gradient-text bg-clip-text text-transparent font-monrope tracking-tighterText"
               >
-                {/* <ClubLogo/>  */}
-                <GrowthClubLogo />
+                <VoiceStackResources/> 
               </Link>
             )}
             <CloseIcon
               width={40}
               height={40}
               onClick={closeMenu}
-              className="text-white"
+              className="text-black"
             />
           </div>
           <div className='flex flex-col h-full gap-40 flex-shrink-0'>
@@ -215,7 +215,7 @@ export const NavPopover = ({
                 </div>
               </div>
 
-              <div
+              {/* <div // Hided 
                 className="text-zinc-400 pt-3 font-medium text-sm uppercase lg:hidden flex items-center gap-1"
                 onClick={showTagsMob}
               >
@@ -225,7 +225,7 @@ export const NavPopover = ({
                   height={25}
                   className="text-zinc-400"
                 />
-              </div>
+              </div> */}
             </div>
           </div>
           {/* mob region switcher */}

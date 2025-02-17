@@ -7,6 +7,7 @@ import ClubLogo from '~/assets/reactiveAssets/ClubLogo'
 import GrowthClubLogo from '~/assets/reactiveAssets/GrowthClubLogo'
 import { generateHref } from '~/utils/common'
 import { useRouter } from 'next/router'
+import VoiceStackResources from '~/assets/reactiveAssets/VoiceStackResources'
 
 const Footer = ({ className }) => {
     const router = useRouter();
@@ -133,7 +134,7 @@ const Footer = ({ className }) => {
               href="/"
               className="text-[30px] font-extrabold bg-gradient-text bg-clip-text text-transparent font-monrope tracking-tighterText max-w-[170px] leading-[1.16] block"
             >
-             <GrowthClubLogo />
+             <VoiceStackResources />
             </Link>
 
             {/* Social media   */}

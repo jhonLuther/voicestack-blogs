@@ -20,16 +20,16 @@ import siteConfig from 'config/siteConfig';
 import  {ShortNavPopover}  from './overlaynav/ShortNavPopover';
 import RegionSwitcher from '~/components/RegionSwitcher';
 import { generateHref, normalizePath } from '~/utils/common';
-import ImageLoader from '~/components/commonSections/ImageLoader';
+import VoiceStackResources from '~/assets/reactiveAssets/VoiceStackResources';
 
 
 export const navigationLinks = [
   // { href: siteConfig.pageURLs.caseStudy, label: "Case Studies", icon: CaseStudiesIcon },
-  { href: siteConfig.pageURLs.podcast, label: "Podcasts", icon: PodcastsIcon },
   { href: siteConfig.pageURLs.article, label: "Articles", icon: ArticlesIcon },
+  // { href: siteConfig.pageURLs.podcast, label: "Podcasts", icon: PodcastsIcon },
   // { href: siteConfig.pageURLs.ebook, label: "Ebooks", icon: EbooksIcon },
-  { href: siteConfig.pageURLs.webinar, label: "Webinars", icon: WebinarsIcon },
-  { href: siteConfig.pageURLs.pressRelease, label: "Press", icon: PressIcon }
+  // { href: siteConfig.pageURLs.webinar, label: "Webinars", icon: WebinarsIcon },
+  // { href: siteConfig.pageURLs.pressRelease, label: "Press", icon: PressIcon }
 ];
 
 
@@ -83,7 +83,7 @@ const Header = () => {
       <ProgressBar />
       <div className={`relative w-full before:content-[''] before:-z-0  before:absolute before:left-0 before:right-0 before:top-[-100px] before:bg-zinc-900`}>
         <header
-          className={`fixed w-full  left-0 z-20 transition-all duration-300 ease-linear md:top-[35px]`}      >
+          className={`fixed w-full  left-0 z-20 transition-all duration-300 ease-linear ${headerFixed ? 'md:top-[15px]' : 'md:top-[35px]' } `}      >
           {homeSettings?.demoBanner && <div className={`bg-cs-primary group hover:bg-[#42dd88] transition-all duration-200 px-4 h-[44px]`}>
             <Link href="https://carestack.com/demo" className="flex justify-center py-3">
               <div className="max-w-7xl flex justify-center gap-3 w-full items-center">
@@ -104,17 +104,16 @@ const Header = () => {
                 <div className={`flex flex-row gap-2 justify-between items-center 
                 lg:relative transition-all duration-300 ease-in-out  `}>
                   <Link href={normalizePath(homeUrl)} className="text-42xl font-extrabold bg-gradient-text bg-clip-text text-transparent font-monrope tracking-tighterText">
-                    {/* <ClubLogo/>  */}
-                    <ImageLoader className='!w-[140px] !h-[40px]' image={'https://cdn.sanity.io/images/76tr0pyh/production/c2b6e61ca9547011a08bc578426d8fe4951be244-135x40.svg'}/>
+                    <VoiceStackResources/>
                   </Link>
                   <div className={`flex lg:gap-10   justify-between rounded-xl items-center`}>
                     {!isMobile && <div className='group relative py-4' >
-                    <Link  href={generateHref(locale, siteConfig.categoryBaseUrls.base)}   className='text-zinc-500 flex items-center gap-[6px] cursor-pointer text-base hover:text-zinc-300'>
+                    {/* <Link  href={generateHref(locale, siteConfig.categoryBaseUrls.base)}   className='text-zinc-500 flex items-center gap-[6px] cursor-pointer text-base hover:text-zinc-300'>
                       <span>
                       {`Topics`}
                       </span>
                       <ChevronDownIcon className={`w-5 h-5  group-hover:translate-x-[4px] transition-transform duration-300 ease-in-out ${showMenu && 'rotate-180'}`} />
-                    </Link>
+                    </Link> */}
                     {navPopoverId && <ShortNavPopover navPopoverId={navPopoverId}   showMenu={showMenu} setShowMenu={setShowMenu} className='z-10 group-hover:block group-hover:visible group-hover:opacity-100 ' />}
                     </div>}
                     <div className={`lg:flex-row top-[110px] hidden right-0 px-4 pt-4 pb-8 lg:p-0 bg-cs-zinc lg:bg-transparent left-0 lg:static flex-col gap-2 justify-between lg:items-center lg:flex`}>

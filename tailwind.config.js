@@ -106,6 +106,11 @@ module.exports = {
       letterSpacing: {
         tighterText: '-0.48px',
       },
+      padding:{
+        headerSpacer : '115px',
+        headerSpacerMob : '64px'
+      },
+      
     },
   },
   plugins: [require('@tailwindcss/typography')],

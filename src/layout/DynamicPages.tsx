@@ -37,7 +37,7 @@ const DynamicPages = ({
 }: DynamicProps) => {
   const featuredBlog = homeSettings?.FeaturedBlog || posts[0]
   const customBrowseContent = homeSettings?.customBrowseContent || posts[0]
-  const featuredBlogs = homeSettings?.popularBlogs || posts
+  const featuredBlogs = homeSettings?.popularBlogs || []
 
   const featuredContents = [...featuredBlogs, ...posts].slice(0, 4)
 
@@ -65,7 +65,7 @@ const DynamicPages = ({
     <>
       <BaseUrlProvider baseUrl={baseUrl}>
         <TagSelect tags={tags} tagLimit={7} />
-        {homeSettings?.eventCarousel && <EventCarousel allEventCards={uniqueEventCards} />}
+         <EventCarousel allEventCards={uniqueEventCards} />
         <LatestBlogs contents={latestPosts} />
         <FeaturedAndPopularBlogs
           featuredBlog={featuredBlog}
@@ -80,7 +80,7 @@ const DynamicPages = ({
           itemsPerPage={siteConfig.pagination.itemsHomePage}
           redirect={true}
         />
-        {homeSettings?.eventCarousel && <EventCarousel bgColor={'white'} allEventCards={uniqueEventCards} />}
+        <EventCarousel bgColor={'white'} allEventCards={uniqueEventCards} />
         {/* <ShortBannerSection /> */}
       </BaseUrlProvider>
     </>
