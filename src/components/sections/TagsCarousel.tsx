@@ -11,6 +11,7 @@ import { ChevronRightIcon } from '@sanity/icons'
 import { useRouter } from 'next/router'
 import siteConfig from 'config/siteConfig'
 import { generateHref } from '~/utils/common'
+import Anchor from '../commonSections/Anchor'
 
 interface TagsCarouselProps {
   tags: Array<any>
@@ -121,9 +122,9 @@ const TagsCarousel: React.FC<TagsCarouselProps> = ({
                     : 'text-zinc-400 hover:text-zinc-300'
                 }`}
             >
-              <Link   href={generateHref(locale as string, hrefTemplate)}scroll={false}>
+              <Anchor   href={generateHref(locale as string, hrefTemplate)}scroll={false}>
                 <span>{tag?.tagName}</span>
-              </Link> 
+              </Anchor> 
             </span>
           </SwiperSlide>
         )})}

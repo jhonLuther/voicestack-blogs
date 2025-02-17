@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React from 'react'
 import XSMedium from '../typography/XSMedium'
+import Anchor from './Anchor'
 
 function ShareableLinks({ props }) {
   const { asPath: route } = useRouter()
@@ -14,7 +15,7 @@ function ShareableLinks({ props }) {
         Share this post{' '}
       </XSMedium>
       <div className="flex gap-6">
-        <Link
+        <Anchor
           href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`}
           target="_blank"
           rel=" noreferrer"
@@ -43,8 +44,8 @@ function ShareableLinks({ props }) {
               </defs>
             </svg>
           </div>
-        </Link>
-        <Link
+        </Anchor>
+        <Anchor
           href={`https://www.facebook.com/sharer.php?u=${encodedUrl}`}
           target="_blank"
           rel=" noreferrer"
@@ -73,8 +74,8 @@ function ShareableLinks({ props }) {
               </defs>
             </svg>
           </div>
-        </Link>
-        <Link
+        </Anchor>
+        <Anchor
           href={`https://twitter.com/share?text=${encodeURIComponent(props)}&url=${encodedUrl}`}
           target="_blank"
           rel="noreferrer"
@@ -96,7 +97,7 @@ function ShareableLinks({ props }) {
               />
             </svg>
           </div>
-        </Link>
+        </Anchor>
       </div>
     </div>
   )

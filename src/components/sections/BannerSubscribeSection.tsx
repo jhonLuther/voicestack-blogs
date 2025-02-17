@@ -5,6 +5,7 @@ import Wrapper from '~/layout/Wrapper'
 import H3XL from '../typography/H3XL'
 import Link from 'next/link'
 import H34XL from '../typography/H34XL'
+import Anchor from '../commonSections/Anchor'
 
 interface BannerSubscribeSectionProps {
   isSmall?: boolean
@@ -110,13 +111,13 @@ function BannerSubscribeSection({ isSmall }: BannerSubscribeSectionProps) {
         </div>
         <p className="mt-3 md:mt-6 text-xs md:text-base font-medium text-zinc-500 leading-[1.2]">
           You can unsubscribe at any time, no hard feelings.{' '}
-          <Link
+          <Anchor
             href="https://carestack.com/legal/2024-1/privacypolicy"
             target="_blank"
             className="underline underline-offset-2"
           >
             {`Privacy policy.`}{' '}
-          </Link>
+          </Anchor>
         </p>
       </Wrapper>
     </Section>

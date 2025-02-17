@@ -5,6 +5,7 @@ import { breadCrumbJsonLd } from '~/utils/generateJSONLD'
 import { CustomHead } from '~/utils/customHead'
 import { ArrowRightIcon } from '@sanity/icons'
 import { removeUnwantedCharacters } from '~/utils/common'
+import Anchor from './Anchor'
 
 interface BreadCrumbProps {
   className?: string
@@ -53,7 +54,7 @@ const Breadcrumb = ({ className }: BreadCrumbProps) => {
       >
         <div className="line-clamdiv-1 uppercase overflow-hidden text-ellipsis flex items-center flex-wrap">
           <span className="flex items-center">
-            <Link href="/" className="zinc-300 text-xs font-500">{`Home`}</Link>
+            <Anchor href="/" className="zinc-300 text-xs font-500">{`Home`}</Anchor>
             <span className="mx-3 text-zinc-500 uppercase">
               <ArrowRightIcon width={24} height={24} />
             </span>
@@ -73,12 +74,12 @@ const Breadcrumb = ({ className }: BreadCrumbProps) => {
                     {removeUnwantedCharacters(breadcrumb.label)}
                   </span>
                 ) : (
-                  <Link
+                  <Anchor
                     href={breadcrumb.href}
                     className="zinc-300 text-xs font-500 uppercase"
                   >
                     {removeUnwantedCharacters(breadcrumb.label)}
-                  </Link>
+                  </Anchor>
                 )}
                 {!isLast && (
                   <span className="mx-3 text-zinc-500">
