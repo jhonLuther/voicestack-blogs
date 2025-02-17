@@ -11,6 +11,7 @@ import Link from 'next/link'
 import siteConfig from 'config/siteConfig'
 import { generateHref } from '~/utils/common'
 import { useRouter } from 'next/router'
+import Anchor from './commonSections/Anchor'
 
 interface Props {
   post?: any
@@ -55,11 +56,11 @@ const MainImageSection = ({
               {!landing && <Breadcrumb />}
               <div>
                 {!landing ? (
-                  <Link href={generateHref(locale as string, hrefTemplate)}>
+                  <Anchor href={generateHref(locale as string, hrefTemplate)}>
                   <SubText className="!text-sky-500 mb-3 block hover:!text-sky-400">
                     {tag?.tagName ? tag?.tagName : ''}
                   </SubText>
-                  </Link>
+                  </Anchor>
                 ) : (
                   <SubText className="!text-yellow-500 mb-3  block">
                     {post?.tagName ? post?.tagName : ''}

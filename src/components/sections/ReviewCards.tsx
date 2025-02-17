@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { ArrowTopRightIcon } from '@sanity/icons'
 import siteConfig from 'config/siteConfig'
 import H2Large from '../typography/H2Large'
+import Anchor from '../commonSections/Anchor'
 
 interface LatestBlogsProps {
   testimonials?: any[]
@@ -22,7 +23,7 @@ const ReviewsGrid: React.FC<LatestBlogsProps> = (testimonials) => {
           <H2Large className="tracking-tighterText select-none">
             {`${'Reviews'} `}
           </H2Large>
-          <Link href={siteConfig.externalLinks.reviews} target="_blank">
+          <Anchor href={siteConfig.externalLinks.reviews} target="_blank">
             <div className="flex items-center gap-3 transform group duration-300 cursor-pointer">
               <span className="text-base font-medium">{`More Reviews`}</span>
               <span className="text-xl">
@@ -33,7 +34,7 @@ const ReviewsGrid: React.FC<LatestBlogsProps> = (testimonials) => {
                 />
               </span>
             </div>
-          </Link>
+          </Anchor>
         </div>
 
         <div className="w-full overflow-hidden columns-1 md:columns-2 lg:columns-3 gap-6">

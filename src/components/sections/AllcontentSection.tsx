@@ -12,6 +12,7 @@ import { useRouter } from 'next/router'
 import { generateHref, removeUnwantedCharacters } from '~/utils/common'
 import DescriptionText from '../typography/DescriptionText'
 import { useGlobalData } from '../Context/GlobalDataContext'
+import Anchor from '../commonSections/Anchor'
 
 interface LatestBlogsProps {
   allContent: any[]
@@ -186,7 +187,7 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
           </div>
           }
           {redirect ? (
-            <Link
+            <Anchor
               href={generateHref(locale,categoryUrl)}
               className="shrink-0"
             >
@@ -200,7 +201,7 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
                   />
                 </span>
               </div>
-            </Link>
+            </Anchor>
           ) : (
             !showCount  && (
               <div className="text-zinc-700 font-normal text-base shrink-0">{`${totalCount} ${totalCount > 1 ? 'results' : 'result'}`}</div>

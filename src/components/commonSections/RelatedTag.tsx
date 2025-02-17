@@ -4,6 +4,7 @@ import DescriptionText from '../typography/DescriptionText'
 import siteConfig from 'config/siteConfig'
 import { useRouter } from 'next/router'
 import { generateHref } from '~/utils/common'
+import Anchor from './Anchor'
 
 interface RelatedTagProps {
   tags?: any
@@ -27,12 +28,12 @@ const RelatedTag = ({ tags, className }: RelatedTagProps) => {
           let hrefTemplate = `${siteConfig.paginationBaseUrls.base}/${tag?.slug?.current ? tag?.slug?.current : ''}`
           const hrefLink = generateHref(locale as string, hrefTemplate)
           return (
-            <Link className='rounded-md bg-zinc-100  md:px-4 md:py-[5px]  px-2 py-[3px]   hover:bg-zinc-200 transition-all duration-300 ease-in-out' 
+            <Anchor className='rounded-md bg-zinc-100  md:px-4 md:py-[5px]  px-2 py-[3px]   hover:bg-zinc-200 transition-all duration-300 ease-in-out' 
             href={hrefLink} key={tag?.slug?.current} > 
               <DescriptionText className={`text-zinc-600 font-normal  md:text-base text-xs`}>
               {tag.tagName}
               </DescriptionText>
-              </Link>
+              </Anchor>
           )
         })}
       </div>

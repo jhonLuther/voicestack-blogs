@@ -244,3 +244,11 @@ export function generateHref(locale: any, linkHref: string): string {
   return `/${locale}/${cleanPath}`;
 }
 export const removeNumberPrefix = (id: any) => id.replace(/^\d+\.\s*/, '');
+
+
+
+export const cookieSelector = (consentString, field) => {
+  const regex = new RegExp(`${field}:(\\w+)`);
+  const match = consentString && consentString.match(regex);
+  return match && match[1] ? match[1] : "false";
+};

@@ -7,6 +7,7 @@ import ClubLogo from '~/assets/reactiveAssets/ClubLogo'
 import GrowthClubLogo from '~/assets/reactiveAssets/GrowthClubLogo'
 import { generateHref } from '~/utils/common'
 import { useRouter } from 'next/router'
+import Anchor from '~/components/commonSections/Anchor'
 
 const Footer = ({ className }) => {
     const router = useRouter();
@@ -129,12 +130,12 @@ const Footer = ({ className }) => {
       <Wrapper className="container mx-auto max-w-7xl flex flex-col gap-12">
         <div className="flex flex-col md:flex-row items-center md:items-start gap-6 md:gap-12 justify-between">
           <div className="flex flex-col items-center md:items-start">
-            <Link
+            <Anchor
               href="/"
               className="text-[30px] font-extrabold bg-gradient-text bg-clip-text text-transparent font-monrope tracking-tighterText max-w-[170px] leading-[1.16] block"
             >
              <GrowthClubLogo />
-            </Link>
+            </Anchor>
 
             {/* Social media   */}
             <div className="mt-6">
@@ -325,14 +326,14 @@ const Footer = ({ className }) => {
                 // <a href={item.url}  key={idx} className="hover:text-zinc-300 text-zinc-500 text-[15px] leading-[1.62]">
                 //   {item.title}
                 // </a>
-                <Link
+                <Anchor
                   href={item.url}
                   target={item.external ? '_blank' : '_self'}
                   key={idx}
                   className="hover:text-zinc-300 text-zinc-500 text-[15px] leading-[1.62]"
                 >
                   {item.title}
-                </Link>
+                </Anchor>
               ))}
             </div>
           </div>
@@ -344,7 +345,7 @@ const Footer = ({ className }) => {
                   {section.links.map((link, linkIndex) => {
                     return(
                     <li key={linkIndex} className="mb-2">
-                      <Link
+                      <Anchor
                         target={link.external ? '_blank' : '_self'}
                         href={section.title === 'Quick Links' ? generateHref(locale, link.url) : link.url}
                         className="hover:text-zinc-300 text-zinc-500 text-[15px] leading-[1.62]"
@@ -353,7 +354,7 @@ const Footer = ({ className }) => {
                         {/* {link.special && (
                           <span className="text-green-400">{link.special}</span>
                         )} */}
-                      </Link>
+                      </Anchor>
                     </li>
                   )})}
                 </ul>
@@ -367,9 +368,9 @@ const Footer = ({ className }) => {
             &copy;{' '}
             {`2017 - ${currentYear} Good Methods Global Inc. All rights reserved.`}
           </span>
-          <Link href="https://www.carestack.com" target="_blank">
+          <Anchor href="https://www.carestack.com" target="_blank">
             <Image src={CsLogo} alt="CareStack" title="CareStack" />
-          </Link>
+          </Anchor>
         </div>
       </Wrapper>
     </footer>
