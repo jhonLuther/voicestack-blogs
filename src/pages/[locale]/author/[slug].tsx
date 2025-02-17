@@ -104,7 +104,7 @@ export default function AuthorPage({
           <CustomHead props={author} type="author" />
           {metaTagDataForAuthor(author, url)}
           <Section className="justify-center">
-            <Wrapper className={`flex-col`}>
+            <Wrapper className={`flex-col md:pt-headerSpacer pt-headerSpacerMob`}>
               <div className="flex md:flex-row justify-between flex-col gap-8 md:gap-16">
                 <div className="md:min-w-[360px] md:h-full min-h-[370px]  ">
                   {author.picture && (
