@@ -14,13 +14,15 @@ import Button from './commonSections/Button';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc'; 
 import timezone from 'dayjs/plugin/timezone';
+import { useGlobalData } from './Context/GlobalDataContext';
 
 dayjs.extend(utc); 
 dayjs.extend(timezone); 
 
-const EventCarousel = ({ allEventCards,bgColor }: { allEventCards?: any; homeSettings?: any, bgColor?: string }) => {
+const EventCarousel = ({ allEventCards,bgColor }: { allEventCards?: any, bgColor?: string }) => {
   const swiperRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
+    let { homeSettings } = useGlobalData()
 
   useEffect(() => {
     if (swiperRef.current) {
@@ -28,9 +30,9 @@ const EventCarousel = ({ allEventCards,bgColor }: { allEventCards?: any; homeSet
     }
   }, [swiperRef]);
 
-  if(!allEventCards) return null
+  if(!allEventCards) return null 
 
-  return (
+  return homeSettings?.eventCarousel && (
     <Section className={`justify-center ${bgColor ? bgColor : 'bg-cs-zinc'}  px-4`}>
       <Wrapper className='w-full relative '>
         <Swiper

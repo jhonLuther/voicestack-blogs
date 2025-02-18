@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import ImageLoader from './ImageLoader'
 import { useRouter } from 'next/router'
+import Anchor from './Anchor'
 
 interface AuthorProps {
   author?: any
@@ -66,7 +67,7 @@ const AuthorInfo = ({
               </div>
             </div>
           ) : (
-            <Link
+            <Anchor
               className={`${className} !no-underline`}
               key={authors?._id || index}
               href={`/author/${authors?.slug && authors?.slug.current && authors?.slug.current}`}
@@ -99,7 +100,7 @@ const AuthorInfo = ({
                   )}
                 </div>
               </div>
-            </Link>
+            </Anchor>
           ),
         )}
     </div>

@@ -115,7 +115,7 @@ const ArticlePage = ({
   if (!articles) {
     return
   }
-  const prodUrl = process.env.NEXT_PUBLIC_VERCEL_URL || 'https://blog.carestack.com'
+  const prodUrl = process.env.NEXT_PUBLIC_VERCEL_URL || 'https://resources.voicestack.com'
   const seoTitle = articles.seoTitle || articles.title
   const seoDescription = articles.seoDescription || articles.excerpt
   const seoKeywords = articles.seoKeywords || ''
@@ -127,7 +127,7 @@ const ArticlePage = ({
 
   return (
     <>
-      <GlobalDataProvider data={categories} featuredTags={homeSettings?.featuredTags}>
+      <GlobalDataProvider data={categories} featuredTags={homeSettings.featuredTags}>
      <SEOHead
           title={seoTitle}
           description={seoDescription}

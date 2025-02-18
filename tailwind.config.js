@@ -37,6 +37,7 @@ module.exports = {
         'cs-dark-500': '#202124',
         'cs-primary': '#42BA78',
         'cs-zinc': '#1a1d23',
+        
 
         background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
@@ -89,7 +90,7 @@ module.exports = {
       },
 
       boxShadow: {
-        custom: '0px 20px 90px 0px rgba(0, 0, 0, 0.15)',
+        custom: '0px 10px 70px 0px rgba(0, 0, 0, 0.15)',
       },
 
       backgroundImage: {
@@ -105,6 +106,11 @@ module.exports = {
       letterSpacing: {
         tighterText: '-0.48px',
       },
+      padding:{
+        headerSpacer : '115px',
+        headerSpacerMob : '64px'
+      },
+      
     },
   },
   plugins: [require('@tailwindcss/typography')],

@@ -67,7 +67,7 @@ const DownloadEbook = ({ ebook }) => {
               <span className='text-base font-medium'>{` Read eBook`}</span>
             </Button> */}
             <Button
-              className="bg-cs-zinc gap-6 py-[14px] px-7 hover:bg-zinc-800"
+              className="bg-zinc-900 gap-6 py-[14px] px-7 hover:bg-zinc-800"
               onClick={() => {
                 download_file(pdfUrl, `${ebook?.title}.pdf`)
               }}

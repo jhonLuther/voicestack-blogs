@@ -1,5 +1,12 @@
+import { useTracking } from 'cs-tracker'
 import Link from 'next/link'
-import React from 'react'
+import { useRouter } from 'next/router'
+import React, { useEffect, useState } from 'react'
+import { getCssSelectorShort } from '~/helpers/createCSSSelector'
+import { getParams, getQueryParamFromLink } from '~/helpers/getQueryParams'
+import { getCookie } from '~/utils/tracker/cookie'
+import { useTrackUser } from '~/utils/tracker/intitialize'
+import Anchor from './Anchor'
 
 interface ButtonProps {
   type?:
@@ -46,15 +53,68 @@ const Button: React.FunctionComponent<ButtonProps> = ({
   isDemo,
   target,
   className,
+  href,
   ...rest
 }) => {
   const baseClasses = `bg-zinc-500 hover:bg-zinc-600 text-white px-6 py-[14px] text-base leading-[1.5] font-medium rounded-[5px] flex items-center whitespace-nowrap  ${className}`
+  const router = useRouter();
+
+  const { Track, trackEvent } = useTracking({}, {})
+  const [newLink, setNewLink] = useState("#");
+  const trackCtx = useTrackUser();
+
+
+  useEffect(() => {
+
+    const { query } = router
+
+    const queryParams: Record<string, string> = Object.entries(query).reduce((acc: any, [key, value]) => {
+      if (value !== undefined && key !== "slug") {
+        acc[key] = value.toString();
+      }
+      return acc;
+    }, {});
+
+    const noParams = Object.keys(queryParams).length === 0;
+
+    const urlSearchParams = new URLSearchParams(queryParams);
+
+    // Get the existing URL parameters from href
+    const existingParams = href?.includes('?') ? href?.split('?')[1] : '';
+
+    // Merge existing parameters with updated URL params
+    let updatedParams = `${existingParams ? (noParams ? existingParams : existingParams + '&') : ""}${urlSearchParams.toString()}`;
+    // Append updated URL params to href
+    const countryVersion: any = getCookie("__cs_ver");
+
+    // if (href.includes('https://') && (countryVersion != 2)) {
+    //   const host = window?.location?.host;
+    //   const url = new URL(href ?? "");
+    //   let a = new RegExp('/' + host + '/');
+    //   if (!a.test(url.host) && !router.query.session && !router.query.user) {
+    //     let trackingParams = `session=${trackCtx?.sessionId}&user=${trackCtx?.userId}`;
+    //     updatedParams += updatedParams.length > 0 ? "&" + trackingParams : "" + trackingParams
+    //   }
+    // }
+
+    if (router.asPath.startsWith("/lp")) {
+      setNewLink(`${href}`);
+    }
+    else if (router.asPath.startsWith("/uk")) {
+      setNewLink(`${href}`);
+    }
+    else {
+
+      setNewLink(`${href?.split('?')[0]}${updatedParams.length > 0 ? "?" + updatedParams : ""}`);
+    }
+  }, [href, router, trackCtx]);
 
   if (link) {
     return (
-      <Link href={link} className={baseClasses} target={target} {...rest}>
+      <Anchor  
+      href={link} className={baseClasses} target={target} {...rest}>
         {children}
-      </Link>
+      </Anchor>
     )
   }
 

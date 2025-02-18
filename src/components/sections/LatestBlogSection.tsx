@@ -1,11 +1,10 @@
 import React from 'react'
-import { Post } from '~/interfaces/post'
 import Card from '../Card'
 import Wrapper from '../../layout/Wrapper'
 import H2Large from '../typography/H2Large'
 import Section from '../Section'
 import { useBaseUrl } from '../Context/UrlContext'
-import { customMetaTag, generateMetaData } from '~/utils/customHead'
+import { useGlobalData } from '../Context/GlobalDataContext'
 
 interface LatestBlogsProps {
   contents: any[]
@@ -29,6 +28,7 @@ const LatestBlogs: React.FC<LatestBlogsProps> = ({
   showPlayIcon,
 }) => {
   const baseUrl = useBaseUrl()
+    const { homeSettings } = useGlobalData();
 
   if (!contents) {
     return null
@@ -50,9 +50,9 @@ const LatestBlogs: React.FC<LatestBlogsProps> = ({
 
   return (
     <React.Fragment>
-      <Section className="justify-center md:pt-16 md:pb-24 bg-cs-zinc text-white">
+      <Section className="justify-center  md:pb-24 bg-cs-zinc text-white md:pt-headerSpacer pt-headerSpacerMob">
         <Wrapper
-          className={`md:flex-row flex-col ${reverse ? 'md:flex-row-reverse' : ''} gap-8 md:gap-12 xl:gap-36`}
+          className={`md:flex-row md:pt-16 pt-8 flex-col ${reverse ? 'md:flex-row-reverse' : ''} gap-8 md:gap-12 xl:gap-36`}
         >
           <div className="flex flex-col gap-9 xl:w-5/12 w-full flex-1">
             <H2Large className="select-none ">
