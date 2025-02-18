@@ -14,6 +14,5 @@ const SVGComponent = (props) => (
 </defs>
 </svg>
 
-
 );
 export default SVGComponent;
