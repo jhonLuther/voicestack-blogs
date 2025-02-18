@@ -51,7 +51,6 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
   uiType,
   compIndex
 }) => {
-  if( allContent.length <= 2) return null
   const postsToShow = itemsPerPage || siteConfig.pagination.childItemsPerPage
   const [selectedTag, setSelectedTag] = useState('')
   const pathname = usePathname()
@@ -133,8 +132,9 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
     updateSelectedTag()
   }, [router.pathname, router.asPath])
 
-  if( allContent.length <= 2) return null
-
+  if (!allContent) {
+    return null
+  }
 
   const renderPosts = () => {
     const posts = []
