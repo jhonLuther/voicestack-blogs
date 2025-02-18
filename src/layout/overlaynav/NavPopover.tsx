@@ -18,6 +18,7 @@ import { generateHref, normalizePath } from '~/utils/common'
 import ImageLoader from '~/components/commonSections/ImageLoader'
 import { regions } from '~/components/RegionSwitcher'
 import VoiceStackResources from '~/assets/reactiveAssets/VoiceStackResources'
+import Anchor from '~/components/commonSections/Anchor'
 
 interface NavProps {
   className?: string
@@ -156,12 +157,12 @@ export const NavPopover = ({
                 </span>
               </div>
             ) : (
-              <Link
+              <Anchor
                 href="/"
                 className="text-2xl font-extrabold bg-gradient-text bg-clip-text text-transparent font-monrope tracking-tighterText"
               >
                 <VoiceStackResources/> 
-              </Link>
+              </Anchor>
             )}
             <CloseIcon
               width={40}
@@ -182,14 +183,14 @@ export const NavPopover = ({
               <nav className="flex flex-col lg:flex-row gap-y-6 gap-x-6 lg:gap-x-10 flex-wrap rounded-[6px] py-[17px] lg:px-[20px] lg:bg-zinc-100">
                 {navigationLinks?.map((link, i) => {
                   return(
-                  <Link
+                  <Anchor
                     key={link.href}
                     href={generateHref(router.query.locale, link.href)}
                     className={`hover:text-zinc-500 self-start font-medium text-base lg:text-sm flex items-center gap-2 ${router.pathname.startsWith(link.href) ? 'text-zinc-600' : 'text-zinc-600'}`}
                   >
                     {link.icon && <link.icon />}
                     {link.label}
-                  </Link>
+                  </Anchor>
                 )})}
               </nav>
               <div className="px-[10px] py-6 lg:p-6 lg:block hidden">
@@ -203,13 +204,13 @@ export const NavPopover = ({
                       const basePath = `${siteConfig.categoryBaseUrls.base}/${tag?.slug?.current || ''}`;
                       return(
                       <div className="break-inside-avoid pb-[14px]" key={tag?.slug?.current}>
-                        <Link
+                        <Anchor
                           href={generateHref(router.query.locale, basePath)}
                           scroll={false}
                           className="text-zinc-500 font-medium text-sm hover:text-zinc-600 transition-colors inlin-flex underline underline-offset-2"
                         >
                           <span>{tag?.categoryName}</span>
-                        </Link>
+                        </Anchor>
                       </div>
                     )})}
                 </div>
@@ -246,7 +247,7 @@ export const NavPopover = ({
                   </div>
                 ) : (
 
-                  <Link key={region.locale} href={region.url} className='flex gap-2 items-center' onClick={closeMenu}>
+                  <Anchor key={region.locale} href={region.url} className='flex gap-2 items-center' onClick={closeMenu}>
                     <ImageLoader
                       image={region.flag.url}
                       alt={region.flag.title}
@@ -256,7 +257,7 @@ export const NavPopover = ({
                       className='border-2 rounded-full border-white !w-[23px] !h-[23px]'
                     >
                     </ImageLoader>
-                  </Link>
+                  </Anchor>
                 )
               )
             })}
@@ -275,18 +276,18 @@ export const NavPopover = ({
                   const cleanHref = normalizePath(basePath)
                   return (
                     <div className="break-inside-avoid" key={cleanHref}>
-                      <Link
+                      <Anchor
                         href={generateHref(router.query.locale, cleanHref)}
                         scroll={false}
                         className="text-zinc-500 pb-[14px] font-medium text-sm flex hover:text-zinc-600 transition-colors"
                       >
                         <span>{tag?.categoryName}</span>
-                      </Link>
+                      </Anchor>
                     </div>
                   )
                 })}
             </div>
-            <Link
+            <Anchor
               href={generateHref(router.query.locale, siteConfig.paginationBaseUrls.base)}
               className=" lg:flex text-[14px] group font-medium leading-[1.5] justify-center text-zinc-500 flex items-center gap-x-1 hover:text-zinc-300 group"
             >
@@ -294,7 +295,7 @@ export const NavPopover = ({
                 {'Browse All'}
                 <ArrowTopRightIcon className="group-hover:translate-y-[-2px] transition-transform duration-300" height={20} width={20} />
               </span>
-            </Link>
+            </Anchor>
 
           </div>
 

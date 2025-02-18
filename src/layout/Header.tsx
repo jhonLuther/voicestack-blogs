@@ -21,6 +21,7 @@ import  {ShortNavPopover}  from './overlaynav/ShortNavPopover';
 import RegionSwitcher from '~/components/RegionSwitcher';
 import { generateHref, normalizePath } from '~/utils/common';
 import VoiceStackResources from '~/assets/reactiveAssets/VoiceStackResources';
+import Anchor from '~/components/commonSections/Anchor';
 
 
 export const navigationLinks = [
@@ -85,7 +86,7 @@ const Header = () => {
         <header
           className={`fixed w-full  left-0 z-20 transition-all duration-300 ease-linear ${headerFixed ? 'md:top-[15px]' : 'md:top-[35px]' } `}      >
           {homeSettings?.demoBanner && <div className={`bg-cs-primary group hover:bg-[#42dd88] transition-all duration-200 px-4 h-[44px]`}>
-            <Link href="https://carestack.com/demo" className="flex justify-center py-3">
+            <Anchor href="https://carestack.com/demo" className="flex justify-center py-3">
               <div className="max-w-7xl flex justify-center gap-3 w-full items-center">
                 <div className="text-xs md:text-sm text-zinc-900">
                   {` Book a Demo with us - It's free!`}
@@ -94,7 +95,7 @@ const Header = () => {
                   <span>{`Register Now`}</span><ArrowRightIcon className="w-5 h-5 text-zinc-800 group-hover:translate-x-[4px] transition-transform duration-300 ease-in-out" />
                 </div>
               </div>
-            </Link>
+            </Anchor>
           </div>}
 
           <div className="max-w-7xl mx-auto">
@@ -103,7 +104,7 @@ const Header = () => {
               <div className={`flex flex-col gap-3 justify-between py-0 transition-all duration-300 ease-linear`}>
                 <div className={`flex flex-row gap-2 justify-between items-center 
                 lg:relative transition-all duration-300 ease-in-out  `}>
-                  <Link href={normalizePath(homeUrl)} className="text-42xl font-extrabold bg-gradient-text bg-clip-text text-transparent font-monrope tracking-tighterText">
+                  <Link href={normalizePath(homeUrl)} className="text-2xl h-7 font-extrabold bg-gradient-text bg-clip-text text-transparent font-monrope tracking-tighterText">
                     <VoiceStackResources/>
                   </Link>
                   <div className={`flex lg:gap-10   justify-between rounded-xl items-center`}>
@@ -120,22 +121,22 @@ const Header = () => {
                       <nav className="flex flex-col lg:flex-row lg:gap-10 flex-wrap ">
                         {navigationLinks && navigationLinks?.map((link, i) => {                                                    
                           return(
-                          <Link
+                          <Anchor
                             key={link.href}
                             href={generateHref(locale as string, link.href)}
-                            className={`hover:text-zinc-300 text-base ${pathname.includes(link.href) ? 'text-zinc-300' : 'text-zinc-500'}`}
+                            className={`hover:text-zinc-300 text-base ${pathname.includes(link.href) ? 'text-gray-400' : 'text-gray-500'}`}
                           >
                             {link.label}
-                          </Link>
+                          </Anchor>
                         )})}
                         {/* {featuredTags && featuredTags?.map((link, i) => ( // tag version nav
-                          <Link
+                          <Anchor
                             key={link.slug?.current}
                             href={`/browse/${link.slug?.current}`}
                             className={`hover:text-zinc-300 text-sm ${pathname.includes(link.slug?.current) ? 'text-zinc-300' : 'text-zinc-500'}`}
                           >
                             {link.tagName}
-                          </Link>
+                          </Anchor>
 
                         ))} */}
                       </nav>
