@@ -99,7 +99,7 @@ const Header = () => {
           </div>}
 
           <div className="max-w-7xl mx-auto">
-          <div className={`z-10 bg-white text-white md:rounded-lg p-3 `}>
+          <div className={`z-10 bg-white text-white md:rounded-lg p-3  shadow-custom `}>
               {/* <div className={`flex flex-col gap-3 justify-between py-[10px] transition-all duration-300 ease-linear relative  ${headerFixed ? '!lg:py-3' : 'lg:py-6'}`}> */}
               <div className={`flex flex-col gap-3 justify-between py-0 transition-all duration-300 ease-linear`}>
                 <div className={`flex flex-row gap-2 justify-between items-center 

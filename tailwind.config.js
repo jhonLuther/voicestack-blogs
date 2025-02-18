@@ -90,7 +90,7 @@ module.exports = {
       },
 
       boxShadow: {
-        custom: '0px 20px 90px 0px rgba(0, 0, 0, 0.15)',
+        custom: '0px 10px 70px 0px rgba(0, 0, 0, 0.15)',
       },
 
       backgroundImage: {

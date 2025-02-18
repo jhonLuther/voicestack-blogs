@@ -94,7 +94,7 @@ function dispatchEvent(data: any) {
     trackData.push(temp);
     const domain = window.location.origin;
     // if (window !== undefined && trackData.length > 0 && !isSending) {
-    if (window !== undefined && trackData.length > 0 && !isSending && domain === "https://resources.carestack.com") {
+    if (window !== undefined && trackData.length > 0 && !isSending && domain === "https://resources.voicestack.com") {
       const user = getUser()
       if (user) {
 

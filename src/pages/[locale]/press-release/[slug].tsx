@@ -121,7 +121,7 @@ const PressReleasePage = ({
 
   if(!pressRelease) return null
 
-  const prodUrl = process.env.NEXT_PUBLIC_VERCEL_URL || 'https://resources.carestack.com'
+  const prodUrl = process.env.NEXT_PUBLIC_VERCEL_URL || 'https://resources.voicestack.com'
 
   const seoTitle = pressRelease.seoTitle || pressRelease.title
   const seoDescription = pressRelease.seoDescription || pressRelease.excerpt
