@@ -98,12 +98,12 @@ const Header = () => {
             </Anchor>
           </div>}
 
-          <div className={`z-10 bg-white text-white  p-3  shadow-custom `}>
+          <div className={`z-10  bg-zinc-900 text-white  px-4 `}>
           <div className="max-w-7xl mx-auto">
               {/* <div className={`flex flex-col gap-3 justify-between py-[10px] transition-all duration-300 ease-linear relative  ${headerFixed ? '!lg:py-3' : 'lg:py-6'}`}> */}
               <div className={`flex flex-col gap-3 justify-between py-0 transition-all duration-300 ease-linear`}>
-                <div className={`flex flex-row gap-2 justify-between items-center 
-                lg:relative transition-all duration-300 ease-in-out  `}>
+              <div className={`flex flex-row gap-2 justify-between items-center 
+                lg:relative transition-all duration-300 ease-in-out ${headerFixed ? 'lg:my-2 my-2' : 'lg:my-4 my-2'}`}>
                   <Link href={normalizePath(homeUrl)} className="text-2xl h-7 font-extrabold bg-gradient-text bg-clip-text text-transparent font-monrope tracking-tighterText">
                     <VoiceStackResources/>
                   </Link>
