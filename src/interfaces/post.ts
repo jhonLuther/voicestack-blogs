@@ -1,6 +1,7 @@
 import { ImageAsset, PortableTextBlock, Slug } from 'sanity'
 
 export interface Post {
+  length: number
   relatedArticles: any
   hasVideo: any
   videos: any[]

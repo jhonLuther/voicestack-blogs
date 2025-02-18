@@ -15,7 +15,7 @@ const FeaturedAndPopularBlogs = ({
   popularBlogs,
 }: FeaturedAndPopularBlogsProps) => {
   
-  if(!popularBlogs) return null  
+  if(featuredBlog && (popularBlogs.length <= 2)) return null  
 
   return (
     <Section className="justify-center md:pt-24 md:pb-12">
