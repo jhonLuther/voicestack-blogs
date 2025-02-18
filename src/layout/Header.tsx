@@ -124,7 +124,7 @@ const Header = () => {
                           <Anchor
                             key={link.href}
                             href={generateHref(locale as string, link.href)}
-                            className={`hover:text-zinc-300 text-base ${pathname.includes(link.href) ? 'text-zinc-300' : 'text-zinc-500'}`}
+                            className={`hover:text-zinc-300 text-base ${pathname.includes(link.href) ? 'text-gray-400' : 'text-gray-500'}`}
                           >
                             {link.label}
                           </Anchor>
