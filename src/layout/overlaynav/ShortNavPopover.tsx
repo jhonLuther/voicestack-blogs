@@ -1,20 +1,17 @@
 import React, { useState, useRef, useEffect } from 'react'
 import Wrapper from '../Wrapper'
-import Section from '~/components/Section'
 import { useGlobalData } from '~/components/Context/GlobalDataContext'
 import Link from 'next/link'
 import {
   CloseIcon,
-  TruncateIcon,
   ChevronRightIcon,
   ChevronLeftIcon,
-  ArrowTopRightIcon,
 } from '@sanity/icons'
-import { navigationLinks } from '../Header'
 import { useRouter } from 'next/router'
 import GrowthClubLogo from '~/assets/reactiveAssets/GrowthClubLogo'
 import siteConfig from 'config/siteConfig'
 import { generateHref, normalizePath } from '~/utils/common'
+import Anchor from '~/components/commonSections/Anchor'
 
 interface ShortNavPopoverProps {
   className?: string
@@ -119,7 +116,7 @@ export const ShortNavPopover = ({
         <div className={`${className} w-full lg:pt-0 pt-14`}>
 
           <div
-            className={`lg:hidden flex fixed top-0 left-0 w-full py-4 px-4 z-20 bg-cs-zinc h-[56px] items-center justify-between`}
+            className={`lg:hidden flex fixed top-0 left-0 w-full py-4 px-4 z-20 bg-zinc-900 h-[56px] items-center justify-between`}
           >
             {showTags ? (
               <div className="flex items-center gap-0">
@@ -133,13 +130,13 @@ export const ShortNavPopover = ({
                 </span>
               </div>
             ) : (
-              <Link
+              <Anchor
                 href="/"
                 className="text-2xl font-extrabold bg-gradient-text bg-clip-text text-transparent font-monrope tracking-tighterText"
               >
                 {/* <ClubLogo/>  */}
                 <GrowthClubLogo />
-              </Link>
+              </Anchor>
             )}
             <CloseIcon
               width={40}
@@ -164,13 +161,13 @@ export const ShortNavPopover = ({
                       const cleanHref = normalizePath(hrefLink);
                     return (
                       <div className="break-inside-avoid p-2 " key={index}>
-                        <Link
+                        <Anchor
                           href={generateHref(router.query.locale as string, cleanHref)}
                           scroll={false}
                           className="text-zinc-500 font-medium text-sm hover:text-zinc-600 transition-colors inline-flex "
                         >
                           <span className='hover:underline underline-offset-4'>{tag?.categoryName}</span>
-                        </Link>
+                        </Anchor>
                       </div>
                     )})}
               </nav>
@@ -183,13 +180,13 @@ export const ShortNavPopover = ({
                     tagData.length > 0 &&
                     tagData.map((tag, index) => (
                       <div className="break-inside-avoid pb-[14px]" key={index}>
-                        <Link
+                        <Anchor
                           href={`/browse/${tag?.slug?.current}`}
                           scroll={false}
                           className="text-zinc-500 font-medium text-sm hover:text-zinc-600 transition-colors inlin-flex underline underline-offset-2"
                         >
                           <span>{tag?.tagName}</span>
-                        </Link>
+                        </Anchor>
                       </div>
                     ))}
                 </div>
@@ -221,13 +218,13 @@ export const ShortNavPopover = ({
                   const cleanHref = normalizePath(hrefLink);
                   return(
                   <div className="break-inside-avoid" key={index}>
-                    <Link
+                    <Anchor
                       href={generateHref(router.query.locale as any, cleanHref)}
                       scroll={false}
                       className="text-zinc-500 pb-[14px] font-medium text-sm flex hover:text-zinc-600 transition-colors"
                     >
                       <span>{tag?.categoryName}</span>
-                    </Link>
+                    </Anchor>
                   </div>
                 )})}
             </div>

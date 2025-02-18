@@ -10,6 +10,7 @@ import DescriptionText from '~/components/typography/DescriptionText'
 import TrapezIcon from '~/assets/reactiveAssets/trapezIcon'
 import { useRouter } from 'next/router'
 import { generateHref } from '~/utils/common'
+import Anchor from '~/components/commonSections/Anchor'
 
 
 interface ContentHubProps {
@@ -50,7 +51,7 @@ export default function ContentHub({ contentCount, categories, featuredDescripti
 
 
   return (
-    <Section className={`bg-cs-zinc relative h-full justify-center ${categoriesData ? 'md:pt-24 pb-16' : 'md:pt-12 pb-6'}`}>
+    <Section className={`bg-zinc-900 relative h-full justify-center ${categoriesData ? 'md:pt-24 pb-16' : 'md:pt-12 pb-6'}`}>
       {categoriesData && <div className='absolute top-0 right-0 h-full 2xl:visible invisible   '>
       <TrapezIcon/>
       </div>}
@@ -71,14 +72,14 @@ export default function ContentHub({ contentCount, categories, featuredDescripti
                  ? `${siteConfig.categoryBaseUrls.base}/${category?.slug.current} ` 
                  : siteConfig.categoryBaseUrls.base}`
             return (
-              <Link
+              <Anchor
               className={`text-zinc-300 flex items-center  text-sm font-normal py-2 px-3 
                 rounded-full bg-zinc-800 hover:bg-zinc-700 transition-all ease-out duration-300 ${pathname.endsWith(`/${siteConfig.categoryBaseUrls.base}`) && index === 0 ? '!bg-zinc-600 !text-zinc-50' : pathname.includes(category?.slug?.current) ? '!bg-zinc-600 !text-zinc-50' : ''}`}
               href={generateHref(locale as string, hrefTemplate)}
               key={index}
               >
               {category.categoryName}
-              </Link>
+              </Anchor>
             )})}
           </div>
 
@@ -91,20 +92,20 @@ export default function ContentHub({ contentCount, categories, featuredDescripti
                     const singularKey = key.endsWith('s') ? key.slice(0, -1) : key
                     const url = siteConfig.pageURLs[singularKey] || '/'
                     return (
-                      <Link href={generateHref(locale as string, url)} key={index} className="hover:text-zinc-300 text-sm md:text-base">
+                      <Anchor href={generateHref(locale as string, url)} key={index} className="hover:text-zinc-300 text-sm md:text-base">
                         {count}{' '}
                         {key.charAt(0).toUpperCase() + key.slice(1)}
                         <span className="hidden md:inline ml-3 ">
                           {index < Object.entries(contentCount).length - 1 && ' • '}
                         </span>
-                      </Link>
+                      </Anchor>
                     )
                   })
                 ) : (
                   <div>No content available</div>
                 )}
               </div>
-              <Link
+              <Anchor
                 href={ generateHref(locale as string, siteConfig.paginationBaseUrls.base)}
                 className=" text-[14px] group font-medium leading-[1.5] justify-center  flex items-center gap-x-1 group"
               >
@@ -117,7 +118,7 @@ export default function ContentHub({ contentCount, categories, featuredDescripti
                     width={20}
                   />
                 </span>
-              </Link>
+              </Anchor>
             </div>
           </div>
         )}

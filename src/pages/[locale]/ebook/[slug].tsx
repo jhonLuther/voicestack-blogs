@@ -107,7 +107,7 @@ const EbookPage = ({
   categories
 }: Props) => {
   if(!ebook) return null
-  const prodUrl = process.env.NEXT_PUBLIC_VERCEL_URL || 'https://blog.carestack.com'
+  const prodUrl = process.env.NEXT_PUBLIC_VERCEL_URL || 'https://resources.voicestack.com'
 
   const seoTitle = ebook.seoTitle || ebook.title
   const seoDescription = ebook.seoDescription || ebook.excerpt

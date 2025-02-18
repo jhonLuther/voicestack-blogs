@@ -24,34 +24,41 @@ import { BaseUrlProvider } from '~/components/Context/UrlContext'
 import { GlobalDataProvider } from '~/components/Context/GlobalDataContext'
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const client = getClient()
-  const region =  params.locale as string;   
-  const pageNumber = params?.number ? parseInt(params.number as string, 10) : 1
+  const client = getClient();
+  const region = params?.locale as string;
+  const pageNumber = params?.number ? parseInt(params.number as string, 10) : 1;
 
-  const cardsPerPage = siteConfig.pagination.childItemsPerPage || 5
-  const startLimit = (pageNumber - 1) * cardsPerPage
-  const endLimit = startLimit + cardsPerPage
+  const cardsPerPage = siteConfig.pagination.childItemsPerPage || 5;
+  const startLimit = (pageNumber - 1) * cardsPerPage;
+  const endLimit = startLimit + cardsPerPage;
 
-  const posts = await getPostsByLimit(client, startLimit, endLimit,undefined,region)
-  const totalPosts = await getPosts(client,undefined,region)
-
-  const totalPages = Math.ceil(totalPosts.length / cardsPerPage)
-
-  const tags = await getTags(client)
-
-  const totalPodcasts = await getPodcastsCount(client,region)
-  const totalWebinars = await getWebinarsCount(client,region)
-  const totalArticles = await getArticlesCount(client,region)
-  const totalEbooks = await getEbooksCount(client,region)
-  const homeSettings = await getHomeSettings(client,region)
-  const categories = await getCategories(client)
-
+  const [
+    posts,
+    totalPosts,
+    tags,
+    totalPodcasts,
+    totalWebinars,
+    totalArticles,
+    totalEbooks,
+    homeSettings,
+    categories
+  ] = await Promise.all([
+    getPostsByLimit(client, startLimit, endLimit, undefined, region),
+    getPosts(client, undefined, region),
+    getTags(client),
+    getPodcastsCount(client, region),
+    getWebinarsCount(client, region),
+    getArticlesCount(client, region),
+    getEbooksCount(client, region),
+    getHomeSettings(client, region),
+    getCategories(client)
+  ]);
 
   return {
     props: {
       posts,
       tags,
-      totalPages,
+      totalPages: Math.ceil(totalPosts.length / cardsPerPage),
       totalPosts,
       currentPage: pageNumber,
       categories,
@@ -63,33 +70,29 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         ebooks: totalEbooks,
       },
     },
-  }
-}
+  };
+};
 
 export const getStaticPaths = async () => {
-  const client = getClient()
-  const locales = siteConfig.locales; 
-  const paths = await Promise.all(
+  const client = getClient();
+  const locales = siteConfig.locales;
+
+  const paths = (await Promise.all(
     locales.map(async (locale) => {
       const slugs = await client.fetch(postSlugsQuery, { locale });
-      const numberOfPosts = slugs.length
-      const cardsPerPage = siteConfig.pagination.childItemsPerPage || 5
-      const numberOfPages = Math.ceil(numberOfPosts / cardsPerPage)
-      const pagePaths = []
-      for (let i = 2; i <= numberOfPages; i++) {
-        pagePaths.push({ params: { number: i.toString(), locale } })
-      }
-
-      return pagePaths
+      const numberOfPages = Math.ceil(slugs.length / siteConfig.pagination.childItemsPerPage || 5);
+      return Array.from({ length: numberOfPages - 1 }, (_, i) => ({
+        params: { number: (i + 2).toString(), locale },
+      }));
     })
-  );
-  
+  )).flat();
 
   return {
-    paths: paths.flat(),
+    paths,
     fallback: 'blocking',
-  }
-}
+  };
+};
+
 
 export default function TagPagePaginated({
   tags,

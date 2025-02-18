@@ -1,2 +1,4 @@
 User-agent: *
 Disallow: /
+
+Sitemap: https://resources.voicestack.com/sitemap.xml

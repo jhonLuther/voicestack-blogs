@@ -40,7 +40,7 @@ export const getStaticProps: GetStaticProps<
     allTags: Tag[]
     totalPages: number
     contentCount: any
-    totalPostCount: any[]
+    totalPostCount: number
     siteSettings: any[]
     homeSettings: any
     categories: any
@@ -49,47 +49,64 @@ export const getStaticProps: GetStaticProps<
   const client = getClient()
   const slug = params?.slug as string
   const region = params?.locale as string
-  const tag = await getTag(client, slug)
-  const allTags = await getTags(client)
-
-  if (!tag) {
-    return {
-      notFound: true,
-    }
-  }
-
   const cardsPerPage = siteConfig.pagination.childItemsPerPage || 5
-  const posts = await getPostsByTagAndLimit(client, tag._id, 0, cardsPerPage,region)
-  const allPostsForTag = await getPostsByTag(client, tag._id,region)
-  const totalPages = Math.ceil(allPostsForTag.length / cardsPerPage)
-  const totalPodcasts = await getPodcastsCount(client,region)
-  const totalWebinars = await getWebinarsCount(client,region)
-  const totalArticles = await getArticlesCount(client,region)
-  const totalEbooks = await getEbooksCount(client,region)
-  const siteSettings = await getSiteSettings(client)
-  const homeSettings = await getHomeSettings(client,region)
-  const categories = await getCategories(client)
 
+  try {
+    const tag = await getTag(client, slug)
 
-  return {
-    props: {
-      tag,
+    if (!tag) {
+      return { notFound: true }
+    }
+
+    const [
       allTags,
-      totalPages,
       posts,
-      draftMode: false,
-      token: null,
-      totalPostCount: allPostsForTag.length,
-      contentCount: {
-        podcasts: totalPodcasts,
-        webinars: totalWebinars,
-        articles: totalArticles,
-        ebooks: totalEbooks,
-      },
+      allPostsForTag,
+      totalPodcasts,
+      totalWebinars,
+      totalArticles,
+      totalEbooks,
       siteSettings,
       homeSettings,
       categories
-    },
+    ] = await Promise.all([
+      getTags(client),
+      getPostsByTagAndLimit(client, tag._id, 0, cardsPerPage, region),
+      getPostsByTag(client, tag._id, region),
+      getPodcastsCount(client, region),
+      getWebinarsCount(client, region),
+      getArticlesCount(client, region),
+      getEbooksCount(client, region),
+      getSiteSettings(client),
+      getHomeSettings(client, region),
+      getCategories(client)
+    ])
+
+    const totalPages = Math.ceil(allPostsForTag.length / cardsPerPage)
+
+    return {
+      props: {
+        tag,
+        allTags,
+        totalPages,
+        posts,
+        draftMode: false,
+        token: null,
+        totalPostCount: allPostsForTag.length,
+        contentCount: {
+          podcasts: totalPodcasts,
+          webinars: totalWebinars,
+          articles: totalArticles,
+          ebooks: totalEbooks,
+        },
+        siteSettings,
+        homeSettings,
+        categories
+      },
+    }
+  } catch (error) {
+    console.error('Error in getStaticProps:', error)
+    return { notFound: true }
   }
 }
 
@@ -97,19 +114,27 @@ export const getStaticPaths = async () => {
   const client = getClient()
   const locales = siteConfig.locales
 
-    const slugs = await Promise.all(
-      locales.map(async (locale) => {
-        const data = await client.fetch(tagsSlugsQuery, { locale });
-        return data as string[]; 
-      })
-    );
-  
+  try {
+    const slugsPromises = locales.map(locale => 
+      client.fetch(tagsSlugsQuery, { locale })
+        .then(data => data.map((slug: string) => ({
+          params: { slug, locale }
+        })))
+    )
 
-  return {
-    paths:slugs.flat().map((item:any) => ({
-      params: { slug:item.slug, locale:item.locale },
-    })),
-    fallback: 'blocking',
+    const localePaths = await Promise.all(slugsPromises)
+    const paths = localePaths.flat()
+
+    return {
+      paths,
+      fallback: 'blocking',
+    }
+  } catch (error) {
+    console.error('Error in getStaticPaths:', error)
+    return {
+      paths: [],
+      fallback: 'blocking',
+    }
   }
 }
 

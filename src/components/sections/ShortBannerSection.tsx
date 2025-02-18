@@ -5,12 +5,13 @@ import icLogo from '../../assets/inner-circle.svg'
 import Image from 'next/image'
 import { ArrowTopRightIcon } from '@sanity/icons'
 import eventBanner from '../../assets/event-banner.svg'
+import Anchor from '../commonSections/Anchor'
 
 function ShortBannerSection() {
   return (
     <section className="flex justify-center px-4 ">
       <Wrapper>
-        <Link
+        <Anchor
           href={'https://carestack.com/company/events/inner-circle-2025'}
           target="_blank"
           className="group w-full"
@@ -26,7 +27,7 @@ function ShortBannerSection() {
               <ArrowTopRightIcon className="flex-shrink-0 w-10 h-10 md:w-28 md:h-28 group-hover:-translate-y-3 transition-transform duration-300 ease-in-out "></ArrowTopRightIcon>
             </div>
           </div>
-        </Link>
+        </Anchor>
       </Wrapper>
     </section>
   )

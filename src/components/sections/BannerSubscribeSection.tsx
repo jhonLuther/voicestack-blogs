@@ -5,6 +5,7 @@ import Wrapper from '~/layout/Wrapper'
 import H3XL from '../typography/H3XL'
 import Link from 'next/link'
 import H34XL from '../typography/H34XL'
+import Anchor from '../commonSections/Anchor'
 
 interface BannerSubscribeSectionProps {
   isSmall?: boolean
@@ -50,7 +51,7 @@ function BannerSubscribeSection({ isSmall }: BannerSubscribeSectionProps) {
 
   return (
     hideBanner ? (
-      <div className='md:pt-24 p-4'></div>
+      <></>
     ):(
     <Section className="justify-center">
       <Wrapper className={`flex-col`}>
@@ -96,7 +97,7 @@ function BannerSubscribeSection({ isSmall }: BannerSubscribeSectionProps) {
                 </div>
 
                 <Button
-                  className="bg-cs-zinc !px-12 hover:bg-zinc-700 md:absolute md:translate-y-[-50%] top-[50%] right-[16px] self-start"
+                  className="bg-zinc-900 !px-12 hover:bg-zinc-700 md:absolute md:translate-y-[-50%] top-[50%] right-[16px] self-start"
                   onClick={handleSubmit}
                 >
                   <span className="text-base font-medium">{`Submit`}</span>
@@ -110,13 +111,13 @@ function BannerSubscribeSection({ isSmall }: BannerSubscribeSectionProps) {
         </div>
         <p className="mt-3 md:mt-6 text-xs md:text-base font-medium text-zinc-500 leading-[1.2]">
           You can unsubscribe at any time, no hard feelings.{' '}
-          <Link
+          <Anchor
             href="https://carestack.com/legal/2024-1/privacypolicy"
             target="_blank"
             className="underline underline-offset-2"
           >
             {`Privacy policy.`}{' '}
-          </Link>
+          </Anchor>
         </p>
       </Wrapper>
     </Section>

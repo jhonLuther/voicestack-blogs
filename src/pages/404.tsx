@@ -80,7 +80,7 @@ const Custom404 = (props: IndexPageProps) => {
    return (
     <GlobalDataProvider
       data={props?.categories}
-      featuredTags={homeSettings?.featuredTags}
+      featuredTags={homeSettings.featuredTags}
       homeSettings={homeSettings}
     >
     
@@ -90,7 +90,7 @@ const Custom404 = (props: IndexPageProps) => {
           <div className='min-h-[40vh] flex flex-col justify-center items-center text-center gap-10'>
               <h1 className='text-xl md:text-2xl text-zinc-800'><span className='font-bold md:text-3xl'>404</span> - This page could not be found.</h1>
               <div className='self-center flex justify-center'>
-                <Button className='bg-cs-zinc  hover:bg-zinc-700 !no-underline' link="/">
+                <Button className='bg-zinc-900  hover:bg-zinc-700 !no-underline' link="/">
                   <span className='text-base font-medium'>Go to Home Page</span>
                 </Button>
               </div>

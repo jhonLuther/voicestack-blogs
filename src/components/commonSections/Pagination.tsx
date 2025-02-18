@@ -7,6 +7,7 @@ import { ArrowRightIcon } from '@sanity/icons'
 import { ArrowLeftIcon } from '@sanity/icons'
 import { useBaseUrl } from '../Context/UrlContext'
 import { generateHref } from '~/utils/common'
+import Anchor from './Anchor'
 
 const Pagination = ({
   totalPages,
@@ -93,7 +94,7 @@ const Pagination = ({
     const visiblePages = Array.from({ length: totalPages }, (_, i) => i + 1)
 
     return visiblePages.map((number) => (
-      <Link
+      <Anchor
         key={number}
         href={getPageUrl(number)}
         onClick={() => handlePageChange(number)}
@@ -108,7 +109,7 @@ const Pagination = ({
         `}
       >
         {number}
-      </Link>
+      </Anchor>
     ))
   }
 
@@ -144,16 +145,16 @@ const Pagination = ({
       <Section className="justify-center md:pb-12 md:pt-16">
         <Wrapper className="justify-center">
           <div className="flex items-center space-x-2 flex-wrap">
-            <Link
+            <Anchor
               href={currentPage <= 1 ? '#' : getPageUrl(currentPage, 'previous')}
               onClick={() => handlePageChange(currentPage - 1)}
               className={arrowLinkClass}
             >
               <ArrowLeftIcon height={25} className={iconClass} />
-            </Link>
+            </Anchor>
 
             {renderPageNumbers()}
-            <Link
+            <Anchor
               aria-disabled={currentPage >= totalPages}
               href={currentPage < totalPages ? getPageUrl(currentPage + 1) : "#"}
               onClick={(e) => {
@@ -166,7 +167,7 @@ const Pagination = ({
               className={nextArrowLinkClass}
             >
               <ArrowRightIcon height={25} className={iconClass} />
-            </Link>
+            </Anchor>
 
           </div>
         </Wrapper>

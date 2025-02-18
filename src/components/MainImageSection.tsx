@@ -11,6 +11,7 @@ import Link from 'next/link'
 import siteConfig from 'config/siteConfig'
 import { generateHref } from '~/utils/common'
 import { useRouter } from 'next/router'
+import Anchor from './commonSections/Anchor'
 
 interface Props {
   post?: any
@@ -45,8 +46,8 @@ const MainImageSection = ({
  let hrefTemplate = tag?.slug?.current ? `/${siteConfig.paginationBaseUrls.base}/${tag?.slug?.current} `: ''
 
   return (
-    <div className="w-full flex gap-1 items-center bg-cs-zinc relative overflow-hidden">
-      <Section className={`justify-center w-full !py-0`}>
+    <div className="w-full flex gap-1 items-center bg-zinc-900 relative overflow-hidden md:pt-headerSpacer pt-headerSpacerMob">
+      <Section className={`justify-center w-full !py-0 relative`}>
         <Wrapper className="z-10 flex h-auto flex-col md:flex-row">
           <div className="flex flex-col items-start  gap-32 text-white md:max-w-[46%] max-w-lg h-full justify-center py-8 md:py-12 md:min-h-[550px]">
             <div
@@ -55,11 +56,11 @@ const MainImageSection = ({
               {!landing && <Breadcrumb />}
               <div>
                 {!landing ? (
-                  <Link href={generateHref(locale as string, hrefTemplate)}>
+                  <Anchor href={generateHref(locale as string, hrefTemplate)}>
                   <SubText className="!text-sky-500 mb-3 block hover:!text-sky-400">
                     {tag?.tagName ? tag?.tagName : ''}
                   </SubText>
-                  </Link>
+                  </Anchor>
                 ) : (
                   <SubText className="!text-yellow-500 mb-3  block">
                     {post?.tagName ? post?.tagName : ''}
