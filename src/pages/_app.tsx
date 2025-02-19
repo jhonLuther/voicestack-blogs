@@ -22,33 +22,19 @@ export interface SharedPageProps {
 const PreviewProvider = lazy(() => import('~/components/PreviewProvider'))
 
 
- function App({
+function App({
   Component,
   pageProps,
 }: AppProps<SharedPageProps>) {
   const { draftMode, token } = pageProps
-  const pathname:any = usePathname()
-  const currentWindow =pathname && pathname?.split('/') || []
-  const index = pathname?.split('/').length-1 || 0
+  const pathname: any = usePathname()
+  const currentWindow = pathname && pathname?.split('/') || []
+  const index = pathname?.split('/').length - 1 || 0
   const result = slugToCapitalized(currentWindow[index])
 
   return (
     <>
-    <TrackUserProvider>
-      <Head>
-        <link
-          rel="icon"
-          href="/favicon-32x32.ico"
-          sizes="32x32"
-          type="image/png"
-        />
-        <link
-          rel="icon"
-          href="/VoiceStack.svg"
-          sizes="16x16"
-          type="image/png"
-        />
-        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+      <TrackUserProvider>
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-YY0CHYH7EY"
           strategy="afterInteractive"
@@ -72,20 +58,35 @@ const PreviewProvider = lazy(() => import('~/components/PreviewProvider'))
             })(window,document,'script','dataLayer','GTM-KCX7H59S');
           `}
         </Script>
-         {/* <!--[BEGIN Google Tag Manager (noscript)]--> */}
-         <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KCX7H59S" height="0" width="0"
+        {/* <!--[BEGIN Google Tag Manager (noscript)]--> */}
+        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KCX7H59S" height="0" width="0"
           style={{ display: 'none', visibility: 'hidden' }}></iframe></noscript>
         {/* <!--[END Google Tag Manager (noscript)]--> */}
-      </Head>
-      {orgSchema()}
-      {siteLinkSchema()}
-      {draftMode ? (
-        <PreviewProvider token={token}>
+        <Head>
+          <link
+            rel="icon"
+            href="/favicon-32x32.ico"
+            sizes="32x32"
+            type="image/png"
+          />
+          <link
+            rel="icon"
+            href="/VoiceStack.svg"
+            sizes="16x16"
+            type="image/png"
+          />
+          <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+        </Head>
+
+        {orgSchema()}
+        {siteLinkSchema()}
+        {draftMode ? (
+          <PreviewProvider token={token}>
+            <Component {...pageProps} />
+          </PreviewProvider>
+        ) : (
           <Component {...pageProps} />
-        </PreviewProvider>
-      ) : (
-        <Component {...pageProps} />
-      )}
+        )}
       </TrackUserProvider>
     </>
   )
@@ -104,12 +105,12 @@ const TrackWrapper = track(
 export default TrackWrapper;
 
 
-function dispatchEvent(data: any) {      
-  const cookieAnalytics = cookieSelector(getCookie('cookieyes-consent'),'analytics')
-  const countryVersion:any = getCookie("__cs_ver"); 
-  const pageVersion:any = getCookie("__cs_pc");       
-                
-  if((cookieAnalytics && cookieAnalytics !== "yes") && countryVersion == 2 && !(pageVersion === "ph-c")){
+function dispatchEvent(data: any) {
+  const cookieAnalytics = cookieSelector(getCookie('cookieyes-consent'), 'analytics')
+  const countryVersion: any = getCookie("__cs_ver");
+  const pageVersion: any = getCookie("__cs_pc");
+
+  if ((cookieAnalytics && cookieAnalytics !== "yes") && countryVersion == 2 && !(pageVersion === "ph-c")) {
     console.log("returned from tracker in app.tsx");
     return
   }
