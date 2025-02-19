@@ -1611,11 +1611,7 @@ export const getAllPodcastSlugs = async (
   totalPodcasts: number
 }> => {
   const query = `
-<<<<<<< HEAD
-    *[_type == "post" && language == $region && contentType == "podcast"] | order(_updatedAt desc) {
-=======
     *[_type == "post" && language == $region && contentType == "podcast"] |  order(date desc) {
->>>>>>> f759a3ec52bf08dceeede34cfb0fa7661cab7708
       "slug": slug.current
     }
   `
