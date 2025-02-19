@@ -26,7 +26,7 @@ import Anchor from '~/components/commonSections/Anchor';
 
 export const navigationLinks = [
   // { href: siteConfig.pageURLs.caseStudy, label: "Case Studies", icon: CaseStudiesIcon },
-  { href: siteConfig.pageURLs.article, label: "Articles", icon: ArticlesIcon },
+  // { href: siteConfig.pageURLs.article, label: "Articles", icon: ArticlesIcon },
   // { href: siteConfig.pageURLs.podcast, label: "Podcasts", icon: PodcastsIcon },
   // { href: siteConfig.pageURLs.ebook, label: "Ebooks", icon: EbooksIcon },
   // { href: siteConfig.pageURLs.webinar, label: "Webinars", icon: WebinarsIcon },
@@ -104,7 +104,7 @@ const Header = () => {
               <div className={`flex flex-col gap-3 justify-between py-0 transition-all duration-300 ease-linear`}>
               <div className={`flex flex-row gap-2 justify-between items-center 
                 lg:relative transition-all duration-300 ease-in-out ${headerFixed ? 'lg:my-2 my-2' : 'lg:my-4 my-2'}`}>
-                  <Link href={normalizePath(homeUrl)} className="text-2xl h-7 font-extrabold bg-gradient-text bg-clip-text text-transparent font-monrope tracking-tighterText">
+                  <Link href={normalizePath(homeUrl)} className="text-2xl font-extrabold bg-gradient-text bg-clip-text text-transparent font-monrope tracking-tighterText">
                     <VoiceStackResources/>
                   </Link>
                   <div className={`flex lg:gap-10   justify-between rounded-xl items-center`}>

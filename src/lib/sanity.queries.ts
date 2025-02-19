@@ -953,7 +953,7 @@ export async function getHomeSettings(client: SanityClient,region: string = 'en'
   return await client.fetch(homeSettingsQuery,{region:region})
 }
 
-export async function getSiteSettings(client: SanityClient,region): Promise<any> {
+export async function getSiteSettings(client: SanityClient): Promise<any> {
   return await client.fetch(siteSettingsQuery)
 }
 
@@ -1611,11 +1611,7 @@ export const getAllPodcastSlugs = async (
   totalPodcasts: number
 }> => {
   const query = `
-<<<<<<< HEAD
-    *[_type == "post" && language == $region && contentType == "podcast"] | order(_updatedAt desc) {
-=======
     *[_type == "post" && language == $region && contentType == "podcast"] |  order(date desc) {
->>>>>>> f759a3ec52bf08dceeede34cfb0fa7661cab7708
       "slug": slug.current
     }
   `
