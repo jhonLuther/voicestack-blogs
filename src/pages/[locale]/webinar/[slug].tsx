@@ -119,7 +119,7 @@ const WebinarPage = ({
     return null 
   }
 
-  const prodUrl = process.env.NEXT_PUBLIC_VERCEL_URL || 'https://resources.carestack.com'
+  const prodUrl = process.env.NEXT_PUBLIC_VERCEL_URL || 'https://resources.voicestack.com'
 
   const seoTitle = webinar.seoTitle || webinar.title
   const seoDescription = webinar.seoDescription || webinar.excerpt

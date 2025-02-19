@@ -26,7 +26,7 @@ import Anchor from '~/components/commonSections/Anchor';
 
 export const navigationLinks = [
   // { href: siteConfig.pageURLs.caseStudy, label: "Case Studies", icon: CaseStudiesIcon },
-  { href: siteConfig.pageURLs.article, label: "Articles", icon: ArticlesIcon },
+  // { href: siteConfig.pageURLs.article, label: "Articles", icon: ArticlesIcon },
   // { href: siteConfig.pageURLs.podcast, label: "Podcasts", icon: PodcastsIcon },
   // { href: siteConfig.pageURLs.ebook, label: "Ebooks", icon: EbooksIcon },
   // { href: siteConfig.pageURLs.webinar, label: "Webinars", icon: WebinarsIcon },
@@ -84,7 +84,7 @@ const Header = () => {
       <ProgressBar />
       <div className={`relative w-full before:content-[''] before:-z-0  before:absolute before:left-0 before:right-0 before:top-[-100px] before:bg-zinc-900`}>
         <header
-          className={`fixed w-full  left-0 z-20 transition-all duration-300 ease-linear ${headerFixed ? 'md:top-[15px]' : 'md:top-[35px]' } `}      >
+          className={`fixed w-full top-0 left-0 z-20 transition-all duration-300 ease-linear ${headerFixed && `!fixed w-full ${homeSettings?.demoBanner ? '!top-[-44px]' : '!top-0'}  left-0`}`}      >
           {homeSettings?.demoBanner && <div className={`bg-cs-primary group hover:bg-[#42dd88] transition-all duration-200 px-4 h-[44px]`}>
             <Anchor href="https://carestack.com/demo" className="flex justify-center py-3">
               <div className="max-w-7xl flex justify-center gap-3 w-full items-center">
@@ -98,13 +98,13 @@ const Header = () => {
             </Anchor>
           </div>}
 
+          <div className={`z-10  bg-zinc-900 text-white  px-4 `}>
           <div className="max-w-7xl mx-auto">
-          <div className={`z-10 bg-white text-white md:rounded-lg p-3 `}>
               {/* <div className={`flex flex-col gap-3 justify-between py-[10px] transition-all duration-300 ease-linear relative  ${headerFixed ? '!lg:py-3' : 'lg:py-6'}`}> */}
               <div className={`flex flex-col gap-3 justify-between py-0 transition-all duration-300 ease-linear`}>
-                <div className={`flex flex-row gap-2 justify-between items-center 
-                lg:relative transition-all duration-300 ease-in-out  `}>
-                  <Link href={normalizePath(homeUrl)} className="text-2xl h-7 font-extrabold bg-gradient-text bg-clip-text text-transparent font-monrope tracking-tighterText">
+              <div className={`flex flex-row gap-2 justify-between items-center 
+                lg:relative transition-all duration-300 ease-in-out ${headerFixed ? 'lg:my-2 my-2' : 'lg:my-4 my-2'}`}>
+                  <Link href={normalizePath(homeUrl)} className="text-2xl font-extrabold bg-gradient-text bg-clip-text text-transparent font-monrope tracking-tighterText">
                     <VoiceStackResources/>
                   </Link>
                   <div className={`flex lg:gap-10   justify-between rounded-xl items-center`}>

@@ -178,8 +178,8 @@ export const defaultMetaTag = (params: any, pageUrl?: string) => {
       )}
       <meta property="twitter:card" content="summary_large_image" />
       <meta property="og:type" content="website" />
-      <meta property="og:url" content="https://resources.carestack.com" />
-      <meta property="twitter:url" content="https://resources.carestack.com" />
+      <meta property="og:url" content="https://resources.voicestack.com" />
+      <meta property="twitter:url" content="https://resources.voicestack.com" />
       {params?.siteTitle ? (
         <>
           {/* <meta name="title" content={params.siteTitle?.trim()}></meta> */}
@@ -428,7 +428,7 @@ export function CustomHead({
     }
     return head(metaData, randomId, type + randomId)
   } else if (props && type === 'articleExpanded' && props?.title) {
-    const url = baseUrl ?? 'www.resources.carestack.com'
+    const url = baseUrl ?? 'www.resources.voicestack.com'
     const metaData = {
       '@context': 'https://schema.org',
       '@type': 'Article',
@@ -556,7 +556,7 @@ export function CustomHead({
         name: props?.map((ele) => {
           return ele?.author?.map((a) => a.name)
         }),
-        url: 'https://resources.carestack.com',
+        url: 'https://resources.voicestack.com',
       },
       itemListElement: [
         {
@@ -564,8 +564,8 @@ export function CustomHead({
           position: pageNumber ?? 1,
           url:
             props && props[0]
-              ? `www.resources.carestack.com/${props[0]?.contentType}/page/${pageNumber}`
-              : 'www.resources.carestack.com',
+              ? `www.resources.voicestack.com/${props[0]?.contentType}/page/${pageNumber}`
+              : 'www.resources.voicestack.com',
         },
       ],
       numberOfItems: 3,
@@ -599,7 +599,7 @@ export function CustomHead({
       '@type': 'Article',
       mainEntityOfPage: {
         '@type': 'WebPage',
-        '@id': 'https://resources.carestack.com/press-release',
+        '@id': 'https://resources.voicestack.com/press-release',
       },
       headline: props?.title,
       image: urlForImage(props?.mainImage?._id),

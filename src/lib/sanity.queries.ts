@@ -475,7 +475,7 @@ export const homeSettingsQuery = groq`
   }[0]
 `
 
-const siteSettingsQuery = groq`*[_type == "siteSetting" && language == $region] | order(date desc) {
+const siteSettingsQuery = groq`*[_type == "siteSetting"] | order(date desc) {
 ...,
 
 }`
@@ -953,8 +953,8 @@ export async function getHomeSettings(client: SanityClient,region: string = 'en'
   return await client.fetch(homeSettingsQuery,{region:region})
 }
 
-export async function getSiteSettings(client: SanityClient,region: string = 'en'): Promise<any> {
-  return await client.fetch(siteSettingsQuery,{region:region})
+export async function getSiteSettings(client: SanityClient): Promise<any> {
+  return await client.fetch(siteSettingsQuery)
 }
 
 export const postBySlugQuery = groq`
@@ -1611,11 +1611,7 @@ export const getAllPodcastSlugs = async (
   totalPodcasts: number
 }> => {
   const query = `
-<<<<<<< HEAD
-    *[_type == "post" && language == $region && contentType == "podcast"] | order(_updatedAt desc) {
-=======
     *[_type == "post" && language == $region && contentType == "podcast"] |  order(date desc) {
->>>>>>> f759a3ec52bf08dceeede34cfb0fa7661cab7708
       "slug": slug.current
     }
   `

@@ -11,6 +11,7 @@ import { getCookie, checkCookie, eraseCookie } from '~/utils/tracker/cookie'
 import { addEvent } from '~/utils/tracker/events'
 import { getSession } from '~/utils/tracker/session'
 import { getUser } from '~/utils/tracker/user'
+import Script from 'next/script'
 
 export interface SharedPageProps {
   draftMode?: boolean
@@ -21,43 +22,71 @@ export interface SharedPageProps {
 const PreviewProvider = lazy(() => import('~/components/PreviewProvider'))
 
 
- function App({
+function App({
   Component,
   pageProps,
 }: AppProps<SharedPageProps>) {
   const { draftMode, token } = pageProps
-  const pathname:any = usePathname()
-  const currentWindow =pathname && pathname?.split('/') || []
-  const index = pathname?.split('/').length-1 || 0
+  const pathname: any = usePathname()
+  const currentWindow = pathname && pathname?.split('/') || []
+  const index = pathname?.split('/').length - 1 || 0
   const result = slugToCapitalized(currentWindow[index])
 
   return (
     <>
-    <TrackUserProvider>
-      <Head>
-        <link
-          rel="icon"
-          href="/favicon-32x32.ico"
-          sizes="32x32"
-          type="image/png"
+      <TrackUserProvider>
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-YY0CHYH7EY"
+          strategy="afterInteractive"
         />
-        <link
-          rel="icon"
-          href="/VoiceStack.svg"
-          sizes="16x16"
-          type="image/png"
-        />
-        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-      </Head>
-      {orgSchema()}
-      {siteLinkSchema()}
-      {draftMode ? (
-        <PreviewProvider token={token}>
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-YY0CHYH7EY');
+          `}
+        </Script>
+
+        {/* Google Tag Manager */}
+        <Script id="google-tag-manager" strategy="afterInteractive">
+          {`
+            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer','GTM-KCX7H59S');
+          `}
+        </Script>
+        {/* <!--[BEGIN Google Tag Manager (noscript)]--> */}
+        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KCX7H59S" height="0" width="0"
+          style={{ display: 'none', visibility: 'hidden' }}></iframe></noscript>
+        {/* <!--[END Google Tag Manager (noscript)]--> */}
+        <Head>
+          <link
+            rel="icon"
+            href="/favicon-32x32.ico"
+            sizes="32x32"
+            type="image/png"
+          />
+          <link
+            rel="icon"
+            href="/VoiceStack.svg"
+            sizes="16x16"
+            type="image/png"
+          />
+          <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+        </Head>
+
+        {orgSchema()}
+        {siteLinkSchema()}
+        {draftMode ? (
+          <PreviewProvider token={token}>
+            <Component {...pageProps} />
+          </PreviewProvider>
+        ) : (
           <Component {...pageProps} />
-        </PreviewProvider>
-      ) : (
-        <Component {...pageProps} />
-      )}
+        )}
       </TrackUserProvider>
     </>
   )
@@ -76,12 +105,12 @@ const TrackWrapper = track(
 export default TrackWrapper;
 
 
-function dispatchEvent(data: any) {      
-  const cookieAnalytics = cookieSelector(getCookie('cookieyes-consent'),'analytics')
-  const countryVersion:any = getCookie("__cs_ver"); 
-  const pageVersion:any = getCookie("__cs_pc");       
-                
-  if((cookieAnalytics && cookieAnalytics !== "yes") && countryVersion == 2 && !(pageVersion === "ph-c")){
+function dispatchEvent(data: any) {
+  const cookieAnalytics = cookieSelector(getCookie('cookieyes-consent'), 'analytics')
+  const countryVersion: any = getCookie("__cs_ver");
+  const pageVersion: any = getCookie("__cs_pc");
+
+  if ((cookieAnalytics && cookieAnalytics !== "yes") && countryVersion == 2 && !(pageVersion === "ph-c")) {
     console.log("returned from tracker in app.tsx");
     return
   }
@@ -94,7 +123,7 @@ function dispatchEvent(data: any) {
     trackData.push(temp);
     const domain = window.location.origin;
     // if (window !== undefined && trackData.length > 0 && !isSending) {
-    if (window !== undefined && trackData.length > 0 && !isSending && domain === "https://resources.carestack.com") {
+    if (window !== undefined && trackData.length > 0 && !isSending && domain === "https://resources.voicestack.com") {
       const user = getUser()
       if (user) {
 

@@ -38,7 +38,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const slug = params?.slug as string;
   const region = params?.locale as string
   const categoryPromise = getCategory(client, slug);
-  const siteSettingsPromise = getSiteSettings(client,region);
+  const siteSettingsPromise = getSiteSettings(client);
   const homeSettingsPromise = getHomeSettings(client,region);
 
   const [category, siteSettings, homeSettings] = await Promise.all([

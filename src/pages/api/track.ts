@@ -6,7 +6,7 @@ export default async function trackEvents(
   res: NextApiResponse
 ) {
   
-  if (req.headers.host == "resources.carestack.com") {
+  if (req.headers.host == "resources.voicestack.com") {
     if (req.method === "POST") {
       const type = req.query.type;
       switch (type) {

@@ -114,7 +114,7 @@ const CaseStudyPage = ({
     return null
   }
 
-  const prodUrl = process.env.NEXT_PUBLIC_VERCEL_URL || 'https://resources.carestack.com'
+  const prodUrl = process.env.NEXT_PUBLIC_VERCEL_URL || 'https://resources.voicestack.com'
   const seoTitle = caseStudy.seoTitle || caseStudy.title
   const seoDescription = caseStudy.seoDescription || caseStudy.excerpt
   const seoKeywords = caseStudy.seoKeywords || ''

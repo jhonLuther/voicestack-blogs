@@ -95,7 +95,7 @@ const RegionSwitcher: React.FC<RegionSwitcherProps> = ({
                 />
               )}
               <div className={`${openSwitcher ? '-rotate-180' : ''} transition-transform linear duration-300`}>
-                <ChevronDown  />
+                <ChevronDown color='white'  />
               </div>
             </button>
           </div>
