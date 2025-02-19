@@ -132,7 +132,7 @@ const AllcontentSection: React.FC<LatestBlogsProps> = ({
     updateSelectedTag()
   }, [router.pathname, router.asPath])
 
-  if( allContent.length <= 2) return null
+  if((allContent?.length <= 2)) return null
 
 
   const renderPosts = () => {

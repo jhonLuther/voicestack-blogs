@@ -74,13 +74,12 @@ const DynamicPages = ({
         {/* <BannerSubscribeSection /> */}
         <SliderSection items={reorderedCarouselItems} />
         <TestimonialSection testimonials={testimonialList} />
-        {posts?.length <= 2 &&
           <AllcontentSection
           customBrowseContent={customBrowseContent}
           allContent={posts}
           itemsPerPage={siteConfig.pagination.itemsHomePage}
           redirect={true}
-        />}
+        />
         <EventCarousel bgColor={'white'} allEventCards={uniqueEventCards} />
         {/* <ShortBannerSection /> */}
       </BaseUrlProvider>
