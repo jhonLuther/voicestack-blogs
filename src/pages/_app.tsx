@@ -11,6 +11,7 @@ import { getCookie, checkCookie, eraseCookie } from '~/utils/tracker/cookie'
 import { addEvent } from '~/utils/tracker/events'
 import { getSession } from '~/utils/tracker/session'
 import { getUser } from '~/utils/tracker/user'
+import Script from 'next/script'
 
 export interface SharedPageProps {
   draftMode?: boolean
@@ -48,6 +49,33 @@ const PreviewProvider = lazy(() => import('~/components/PreviewProvider'))
           type="image/png"
         />
         <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-YY0CHYH7EY"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-YY0CHYH7EY');
+          `}
+        </Script>
+
+        {/* Google Tag Manager */}
+        <Script id="google-tag-manager" strategy="afterInteractive">
+          {`
+            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer','GTM-KCX7H59S');
+          `}
+        </Script>
+         {/* <!--[BEGIN Google Tag Manager (noscript)]--> */}
+         <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KCX7H59S" height="0" width="0"
+          style={{ display: 'none', visibility: 'hidden' }}></iframe></noscript>
+        {/* <!--[END Google Tag Manager (noscript)]--> */}
       </Head>
       {orgSchema()}
       {siteLinkSchema()}

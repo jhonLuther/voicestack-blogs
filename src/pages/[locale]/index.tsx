@@ -92,7 +92,7 @@ export const getStaticProps: GetStaticProps<
       getTagsByOrder(client),
       getTestiMonials(client,region),
       getHomeSettings(client,region),
-      getSiteSettings(client,region),
+      getSiteSettings(client),
       getEbooks(client,region),
       getWebinars(client,region),
       getEventCards(client),

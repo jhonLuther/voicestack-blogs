@@ -953,7 +953,7 @@ export async function getHomeSettings(client: SanityClient,region: string = 'en'
   return await client.fetch(homeSettingsQuery,{region:region})
 }
 
-export async function getSiteSettings(client: SanityClient,region): Promise<any> {
+export async function getSiteSettings(client: SanityClient): Promise<any> {
   return await client.fetch(siteSettingsQuery)
 }
 
